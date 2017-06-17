@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>AdminLTE 2 | Student Profile</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../lib/plugins/datatables/dataTables.bootstrap.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css"/>
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.css"/>
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../../lib/dist/css/skins/_all-skins.min.css"/>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <div th:include="/layout/header :: header"></div>
+
+  <!-- Left side column. contains the logo and sidebar -->
+  <div th:include="/layout/sidebarnav :: sidebarnav"></div>
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Activity Profile
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Students</a></li>
+        <li class="active">Student</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="row">
+        <div class="col-md-3">
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src="../../lib/dist/img/user4-128x128.jpg" alt="User profile picture"/>
+
+              <h3 class="profile-username text-center" th:text="${student.name}">Nina Mcintire</h3>
+
+              <!-- <p class="text-muted text-center" >Software Engineer</p> -->
+
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <a><b>Teachers</b><samll class="label pull-right bg-blue" th:text="${activity.teacher.size()}">1,322</samll></a>
+                </li>
+                <li class="list-group-item">
+                  <a><b>Courses</b><small class="label pull-right bg-blue" th:text="${student.courses.size()}">543</small></a>
+                </li>
+                <li class="list-group-item">
+                  <a><b>Students</b><small class="label pull-right bg-blue" th:text="${totalStudents}">543</small></a>
+                </li>
+              </ul>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">About Me</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <p class="text-center">
+                <strong>Students Details</strong>
+              </p>
+
+              <div class="progress-group">
+                <span class="progress-text">Studying</span>
+                <span class="progress-number"><b th:text="${totalStudying}">160</b>/<span th:text="${totalStudents}">200</span></span>
+
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-aqua" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0) ? ((${totalStudying}/${totalStudents}) * 100) : 0) + '%'"></div>
+                </div>
+              </div>
+              <!-- /.progress-group -->
+              <div class="progress-group">
+                <span class="progress-text">Waiting</span>
+                <span class="progress-number"><b th:text="${totalWaiting}">310</b>/<span th:text="${totalStudents}">400</span></span>
+
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-yellow" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0)?((${totalWaiting}/${totalStudents}) * 100) :0)  + '%'"></div>
+                </div>
+              </div>
+              <!-- /.progress-group -->
+              <div class="progress-group">
+                <span class="progress-text">Certified</span>
+                <span class="progress-number"><b th:text="${totalCertified}">480</b>/<span th:text="${totalStudents}">800</span></span>
+
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-green" style="width: 80%" th:style="'width:' +((${totalStudents} != 0) ? ((${totalCertified}/${totalStudents}) * 100) : 0 )  + '%'"></div>
+                </div>
+              </div>
+              <!-- /.progress-group -->
+              <div class="progress-group">
+                <span class="progress-text">Fired</span>
+                <span class="progress-number"><b th:text="${totalFired}">250</b>/<span th:text="${totalStudents}">500</span></span>
+
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-red" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0)?((${totalFired}/${totalStudents}) * 100) : 0 ) + '%'"></div>
+                </div>
+              </div>
+              <!-- /.progress-group -->
+              <div class="progress-group">
+                <span class="progress-text">Temporary Stopped</span>
+                <span class="progress-number"><b th:text="${totalTempStopped}">250</b>/<span th:text="${totalStudents}">500</span></span>
+
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-red" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0)?((${totalTempStopped}/${totalStudents}) * 100) : 0 ) + '%'"></div>
+                </div>
+              </div>
+              <!-- /.progress-group -->
+              <div class="progress-group">
+                <span class="progress-text">Finally Stopped</span>
+                <span class="progress-number"><b th:text="${totalFinalStopped}">250</b>/<span th:text="${totalStudents}">500</span></span>
+
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-red" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0)?((${totalFinalStopped}/${totalStudents}) * 100) :0 ) + '%'"></div>
+                </div>
+              </div>
+              <!-- /.progress-group -->
+            </div>
+            <!-- <div class="box-body">
+              <strong><i class="fa fa-book margin-r-5"></i> Total Studying Students</strong>
+
+              <p class="text-muted" th:text="${totalStudying}">
+                B.S. in Computer Science from the University of Tennessee at Knoxville
+              </p>
+
+              <hr/>
+
+              <strong><i class="fa fa-map-marker margin-r-5"></i> Total Waiting Students</strong>
+
+              <p class="text-muted" th:text="${totalWaiting}">Malibu, California</p>
+
+              <hr/>
+
+              <strong><i class="fa fa-map-marker margin-r-5"></i> Total Certified Students</strong>
+
+              <p class="text-muted" th:text="${totalCertified}">Malibu, California</p>
+
+              <hr/>
+
+              <strong><i class="fa fa-pencil margin-r-5"></i> Total Fired Students</strong>
+
+              <p class="text-muted" th:text="${totalFired}">Malibu, California</p>
+
+              <hr/>
+
+              <strong><i class="fa fa-pencil margin-r-5"></i> Total Temporary Stopped Students</strong>
+
+              <p class="text-muted" th:text="${totalTempStopped}">Malibu, California</p>
+
+              <hr/>
+
+              <strong><i class="fa fa-pencil margin-r-5"></i> Total Finally Stopped Students</strong>
+
+              <p class="text-muted" th:text="${totalFinalStopped}">Malibu, California</p>
+
+              <hr/>
+            </div> -->
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#teachers" data-toggle="tab">Teachers</a></li>
+              <li><a href="#courses" data-toggle="tab">Courses</a></li>
+              <li><a href="#students" data-toggle="tab">Students</a></li>
+              <li><a href="#settings" data-toggle="tab">Settings</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="active tab-pane" id="teachers">
+                <div class="box">
+                  <div class="box-header">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <h3 class="box-title">Teachers List</h3>
+                      </div>
+                      <div class="col-sm-6">
+                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Teacher</button>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                      <div class="row" th:remove="all">
+                        <div class="col-sm-6">
+                          <div class="dataTables_length" id="example1_length">
+                            <label>Show
+                              <select name="example1_length" aria-controls="example1"
+                                      class="form-control input-sm">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                              </select>
+                              entries</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div id="example1_filter" class="dataTables_filter">
+                            <label>Search:<input type="search" class="form-control input-sm"
+                                                 placeholder="Teacher Name" aria-controls="example1"></label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" th:remove="all-but-first">
+                        <div class="col-sm-12">
+                          <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                                 aria-describedby="example1_info">
+                            <thead>
+                            <tr role="row">
+                              <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-sort="ascending"
+                                  aria-label="ID: activate to sort column descending"
+                                  style="width: 130.4px;">ID
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="Name: activate to sort column ascending"
+                                  style="width: 266.4px;">Name
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="Total Courses: activate to sort column ascending"
+                                  style="width: 237.4px;">Total Courses
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="Email: activate to sort column ascending"
+                                  style="width: 186.4px;">Email
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="Tel: activate to sort column ascending"
+                                  style="width: 135.2px;">Tel
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="Education Grade: activate to sort column ascending"
+                                  style="width: 135.2px;">Education Grade
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                  style="width: 266.2px;">Comments
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                  colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                  style="width: 266.2px;">Tools
+                              </th>
+                            </tr>
+                            </thead>
+                            <tbody th:remove="all-but-first">
+                            <tr rol="row" th:each="teacher : ${teachers}"
+                                th:class="${teacherStat.odd}? 'odd' : 'even'">
+                              <td class="sorting_1" th:text="${teacher.id}">Teacher ID</td>
+                              <td><a href="#" th:href="@{/admin/teachers/teacher(id=${teacher.id})}"><span th:text="${teacher.name}">Teacher Name</span></a></td>
+                              <td th:text="${teacherCourses[teacher.id]}">Total Courses</td>
+                              <td th:text="${teacher.email}">Teacher Email</td>
+                              <td th:text="${teacher.tel}">Teacher Tel</td>
+                              <td th:text="${teacher.education}">Teacher Education</td>
+                              <td th:text="${teacher.comments}">Teacher Comments</td>
+                              <td>
+                                <ul class="dtt">
+                                  <li>
+                                    <div class="tools">
+                                      <a href="#" th:href="@{/admin/teachers/teacher(id=${teacher.id})}"><i class="fa fa-edit fa-3x"></i></a>
+                                      <a href="#" th:href="@{/admin/teachers/teacher(id=${teacher.id})}"><i class="fa fa-trash-o fa-3x"></i></a>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 1.0</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.7</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 1.5</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 2.0</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 3.0</td>
+                              <td>Win 2k+ / OSX.3+</td>
+                              <td>1.9</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Camino 1.0</td>
+                              <td>OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Camino 1.5</td>
+                              <td>OSX.3+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Netscape 7.2</td>
+                              <td>Win 95+ / Mac OS 8.6-9.2</td>
+                              <td>1.7</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Netscape Browser 8</td>
+                              <td>Win 98SE+</td>
+                              <td>1.7</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Netscape Navigator 9</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Mozilla 1.0</td>
+                              <td>Win 95+ / OSX.1+</td>
+                              <td>1</td>
+                              <td>A</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                              <th rowspan="1" colspan="1">ID</th>
+                              <th rowspan="1" colspan="1">Name</th>
+                              <th rowspan="1" colspan="1">Total Courses</th>
+                              <th rowspan="1" colspan="1">Email</th>
+                              <th rowspan="1" colspan="1">Tel</th>
+                              <th rowspan="1" colspan="1">Education Grad</th>
+                              <th rowspan="1" colspan="1">Comments</th>
+                              <th rowspan="1" colspan="1">Tools</th>
+                            </tr>
+                            </tfoot>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row" th:remove="all">
+                        <div class="col-sm-5">
+                          <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing
+                            1 to 10 of 57 entries
+                          </div>
+                        </div>
+                        <div class="col-sm-7">
+                          <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                            <ul class="pagination">
+                              <li class="paginate_button previous disabled" id="example1_previous"><a href="#"
+                                                                                                      aria-controls="example1"
+                                                                                                      data-dt-idx="0"
+                                                                                                      tabindex="0">Previous</a>
+                              </li>
+                              <li class="paginate_button active"><a href="#" aria-controls="example1"
+                                                                    data-dt-idx="1" tabindex="0">1</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                              data-dt-idx="2" tabindex="0">2</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                              data-dt-idx="3" tabindex="0">3</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                              data-dt-idx="4" tabindex="0">4</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                              data-dt-idx="5" tabindex="0">5</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                              data-dt-idx="6" tabindex="0">6</a></li>
+                              <li class="paginate_button next" id="example1_next"><a href="#"
+                                                                                     aria-controls="example1"
+                                                                                     data-dt-idx="7"
+                                                                                     tabindex="0">Next</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="courses">
+                <div class="box">
+                  <div class="box-header">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <h3 class="box-title">Courses List</h3>
+                      </div>
+                      <div class="col-sm-6">
+                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Course</button>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div id="coursesDT_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                      <div class="row" th:remove="all">
+                        <div class="col-sm-6">
+                          <div class="dataTables_length" id="coursesDT_length">
+                            <label>Show
+                              <select name="coursesDT_length" aria-controls="coursesDT"
+                                      class="form-control input-sm">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                              </select>
+                              entries</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div id="coursesDT_filter" class="dataTables_filter">
+                            <label>Search:<input type="search" class="form-control input-sm"
+                                                 placeholder="Teacher Name" aria-controls="coursesDT"></label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" th:remove="all-but-first">
+                        <div class="col-sm-12">
+                          <table id="coursesDT" class="table table-bordered table-striped dataTable" role="grid"
+                                 aria-describedby="coursesDT_info">
+                            <thead>
+                            <tr role="row">
+                              <th class="sorting_asc" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-sort="ascending"
+                                  aria-label="ID: activate to sort column descending"
+                                  style="width: 130.4px;">ID
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="Name: activate to sort column ascending"
+                                  style="width: 266.4px;">Name
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="Teacher Name: activate to sort column ascending"
+                                  style="width: 186.4px;">Teacher Name
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="Days: activate to sort column ascending"
+                                  style="width: 135.2px;">Days
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="Start Time: activate to sort column ascending"
+                                  style="width: 135.2px;">Start Time
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="End Time: activate to sort column ascending"
+                                  style="width: 135.2px;">End Time
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="Start Date: activate to sort column ascending"
+                                  style="width: 135.2px;">Start Date
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="Start Time: activate to sort column ascending"
+                                  style="width: 135.2px;">End Date
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                  style="width: 266.2px;">Comments
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                  style="width: 266.2px;">Tools
+                              </th>
+                            </tr>
+                            </thead>
+                            <tbody th:remove="all-but-first">
+                            <tr rol="row" th:each="course : ${courses}"
+                                th:class="${courseStat.odd}? 'odd' : 'even'">
+                              <td class="sorting_1" th:text="${course.id}">Course ID</td>
+                              <td class="sorting_1" th:text="${course.name}">Course Name</td>
+                              <td><a href="#" th:href="@{/admin/teachers/teacher(id=${course.teacher.id})}"><span th:text="${course.teacher.name}">Teacher Name</span></a></td>
+                              <td th:text="${course.days}">Days</td>
+                              <td th:text="${course.startTime}">Start Time</td>
+                              <td th:text="${course.endTime}">End Time</td>
+                              <td th:text="${course.startDate}">Start Date</td>
+                              <td th:text="${course.endDate}">End Date</td>
+                              <td th:text="${course.comments}">Course Comments</td>
+                              <td>
+                                <ul class="dtt">
+                                  <li>
+                                    <div class="tools">
+                                      <a href="#" th:href="@{/admin/courses/course(id=${course.id})}"><i class="fa fa-edit fa-3x"></i></a>
+                                      <a href="#" th:href="@{/admin/courses/course(id=${course.id})}"><i class="fa fa-trash-o fa-3x"></i></a>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 1.0</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.7</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 1.5</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 2.0</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 3.0</td>
+                              <td>Win 2k+ / OSX.3+</td>
+                              <td>1.9</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Camino 1.0</td>
+                              <td>OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Camino 1.5</td>
+                              <td>OSX.3+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Netscape 7.2</td>
+                              <td>Win 95+ / Mac OS 8.6-9.2</td>
+                              <td>1.7</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Netscape Browser 8</td>
+                              <td>Win 98SE+</td>
+                              <td>1.7</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Netscape Navigator 9</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Mozilla 1.0</td>
+                              <td>Win 95+ / OSX.1+</td>
+                              <td>1</td>
+                              <td>A</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                              <th rowspan="1" colspan="1">ID</th>
+                              <th rowspan="1" colspan="1">Name</th>
+                              <th rowspan="1" colspan="1">Teacher Name</th>
+                              <th rowspan="1" colspan="1">Days</th>
+                              <th rowspan="1" colspan="1">Start Time</th>
+                              <th rowspan="1" colspan="1">End Time</th>
+                              <th rowspan="1" colspan="1">Start Date</th>
+                              <th rowspan="1" colspan="1">End Date</th>
+                              <th rowspan="1" colspan="1">Comments</th>
+                              <th rowspan="1" colspan="1">Tools</th>
+                            </tr>
+                            </tfoot>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row" th:remove="all">
+                        <div class="col-sm-5">
+                          <div class="dataTables_info" id="coursesDT_info" role="status" aria-live="polite">Showing
+                            1 to 10 of 57 entries
+                          </div>
+                        </div>
+                        <div class="col-sm-7">
+                          <div class="dataTables_paginate paging_simple_numbers" id="coursesDT_paginate">
+                            <ul class="pagination">
+                              <li class="paginate_button previous disabled" id="coursesDT_previous"><a href="#"
+                                                                                                      aria-controls="coursesDT"
+                                                                                                      data-dt-idx="0"
+                                                                                                      tabindex="0">Previous</a>
+                              </li>
+                              <li class="paginate_button active"><a href="#" aria-controls="coursesDT"
+                                                                    data-dt-idx="1" tabindex="0">1</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="coursesDT"
+                                                              data-dt-idx="2" tabindex="0">2</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="coursesDT"
+                                                              data-dt-idx="3" tabindex="0">3</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="coursesDT"
+                                                              data-dt-idx="4" tabindex="0">4</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="coursesDT"
+                                                              data-dt-idx="5" tabindex="0">5</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="coursesDT"
+                                                              data-dt-idx="6" tabindex="0">6</a></li>
+                              <li class="paginate_button next" id="coursesDT_next"><a href="#"
+                                                                                     aria-controls="coursesDT"
+                                                                                     data-dt-idx="7"
+                                                                                     tabindex="0">Next</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="students">
+                <div class="box">
+                  <div class="box-header">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <h3 class="box-title">Students List</h3>
+                      </div>
+                      <div class="col-sm-6">
+                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Student</button>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div id="studentsDT_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                      <div class="row" th:remove="all">
+                        <div class="col-sm-6">
+                          <div class="dataTables_length" id="studentsDT_length">
+                            <label>Show
+                              <select name="studentsDT_length" aria-controls="studentsDT"
+                                      class="form-control input-sm">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                              </select>
+                              entries</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div id="studentsDT_filter" class="dataTables_filter">
+                            <label>Search:<input type="search" class="form-control input-sm"
+                                                 placeholder="Student Name" aria-controls="studentsDT"></label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" th:remove="all-but-first">
+                        <div class="col-sm-12">
+                          <table id="studentsDT" class="table table-bordered table-striped dataTable" role="grid"
+                                 aria-describedby="studentsDT_info">
+                            <thead>
+                            <tr role="row">
+                              <th class="sorting_asc" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-sort="ascending"
+                                  aria-label="ID: activate to sort column descending"
+                                  style="width: 130.4px;">ID
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Name: activate to sort column ascending"
+                                  style="width: 266.4px;">Name
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Identity ID: activate to sort column ascending"
+                                  style="width: 160.4px;">Identity ID
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Birth Date: activate to sort column ascending"
+                                  style="width: 160.2px;">Birth Date
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Birth Location: activate to sort column ascending"
+                                  style="width: 135.2px;">Birth Location
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Country: activate to sort column ascending"
+                                  style="width: 266.2px;">Country
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                  style="width: 160.2px;">Home Address
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Egypt Address: activate to sort column ascending"
+                                  style="width: 266.2px;">Egypt Address
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Tel: activate to sort column ascending"
+                                  style="width: 266.2px;">Tel
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Email: activate to sort column ascending"
+                                  style="width: 266.2px;">Email
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Facebook: activate to sort column ascending"
+                                  style="width: 266.2px;">Facebook
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Education: activate to sort column ascending"
+                                  style="width: 266.2px;">Education
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Job: activate to sort column ascending"
+                                  style="width: 266.2px;">Job
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="House: activate to sort column ascending"
+                                  style="width: 266.2px;">House
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="Comments: activate to sort column ascending"
+                                  style="width: 266.2px;">Comments
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
+                                  colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                  style="width: 266.2px;">Tools
+                              </th>
+                            </tr>
+                            </thead>
+                            <tbody th:remove="all-but-first">
+                            <tr rol="row" th:each="student : ${students}"
+                                th:class="${studentStat.odd}? 'odd' : 'even'">
+                              <td class="sorting_1" th:text="${student.id}">Student ID</td>
+                              <td><a href="#" th:href="@{/admin/students/student(id=${student.id})}"><span th:text="${student.name}">Student Name</span></a></td>
+                              <td th:text="${student.identityId}">Student Identity ID</td>
+                              <td th:text="${student.birthDate}">Student Birth Date</td>
+                              <td th:text="${student.birthLocation}">Student Birth Location</td>
+                              <td th:text="${student.country.arabicName}">Student Country</td>
+                              <td th:text="${student.homeAddress}">Student Home Address</td>
+                              <td th:text="${student.egyptAddress}">Student Egypt Address</td>
+                              <td th:text="${student.Tel}">Student Tel</td>
+                              <td th:text="${student.email}">Student Email</td>
+                              <td th:text="${student.facebook}">Student Facebook</td>
+                              <td th:text="${student.education}">Student Education</td>
+                              <td th:text="${student.job}">Student job</td>
+                              <td th:text="${student.house}? ${student.house.name} : 'N/A'">Student House</td>
+                              <td th:text="${student.comments}">Student comments</td>
+                              <td>
+                                <ul class="dtt">
+                                  <li>
+                                    <div class="tools">
+                                      <a href="#" th:href="@{/admin/students/student(id=${student.id})}"><i class="fa fa-edit fa-3x"></i></a>
+                                      <a href="#" th:href="@{/admin/students/student(id=${student.id})}"><i class="fa fa-trash-o fa-3x"></i></a>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 1.0</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.7</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 1.5</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 2.0</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Firefox 3.0</td>
+                              <td>Win 2k+ / OSX.3+</td>
+                              <td>1.9</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Camino 1.0</td>
+                              <td>OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Camino 1.5</td>
+                              <td>OSX.3+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Netscape 7.2</td>
+                              <td>Win 95+ / Mac OS 8.6-9.2</td>
+                              <td>1.7</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Netscape Browser 8</td>
+                              <td>Win 98SE+</td>
+                              <td>1.7</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Netscape Navigator 9</td>
+                              <td>Win 98+ / OSX.2+</td>
+                              <td>1.8</td>
+                              <td>A</td>
+                            </tr>
+                            <tr role="row" class="even">
+                              <td class="sorting_1">Gecko</td>
+                              <td>Mozilla 1.0</td>
+                              <td>Win 95+ / OSX.1+</td>
+                              <td>1</td>
+                              <td>A</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                              <th rowspan="1" colspan="1">ID</th>
+                              <th rowspan="1" colspan="1">Name</th>
+                              <th rowspan="1" colspan="1">Identity ID</th>
+                              <th rowspan="1" colspan="1">Birth Date</th>
+                              <th rowspan="1" colspan="1">Birth Location</th>
+                              <th rowspan="1" colspan="1">Country</th>
+                              <th rowspan="1" colspan="1">Home Address</th>
+                              <th rowspan="1" colspan="1">Egypt Address</th>
+                              <th rowspan="1" colspan="1">Tel</th>
+                              <th rowspan="1" colspan="1">Email</th>
+                              <th rowspan="1" colspan="1">Facebook</th>
+                              <th rowspan="1" colspan="1">Education</th>
+                              <th rowspan="1" colspan="1">Job</th>
+                              <th rowspan="1" colspan="1">House</th>
+                              <th rowspan="1" colspan="1">Comments</th>
+                              <th rowspan="1" colspan="1">Tools</th>
+                            </tr>
+                            </tfoot>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row" th:remove="all">
+                        <div class="col-sm-5">
+                          <div class="dataTables_info" id="studentsDT_info" role="status" aria-live="polite">Showing
+                            1 to 10 of 57 entries
+                          </div>
+                        </div>
+                        <div class="col-sm-7">
+                          <div class="dataTables_paginate paging_simple_numbers" id="studentsDT_paginate">
+                            <ul class="pagination">
+                              <li class="paginate_button previous disabled" id="studentsDT_previous"><a href="#"
+                                                                                                      aria-controls="studentsDT"
+                                                                                                      data-dt-idx="0"
+                                                                                                      tabindex="0">Previous</a>
+                              </li>
+                              <li class="paginate_button active"><a href="#" aria-controls="studentsDT"
+                                                                    data-dt-idx="1" tabindex="0">1</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="studentsDT"
+                                                              data-dt-idx="2" tabindex="0">2</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="studentsDT"
+                                                              data-dt-idx="3" tabindex="0">3</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="studentsDT"
+                                                              data-dt-idx="4" tabindex="0">4</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="studentsDT"
+                                                              data-dt-idx="5" tabindex="0">5</a></li>
+                              <li class="paginate_button "><a href="#" aria-controls="studentsDT"
+                                                              data-dt-idx="6" tabindex="0">6</a></li>
+                              <li class="paginate_button next" id="studentsDT_next"><a href="#"
+                                                                                     aria-controls="studentsDT"
+                                                                                     data-dt-idx="7"
+                                                                                     tabindex="0">Next</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="settings">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputName" placeholder="Name"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputSubject" class="col-sm-2 control-label">Subject</label>
+
+                    <div class="col-sm-10">
+                      <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" id="inputSubject" tabindex="-1" aria-hidden="true">
+                        <option selected="selected">Select Subject</option>
+                        <option>Calligraphy</option>
+                        <option>Arabic Language</option>
+                        <option>Phonetics</option>
+                        <option>Arabesic</option>
+                        <option>Tones</option>
+                        <option>Quran</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputTel" class="col-sm-2 control-label">Tel</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputTel" placeholder="Tel"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="inputEmail" placeholder="Email"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputEducation" class="col-sm-2 control-label">Education</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEducation" placeholder="Education"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputComments" class="col-sm-2 control-label">Comments</label>
+
+                    <div class="col-sm-10">
+                      <textarea class="form-control" id="inputComments" placeholder="Comments"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a></input>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-danger">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- Main Footer -->
+  <div th:include="/layout/footer :: footer"></div>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                <p>Will be 23 on April 24th</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-user bg-yellow"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                <p >New phone <span></span> +1(800)555-1234</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                <p>nora@example.com</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                <p>Execution time 5 seconds</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Custom Template Design
+                <span class="label label-danger pull-right">70%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Update Resume
+                <span class="label label-success pull-right">95%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Laravel Integration
+                <span class="label label-warning pull-right">50%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Back End Framework
+                <span class="label label-primary pull-right">68%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Report panel usage
+              <input type="checkbox" class="pull-right" checked="true"/>
+            </label>
+
+            <p>
+              Some information about this general settings option
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Allow mail redirect
+              <input type="checkbox" class="pull-right" checked="true"/>
+            </label>
+
+            <p>
+              Other sets of options are available
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Expose author name in posts
+              <input type="checkbox" class="pull-right" checked="true"/>
+            </label>
+
+            <p>
+              Allow the user to show his name in blog posts
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Show me as online
+              <input type="checkbox" class="pull-right" checked="true"/>
+            </label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Turn off notifications
+              <input type="checkbox" class="pull-right"/>
+            </label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Delete chat history
+              <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+            </label>
+          </div>
+          <!-- /.form-group -->
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="../../lib/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../lib/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="../../lib/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../../lib/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../lib/dist/js/demo.js"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $("#coursesDT").DataTable({
+      "scrollX": true
+    });
+    $("#studentsDT").DataTable({
+      "scrollX": true
+    });
+  });
+
+</script>
+</body>
+</html>

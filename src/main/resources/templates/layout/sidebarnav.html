@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="sidebarnav">
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="../lib/dist/img/user2-160x160.jpg" th:src="@{/lib/dist/img/user2-160x160.jpg}" class="img-circle" alt="User Image"/>
+        </div>
+        <div class="pull-left info">
+          <p th:text="${session.userName}">Alexander Pierce</p>
+          <!-- Status -->
+          <a href="#" th:if="${session.userStatus}"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#" th:unless="${session.userStatus}"><i class="fa fa-circle text-danger"></i> Offline</a>
+        </div>
+      </div>
+
+      <!-- search form (Optional) -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search..."/>
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu">
+        <li class="header">HEADER</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li class="treeview active">
+          <a href="#" th:href="@{/admin/activities}"><i class="fa fa-list"></i> <span>Activities</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu" th:each="activity : ${activities}" th:remove="all-but-first">
+            <li><a href="#" th:href="@{/admin/activities/activity(id=${activity.id})}"><span th:text="${activity.name}">Activity Name</span></a></li>
+            <li><a href="#" th:href="@{/admin/activities/activity(id=1)}">Quran</a></li>
+            <li><a href="#" th:href="@{/admin/activities/activity(id=2)}">Arabic Language</a></li>
+            <li><a href="#" th:href="@{/admin/activities/activity(id=3)}">Calligraphy</a></li>
+            <li><a href="#" th:href="@{/admin/activities/activity(id=4)}">Decoration</a></li>
+            <li><a href="#" th:href="@{/admin/activities/activity(id=5)}">Maqamat</a></li>
+            <li><a href="#" th:href="@{/admin/activities/activity(id=6)}">Rhythm</a></li>
+            <li><a href="#" th:href="@{/admin/activities/activity(id=7)}">Housing</a></li>
+          </ul>
+        </li>
+        <li><a href="#" th:href="@{/admin/courses}"><i class="fa fa-university" aria-hidden="true"></i> <span>Courses</span></a></li>
+        <li class="treeview">
+          <a href="#" th:href="@{/admin/schedules}"><i class="fa fa-calendar" aria-hidden="true"></i> <span>Certificates</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" th:href="@{/admin/schedules/students}">For Country</a></li>
+            <li><a href="#" th:href="@{/admin/schedules/teachers}">For Gender</a></li>
+          </ul>
+        </li>
+        <li><a href="#" th:href="@{/admin/students}">
+          <i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Students</span>
+          <span class="pull-right-container">
+            <!-- total study -->
+              <small class="label pull-right bg-yellow" th:text="${totalStudy}">12</small>
+            <!-- total wait -->
+              <small class="label pull-right bg-green" th:text="${totalWaits}">16</small>
+            <!-- total certified -->
+              <small class="label pull-right bg-blue" th:text="${totalCertified}">5</small>
+            </span></a></li>
+        <li><a href="#" th:href="@{/admin/teachers}"><i class="fa fa-users" aria-hidden="true"></i> <span>Teachers</span></a></li>
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+</div>
+</body>
+</html>
