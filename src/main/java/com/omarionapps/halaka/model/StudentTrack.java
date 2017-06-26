@@ -18,6 +18,8 @@ public class StudentTrack implements Serializable {
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
+    @OneToOne(mappedBy = "studentTrack")
+    private Certificate certificate;
     @Temporal(TemporalType.DATE)
     private Date registerDate;
     @Temporal(TemporalType.DATE)
@@ -50,6 +52,14 @@ public class StudentTrack implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Certificate getCertificate() {
+        return certificate;
+    }
+
+    public void setCertificate(Certificate certificate) {
+        this.certificate = certificate;
     }
 
     public Date getRegisterDate() {

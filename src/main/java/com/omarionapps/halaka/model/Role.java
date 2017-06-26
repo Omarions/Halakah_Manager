@@ -51,10 +51,13 @@ public class Role implements Serializable{
 
     @Override
     public String toString() {
+        StringBuilder buildUsers = new StringBuilder();
+        users.forEach((user) -> buildUsers.append(user.getName()).append(","));
         return "Role{" +
                 "id=" + id +
                 ", role='" + role + '\'' +
-                '}';
+                ", users=[" + buildUsers.toString() +
+                "]}";
     }
 
     @Override

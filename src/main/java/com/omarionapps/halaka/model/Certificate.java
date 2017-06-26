@@ -17,15 +17,9 @@ public class Certificate {
     @NotNull
     @NotEmpty
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
-    private Student student;
-    @ManyToOne
-    @JoinColumn(name = "activity_id", referencedColumnName = "id", nullable = false)
-    private Activity activity;
-    @ManyToOne
-    @JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)
-    private Teacher teacher;
+    @OneToOne
+    @JoinColumn(name = "student_track_id")
+    private StudentTrack studentTrack;
     @Temporal(TemporalType.DATE)
     private Date releaseDate;
     @NotNull
@@ -37,10 +31,8 @@ public class Certificate {
 
     public Certificate(Student student, String name, Activity activity, Teacher teacher, Date releaseDate,
                        String image, String comments) {
-        this.student = student;
+
         this.name = name;
-        this.activity = activity;
-        this.teacher = teacher;
         this.releaseDate = releaseDate;
         this.image = image;
         this.comments = comments;
@@ -62,28 +54,12 @@ public class Certificate {
         this.name = name;
     }
 
-    public Student getStudent() {
-        return student;
+    public StudentTrack getStudentTrack() {
+        return studentTrack;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Activity getActivity() {
-        return activity;
-    }
-
-    public void setActivity(Activity activity) {
-        this.activity = activity;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setStudentTrack(StudentTrack studentTrack) {
+        this.studentTrack = studentTrack;
     }
 
     public Date getReleaseDate() {
@@ -115,9 +91,7 @@ public class Certificate {
         return "Certificate{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", student=" + student.getName() +
-                ", activity=" + activity.getName() +
-                ", teacher=" + teacher.getName() +
+
                 ", releaseDate=" + releaseDate +
                 ", image='" + image + '\'' +
                 ", comments='" + comments + '\'' +

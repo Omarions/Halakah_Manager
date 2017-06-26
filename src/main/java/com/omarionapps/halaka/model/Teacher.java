@@ -22,8 +22,6 @@ public class Teacher {
     private Set<Course> course = new HashSet<>();
     @OneToMany(mappedBy = "teacher")
     private Set<TeacherTrack> teacherTracks = new HashSet<>();
-    @OneToMany(mappedBy = "teacher")
-    private Set<Certificate> certificates = new HashSet<>();
     @Column(name = "name", nullable = false)
     private String name;
     @Email
@@ -76,14 +74,6 @@ public class Teacher {
 
     public void setTeacherTracks(Set<TeacherTrack> teacherTracks) {
         this.teacherTracks = teacherTracks;
-    }
-
-    public Set<Certificate> getCertificates() {
-        return certificates;
-    }
-
-    public void setCertificates(Set<Certificate> certificates) {
-        this.certificates = certificates;
     }
 
     public String getName() {

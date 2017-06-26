@@ -52,12 +52,9 @@ public class LoginController {
             }
 
         }else {
-
             modelAndView.setViewName("auth/login");
         }
         return modelAndView;
     }
-
-
 
 }

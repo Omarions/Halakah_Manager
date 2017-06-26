@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml" xmlns:javascript="http://www.w3.org/1999/xhtml">
+      xmlns:javascript="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -167,11 +167,12 @@
 
                             <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
                                 <div class="btn-group" data-toggle="btn-toggle">
-                                    <button type="button" class="btn btn-default btn-sm active"><i
+                                    <button type="button" id="button_online" class="btn btn-default btn-sm active"><i
                                             class="fa fa-square text-green"></i>
                                     </button>
-                                    <button type="button" class="btn btn-default btn-sm"><i
-                                            class="fa fa-square text-red"></i></button>
+                                    <button type="button" id="button_offline" class="btn btn-default btn-sm"><i
+                                            class="fa fa-square text-red"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +184,7 @@
                                 <p class="message">
                                     <a href="#" class="name">
                                         <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                                        Mike Doe
+                                        <span>Mike Doe</span>
                                     </a>
                                     I would like to meet you to discuss the latest news about
                                     the arrival of the new theme. They say it is going to be one the
@@ -841,6 +842,9 @@
     //the data come from HomeController in model object
     var visitorsData = [[${mapCounts}]];
 
+    var userEmail = [[${#httpSession.getAttribute('user').email}]];
+    console.log("userID: " + userEmail);
+
     //PieChart data
     //data sent from HomeController in model object
     var houses = [[${housesOccupy}]];
@@ -904,5 +908,35 @@
 
 <!-- AdminLTE for demo purposes -->
 <script src="../lib/dist/js/demo.js"></script>
+<script>
+    //Variable to save new status of the user
+    var user_status;
+    //assign update status of the user to the click event of the button_online
+    $('#button_online').click(function (e) {
+        user_status = 'online';
+        updateStatus(userEmail, user_status);
+    });
+    //assign update status of the user to the click event of the button_offline
+    $('#button_offline').click(function (event) {
+        user_status = 'offline';
+        updateStatus(userEmail, user_status);
+    });
+    function updateStatus(uEmail, newStatus) {
+        $.ajax({
+            url: "/admin/user/updateStatus",
+            type: "GET",
+            data: {
+                email: uEmail,
+                userStatus: newStatus
+            },
+            dataType: "html",
+            success: function (data) {
+                location.reload();
+            }
+        });
+    }
+
+
+</script>
 </body>
 </html>

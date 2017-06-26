@@ -14,6 +14,8 @@ import java.util.Set;
  * Created by Omar on 22-Apr-17.
  */
 public class UserDetailsImpl implements UserDetails {
+
+    private static final long serialVersionUID = -4922501257015832213L;
     private User user;
 
     public UserDetailsImpl(User user){

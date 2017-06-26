@@ -1,6 +1,7 @@
 package com.omarionapps.halaka.com.omarionapps.halaka.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 /**
@@ -34,27 +36,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/login").permitAll()
-                    .antMatchers("/logout").permitAll()
-                    .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-                    .authenticated()
-                    .and()
+                .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/logout").permitAll()
+                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+                .authenticated()
+                .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .failureUrl("/login?error=true")
-                    .defaultSuccessUrl("/admin/home")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    .and()
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/admin/home")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .and()
                 .logout()
-                    .logoutSuccessUrl("/")
-                    .and()
+                .logoutSuccessUrl("/")
+                .and()
                 .exceptionHandling()
-                    .accessDeniedPage("/access-denied")
-                    .and()
+                .accessDeniedPage("/access-denied")
+                .and()
                 .rememberMe()
-                    .alwaysRemember(true);
+                .alwaysRemember(true);
 
 
     }
@@ -63,7 +65,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception{
         web
                 .ignoring()
-                .antMatchers("/resource/**", "/static/**", "/lib/**", "/images/**");
+                .antMatchers("/resource/**", "/static/**", "/static/", "/css/**", "/css/*", "/js/**", "/js/*", "/img/*", "/images/**",
+                        "/plugins/**", "/plugins/*");
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return bCryptPasswordEncoder;
     }
 
 }

@@ -9,12 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by Omar on 09-Apr-17.
  */
 @Controller
+@SessionAttributes("user")
 public class HomeController {
 
     @Autowired
@@ -29,6 +31,8 @@ public class HomeController {
     ActivityService activityService;
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping("/")
     public String home(Model model){
@@ -37,8 +41,8 @@ public class HomeController {
 
     @RequestMapping(value="/admin/home", method = RequestMethod.GET)
     public ModelAndView home(HttpServletRequest request){
-
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", userService.findUserByUserDetails());
         modelAndView.addObject("houseOccupied", houseService.getTotalOccupied());
         modelAndView.addObject("houseFree", houseService.getTotalFree());
         modelAndView.addObject("houseMaxCapacity", houseService.getTotalCapacity());

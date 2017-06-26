@@ -44,7 +44,6 @@ public class User implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-
     public int getId() {
         return id;
     }

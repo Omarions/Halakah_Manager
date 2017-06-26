@@ -39,8 +39,6 @@ public class Student {
     private Set<CourseTrack> courseTracks = new HashSet<>();
     @OneToMany(mappedBy = "student")
     private Set<StudentTrack> studentTracks = new HashSet<>();
-    @OneToMany(mappedBy = "student")
-    private Set<Certificate> certificates = new HashSet<>();
 
     public Student(){}
 

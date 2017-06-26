@@ -1,7 +1,6 @@
 package com.omarionapps.halaka.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,8 +19,6 @@ public class Activity{
     private Set<Teacher> teacher = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
     private Set<Course> courses = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
-    private Set<Certificate> certificates = new HashSet<>();
 
     public Activity(){}
 
@@ -70,21 +67,13 @@ public class Activity{
         this.teacher = teacher;
     }
 
-    public Set<Certificate> getCertificates() {
-        return certificates;
-    }
-
-    public void setCertificates(Set<Certificate> certificates) {
-        this.certificates = certificates;
-    }
-
     @Override
     public String toString() {
         StringBuilder teachers = new StringBuilder();
         StringBuilder activityCourses = new StringBuilder();
 
-        teacher.forEach((t) -> teachers.append(t.getName() + ','));
-        courses.forEach((c) -> activityCourses.append(c.getName() + ','));
+        teacher.forEach((t) -> teachers.append(t.getName()).append(','));
+        courses.forEach((c) -> activityCourses.append(c.getName()).append(','));
 
         return "Activity{" +
                 "id=" + id +
