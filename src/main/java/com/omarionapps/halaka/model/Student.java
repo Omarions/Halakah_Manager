@@ -3,7 +3,11 @@ package com.omarionapps.halaka.model;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import java.util.*;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Omar on 09-Apr-17.
@@ -15,7 +19,6 @@ public class Student {
     private int id;
     private String name;
     private String identityId;
-    @Temporal(TemporalType.DATE)
     private Date birthDate;
     private String birthLocation;
     @ManyToOne

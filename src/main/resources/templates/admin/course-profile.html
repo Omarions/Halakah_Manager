@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -913,7 +913,7 @@
                                         <!-- Dropdown list of Teachers -->
                                         <div class="form-group"
                                              th:classappend="${#fields.hasErrors('teacher')}? 'has-error'">
-                                            <label for="selectActivity" class="col-sm-2 control-label">Teacher</label>
+                                            <label for="selectTeacher" class="col-sm-2 control-label">Teacher</label>
 
                                             <div class="col-sm-10">
                                                 <select id="selectTeacher" class="form-control" th:field="*{teacher}">

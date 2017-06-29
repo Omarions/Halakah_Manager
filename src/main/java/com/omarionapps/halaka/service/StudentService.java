@@ -6,17 +6,13 @@ import com.omarionapps.halaka.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 /**
  * Created by Omar on 09-Apr-17.
  */
 @Service
 public class StudentService {
-    private StudentRepository studentRepository;
     long countByStatus = 0;
+    private StudentRepository studentRepository;
 
     @Autowired
     public StudentService(StudentRepository studentRepository){
@@ -44,10 +40,13 @@ public class StudentService {
         return countByStatus;
     }
 
-    public void save(Student student) {
+    public Student save(Student student) {
 
-        studentRepository.save(student);
+        return studentRepository.save(student);
 
     }
 
+    public void delete(int id) {
+        studentRepository.delete(id);
+    }
 }

@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="../../lib/plugins/datatables/dataTables.bootstrap.css">
   <!-- Theme style -->
@@ -83,6 +87,7 @@
                 </li>
               </ul>
               <a href="#" class="btn btn-primary btn-block"><b>Add Certificate</b></a>
+              <a href="#" class="btn btn-primary btn-block"><b>Add Course</b></a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -680,28 +685,85 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="settings">
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="#" th:action="@{/admin/students/student}"
+                      th:object="${student}" method="post">
+                  <input type="hidden" th:field="*{id}"/>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Name</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" placeholder="Name"/>
+                      <input type="text" class="form-control" id="inputName" placeholder="Name" th:field="*{name}"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputIdentityId" class="col-sm-2 control-label">Identity ID</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputIdentityId" placeholder="Identity ID"
+                             th:field="*{identityId}"/>
+                    </div>
+                  </div>
+
+                  <!-- Birth Date Picker -->
+                  <div class="form-group"
+                       th:classappend="${#fields.hasErrors('birthDate')}? 'has-error'">
+                    <label class="col-sm-2 control-label">Birth Date</label>
+
+                    <div class="col-sm-10">
+                      <div class="input-group date">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+
+                        <input type="text" class="form-control pull-right"
+                               id="birthDatePicker"
+                               th:value="Null" th:field="*{birthDate}">
+                      </div>
+                                        <span th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"
+                                              th:class="help-block">Birth Date Error</span>
+                      <!-- /.input group -->
+                    </div>
+                  </div>
+                  <!-- /.start-date-picker -->
+
+
+                  <div class="form-group">
+                    <label for="inputBirthLocation" class="col-sm-2 control-label">Birth Location</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputBirthLocation" placeholder="Birth Location"
+                             th:field="*{birthLocation}"/>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="inputSubject" class="col-sm-2 control-label">Subject</label>
+                    <label class="col-sm-2 control-label">Country</label>
+                    <div class="col-sm-10">
+                      <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                              tabindex="-1" aria-hidden="true" th:field="*{country}">
+                        <option value="" selected="selected">Select Country</option>
+                        <option th:each="country : ${countries}" th:value="${country.id}"
+                                th:text="${country.englishName}">Country Name
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputHomeAddress" class="col-sm-2 control-label">Home Address</label>
 
                     <div class="col-sm-10">
-                      <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" id="inputSubject" tabindex="-1" aria-hidden="true">
-                        <option selected="selected">Select Subject</option>
-                        <option>Calligraphy</option>
-                        <option>Arabic Language</option>
-                        <option>Phonetics</option>
-                        <option>Arabesic</option>
-                        <option>Tones</option>
-                        <option>Quran</option>
-                      </select>
+                      <input type="text" class="form-control" id="inputHomeAddress" placeholder="Home Address"
+                             th:field="*{homeAddress}"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputEgyptAddress" class="col-sm-2 control-label">Egypt Address</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputEgyptAddress" placeholder="Egypt Address"
+                             th:field="*{egyptAddress}"/>
                     </div>
                   </div>
 
@@ -709,14 +771,23 @@
                     <label for="inputTel" class="col-sm-2 control-label">Tel</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputTel" placeholder="Tel"/>
+                      <input type="text" class="form-control" id="inputTel" placeholder="Tel" th:field="*{tel}"/>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                     <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email"/>
+                      <input type="email" class="form-control" id="inputEmail" placeholder="Email" th:field="*{email}"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputFacebook" class="col-sm-2 control-label">Facebook</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputFacebook" placeholder="Facebook"
+                             th:field="*{facebook}"/>
                     </div>
                   </div>
 
@@ -724,7 +795,16 @@
                     <label for="inputEducation" class="col-sm-2 control-label">Education</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEducation" placeholder="Education"/>
+                      <input type="text" class="form-control" id="inputEducation" placeholder="Education"
+                             th:field="*{education}"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputJob" class="col-sm-2 control-label">Job</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputJob" placeholder="Job" th:field="*{job}"/>
                     </div>
                   </div>
 
@@ -732,19 +812,10 @@
                     <label for="inputComments" class="col-sm-2 control-label">Comments</label>
 
                     <div class="col-sm-10">
-                      <textarea class="form-control" id="inputComments" placeholder="Comments"></textarea>
+                      <textarea class="form-control" id="inputComments" placeholder="Comments" th:field="*{comments}">Comments</textarea>
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a></input>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="submit" class="btn btn-danger">Submit</button>
@@ -969,6 +1040,10 @@
 <script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+<!-- Select2 -->
+<script src="../../lib/plugins/select2/select2.full.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- DataTables -->
 <script src="../../lib/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../../lib/plugins/datatables/dataTables.bootstrap.min.js"></script>
@@ -980,6 +1055,14 @@
 <script src="../../lib/dist/js/demo.js"></script>
 <script>
   $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+
+    $('#birthDatePicker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    });
+
     $("#example1").DataTable();
     $("#coursesDT").DataTable({
       "scrollX": true

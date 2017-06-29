@@ -91,5 +91,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.sidebar -->
   </aside>
 </div>
+<script>
+  //Variable to save new status of the user
+  var user_status;
+  //assign update status of the user to the click event of the button_online
+  $('#button_online').click(function (e) {
+    user_status = 'online';
+    updateStatus(userEmail, user_status);
+  });
+  //assign update status of the user to the click event of the button_offline
+  $('#button_offline').click(function (event) {
+    user_status = 'offline';
+    updateStatus(userEmail, user_status);
+  });
+  function updateStatus(uEmail, newStatus) {
+    $.ajax({
+      url: "/admin/user/updateStatus",
+      type: "GET",
+      data: {
+        email: uEmail,
+        userStatus: newStatus
+      },
+      dataType: "html",
+      success: function (data) {
+        location.reload();
+      }
+    });
+  }
+
+
+</script>
 </body>
 </html>
