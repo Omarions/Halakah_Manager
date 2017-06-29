@@ -157,12 +157,18 @@ public class Student {
     }
 
     public List<Certificate> getCertificates() {
-        this.getStudentTracks().forEach((st) -> certificates.add(st.getCertificate()));
+        certificates.clear();
+        this.getStudentTracks().stream()
+                .filter((st) -> st.getStudent() == this)
+                .forEach((st) -> certificates.add(st.getCertificate()));
         return certificates;
     }
 
     public List<Course> getCourses() {
-        this.getStudentTracks().forEach((st) -> courses.add(st.getCourse()));
+        courses.clear();
+        this.getStudentTracks().stream()
+                .filter((st) -> st.getStudent() == this)
+                .forEach((st) -> courses.add(st.getCourse()));
         return courses;
     }
 

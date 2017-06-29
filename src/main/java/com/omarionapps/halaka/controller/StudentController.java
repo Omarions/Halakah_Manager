@@ -9,8 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -45,8 +47,9 @@ public class StudentController {
     public ModelAndView getStudent(@RequestParam(value="id") int id){
         ModelAndView modelAndView = new ModelAndView("admin/student-profile");
         Student student = studentService.getById(id);
-
+        
         modelAndView.addObject("student", student);
+
         return modelAndView;
     }
 
