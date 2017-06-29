@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -44,7 +44,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Activity Profile
+        Student Profile
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -66,20 +66,23 @@
 
               <h3 class="profile-username text-center" th:text="${student.name}">Nina Mcintire</h3>
 
-              <!-- <p class="text-muted text-center" >Software Engineer</p> -->
+              <p class="text-muted text-center" th:text="${student.country.arabicName}">China</p>
+
+              <p class="text-muted text-center" th:text="${student.job}">China</p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <a><b>Teachers</b><samll class="label pull-right bg-blue" th:text="${activity.teacher.size()}">1,322</samll></a>
+                  <a><b>Courses</b>
+                    <samll class="label pull-right bg-blue" th:text="${student.courses.size()}">1,322</samll>
+                  </a>
                 </li>
                 <li class="list-group-item">
-                  <a><b>Courses</b><small class="label pull-right bg-blue" th:text="${student.courses.size()}">543</small></a>
-                </li>
-                <li class="list-group-item">
-                  <a><b>Students</b><small class="label pull-right bg-blue" th:text="${totalStudents}">543</small></a>
+                  <a><b>Certificates</b>
+                    <small class="label pull-right bg-blue" th:text="${student.certificates.size()}">543</small>
+                  </a>
                 </li>
               </ul>
-
+              <a href="#" class="btn btn-primary btn-block"><b>Add Certificate</b></a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -92,104 +95,93 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <p class="text-center">
-                <strong>Students Details</strong>
+              <strong><i class="fa fa-info margin-r-5"></i> Personal Info</strong>
+
+              <p>
+                <strong><i class="fa fa-credit-card margin-r-5"></i> Identity ID</strong>
+
+              <p class="text-muted" th:text="${student.identityId}">Identity ID</p>
+              <strong><i class="fa fa-birthday-cake margin-r-5"></i> Birth Date</strong>
+
+              <p class="text-muted" th:text="${student.birthDate}">2015-3-23</p>
+              <strong><i class="fa fa-map-marker margin-r-5"></i> Birth Location</strong>
+
+              <p class="text-muted" th:text="${student.birthLocation}">Malibu, California</p>
               </p>
 
-              <div class="progress-group">
-                <span class="progress-text">Studying</span>
-                <span class="progress-number"><b th:text="${totalStudying}">160</b>/<span th:text="${totalStudents}">200</span></span>
+              <hr>
 
-                <div class="progress sm">
-                  <div class="progress-bar progress-bar-aqua" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0) ? ((${totalStudying}/${totalStudents}) * 100) : 0) + '%'"></div>
-                </div>
-              </div>
-              <!-- /.progress-group -->
-              <div class="progress-group">
-                <span class="progress-text">Waiting</span>
-                <span class="progress-number"><b th:text="${totalWaiting}">310</b>/<span th:text="${totalStudents}">400</span></span>
+              <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
 
-                <div class="progress sm">
-                  <div class="progress-bar progress-bar-yellow" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0)?((${totalWaiting}/${totalStudents}) * 100) :0)  + '%'"></div>
-                </div>
-              </div>
-              <!-- /.progress-group -->
-              <div class="progress-group">
-                <span class="progress-text">Certified</span>
-                <span class="progress-number"><b th:text="${totalCertified}">480</b>/<span th:text="${totalStudents}">800</span></span>
+              <p class="text-muted" th:text="${student.country.arabicName}">China</p>
+              <strong><i class="fa fa-map-marker margin-r-7"></i> Address At Home</strong>
 
-                <div class="progress sm">
-                  <div class="progress-bar progress-bar-green" style="width: 80%" th:style="'width:' +((${totalStudents} != 0) ? ((${totalCertified}/${totalStudents}) * 100) : 0 )  + '%'"></div>
-                </div>
-              </div>
-              <!-- /.progress-group -->
-              <div class="progress-group">
-                <span class="progress-text">Fired</span>
-                <span class="progress-number"><b th:text="${totalFired}">250</b>/<span th:text="${totalStudents}">500</span></span>
+              <p class="text-muted" th:text="${student.homeAddress}">Malibu, California</p>
 
-                <div class="progress sm">
-                  <div class="progress-bar progress-bar-red" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0)?((${totalFired}/${totalStudents}) * 100) : 0 ) + '%'"></div>
-                </div>
-              </div>
-              <!-- /.progress-group -->
-              <div class="progress-group">
-                <span class="progress-text">Temporary Stopped</span>
-                <span class="progress-number"><b th:text="${totalTempStopped}">250</b>/<span th:text="${totalStudents}">500</span></span>
 
-                <div class="progress sm">
-                  <div class="progress-bar progress-bar-red" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0)?((${totalTempStopped}/${totalStudents}) * 100) : 0 ) + '%'"></div>
-                </div>
-              </div>
-              <!-- /.progress-group -->
-              <div class="progress-group">
-                <span class="progress-text">Finally Stopped</span>
-                <span class="progress-number"><b th:text="${totalFinalStopped}">250</b>/<span th:text="${totalStudents}">500</span></span>
+              <strong><i class="fa fa-map-marker margin-r-7"></i> Address At Egypt</strong>
 
-                <div class="progress sm">
-                  <div class="progress-bar progress-bar-red" style="width: 80%" th:style="'width:' + ((${totalStudents} != 0)?((${totalFinalStopped}/${totalStudents}) * 100) :0 ) + '%'"></div>
-                </div>
-              </div>
-              <!-- /.progress-group -->
-            </div>
-            <!-- <div class="box-body">
-              <strong><i class="fa fa-book margin-r-5"></i> Total Studying Students</strong>
+              <p class="text-muted" th:text="${student.egyptAddress}">Malibu, California</p>
 
-              <p class="text-muted" th:text="${totalStudying}">
+              <hr>
+
+              <strong><i class="fa fa-institution margin-r-5"></i> Education</strong>
+
+              <p class="text-muted" th:text="${student.education}">
                 B.S. in Computer Science from the University of Tennessee at Knoxville
               </p>
 
-              <hr/>
+              <hr>
 
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Total Waiting Students</strong>
+              <strong><i class="fa fa-book margin-r-5"></i> Contact Info</strong>
 
-              <p class="text-muted" th:text="${totalWaiting}">Malibu, California</p>
+              <p>
+                <strong><i class="fa fa-phone margin-r-7"></i> Tel</strong>
 
-              <hr/>
+              <p class="text-muted" th:text="${student.tel}">Malibu, California</p>
 
-              <strong><i class="fa fa-map-marker margin-r-5"></i> Total Certified Students</strong>
 
-              <p class="text-muted" th:text="${totalCertified}">Malibu, California</p>
+              <strong><i class="fa fa-envelope-o margin-r-7"></i> Email</strong>
 
-              <hr/>
+              <p class="text-muted" th:text="${student.email}">Malibu, California</p>
 
-              <strong><i class="fa fa-pencil margin-r-5"></i> Total Fired Students</strong>
+              <strong><i class="fa fa-facebook-official margin-r-7"></i> Facebook</strong>
 
-              <p class="text-muted" th:text="${totalFired}">Malibu, California</p>
+              <p class="text-muted" th:text="${student.facebook}">Malibu, California</p>
 
-              <hr/>
+              </p>
 
-              <strong><i class="fa fa-pencil margin-r-5"></i> Total Temporary Stopped Students</strong>
+              <hr>
 
-              <p class="text-muted" th:text="${totalTempStopped}">Malibu, California</p>
+              <strong><i class="fa fa-pencil margin-r-5"></i> Activities</strong>
 
-              <hr/>
+              <p>
 
-              <strong><i class="fa fa-pencil margin-r-5"></i> Total Finally Stopped Students</strong>
+              <div th:each="st: ${student.studentTracks}">
+                <div th:switch="${st.status}">
+                  <span th:case="'WAITING'" class="label label-warning"
+                        th:text="${st.course.activity.name}">Coding</span>
+                  <span th:case="'STUDYING'" class="label label-primary"
+                        th:text="${st.course.activity.name}">Coding</span>
+                  <span th:case="'CERTIFIED'" class="label label-success"
+                        th:text="${st.course.activity.name}">Coding</span>
+                  <span th:case="'FIRED'" class="label label-danger" th:text="${st.course.activity.name}">Coding</span>
+                  <span th:case="'TEMP_STOPPED'" class="label label-info"
+                        th:text="${st.course.activity.name}">Coding</span>
+                  <span th:case="'FINAL_STOPPED'" class="label label-info"
+                        th:text="${st.course.activity.name}">Coding</span>
+                </div>
+              </div>
 
-              <p class="text-muted" th:text="${totalFinalStopped}">Malibu, California</p>
+              </p>
 
-              <hr/>
-            </div> -->
+              <hr>
+
+              <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+
+              <p th:text="${student.comments}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum
+                enim neque.</p>
+            </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->

@@ -3,9 +3,7 @@ package com.omarionapps.halaka.model;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Omar on 09-Apr-17.
@@ -39,6 +37,10 @@ public class Student {
     private Set<CourseTrack> courseTracks = new HashSet<>();
     @OneToMany(mappedBy = "student")
     private Set<StudentTrack> studentTracks = new HashSet<>();
+    @Transient
+    private List<Certificate> certificates = new ArrayList<>();
+    @Transient
+    private List<Course> courses = new ArrayList<>();
 
     public Student(){}
 
@@ -152,6 +154,16 @@ public class Student {
 
     public void setStudentTracks(Set<StudentTrack> studentTracks) {
         this.studentTracks = studentTracks;
+    }
+
+    public List<Certificate> getCertificates() {
+        this.getStudentTracks().forEach((st) -> certificates.add(st.getCertificate()));
+        return certificates;
+    }
+
+    public List<Course> getCourses() {
+        this.getStudentTracks().forEach((st) -> courses.add(st.getCourse()));
+        return courses;
     }
 
     public Date getBirthDate() {
