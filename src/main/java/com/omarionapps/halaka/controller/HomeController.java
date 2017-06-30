@@ -42,7 +42,9 @@ public class HomeController {
     @RequestMapping(value="/admin/home", method = RequestMethod.GET)
     public ModelAndView home(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
+
         modelAndView.addObject("user", userService.findUserByUserDetails());
+        modelAndView.addObject("countryStudentsChart", countryService.getCountryStudentsCountByGenderMap());
         modelAndView.addObject("houseOccupied", houseService.getTotalOccupied());
         modelAndView.addObject("houseFree", houseService.getTotalFree());
         modelAndView.addObject("houseMaxCapacity", houseService.getTotalCapacity());

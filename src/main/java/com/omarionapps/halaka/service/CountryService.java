@@ -1,13 +1,16 @@
 package com.omarionapps.halaka.service;
 
-import com.omarionapps.halaka.model.Activity;
 import com.omarionapps.halaka.model.Country;
 import com.omarionapps.halaka.model.Student;
+import com.omarionapps.halaka.model.StudentGender;
 import com.omarionapps.halaka.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Omar on 08-May-17.
@@ -54,7 +57,7 @@ public class CountryService {
     }
 
     /*
-        Get activity set of students that belong to a country (by its code)
+        Get set of students that belong to a country (by its code)
      */
     public Map<String, Set<Student>> getCountryCodeStudentsMap(Set<Student> students){
         Map<String, Set<Student>> map = new HashMap<>();
@@ -76,5 +79,52 @@ public class CountryService {
 
     public Iterable<Country> findAllByOrderByEnglishNameAsc() {
         return countryRepository.findAllByOrderByEnglishNameAsc();
+    }
+
+    public Set<Country> getCountriesHasStudents() {
+        Set<Country> countries = new HashSet<>();
+        getAll().forEach((country) -> {
+            if (country.getStudents().size() > 0)
+                countries.add(country);
+        });
+
+        return countries;
+    }
+
+
+    public Map<String, Integer> getCountryStudentsCountMapByGender(StudentGender gender) {
+        Map<String, Integer> map = new HashMap<>();
+        Set<Country> countries = getCountriesHasStudents();
+        countries.forEach((country) -> {
+            country.getStudents().stream()
+                    .filter((s) -> s.getGender().equalsIgnoreCase(gender.name()))
+                    .forEach((s) -> map.put(country.getEnglishName(), country.getStudents().size()));
+
+        });
+
+        return map;
+    }
+
+    public Map<String, Map<String, Integer>> getCountryStudentsCountByGenderMap() {
+        Map<String, Map<String, Integer>> map = new HashMap<>();
+
+        Set<Country> countries = getCountriesHasStudents();
+        countries.forEach((country) -> {
+            Map<String, Integer> mapValue = new HashMap<>();
+            mapValue.put(StudentGender.MALE.name(), 0);
+            mapValue.put(StudentGender.FEMALE.name(), 0);
+            country.getStudents()
+                    .forEach((student) -> {
+                        int malesCount = mapValue.get(StudentGender.MALE.name());
+                        int femalesCount = mapValue.get(StudentGender.FEMALE.name());
+                        if (student.getGender().equalsIgnoreCase(StudentGender.MALE.name()))
+                            mapValue.put(StudentGender.MALE.name(), ++malesCount);
+                        else
+                            mapValue.put(StudentGender.FEMALE.name(), ++femalesCount);
+                    });
+            map.put(country.getArabicName(), mapValue);
+        });
+
+        return map;
     }
 }

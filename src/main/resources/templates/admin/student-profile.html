@@ -66,7 +66,8 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../../lib/dist/img/user4-128x128.jpg" alt="User profile picture"/>
+              <img class="profile-user-img img-responsive img-circle" src="../../lib/dist/img/user4-128x128.jpg"
+                   th:src="@{'/lib/dist/img/' + ${student.photo}}" alt="User profile picture"/>
 
               <h3 class="profile-username text-center" th:text="${student.name}">Nina Mcintire</h3>
 
@@ -165,16 +166,17 @@
               <div th:each="st: ${student.studentTracks}">
                 <div th:switch="${st.status}">
                   <span th:case="'WAITING'" class="label label-warning"
-                        th:text="${st.course.activity.name}">Coding</span>
+                        th:text="${st.course.activity.name}">Waiting Activity</span>
                   <span th:case="'STUDYING'" class="label label-primary"
-                        th:text="${st.course.activity.name}">Coding</span>
+                        th:text="${st.course.activity.name}">Studying Activity</span>
                   <span th:case="'CERTIFIED'" class="label label-success"
-                        th:text="${st.course.activity.name}">Coding</span>
-                  <span th:case="'FIRED'" class="label label-danger" th:text="${st.course.activity.name}">Coding</span>
+                        th:text="${st.course.activity.name}">Certified Activity</span>
+                  <span th:case="'FIRED'" class="label label-danger"
+                        th:text="${st.course.activity.name}">Fired Activity</span>
                   <span th:case="'TEMP_STOPPED'" class="label label-info"
-                        th:text="${st.course.activity.name}">Coding</span>
+                        th:text="${st.course.activity.name}">Temp_Stopped Activity</span>
                   <span th:case="'FINAL_STOPPED'" class="label label-info"
-                        th:text="${st.course.activity.name}">Coding</span>
+                        th:text="${st.course.activity.name}">Final Stopped Activity</span>
                 </div>
               </div>
 
@@ -415,10 +417,12 @@
                   <div class="box-header">
                     <div class="row">
                       <div class="col-sm-6">
-                        <h3 class="box-title">Students List</h3>
+                        <h3 class="box-title">Student's Certificates List</h3>
                       </div>
                       <div class="col-sm-6">
-                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Student</button>
+                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add
+                          Certificate
+                        </button>
                       </div>
                     </div>
 
@@ -463,52 +467,20 @@
                                   style="width: 266.4px;">Name
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Identity ID: activate to sort column ascending"
-                                  style="width: 160.4px;">Identity ID
+                                  colspan="1" aria-label="Activity: activate to sort column ascending"
+                                  style="width: 160.4px;">Activity
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Birth Date: activate to sort column ascending"
-                                  style="width: 160.2px;">Birth Date
+                                  colspan="1" aria-label="Teacher Name: activate to sort column ascending"
+                                  style="width: 160.2px;">Teacher Name
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Birth Location: activate to sort column ascending"
-                                  style="width: 135.2px;">Birth Location
+                                  colspan="1" aria-label="Release Date: activate to sort column ascending"
+                                  style="width: 135.2px;">Release Date
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Country: activate to sort column ascending"
-                                  style="width: 266.2px;">Country
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="CSS grade: activate to sort column ascending"
-                                  style="width: 160.2px;">Home Address
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Egypt Address: activate to sort column ascending"
-                                  style="width: 266.2px;">Egypt Address
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Tel: activate to sort column ascending"
-                                  style="width: 266.2px;">Tel
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Email: activate to sort column ascending"
-                                  style="width: 266.2px;">Email
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Facebook: activate to sort column ascending"
-                                  style="width: 266.2px;">Facebook
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Education: activate to sort column ascending"
-                                  style="width: 266.2px;">Education
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="Job: activate to sort column ascending"
-                                  style="width: 266.2px;">Job
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
-                                  colspan="1" aria-label="House: activate to sort column ascending"
-                                  style="width: 266.2px;">House
+                                  colspan="1" aria-label="Certificate Photo: activate to sort column ascending"
+                                  style="width: 266.2px;">Certificate Photo
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="studentsDT" rowspan="1"
                                   colspan="1" aria-label="Comments: activate to sort column ascending"
@@ -521,23 +493,20 @@
                             </tr>
                             </thead>
                             <tbody th:remove="all-but-first">
-                            <tr rol="row" th:each="student : ${students}"
-                                th:class="${studentStat.odd}? 'odd' : 'even'">
-                              <td class="sorting_1" th:text="${student.id}">Student ID</td>
-                              <td><a href="#" th:href="@{/admin/students/student(id=${student.id})}"><span th:text="${student.name}">Student Name</span></a></td>
-                              <td th:text="${student.identityId}">Student Identity ID</td>
-                              <td th:text="${student.birthDate}">Student Birth Date</td>
-                              <td th:text="${student.birthLocation}">Student Birth Location</td>
-                              <td th:text="${student.country.arabicName}">Student Country</td>
-                              <td th:text="${student.homeAddress}">Student Home Address</td>
-                              <td th:text="${student.egyptAddress}">Student Egypt Address</td>
-                              <td th:text="${student.Tel}">Student Tel</td>
-                              <td th:text="${student.email}">Student Email</td>
-                              <td th:text="${student.facebook}">Student Facebook</td>
-                              <td th:text="${student.education}">Student Education</td>
-                              <td th:text="${student.job}">Student job</td>
-                              <td th:text="${student.house}? ${student.house.name} : 'N/A'">Student House</td>
-                              <td th:text="${student.comments}">Student comments</td>
+                            <tr rol="row" th:each="cert : ${student.certificates}"
+                                th:class="${certStat.odd}? 'odd' : 'even'">
+                              <td class="sorting_1" th:text="${cert.id}">Certificate ID</td>
+                              <td th:text="${cert.name}">Certificate's name</td>
+                              <td><a href="#"
+                                     th:href="@{/admin/activities/activity(id=${cert.studentTrack.course.activity.id})}"><span
+                                      th:text="${cert.studentTrack.course.activity.name}">Activity Name</span></a></td>
+                              <td><a href="#"
+                                     th:href="@{/admin/teachers/teacher(id=${cert.studentTrack.course.teacher.id})}"><span
+                                      th:text="${cert.studentTrack.course.teacher.name}">Teacher Name</span></a></td>
+                              <td th:text="${cert.releaseDate}">Release Date</td>
+                              <td><img src="#" th:src="@{'/lib/dist/img/credit/' + ${cert.image}}"
+                                       alt="Certificate Photo"/></td>
+                              <td th:text="${cert.comments}">Certificate comments</td>
                               <td>
                                 <ul class="dtt">
                                   <li>
@@ -624,18 +593,10 @@
                             <tr>
                               <th rowspan="1" colspan="1">ID</th>
                               <th rowspan="1" colspan="1">Name</th>
-                              <th rowspan="1" colspan="1">Identity ID</th>
-                              <th rowspan="1" colspan="1">Birth Date</th>
-                              <th rowspan="1" colspan="1">Birth Location</th>
-                              <th rowspan="1" colspan="1">Country</th>
-                              <th rowspan="1" colspan="1">Home Address</th>
-                              <th rowspan="1" colspan="1">Egypt Address</th>
-                              <th rowspan="1" colspan="1">Tel</th>
-                              <th rowspan="1" colspan="1">Email</th>
-                              <th rowspan="1" colspan="1">Facebook</th>
-                              <th rowspan="1" colspan="1">Education</th>
-                              <th rowspan="1" colspan="1">Job</th>
-                              <th rowspan="1" colspan="1">House</th>
+                              <th rowspan="1" colspan="1">Activity Name</th>
+                              <th rowspan="1" colspan="1">Teacher Name</th>
+                              <th rowspan="1" colspan="1">Release Date</th>
+                              <th rowspan="1" colspan="1">Certificate Photo</th>
                               <th rowspan="1" colspan="1">Comments</th>
                               <th rowspan="1" colspan="1">Tools</th>
                             </tr>

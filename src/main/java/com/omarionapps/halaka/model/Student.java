@@ -3,6 +3,7 @@ package com.omarionapps.halaka.model;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,7 +18,11 @@ public class Student {
     @Id
     @GeneratedValue
     private int id;
+    @NotNull
     private String name;
+    @NotNull
+    private String gender;
+    private String photo;
     private String identityId;
     private Date birthDate;
     private String birthLocation;
@@ -69,6 +74,22 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public Country getCountry() {
@@ -162,7 +183,7 @@ public class Student {
     public List<Certificate> getCertificates() {
         certificates.clear();
         this.getStudentTracks().stream()
-                .filter((st) -> st.getStudent() == this)
+                .filter((st) -> st.getStudent() == this && st.getStatus().equalsIgnoreCase(StudentStatus.CERTIFIED.name()))
                 .forEach((st) -> certificates.add(st.getCertificate()));
         return certificates;
     }

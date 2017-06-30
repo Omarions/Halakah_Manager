@@ -2,7 +2,9 @@ package com.omarionapps.halaka.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,6 +20,8 @@ public class Country implements Serializable{
     private String code;
     @OneToMany(mappedBy = "country")
     private Set<Student> students = new HashSet<>();
+    @Transient
+    private List<Certificate> certificates = new ArrayList<>();
 
     public Country(){
 
@@ -61,6 +65,16 @@ public class Country implements Serializable{
 
     public void setStudents(Set<Student> students) {
         this.students = students;
+    }
+
+    public List<Certificate> getCertificates() {
+        certificates.clear();
+        students.forEach((s) -> {
+            s.getStudentTracks().stream()
+                    .filter((st) -> st.getStudent() == s && st.getStatus().equalsIgnoreCase(StudentStatus.CERTIFIED.name()))
+                    .forEach((st) -> certificates.add(st.getCertificate()));
+        });
+        return certificates;
     }
 
     @Override
