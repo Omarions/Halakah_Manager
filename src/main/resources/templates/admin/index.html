@@ -25,7 +25,9 @@
     <!-- jvectormap -->
     <link rel="stylesheet" href="../lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css"
           th:href="@{/lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css}">
-
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="../lib/plugins/datepicker/datepicker3.css"
+          th:href="@{/lib/plugins/datepicker/datepicker3.css}"/>
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
           th:href="@{/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
@@ -137,7 +139,9 @@
                 <!-- ./col -->
             </div>
             <!-- /.row -->
+
             <!-- Main row -->
+            <!-- first row -->
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Custom tabs (Charts with tabs)-->
@@ -170,9 +174,143 @@
                 </div>
 
             </div>
+            <!-- /.first-row -->
+
+            <!-- second row -->
             <div class="row">
                 <!-- Left col -->
                 <section class="col-lg-7 connectedSortable">
+
+                    <!-- Map box -->
+                    <div class="box box-solid bg-light-blue-gradient">
+                        <div class="box-header">
+                            <!-- tools box -->
+                            <div class="pull-right box-tools">
+                                <button type="button" class="btn btn-primary btn-sm daterange pull-right"
+                                        data-toggle="tooltip" title="Date range">
+                                    <i class="fa fa-calendar"></i></button>
+                                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
+                                        data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+                                    <i class="fa fa-minus"></i></button>
+                            </div>
+                            <!-- /. tools -->
+
+                            <i class="fa fa-map-marker"></i>
+
+                            <h3 class="box-title">
+                                Worldwide Statistics
+                            </h3>
+                        </div>
+                        <div class="box-body">
+
+                            <div id="world-map" style="height: 250px; width: 100%;"><input type="hidden"
+                                                                                           id="visitorsData"
+                                                                                           name="visitorsData"
+                                                                                           value="${mapCounts}"/></div>
+                        </div>
+                        <!-- /.box-body-->
+                        <div class="box-footer no-border">
+                            <div class="row">
+                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                                    <div id="sparkline-1"></div>
+                                    <div class="knob-label">Studying</div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                                    <div id="sparkline-2"></div>
+                                    <div class="knob-label">Waiting</div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-xs-4 text-center">
+                                    <div id="sparkline-3"></div>
+                                    <div class="knob-label">Finished</div>
+                                </div>
+                                <!-- ./col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
+                    <!-- /.box -->
+
+                    <!-- Calendar -->
+                    <div class="box box-solid bg-green-gradient">
+                        <div class="box-header">
+                            <i class="fa fa-calendar"></i>
+
+                            <h3 class="box-title">Calendar</h3>
+                            <!-- tools box -->
+                            <div class="pull-right box-tools">
+                                <!-- button with a dropdown -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success btn-sm dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <i class="fa fa-bars"></i></button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Add new event</a></li>
+                                        <li><a href="#">Clear events</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">View calendar</a></li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i
+                                        class="fa fa-times"></i>
+                                </button>
+                            </div>
+                            <!-- /. tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <!--The calendar -->
+                            <div id="calendar" style="width: 100%"></div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer text-black">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- Progress bars -->
+                                    <div class="clearfix">
+                                        <span class="pull-left">Task #1</span>
+                                        <small class="pull-right">90%</small>
+                                    </div>
+                                    <div class="progress xs">
+                                        <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <span class="pull-left">Task #2</span>
+                                        <small class="pull-right">70%</small>
+                                    </div>
+                                    <div class="progress xs">
+                                        <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-6">
+                                    <div class="clearfix">
+                                        <span class="pull-left">Task #3</span>
+                                        <small class="pull-right">60%</small>
+                                    </div>
+                                    <div class="progress xs">
+                                        <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <span class="pull-left">Task #4</span>
+                                        <small class="pull-right">40%</small>
+                                    </div>
+                                    <div class="progress xs">
+                                        <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
+                    <!-- /.box -->
 
                     <!-- Chat box -->
                     <div class="box box-success">
@@ -267,6 +405,109 @@
                         </div>
                     </div>
                     <!-- /.box (chat box) -->
+
+                </section>
+                <!-- /.Left col -->
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                <section class="col-lg-5 connectedSortable">
+
+                    <!-- solid sales graph -->
+                    <div class="box box-solid bg-teal-gradient">
+                        <div class="box-header">
+                            <i class="fa fa-th"></i>
+
+                            <h3 class="box-title">Housing Graph</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i
+                                        class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body border-radius-none">
+                            <div class="chart" id="line-chart" style="height: 250px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer no-border">
+                            <div class="row">
+                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                                    <input type="text" class="knob" data-readonly="true" th:value="${houseOccupied}"
+                                           data-width="60" data-height="60" data-fgColor="#39CCCC"/>
+
+                                    <div class="knob-label">Total Occupied</div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                                    <input type="text" class="knob" data-readonly="true" th:value="${houseFree}"
+                                           data-width="60" data-height="60" data-fgColor="#39CCCC"/>
+
+                                    <div class="knob-label">Total Free</div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-xs-4 text-center">
+                                    <input type="text" class="knob" data-readonly="true" th:value="${houseMaxCapacity}"
+                                           data-width="60" data-height="60" data-fgColor="#39CCCC"/>
+
+                                    <div class="knob-label">Max Capacity</div>
+                                </div>
+                                <!-- ./col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Browser Usage</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="chart-responsive">
+                                        <canvas id="pieChart" height="202" width="657"
+                                                style="width: 526px; height: 162px;"></canvas>
+                                    </div>
+                                    <!-- ./chart-responsive -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-md-4">
+                                    <ul class="chart-legend clearfix" th:each="house : ${housesOccupy}">
+                                        <li><i class="fa fa-circle-o text-red"></i> <span th:text="${house.name}"/></li>
+
+                                    </ul>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">United States of America
+                                    <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a>
+                                </li>
+                                <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
+                                </li>
+                                <li><a href="#">China
+                                    <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.footer -->
+                    </div>
+                    <!-- /.box -->
 
                     <!-- TO DO List -->
                     <div class="box box-primary">
@@ -380,7 +621,14 @@
                         </div>
                     </div>
                     <!-- /.box -->
+                </section>
+                <!-- right col -->
+            </div>
+            <!-- /.second-row -->
 
+            <!-- third row -->
+            <div class="row">
+                <div class="col-lg-12">
                     <!-- quick email widget -->
                     <div class="box box-info">
                         <div class="box-header">
@@ -414,245 +662,9 @@
                                 <i class="fa fa-arrow-circle-right"></i></button>
                         </div>
                     </div>
-
-                </section>
-                <!-- /.Left col -->
-                <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                <section class="col-lg-5 connectedSortable">
-
-                    <!-- Map box -->
-                    <!-- Map box -->
-                    <div class="box box-solid bg-light-blue-gradient">
-                        <div class="box-header">
-                            <!-- tools box -->
-                            <div class="pull-right box-tools">
-                                <button type="button" class="btn btn-primary btn-sm daterange pull-right"
-                                        data-toggle="tooltip" title="Date range">
-                                    <i class="fa fa-calendar"></i></button>
-                                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
-                                        data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
-                                    <i class="fa fa-minus"></i></button>
-                            </div>
-                            <!-- /. tools -->
-
-                            <i class="fa fa-map-marker"></i>
-
-                            <h3 class="box-title">
-                                Worldwide Statistics
-                            </h3>
-                        </div>
-                        <div class="box-body">
-
-                            <div id="world-map" style="height: 250px; width: 100%;"><input type="hidden"
-                                                                                           id="visitorsData"
-                                                                                           name="visitorsData"
-                                                                                           value="${mapCounts}"/></div>
-                        </div>
-                        <!-- /.box-body-->
-                        <div class="box-footer no-border">
-                            <div class="row">
-                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                    <div id="sparkline-1"></div>
-                                    <div class="knob-label">Studying</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                    <div id="sparkline-2"></div>
-                                    <div class="knob-label">Waiting</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-xs-4 text-center">
-                                    <div id="sparkline-3"></div>
-                                    <div class="knob-label">Finished</div>
-                                </div>
-                                <!-- ./col -->
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                    </div>
-                    <!-- /.box -->
-
-                    <!-- solid sales graph -->
-                    <div class="box box-solid bg-teal-gradient">
-                        <div class="box-header">
-                            <i class="fa fa-th"></i>
-
-                            <h3 class="box-title">Housing Graph</h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i
-                                        class="fa fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="box-body border-radius-none">
-                            <div class="chart" id="line-chart" style="height: 250px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer no-border">
-                            <div class="row">
-                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                    <input type="text" class="knob" data-readonly="true" th:value="${houseOccupied}"
-                                           data-width="60" data-height="60" data-fgColor="#39CCCC"/>
-
-                                    <div class="knob-label">Total Occupied</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                    <input type="text" class="knob" data-readonly="true" th:value="${houseFree}"
-                                           data-width="60" data-height="60" data-fgColor="#39CCCC"/>
-
-                                    <div class="knob-label">Total Free</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-xs-4 text-center">
-                                    <input type="text" class="knob" data-readonly="true" th:value="${houseMaxCapacity}"
-                                           data-width="60" data-height="60" data-fgColor="#39CCCC"/>
-
-                                    <div class="knob-label">Max Capacity</div>
-                                </div>
-                                <!-- ./col -->
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.box-footer -->
-                    </div>
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Browser Usage</h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                        class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="chart-responsive">
-                                        <canvas id="pieChart" height="202" width="657"
-                                                style="width: 526px; height: 162px;"></canvas>
-                                    </div>
-                                    <!-- ./chart-responsive -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-md-4">
-                                    <ul class="chart-legend clearfix" th:each="house : ${housesOccupy}">
-                                        <li><i class="fa fa-circle-o text-red"></i> <span th:text="${house.name}"/></li>
-
-                                    </ul>
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer no-padding">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">United States of America
-                                    <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a>
-                                </li>
-                                <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
-                                </li>
-                                <li><a href="#">China
-                                    <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.footer -->
-                    </div>
-                    <!-- /.box -->
-
-                    <!-- Calendar -->
-                    <div class="box box-solid bg-green-gradient">
-                        <div class="box-header">
-                            <i class="fa fa-calendar"></i>
-
-                            <h3 class="box-title">Calendar</h3>
-                            <!-- tools box -->
-                            <div class="pull-right box-tools">
-                                <!-- button with a dropdown -->
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success btn-sm dropdown-toggle"
-                                            data-toggle="dropdown">
-                                        <i class="fa fa-bars"></i></button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Add new event</a></li>
-                                        <li><a href="#">Clear events</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">View calendar</a></li>
-                                    </ul>
-                                </div>
-                                <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i
-                                        class="fa fa-times"></i>
-                                </button>
-                            </div>
-                            <!-- /. tools -->
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body no-padding">
-                            <!--The calendar -->
-                            <div id="calendar" style="width: 100%"></div>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer text-black">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- Progress bars -->
-                                    <div class="clearfix">
-                                        <span class="pull-left">Task #1</span>
-                                        <small class="pull-right">90%</small>
-                                    </div>
-                                    <div class="progress xs">
-                                        <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
-                                    </div>
-
-                                    <div class="clearfix">
-                                        <span class="pull-left">Task #2</span>
-                                        <small class="pull-right">70%</small>
-                                    </div>
-                                    <div class="progress xs">
-                                        <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                                    </div>
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-6">
-                                    <div class="clearfix">
-                                        <span class="pull-left">Task #3</span>
-                                        <small class="pull-right">60%</small>
-                                    </div>
-                                    <div class="progress xs">
-                                        <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                                    </div>
-
-                                    <div class="clearfix">
-                                        <span class="pull-left">Task #4</span>
-                                        <small class="pull-right">40%</small>
-                                    </div>
-                                    <div class="progress xs">
-                                        <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
-                                    </div>
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                    </div>
-                    <!-- /.box -->
-
-                </section>
-                <!-- right col -->
+                </div>
             </div>
+            <!-- /.third-row -->
             <!-- /.row (main row) -->
 
         </section>
@@ -929,6 +941,9 @@
 <!-- Sparkline -->
 <script src="../lib/plugins/sparkline/jquery.sparkline.min.js"
         th:src="@{/lib/plugins/sparkline/jquery.sparkline.min.js}"></script>
+<!-- datepicker -->
+<script src="../lib/plugins/datepicker/bootstrap-datepicker.js"
+        th:src="@{/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
 <!-- jQuery Knob Chart -->
 <script src="../lib/plugins/knob/jquery.knob.js" th:src="@{/lib/plugins/knob/jquery.knob.js}"></script>
 <!-- Bootstrap WYSIHTML5 -->
@@ -945,8 +960,6 @@
 <script src="../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../lib/dist/js/pages/dashboard.js" th:src="@{/lib/dist/js/pages/home.js}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../lib/dist/js/demo.js" th:src="@{/lib/dist/js/demo.js}"></script>
 <script>
     //Variable to save new status of the user
     var user_status;
