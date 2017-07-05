@@ -1,4 +1,4 @@
-package com.omarionapps.halaka.controller;
+package com.omarionapps.halaka.com.omarionapps.halaka.config;
 
 import com.omarionapps.halaka.service.ActivityService;
 import com.omarionapps.halaka.service.CourseService;
@@ -13,7 +13,7 @@ import javax.servlet.ServletContext;
  * Created by Omar on 05-Jul-17.
  */
 @Component
-public class SideNavBarAttributes {
+public class ApplicationAttributes {
     @Autowired
     private ServletContext servletContext;
     @Autowired
