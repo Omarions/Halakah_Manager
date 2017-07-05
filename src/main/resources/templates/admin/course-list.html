@@ -24,9 +24,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"
-          th:href="@{/lib/dist/css/skins/_all-skins.min.css}"/>
-    <!-- iCheck -->
-    <link rel="stylesheet" href="../lib/plugins/iCheck/flat/blue.css" th:href="@{/lib/plugins/iCheck/flat/blue.css}"/>
+          th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,6 +52,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/admin/home"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li th:if="${isArchived}">Archive</li>
                 <li class="active">Courses</li>
             </ol>
         </section>

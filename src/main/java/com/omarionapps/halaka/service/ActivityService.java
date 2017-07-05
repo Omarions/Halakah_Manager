@@ -69,6 +69,21 @@ public class ActivityService {
     }
 
     /**
+     * Get count of activities
+     * @return count of activities
+     */
+    public long getCountByArchived(boolean isArchived) {
+        totalActivities = 0;
+        Iterable<Activity> activities = this.findAllOrderByName();
+        activities.forEach(activity -> {
+            if (activity.isArchived() == isArchived)
+                totalActivities++;
+        });
+        return totalActivities;
+    }
+
+
+    /**
      * Get total number of students in an activity
      * @param activityId the activity Id to get its number of students
      * @return get the count of students of an activity

@@ -1,12 +1,12 @@
 package com.omarionapps.halaka.service;
 
-import com.omarionapps.halaka.model.Course;
 import com.omarionapps.halaka.model.Teacher;
 import com.omarionapps.halaka.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Omar on 30-Apr-17.
@@ -48,5 +48,20 @@ public class TeacherService {
 
     public Iterable<Teacher> findAllByActivity(int activityId){
         return teacherRepository.findAllByActivityId(activityId);
+    }
+
+    public long getCountByArchived(boolean isArchived) {
+        return findAllByArchive(isArchived).size();
+    }
+
+    public Set<Teacher> findAllByArchive(boolean isArchived) {
+        Set<Teacher> archivedTeachers = new HashSet<>();
+        Iterable<Teacher> teachers = findAll();
+        teachers.forEach((teacher) -> {
+            if (teacher.isArchived() == isArchived)
+                archivedTeachers.add(teacher);
+        });
+
+        return archivedTeachers;
     }
 }

@@ -8,32 +8,25 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css"
+          th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css" th:href="@{/lib/dist/css/AdminLTE.css}"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"/>
+    <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"
+          th:href="@{/lib/dist/css/skins/_all-skins.min.css}"/>
     <!-- iCheck -->
-    <link rel="stylesheet" href="../lib/plugins/iCheck/flat/blue.css"/>
-    <!-- Morris chart -->
-    <link rel="stylesheet" href="../lib/plugins/morris/morris.css"/>
-    <!-- jvectormap -->
-    <link rel="stylesheet" href="../lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css"/>
-    <!-- Date Picker -->
-    <link rel="stylesheet" href="../lib/plugins/datepicker/datepicker3.css"/>
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="../lib/plugins/daterangepicker/daterangepicker.css"/>
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>
+    <link rel="stylesheet" href="../lib/plugins/iCheck/flat/blue.css" th:href="@{/lib/plugins/iCheck/flat/blue.css}"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -60,6 +53,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li th:if="${isArchived}">Archive</li>
                 <li class="active">Students</li>
             </ol>
         </section>
@@ -73,7 +67,9 @@
                             <h3 class="box-title">Halaka Students List</h3>
                         </div>
                         <div class="col-sm-6">
-                            <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Student</button>
+                            <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add
+                                Student
+                            </button>
                         </div>
                     </div>
 
@@ -239,8 +235,12 @@
                                             <ul class="dtt">
                                                 <li>
                                                     <div class="tools">
-                                                        <a href="#" th:href="@{/admin/students/student(id=${student.id})}"><i class="fa fa-edit fa-3x"></i></a>
-                                                        <a href="#" th:href="@{/admin/students/student(id=${student.id})}"><i class="fa fa-trash-o fa-3x"></i></a>
+                                                        <a href="#"
+                                                           th:href="@{/admin/students/student(id=${student.id})}"><i
+                                                                class="fa fa-edit fa-3x"></i></a>
+                                                        <a href="#"
+                                                           th:href="@{/admin/students/student(id=${student.id})}"><i
+                                                                class="fa fa-trash-o fa-3x"></i></a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -529,32 +529,24 @@
 <!-- ./wrapper -->
 <!-- to send data from db to the map in javascript code -->
 <!-- jQuery 2.2.3 -->
-<script src="../lib/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../lib/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
-<!-- Select2 -->
-<script src="../lib/plugins/select2/select2.full.min.js"></script>
-<!-- iCheck -->
-<script src="../lib/plugins/iCheck/icheck.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- DataTables -->
-<script src="../lib/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="../lib/plugins/datatables/jquery.dataTables.min.js"
+        th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
+<script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
+        th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
 <!-- FastClick -->
-<script src="../../lib/plugins/fastclick/fastclick.js"></script>
+<script src="../lib/plugins/fastclick/fastclick.js" th:src="@{/lib/plugins/fastclick/fastclick.js}"></script>
 <!-- AdminLTE App -->
-<script src="../../lib/dist/js/app.min.js"></script>
+<script src="../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../../lib/dist/js/demo.js"></script>
+<script src="../lib/dist/js/demo.js" th:src="@{/lib/dist/js/demo.js}"></script>
 <script>
     $(function () {
         $("#example1").DataTable({
             "scrollX": true
-        });
-
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
         });
     });
 

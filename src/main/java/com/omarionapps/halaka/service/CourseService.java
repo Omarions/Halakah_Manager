@@ -21,6 +21,7 @@ public class CourseService {
     private CourseRepository courseRepository;
     private CountryService countryService;
     private long totalByCourse;
+    private int totalCourses;
 
     @Autowired
     public CourseService(CourseRepository courseRepository, CountryService countryService){
@@ -34,6 +35,10 @@ public class CourseService {
      */
     public Iterable<Course> findAllByOrderByName() {
         return courseRepository.findAllByOrderByName();
+    }
+
+    public long getCountByArchived(boolean isArchived) {
+        return findAllByArchive(isArchived).size();
     }
 
     /**
@@ -179,4 +184,6 @@ public class CourseService {
 
         return archivedCourses;
     }
+
+
 }
