@@ -35,12 +35,12 @@ public class HomeController {
     UserService userService;
 
     @RequestMapping("/")
-    public String home(Model model){
+    public String home(Model model) {
         return "admin/index";
     }
 
-    @RequestMapping(value="/admin/home", method = RequestMethod.GET)
-    public ModelAndView home(HttpServletRequest request){
+    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
+    public ModelAndView home(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.addObject("user", userService.findUserByUserDetails());

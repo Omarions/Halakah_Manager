@@ -30,11 +30,11 @@ public class Teacher {
     private String education;
     private String job;
     @Temporal(TemporalType.DATE)
-    private Date startDate;
+    private Date hireDate;
     @Temporal(TemporalType.DATE)
-    private Date endDate;
-    @Column(name = "is_working", columnDefinition = "TINYINT")
-    private boolean isWorking;
+    private Date archivedDate;
+    @Column(name = "archived", columnDefinition = "TINYINT")
+    private boolean archived;
     private String comments;
 
     public Teacher(){}
@@ -116,28 +116,28 @@ public class Teacher {
         this.job = job;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getHireDate() {
+        return hireDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Date getArchivedDate() {
+        return archivedDate;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setArchivedDate(Date archivedDate) {
+        this.archivedDate = archivedDate;
     }
 
-    public boolean isWorking() {
-        return isWorking;
+    public boolean isArchived() {
+        return archived;
     }
 
-    public void setWorking(boolean working) {
-        isWorking = working;
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
     public String getComments() {

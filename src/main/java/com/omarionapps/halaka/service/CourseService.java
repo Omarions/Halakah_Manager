@@ -1,11 +1,16 @@
 package com.omarionapps.halaka.service;
 
-import com.omarionapps.halaka.model.*;
+import com.omarionapps.halaka.model.Course;
+import com.omarionapps.halaka.model.Student;
+import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Omar on 30-Apr-17.
@@ -162,5 +167,16 @@ public class CourseService {
      */
     public void delete(int id) {
         courseRepository.delete(id);
+    }
+
+    public Set<Course> findAllByArchive(boolean isArchived) {
+        Set<Course> archivedCourses = new HashSet<>();
+        Iterable<Course> courses = findAllByOrderByName();
+        courses.forEach((course) -> {
+            if (course.isArchived() == isArchived)
+                archivedCourses.add(course);
+        });
+
+        return archivedCourses;
     }
 }

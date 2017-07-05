@@ -64,14 +64,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </li>
         <li><a href="#" th:href="@{/admin/courses}"><i class="fa fa-university" aria-hidden="true"></i> <span>Courses</span></a></li>
         <li class="treeview">
-          <a href="#" th:href="@{/admin/schedules}"><i class="fa fa-certificate" aria-hidden="true"></i> <span>Certificates</span>
+          <a href="#"><i class="fa fa-certificate" aria-hidden="true"></i> <span>Certificates</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#" th:href="@{/admin/schedules/students}">For Country</a></li>
-            <li><a href="#" th:href="@{/admin/schedules/teachers}">For Gender</a></li>
+            <li><a href="#" th:href="@{/admin/schedules/students}"><i class="fa fa-flag" aria-hidden="true"></i> <span>Country</span></a>
+            </li>
+            <li><a href="#" th:href="@{/admin/schedules/teachers}"><i class="fa fa-transgender" aria-hidden="true"></i>
+              <span>Gender</span></a></li>
           </ul>
         </li>
         <li><a href="#" th:href="@{/admin/students}">
@@ -85,6 +87,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <small class="label pull-right bg-green" th:text="${totalCertified}">5</small>
             </span></a></li>
         <li><a href="#" th:href="@{/admin/teachers}"><i class="fa fa-users" aria-hidden="true"></i> <span>Teachers</span></a></li>
+        <li><a href="#" th:href="@{/admin/countries}"><i class="fa  fa-flag" aria-hidden="true"></i>
+          <span>Countries</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-archive" aria-hidden="true"></i> <span>Archive</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" th:href="@{/admin/archive/activities}"><i class="fa fa-list"></i>
+              <span>Activities</span></a></li>
+            <li><a href="#" th:href="@{/admin/archive/teachers}"><i class="fa fa-users" aria-hidden="true"></i> <span>Teachers</span></a>
+            </li>
+            <li><a href="#" th:href="@{/admin/archive/students}"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+              <span>Students</span></a></li>
+            <li><a href="#" th:href="@{/admin/archive/courses}"><i class="fa fa-university" aria-hidden="true"></i>
+              <span>courses</span></a></li>
+          </ul>
+        </li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

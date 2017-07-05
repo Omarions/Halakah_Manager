@@ -1,6 +1,7 @@
 package com.omarionapps.halaka.model;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,11 +15,15 @@ public class Activity{
     private int id;
     private String name;
     private String comments;
+    private Date startDate;
+    private Date archivedDate;
     @JoinTable(name = "activity_teacher")
     @ManyToMany
     private Set<Teacher> teacher = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
     private Set<Course> courses = new HashSet<>();
+    @Column(name = "archived", columnDefinition = "TINYINT")
+    private boolean archived;
 
     public Activity(){}
 
@@ -65,6 +70,30 @@ public class Activity{
 
     public void setTeacher(Set<Teacher> teacher) {
         this.teacher = teacher;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getArchivedDate() {
+        return archivedDate;
+    }
+
+    public void setArchivedDate(Date archivedDate) {
+        this.archivedDate = archivedDate;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
     @Override

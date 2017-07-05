@@ -37,6 +37,10 @@ public class Student {
     private String facebook;
     private String education;
     private String job;
+    @Column(name = "archived", columnDefinition = "TINYINT")
+    private boolean archived;
+    @Column(name = "archived_date", nullable = true)
+    private Date archivedDate;
     @ManyToOne
     @JoinColumn(name = "house_id", referencedColumnName = "id")
     private House house;
@@ -154,6 +158,22 @@ public class Student {
 
     public void setJob(String job) {
         this.job = job;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
+
+    public Date getArchivedDate() {
+        return archivedDate;
+    }
+
+    public void setArchivedDate(Date archivedDate) {
+        this.archivedDate = archivedDate;
     }
 
     public String getComments() {

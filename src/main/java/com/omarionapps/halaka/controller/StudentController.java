@@ -34,7 +34,7 @@ public class StudentController {
     private CountryService countryService;
 
     @Autowired
-    public StudentController(StudentService studentService, ActivityService activityService, CourseService courseService, CountryService countryService){
+    public StudentController(StudentService studentService, ActivityService activityService, CourseService courseService, CountryService countryService) {
         this.studentService = studentService;
         this.activityService = activityService;
         this.courseService = courseService;
@@ -42,7 +42,7 @@ public class StudentController {
     }
 
     @GetMapping("/admin/students")
-    public ModelAndView getStudentsList(){
+    public ModelAndView getStudentsList() {
         ModelAndView model = new ModelAndView("admin/student-list");
         Iterable<Student> students = studentService.getAll();
         model.addObject("students", students);

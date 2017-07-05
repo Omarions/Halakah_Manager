@@ -77,8 +77,8 @@
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <a><b>Courses</b>
-                    <samll class="label pull-right bg-blue" th:text="${student.courses.size()}">1,322</samll>
+                  <a><b>Tracks</b>
+                    <samll class="label pull-right bg-blue" th:text="${student.studentTracks.size()}">1,322</samll>
                   </a>
                 </li>
                 <li class="list-group-item">
@@ -198,7 +198,7 @@
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-              <li><a href="#courses" data-toggle="tab">Courses</a></li>
+              <li><a href="#tracks" data-toggle="tab">Tracks</a></li>
               <li><a href="#certificates" data-toggle="tab">Certificates</a></li>
               <li><a href="#settings" data-toggle="tab">Settings</a></li>
             </ul>
@@ -216,15 +216,16 @@
                 </div>
               </div>
               <!-- /.tab-pane -->
-              <div class="tab-pane" id="courses">
+              <div class="tab-pane" id="tracks">
                 <div class="box">
                   <div class="box-header">
                     <div class="row">
                       <div class="col-sm-6">
-                        <h3 class="box-title">Courses List</h3>
+                        <h3 class="box-title">Tracks List</h3>
                       </div>
                       <div class="col-sm-6">
-                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Course</button>
+                        <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Track
+                        </button>
                       </div>
                     </div>
 
@@ -266,31 +267,31 @@
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
                                   colspan="1" aria-label="Name: activate to sort column ascending"
-                                  style="width: 266.4px;">Name
+                                  style="width: 266.4px;">Course Name
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
                                   colspan="1" aria-label="Teacher Name: activate to sort column ascending"
                                   style="width: 186.4px;">Teacher Name
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="Name: activate to sort column ascending"
+                                  style="width: 266.4px;">Activity Name
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
                                   colspan="1" aria-label="Days: activate to sort column ascending"
-                                  style="width: 135.2px;">Days
+                                  style="width: 135.2px;">Register Date
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
                                   colspan="1" aria-label="Start Time: activate to sort column ascending"
-                                  style="width: 135.2px;">Start Time
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
-                                  colspan="1" aria-label="End Time: activate to sort column ascending"
-                                  style="width: 135.2px;">End Time
-                              </th>
-                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
-                                  colspan="1" aria-label="Start Date: activate to sort column ascending"
                                   style="width: 135.2px;">Start Date
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
-                                  colspan="1" aria-label="Start Time: activate to sort column ascending"
-                                  style="width: 135.2px;">End Date
+                                  colspan="1" aria-label="End Time: activate to sort column ascending"
+                                  style="width: 135.2px;">Evaluation
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
+                                  colspan="1" aria-label="Start Date: activate to sort column ascending"
+                                  style="width: 135.2px;">Status
                               </th>
                               <th class="sorting" tabindex="0" aria-controls="coursesDT" rowspan="1"
                                   colspan="1" aria-label="CSS grade: activate to sort column ascending"
@@ -303,23 +304,44 @@
                             </tr>
                             </thead>
                             <tbody th:remove="all-but-first">
-                            <tr rol="row" th:each="course : ${student.courses}"
-                                th:class="${courseStat.odd}? 'odd' : 'even'">
-                              <td class="sorting_1" th:text="${course.id}">Course ID</td>
-                              <td class="sorting_1" th:text="${course.name}">Course Name</td>
-                              <td><a href="#" th:href="@{/admin/teachers/teacher(id=${course.teacher.id})}"><span th:text="${course.teacher.name}">Teacher Name</span></a></td>
-                              <td th:text="${course.days}">Days</td>
-                              <td th:text="${course.startTime}">Start Time</td>
-                              <td th:text="${course.endTime}">End Time</td>
-                              <td th:text="${course.startDate}">Start Date</td>
-                              <td th:text="${course.endDate}">End Date</td>
-                              <td th:text="${course.comments}">Course Comments</td>
+                            <tr rol="row" th:each="track : ${student.studentTracks}"
+                                th:class="${trackStat.odd}? 'odd' : 'even'">
+                              <td class="sorting_1" th:text="${track.id}">Track ID</td>
+                              <td><a href="#" th:href="@{/admin/courses/course(id=${track.course.id})}"><span
+                                      th:text="${track.course.name}">Course Name</span></a></td>
+                              <td><a href="#" th:href="@{/admin/teachers/teacher(id=${track.course.teacher.id})}"><span
+                                      th:text="${track.course.teacher.name}">Teacher Name</span></a></td>
+                              <td><a href="#"
+                                     th:href="@{/admin/activities/activity(id=${track.course.activity.id})}"><span
+                                      th:text="${track.course.activity.name}">Activity Name</span></a></td>
+                              <td th:text="${track.registerDate}">Register Date</td>
+                              <td th:text="${track.startDate}">Start Date</td>
+                              <td th:text="${track.evaluation}">Evaluation</td>
+                              <td>
+                                <div th:switch="${track.status}">
+                                  <span th:case="'WAITING'" class="label label-warning"
+                                        th:text="${track.status}">Waiting status</span>
+                                  <span th:case="'STUDYING'" class="label label-primary"
+                                        th:text="${track.status}">Studying status</span>
+                                  <span th:case="'CERTIFIED'" class="label label-success"
+                                        th:text="${track.status}">Certified status</span>
+                                  <span th:case="'FIRED'" class="label label-danger"
+                                        th:text="${track.status}">Fired status</span>
+                                  <span th:case="'TEMP_STOP'" class="label label-info"
+                                        th:text="${track.status}">Temp_Stopped status</span>
+                                  <span th:case="'FINAL_STOP'" class="label label-info"
+                                        th:text="${track.status}">Final Stopped status</span>
+                                </div>
+                              </td>
+                              <td th:text="${track.comments}">Track Comments</td>
                               <td>
                                 <ul class="dtt">
                                   <li>
                                     <div class="tools">
-                                      <a href="#" th:href="@{/admin/courses/course(id=${course.id})}"><i class="fa fa-edit fa-3x"></i></a>
-                                      <a href="#" th:href="@{/admin/courses/course(id=${course.id})}"><i class="fa fa-trash-o fa-3x"></i></a>
+                                      <a href="#" th:href="@{/admin/student-tracks/track(id=${track.id})}"><i
+                                              class="fa fa-edit fa-3x"></i></a>
+                                      <a href="#" th:href="@{/admin/student-tracks/track(id=${track.id})}"><i
+                                              class="fa fa-trash-o fa-3x"></i></a>
                                     </div>
                                   </li>
                                 </ul>
@@ -359,11 +381,11 @@
                               <th rowspan="1" colspan="1">ID</th>
                               <th rowspan="1" colspan="1">Name</th>
                               <th rowspan="1" colspan="1">Teacher Name</th>
-                              <th rowspan="1" colspan="1">Days</th>
-                              <th rowspan="1" colspan="1">Start Time</th>
-                              <th rowspan="1" colspan="1">End Time</th>
+                              <th rowspan="1" colspan="1">Activity Name</th>
+                              <th rowspan="1" colspan="1">Register Date</th>
                               <th rowspan="1" colspan="1">Start Date</th>
-                              <th rowspan="1" colspan="1">End Date</th>
+                              <th rowspan="1" colspan="1">Evaulation</th>
+                              <th rowspan="1" colspan="1">Status</th>
                               <th rowspan="1" colspan="1">Comments</th>
                               <th rowspan="1" colspan="1">Tools</th>
                             </tr>

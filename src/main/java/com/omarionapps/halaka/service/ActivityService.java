@@ -12,13 +12,13 @@ import java.util.*;
  */
 @Service
 public class ActivityService {
-    private ActivityRepository activityRepository;
-    private CourseService courseService;
-    private CountryService countryService;
     long totalStudents = 0;
     long totalByStatus = 0;
     int countByCountry = 0;
     long totalActivities = 0;
+    private ActivityRepository activityRepository;
+    private CourseService courseService;
+    private CountryService countryService;
 
     @Autowired
     public ActivityService(ActivityRepository activityRepository, CourseService courseService, CountryService countryService){
@@ -29,6 +29,16 @@ public class ActivityService {
 
     public Iterable<Activity> findAllOrderByName(){
         return activityRepository.findAllByOrderByName();
+    }
+
+    public List<Activity> findAllByArchived(boolean isArchived) {
+        List<Activity> archivedActivities = new ArrayList<>();
+        Iterable<Activity> activities = activityRepository.findAll();
+        activities.forEach((act) -> {
+            if (act.isArchived() == isArchived)
+                archivedActivities.add(act);
+        });
+        return archivedActivities;
     }
 
     public Activity findById(int id){

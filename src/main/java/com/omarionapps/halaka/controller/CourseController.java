@@ -1,24 +1,27 @@
 package com.omarionapps.halaka.controller;
 
-import com.omarionapps.halaka.model.*;
+import com.omarionapps.halaka.model.Course;
+import com.omarionapps.halaka.model.Student;
+import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.service.ActivityService;
 import com.omarionapps.halaka.service.CountryService;
 import com.omarionapps.halaka.service.CourseService;
-import com.omarionapps.halaka.service.TeacherService;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Omar on 12-May-17.
@@ -44,7 +47,7 @@ public class CourseController {
     @GetMapping("/admin/courses")
     public ModelAndView getCourses() {
         ModelAndView modelAndView = new ModelAndView("admin/course-list");
-        modelAndView.addObject("courses", courseService.findAllByOrderByName());
+        modelAndView.addObject("courses", courseService.findAllByArchive(false));
         return modelAndView;
     }
 
@@ -71,20 +74,16 @@ public class CourseController {
 
         if (bindingResult.hasErrors()) {
 
-            List<FieldError> fErrors = (List<FieldError>)bindingResult.getFieldErrors();
+            List<FieldError> fErrors = bindingResult.getFieldErrors();
             BindingResult bResult = new BeanPropertyBindingResult(course, "course");
-            for(FieldError error : fErrors){
-                System.out.println("Error message: " + error);
+            for (FieldError error : fErrors) {
                 String field = error.getField();
-                System.out.println("Field : " + field + ", Error Code: " + error.getCode());
-
-                bResult.rejectValue(field , field + " is required");
-
+                bResult.rejectValue(field, field + " is required");
             }
             bindingResult = bResult;
             model.addAttribute("activities", activityService.findAllOrderByName());
             model.addAttribute("teachers", activityService.getActivityTeachersMap());
-            return (course.getId() == 0)? "admin/register-course" : "redirect:/admin/courses/course?id=" + course.getId();
+            return (course.getId() == 0) ? "admin/register-course" : "redirect:/admin/courses/course?id=" + course.getId();
 
         } else {
             Course returnedCourse = null;
@@ -92,7 +91,6 @@ public class CourseController {
             returnedCourse = courseService.save(course);
             return "redirect:/admin/courses/course?id=" + returnedCourse.getId();
         }
-
 
 
     }

@@ -1,16 +1,10 @@
 package com.omarionapps.halaka.model;
 
-import org.hibernate.id.IncrementGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
-import java.sql.Time;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,6 +41,10 @@ public class Course {
     private int capacity;
     @Column(name = "comments", nullable = true)
     private String comments;
+    @Column(name = "archived", columnDefinition = "TINYINT")
+    private boolean archived;
+    @Column(name = "archived_date", nullable = true)
+    private Date archivedDate;
     @Transient
     private boolean full;
     @Transient
@@ -160,6 +158,22 @@ public class Course {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public Date getArchivedDate() {
+        return archivedDate;
+    }
+
+    public void setArchivedDate(Date archivedDate) {
+        this.archivedDate = archivedDate;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
     public boolean isFull() {

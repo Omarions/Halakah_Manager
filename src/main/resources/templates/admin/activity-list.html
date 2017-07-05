@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml" xmlns:javascript="http://www.w3.org/1999/xhtml">
+      xmlns:javascript="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -8,28 +8,22 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css"
+          th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"/>
-    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css" th:href="@{/lib/dist/css/AdminLTE.css}"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"/>
-    <!-- iCheck -->
-    <link rel="stylesheet" href="../lib/plugins/iCheck/flat/blue.css"/>
-    <!-- Morris chart -->
-    <link rel="stylesheet" href="../lib/plugins/morris/morris.css"/>
-    <!-- jvectormap -->
-    <link rel="stylesheet" href="../lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css"/>
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>
-
+    <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"
+          th:href="@{/lib/dist/css/skins/_all-skins.min.css}"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -64,24 +58,26 @@
             <div class="box">
                 <div class="box-header">
 
-                        <div class="col-sm-6">
-                            <h3 class="box-title">Halaka Activity List</h3>
-                        </div>
-                        <div class="col-sm-6">
-                            <form action="#" th:action="@{/admin/activities/activity}" method="get">
-                                <button type="submit" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add Activity</button>
-                            </form>
-                        </div>
-                        <div  th:if="${message}">
-                            <div><br/></div>
-                            <div class="col-sm-12">
-                                <div class="alert alert-success alert-dismissible">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                    <h4><i class="icon fa fa-check"></i> Alert!</h4>
-                                    <span th:text="${message}">Success alert preview. This alert is dismissable.</span>
-                                </div>
+                    <div class="col-sm-6">
+                        <h3 class="box-title">Halaka Activity List</h3>
+                    </div>
+                    <div class="col-sm-6">
+                        <form action="#" th:action="@{/admin/activities/activity}" method="get">
+                            <button type="submit" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add
+                                Activity
+                            </button>
+                        </form>
+                    </div>
+                    <div th:if="${message}">
+                        <div><br/></div>
+                        <div class="col-sm-12">
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                                <span th:text="${message}">Success alert preview. This alert is dismissable.</span>
                             </div>
                         </div>
+                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -148,7 +144,8 @@
                                     <tr rol="row" th:each="activity : ${activities}"
                                         th:class="${activityStat.odd}? 'odd' : 'even'">
                                         <td class="sorting_1" th:text="${activity.id}">Activity ID</td>
-                                        <td><a href="#" th:href="@{/admin/activities/activity(id=${activity.id})}"><span th:text="${activity.name}">Activity Name</span></a></td>
+                                        <td><a href="#" th:href="@{/admin/activities/activity(id=${activity.id})}"><span
+                                                th:text="${activity.name}">Activity Name</span></a></td>
                                         <td th:text="${activity.courses.size()}">Total Courses</td>
                                         <td th:text="${activity.teacher.size()}">Total Teachers</td>
                                         <td th:text="${students[activity.id]}">Total Students</td>
@@ -157,8 +154,12 @@
                                             <ul class="dtt">
                                                 <li>
                                                     <div class="tools">
-                                                        <a href="#" th:href="@{/admin/activities/activity(id=${activity.id})}"><i class="fa fa-edit fa-3x"></i></a>
-                                                        <a href="#" th:href="@{/admin/activities/activity/delete(id=${activity.id})}"><i class="fa fa-trash-o fa-3x"></i></a>
+                                                        <a href="#"
+                                                           th:href="@{/admin/activities/activity(id=${activity.id})}"><i
+                                                                class="fa fa-edit fa-3x"></i></a>
+                                                        <a href="#"
+                                                           th:href="@{/admin/activities/activity/delete(id=${activity.id})}"><i
+                                                                class="fa fa-trash-o fa-3x"></i></a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -493,26 +494,18 @@
 <!-- ./wrapper -->
 <!-- to send data from db to the map in javascript code -->
 <!-- jQuery 2.2.3 -->
-<script src="../lib/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../lib/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- DataTables -->
-<script src="../lib/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<!-- Select2 -->
-<script src="../lib/plugins/select2/select2.full.min.js"></script>
-<!-- iCheck -->
-<script src="../lib/plugins/iCheck/icheck.min.js"></script>
+<script src="../lib/plugins/datatables/jquery.dataTables.min.js"
+        th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
+<script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
+        th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
 <script>
     $(function () {
         //Initialize Select2 Elements
         $("#example1").DataTable();
-
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
     });
 
 </script>
