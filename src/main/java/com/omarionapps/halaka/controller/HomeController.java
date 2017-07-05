@@ -45,7 +45,6 @@ public class HomeController {
         modelAndView.addObject("houseMaxCapacity", houseService.getTotalCapacity());
         //modelAndView.addObject("housesOccupy", houseService.findAllOrderById());
         modelAndView.addObject("mapCounts", countryService.getAllCountryCodeStudentsCountMap());
-
         modelAndView.setViewName("admin/index");
 
 
