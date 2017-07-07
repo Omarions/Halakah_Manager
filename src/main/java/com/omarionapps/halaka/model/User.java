@@ -32,6 +32,9 @@ public class User implements Serializable{
     @Column(name = "name", nullable = false)
     @NotEmpty(message = "*Please provide your name")
     private String name;
+    @Column(name = "photo", nullable = false)
+    @NotEmpty(message = "*Please provide your name")
+    private String photo;
     @Column(name = "title")
     @NotEmpty(message = "*Please provide your title")
     private String title;
@@ -43,14 +46,6 @@ public class User implements Serializable{
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -74,6 +69,14 @@ public class User implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getTitle() {
@@ -101,16 +104,8 @@ public class User implements Serializable{
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", title='" + title + '\'' +
-                ", status=" + status +
-                ", roles=" + roles +
-                '}';
+    public int hashCode() {
+        return getId();
     }
 
     @Override
@@ -124,8 +119,25 @@ public class User implements Serializable{
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
-    public int hashCode() {
-        return getId();
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", status='" + status + '\'' +
+                ", photo='" + photo + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

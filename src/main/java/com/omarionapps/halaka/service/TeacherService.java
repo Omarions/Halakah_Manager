@@ -32,14 +32,14 @@ public class TeacherService {
         return teachers;
     }
 
-    public Iterable<Teacher> findAll() {
-        return teacherRepository.findAllByOrderByName();
-    }
-
     public long getCount(){
         totalTeachers = 0;
         this.findAll().forEach(teacher -> ++totalTeachers);
         return totalTeachers;
+    }
+
+    public Iterable<Teacher> findAll() {
+        return teacherRepository.findAllByOrderByName();
     }
 
     public Teacher findOneById(int id) {
@@ -63,5 +63,9 @@ public class TeacherService {
         });
 
         return archivedTeachers;
+    }
+
+    public Teacher save(Teacher teacher) {
+        return teacherRepository.save(teacher);
     }
 }

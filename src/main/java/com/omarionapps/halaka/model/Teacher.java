@@ -3,7 +3,8 @@ package com.omarionapps.halaka.model;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,14 +25,14 @@ public class Teacher {
     private Set<TeacherTrack> teacherTracks = new HashSet<>();
     @Column(name = "name", nullable = false)
     private String name;
+    private String photo;
     @Email
     private String email;
+    @NotNull
     private String tel;
     private String education;
     private String job;
-    @Temporal(TemporalType.DATE)
     private Date hireDate;
-    @Temporal(TemporalType.DATE)
     private Date archivedDate;
     @Column(name = "archived", columnDefinition = "TINYINT")
     private boolean archived;
@@ -42,14 +43,6 @@ public class Teacher {
     public Teacher(int id, String name){
         this.id = id;
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Set<Activity> getActivity() {
@@ -82,6 +75,14 @@ public class Teacher {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getEmail() {
@@ -148,21 +149,9 @@ public class Teacher {
         this.comments = comments;
     }
 
-
     @Override
-    public String toString() {
-        StringBuilder activities = new StringBuilder();
-        for(Activity act : activity){
-            activities.append(act.getName()).append(',');
-        }
-        return "Teacher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", tel='" + tel + '\'' +
-                ", education='" + education + '\'' +
-                ", comments='" + comments + '\'' +
-                ", activities=[" + activities.toString() + "]}";
+    public int hashCode() {
+        return getId();
     }
 
     @Override
@@ -176,8 +165,27 @@ public class Teacher {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
-    public int hashCode() {
-        return getId();
+    public String toString() {
+        StringBuilder activities = new StringBuilder();
+        for (Activity act : activity) {
+            activities.append(act.getName()).append(',');
+        }
+        return "Teacher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", tel='" + tel + '\'' +
+                ", education='" + education + '\'' +
+                ", comments='" + comments + '\'' +
+                ", activities=[" + activities.toString() + "]}";
     }
 }
