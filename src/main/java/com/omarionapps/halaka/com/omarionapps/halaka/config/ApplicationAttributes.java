@@ -1,9 +1,6 @@
 package com.omarionapps.halaka.com.omarionapps.halaka.config;
 
-import com.omarionapps.halaka.service.ActivityService;
-import com.omarionapps.halaka.service.CourseService;
-import com.omarionapps.halaka.service.StudentService;
-import com.omarionapps.halaka.service.TeacherService;
+import com.omarionapps.halaka.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +21,8 @@ public class ApplicationAttributes {
     private StudentService studentService;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private CertificateService certificateService;
 
     private long archivedActivitiesCount;
     private long archivedCoursesCount;
@@ -34,6 +33,8 @@ public class ApplicationAttributes {
     private long activeCoursesCount;
     private long activeTeachersCount;
     private long activeStudentsCount;
+
+    private long certificatesCount;
 
     private long waitStudentsCount;
     private long studyStudentsCount;
@@ -85,6 +86,12 @@ public class ApplicationAttributes {
     public void setActiveStudentsCount() {
         activeStudentsCount = studentService.getCountByArchived(false);
         servletContext.setAttribute("activeStudentsCount", activeStudentsCount);
+    }
+
+    @Autowired
+    public void setCertificatesCount() {
+        certificatesCount = certificateService.getCount();
+        servletContext.setAttribute("certificatesCount", certificatesCount);
     }
 
     /*

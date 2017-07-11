@@ -1,9 +1,9 @@
 package com.omarionapps.halaka.model;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,12 +23,14 @@ public class Teacher {
     private Set<Course> course = new HashSet<>();
     @OneToMany(mappedBy = "teacher")
     private Set<TeacherTrack> teacherTracks = new HashSet<>();
+    @NotEmpty
     @Column(name = "name", nullable = false)
     private String name;
     private String photo;
+    @NotEmpty
     @Email
     private String email;
-    @NotNull
+    @NotEmpty
     private String tel;
     private String education;
     private String job;
@@ -165,14 +167,6 @@ public class Teacher {
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         StringBuilder activities = new StringBuilder();
@@ -187,5 +181,13 @@ public class Teacher {
                 ", education='" + education + '\'' +
                 ", comments='" + comments + '\'' +
                 ", activities=[" + activities.toString() + "]}";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

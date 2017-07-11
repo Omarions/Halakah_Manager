@@ -339,7 +339,18 @@
                                               th:action="@{/admin/teachers/teacher}" th:object="${teacher}"
                                               method="post">
                                             <input type="hidden" th:field="*{id}"/>
-                                            <input type="hidden" th:field="*{photo}"/>
+
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-6 col-sm-6">
+
+                                                    <img src="../lib/dist/img/user2-160x160.jpg"
+                                                         th:src="@{'/lib/dist/img/' + ${teacher.photo}}"
+                                                         class="img-circle" alt="User Image"/>
+
+                                                    <input type="file" th:field="*{photo}"/>
+
+                                                </div>
+                                            </div>
 
                                             <div class="form-group">
                                                 <label for="inputName" class="col-sm-2 control-label">Name</label>
@@ -349,7 +360,6 @@
                                                            placeholder="Name" th:field="*{name}"/>
                                                 </div>
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="inputTel" class="col-sm-2 control-label">Tel</label>
 
@@ -358,6 +368,7 @@
                                                            placeholder="Tel" th:field="*{tel}"/>
                                                 </div>
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
@@ -409,23 +420,49 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group has-feedback">
-                                                <label for="selectActivity"
-                                                       class="col-sm-2 control-label">Activity</label>
+                                            <!-- Dropdown list of activities -->
+                                            <div class="form-group">
+                                                <label for="selectActivities"
+                                                       class="col-sm-2 control-label">Activities</label>
 
                                                 <div class="col-sm-10">
                                                     <select class="form-control select2 select2-hidden-accessible"
-                                                            id="selectActivity"
-                                                            style="width: 100%;"
-                                                            tabindex="-1" aria-hidden="true" th:field="*{activity}"
-                                                            multiple="multiple">
-                                                        <option th:each="activity : ${activities}"
-                                                                th:value="${activity.id}"
-                                                                th:text="${activity.name}">Activity Name
+                                                            style="width: 100%;" id="selectActivities"
+                                                            multiple="multiple"
+                                                            tabindex="-1" aria-hidden="true" th:field="*{activity}">
+                                                        <option th:each="act : ${activities}"
+                                                                th:value="${act.id}" th:text="${act.name}">activity name
                                                         </option>
+
                                                     </select>
+                                        <span th:if="${#fields.hasErrors('activity')}" th:errors="*{activity}"
+                                              th:class="help-block">Activity Errors</span>
+
                                                 </div>
                                             </div>
+                                            <!-- / .activity-dropdown-list -->
+
+                                            <!-- Dropdown list of courses -->
+                                            <div class="form-group">
+                                                <label for="selectCourses"
+                                                       class="col-sm-2 control-label">Courses</label>
+
+                                                <div class="col-sm-10">
+                                                    <select class="form-control select2 select2-hidden-accessible"
+                                                            style="width: 100%;" id="selectCourses" multiple="multiple"
+                                                            tabindex="-1" aria-hidden="true" th:field="*{course}"
+                                                            disabled>
+                                                        <option th:each="c : *{course}" th:value="${c.id}"
+                                                                th:text="${c.name}">Select Courses
+                                                        </option>
+
+                                                    </select>
+                                        <span th:if="${#fields.hasErrors('course')}" th:errors="*{course}"
+                                              th:class="help-block">Course Errors</span>
+
+                                                </div>
+                                            </div>
+                                            <!-- / .activity-dropdown-list -->
 
                                             <div class="form-group">
                                                 <label for="inputComments"
@@ -437,16 +474,6 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox"> I agree to the <a href="#">terms and
-                                                                                                               conditions</a></input>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">
                                                     <button type="submit" class="btn btn-danger">Submit</button>
@@ -683,6 +710,8 @@
         <script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{/lib/plugins/fastclick/fastclick.js}"></script>
         <!-- AdminLTE App -->
         <script src="../../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
+        <!-- script to populate courses dropdown list based on selection of activity dropdown list -->
+        <script src="../../lib/dist/js/pages/teacher.js" th:src="@{/lib/dist/js/pages/teacher.js}"></script>
         <script>
             $(function () {
                 //Initialize Select2 Elements

@@ -1,7 +1,9 @@
 package com.omarionapps.halaka.controller;
 
+import com.omarionapps.halaka.model.Course;
 import com.omarionapps.halaka.model.Teacher;
 import com.omarionapps.halaka.service.ActivityService;
+import com.omarionapps.halaka.service.CourseService;
 import com.omarionapps.halaka.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,8 @@ public class TeacherController {
     TeacherService teacherService;
     @Autowired
     ActivityService activityService;
+    @Autowired
+    CourseService courseService;
 
     @GetMapping("/admin/teachers")
     public ModelAndView getTeacherService() {
@@ -63,7 +67,7 @@ public class TeacherController {
         ModelAndView modelAndView = new ModelAndView("admin/register-teacher");
         modelAndView.addObject("teacher", new Teacher());
         modelAndView.addObject("activities", activityService.findAllOrderByName());
-
+        modelAndView.addObject("courses", activityService.getActivityCoursesMap());
         return modelAndView;
     }
 
@@ -95,6 +99,11 @@ public class TeacherController {
         } else {
             Teacher returnedTeacher = null;
             returnedTeacher = teacherService.save(teacher);
+            for (Course course : teacher.getCourse()) {
+                course.setTeacher(teacher);
+                courseService.save(course);
+            }
+
             return "redirect:/admin/teachers/teacher?id=" + returnedTeacher.getId();
         }
     }

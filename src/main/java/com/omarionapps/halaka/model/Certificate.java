@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * Created by Omar on 10-Jun-17.
@@ -20,8 +19,9 @@ public class Certificate {
     @OneToOne
     @JoinColumn(name = "student_track_id")
     private StudentTrack studentTrack;
-    @Temporal(TemporalType.DATE)
-    private Date releaseDate;
+    @ManyToOne
+    @JoinColumn(name = "event", referencedColumnName = "id")
+    private Event event;
     @NotNull
     private String image;
     private String comments;
@@ -29,21 +29,13 @@ public class Certificate {
     public Certificate() {
     }
 
-    public Certificate(Student student, String name, Activity activity, Teacher teacher, Date releaseDate,
+    public Certificate(String name, Event event,
                        String image, String comments) {
 
         this.name = name;
-        this.releaseDate = releaseDate;
+        this.event = event;
         this.image = image;
         this.comments = comments;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -62,14 +54,6 @@ public class Certificate {
         this.studentTrack = studentTrack;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
     public String getImage() {
         return image;
     }
@@ -86,16 +70,17 @@ public class Certificate {
         this.comments = comments;
     }
 
-    @Override
-    public String toString() {
-        return "Certificate{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+    public Event getEvent() {
+        return event;
+    }
 
-                ", releaseDate=" + releaseDate +
-                ", image='" + image + '\'' +
-                ", comments='" + comments + '\'' +
-                '}';
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    @Override
+    public int hashCode() {
+        return getId();
     }
 
     @Override
@@ -109,8 +94,22 @@ public class Certificate {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
-    public int hashCode() {
-        return getId();
+    public String toString() {
+        return "Certificate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", event='" + event.getName() + '\'' +
+                ", image='" + image + '\'' +
+                ", comments='" + comments + '\'' +
+                '}';
     }
 }
