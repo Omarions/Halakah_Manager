@@ -59,7 +59,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="#" th:href="@{/admin/activities}"><i class="fa fa-list-ul"></i> List</a></li>
-                        <li><a href="admin/register-activities.html"><i class="fa fa-plus-square"></i> New</a></li>
+                        <li><a href="*" th:href="@{/admin/activities/activity}"><i class="fa fa-plus-square"></i>
+                            New</a></li>
                         <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
@@ -74,7 +75,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="#" th:href="@{/admin/courses}"><i class="fa fa-list-ul"></i> List</a></li>
-                        <li><a href="admin/register-activities.html"><i class="fa fa-plus-square"></i> New</a></li>
+                        <li><a href="#" th:href="@{/admin/courses/course}"><i class="fa fa-plus-square"></i> New</a>
+                        </li>
                         <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
@@ -82,15 +84,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a href="#"><i class="fa fa-certificate" aria-hidden="true"></i> <span>Certificates</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
+                            <span class="label label-primary pull-right"
+                                  th:text="${application.certificatesCount}">4</span>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/schedules/students}"><i class="fa fa-flag"
-                                                                                  aria-hidden="true"></i>
+                        <li><a href="#" th:href="@{/admin/certificates/country}"><i class="fa fa-flag"
+                                                                                    aria-hidden="true"></i>
                             <span>Country</span></a>
                         </li>
-                        <li><a href="#" th:href="@{/admin/schedules/teachers}"><i class="fa fa-transgender"
-                                                                                  aria-hidden="true"></i>
+                        <li><a href="#" th:href="@{/admin/certificates/gender}"><i class="fa fa-transgender"
+                                                                                   aria-hidden="true"></i>
                             <span>Gender</span></a></li>
                     </ul>
                 </li>
@@ -100,7 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                             <!-- total study -->
-                          <small class="label pull-right bg-blue" th:text="${application.activeStudentsCount}">12
+                          <small class="label label-primary pull-right" th:text="${application.activeStudentsCount}">12
                           </small>
 
                             <!-- total wait
@@ -112,7 +116,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="#" th:href="@{/admin/students}"><i class="fa fa-list-ul"></i> List</a></li>
-                        <li><a href="admin/register-activities.html"><i class="fa fa-plus-square"></i> New</a></li>
+                        <li><a href="#" th:href="@{/admin/students/student}"><i class="fa fa-plus-square"></i> New</a>
+                        </li>
                         <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
@@ -126,7 +131,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="#" th:href="@{/admin/teachers}"><i class="fa fa-list-ul"></i> List</a></li>
-                        <li><a href="admin/register-activities.html"><i class="fa fa-plus-square"></i> New</a></li>
+                        <li><a href="#" th:href="@{/admin/teachers/teacher}"><i class="fa fa-plus-square"></i> New</a>
+                        </li>
                         <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>

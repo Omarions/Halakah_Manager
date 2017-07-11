@@ -1,6 +1,7 @@
 package com.omarionapps.halaka.model;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,20 +19,23 @@ public class Student {
     @Id
     @GeneratedValue
     private int id;
-    @NotNull
+    @NotEmpty
     private String name;
-    @NotNull
+    @NotEmpty
     private String gender;
     private String photo;
     private String identityId;
     private Date birthDate;
     private String birthLocation;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
     private String egyptAddress;
     private String homeAddress;
+    @NotEmpty
     private String tel;
+    @NotEmpty
     @Email
     private String email;
     private String facebook;
@@ -192,20 +196,20 @@ public class Student {
         this.courseTracks = courseTracks;
     }
 
-    public Set<StudentTrack> getStudentTracks() {
-        return studentTracks;
-    }
-
-    public void setStudentTracks(Set<StudentTrack> studentTracks) {
-        this.studentTracks = studentTracks;
-    }
-
     public List<Certificate> getCertificates() {
         certificates.clear();
         this.getStudentTracks().stream()
                 .filter((st) -> st.getStudent() == this && st.getStatus().equalsIgnoreCase(StudentStatus.CERTIFIED.name()))
                 .forEach((st) -> certificates.add(st.getCertificate()));
         return certificates;
+    }
+
+    public Set<StudentTrack> getStudentTracks() {
+        return studentTracks;
+    }
+
+    public void setStudentTracks(Set<StudentTrack> studentTracks) {
+        this.studentTracks = studentTracks;
     }
 
     public List<Course> getCourses() {
@@ -241,32 +245,8 @@ public class Student {
     }
 
     @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-
-        result.append("Student{")
-                .append("id=").append(id)
-                .append(", name=" + name + "\'")
-                .append(", identityID='" + identityId + '\'')
-                .append(", egyptAddress='" + egyptAddress + "\'")
-                .append(", homeAddress='" + homeAddress + '\'')
-                .append(", tel='" + tel + '\'')
-                .append(", education='" + education + '\'')
-                .append(", job='" + job + '\'')
-                .append(", country=[" + country.getEnglishName() + "]" )
-                .append(", courseTracks[ " + courseTracks + "]")
-                .append(", StudentTracks[");
-
-        for (StudentTrack track : studentTracks){
-            result.append("Track[id=" + track.getId())
-                    .append(", course=[" + track.getCourse().getName() + "]")
-                    .append(", registerDate=" + track.getRegisterDate())
-                    .append(", startDate=" + track.getStartDate())
-                    .append(", status='" + track.getStatus())
-                    .append(", evaluation=" + track.getEvaluation())
-                    .append(", comments='" + comments  + "]]}");
-        }
-                return result.toString();
+    public int hashCode() {
+        return id;
     }
 
     @Override
@@ -281,7 +261,31 @@ public class Student {
     }
 
     @Override
-    public int hashCode() {
-        return id;
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+
+        result.append("Student{")
+                .append("id=").append(id)
+                .append(", name=" + name + "\'")
+                .append(", identityID='" + identityId + '\'')
+                .append(", egyptAddress='" + egyptAddress + "\'")
+                .append(", homeAddress='" + homeAddress + '\'')
+                .append(", tel='" + tel + '\'')
+                .append(", education='" + education + '\'')
+                .append(", job='" + job + '\'')
+                .append(", country=[" + country.getEnglishName() + "]")
+                .append(", courseTracks[ " + courseTracks + "]")
+                .append(", StudentTracks[");
+
+        for (StudentTrack track : studentTracks) {
+            result.append("Track[id=" + track.getId())
+                    .append(", course=[" + track.getCourse().getName() + "]")
+                    .append(", registerDate=" + track.getRegisterDate())
+                    .append(", startDate=" + track.getStartDate())
+                    .append(", status='" + track.getStatus())
+                    .append(", evaluation=" + track.getEvaluation())
+                    .append(", comments='" + comments + "]]}");
+        }
+        return result.toString();
     }
 }
