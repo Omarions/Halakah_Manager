@@ -1,6 +1,7 @@
 package com.omarionapps.halaka.controller;
 
 import com.omarionapps.halaka.model.Student;
+import com.omarionapps.halaka.model.StudentTrack;
 import com.omarionapps.halaka.service.ActivityService;
 import com.omarionapps.halaka.service.CountryService;
 import com.omarionapps.halaka.service.CourseService;
@@ -66,6 +67,7 @@ public class StudentController {
         ModelAndView model = new ModelAndView("admin/register-student");
 
         model.addObject("student", new Student());
+        model.addObject("studentTrack", new StudentTrack());
         model.addObject("countries", countryService.findAllByOrderByEnglishNameAsc());
         return model;
     }
@@ -109,21 +111,22 @@ public class StudentController {
      * @return redirect to the saved student profile page
      */
     @PostMapping("/admin/students/student")
-    public String saveStudent(@Valid Student student, BindingResult bindingResult, Model model) {
+    public String saveStudent(@Valid Student student, @Valid StudentTrack studentTrack, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
 
             List<FieldError> fErrors = bindingResult.getFieldErrors();
-            BindingResult bResult = new BeanPropertyBindingResult(student, "student");
+            BindingResult bResultStudent = new BeanPropertyBindingResult(student, "student");
+
             for (FieldError error : fErrors) {
                 System.out.println("Error message: " + error);
                 String field = error.getField();
                 System.out.println("Field : " + field + ", Error Code: " + error.getCode());
 
-                bResult.rejectValue(field, field + " is required");
+                bResultStudent.rejectValue(field, field + " is required");
 
             }
-            bindingResult = bResult;
+
             return (student.getId() == 0) ? "admin/register-student" : "redirect:/admin/students/student?id=" + student.getId();
 
         } else {

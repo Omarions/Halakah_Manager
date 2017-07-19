@@ -20,7 +20,7 @@ public class Certificate {
     @JoinColumn(name = "student_track_id")
     private StudentTrack studentTrack;
     @ManyToOne
-    @JoinColumn(name = "event", referencedColumnName = "id")
+    @JoinColumn(name = "event_id", referencedColumnName = "id")
     private Event event;
     @NotNull
     private String image;
@@ -94,14 +94,6 @@ public class Certificate {
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "Certificate{" +
@@ -111,5 +103,13 @@ public class Certificate {
                 ", image='" + image + '\'' +
                 ", comments='" + comments + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -177,9 +177,19 @@
                                                 <tr rol="row" th:each="teacher : ${teachers}"
                                                     th:class="${teacherStat.odd}? 'odd' : 'even'">
                                                     <td class="sorting_1" th:text="${teacher.id}">Teacher ID</td>
-                                                    <td><a href="#"
-                                                           th:href="@{/admin/teachers/teacher(id=${teacher.id})}"><span
-                                                            th:text="${teacher.name}">Teacher Name</span></a></td>
+                                                    <td>
+                                                        <a href="#"
+                                                           th:href="@{/admin/teachers/teacher(id=${teacher.id})}">
+                                                            <img class="profile-user-img img-responsive img-circle"
+                                                                 src="../../lib/dist/img/user4-128x128.jpg"
+                                                                 th:src="@{'/lib/dist/img/teacher/' + ${teacher.photo}}"
+                                                                 alt="User profile picture"/>
+
+                                                            <h3 class="profile-username text-center"
+                                                                th:text="${teacher.name}">Nina
+                                                                                          Mcintire</h3>
+                                                        </a>
+                                                    </td>
                                                     <td>
                                                         <ul class="dtt" th:remove="all-but-first">
                                                             <li class="primary" th:each="act : ${teacher.activity}">
