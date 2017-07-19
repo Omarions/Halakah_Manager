@@ -239,7 +239,7 @@
                                                            th:href="@{/admin/students/student(id=${student.id})}">
                                                             <img class="profile-user-img img-responsive img-circle"
                                                                  src="../../lib/dist/img/user4-128x128.jpg"
-                                                                 th:src="@{'/lib/dist/img/' + ${student.photo}}"
+                                                                 th:src="@{'/lib/dist/img/student/' + ${student.photo}}"
                                                                  alt="User profile picture"/>
 
                                                             <h3 class="profile-username text-center"
@@ -255,15 +255,15 @@
                                                                 <div th:switch="${stTrack.status}">
                                                       <span th:case="'WAITING'" class="label label-warning"
                                                             th:text="${stTrack.course.activity.name}">Waiting Activity</span>
-                                                      <span th:case="'STUDYING'" class="label label-primary"
+                                                      <span th:case="'STUDYING'" class="label label-success"
                                                             th:text="${stTrack.course.activity.name}">Studying Activity</span>
-                                                      <span th:case="'CERTIFIED'" class="label label-success"
+                                                      <span th:case="'CERTIFIED'" class="label label-primary"
                                                             th:text="${stTrack.course.activity.name}">Certified Activity</span>
                                                       <span th:case="'FIRED'" class="label label-danger"
                                                             th:text="${stTrack.course.activity.name}">Fired Activity</span>
                                                       <span th:case="'TEMP_STOP'" class="label label-info"
                                                             th:text="${stTrack.course.activity.name}">Temp_Stopped Activity</span>
-                                                      <span th:case="'FINAL_STOP'" class="label label-info"
+                                                      <span th:case="'FINAL_STOP'" class="label label-danger"
                                                             th:text="${stTrack.course.activity.name}">Final Stopped Activity</span>
                                                                 </div>
                                                             </li>

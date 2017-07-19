@@ -46,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <div class="pull-left">
                         <!-- User Image -->
                         <img src="../lib/dist/img/user2-160x160.jpg"
-                             th:src="@{'/lib/dist/img/' + ${#httpSession.getAttribute('user')?.photo}}"
+                             th:src="@{'/lib/dist/img/user/' + ${#httpSession.getAttribute('user')?.photo}}"
                              class="img-circle" alt="User Image"/>
                       </div>
                       <!-- Message title and timestamp -->
@@ -132,7 +132,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
               <img src="../lib/dist/img/user2-160x160.jpg"
-                   th:src="@{'/lib/dist/img/' + ${#httpSession.getAttribute('user')?.photo}}" class="user-image"
+                   th:src="@{'/lib/dist/img/user/' + ${#httpSession.getAttribute('user')?.photo}}" class="user-image"
                    alt="User Image"/>
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs" th:text="${#httpSession.getAttribute('user')?.name}">Alexander Pierce</span>
@@ -141,7 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <!-- The user image in the menu -->
               <li class="user-header">
                 <img src="../lib/dist/img/user2-160x160.jpg"
-                     th:src="@{'/lib/dist/img/' + ${#httpSession.getAttribute('user')?.photo}}" class="img-circle"
+                     th:src="@{'/lib/dist/img/user/' + ${#httpSession.getAttribute('user')?.photo}}" class="img-circle"
                      alt="User Image"/>
 
                 <p>
