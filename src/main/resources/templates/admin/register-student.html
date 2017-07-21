@@ -28,9 +28,9 @@
         <!-- iCheck -->
         <link rel="stylesheet" href="../../lib/plugins/iCheck/flat/blue.css"
               th:href="@{/lib/plugins/iCheck/flat/blue.css}"/>
-        <!-- jvectormap -->
-        <link rel="stylesheet" href="../../lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css"
-              th:href="@{/lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css}"/>
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css"
+              th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
               th:href="@{/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
@@ -91,8 +91,8 @@
                                         <div class="form-group">
                                             <div class="col-sm-offset-6 col-sm-6">
 
-                                                <img src="../lib/dist/img/user2-160x160.jpg"
-
+                                                <img src="../lib/dist/img/user/user2-160x160.jpg"
+                                                     th:src="@{/lib/dist/img/user/user2-160x160.jpg}"
                                                      class="img-circle" alt="User Image"/>
 
                                                 <input type="file" id="inputPhoto" th:field="*{photo}"/>
@@ -113,6 +113,22 @@
                                             </div>
                                         </div>
                                         <!-- /.input-for-name -->
+
+                                        <!-- select for Country -->
+                                        <div class="form-group">
+                                            <label for="selectCountry" class="col-sm-2 control-label">Select
+                                                                                                      Country </label>
+
+                                            <div class="col-sm-10">
+                                                <select id="selectCountry" class="select2 form-control">
+                                                    <option value="null" text="Select Country">Select Country</option>
+                                                    <option th:each="country: ${countries}" th:value="${country.id}"
+                                                            th:text="${country.arabicName}">Select Country
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- /.select-for-country -->
 
                                         <!-- input for email -->
                                         <div class="form-group">
@@ -201,6 +217,96 @@
                                             </div>
                                         </div>
                                         <!-- /.input-for-comments -->
+
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                <h4 class="box-title">Register Student's Tracks</h4>
+
+                                                <div class="form-group">
+                                                    <label for="selectActivity" class="col-sm-2 control-label">Select
+                                                                                                               Activity: </label>
+
+                                                    <div class="col-sm-10">
+                                                        <select id="selectActivity" class="select2"
+                                                                th:onchange="'javascript:populateTracksTable();'">
+                                                            <option th:each="act: ${activities}" th:value="${act.id}"
+                                                                    th:text="${act.name}">Select Activity
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="form-group">
+                                                    <div class="col-sm-10 pull-right">
+                                                        <table id="student-tracks"
+                                                               class="table table-bordered table-striped dataTable"
+                                                               role="grid"
+                                                               aria-describedby="example1_info">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Select</th>
+                                                                    <th>Course Name</th>
+                                                                    <th>Status</th>
+                                                                    <th>Comments</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th>Select</th>
+                                                                    <th>Course Name</th>
+                                                                    <th>Status</th>
+                                                                    <th>Comments</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                            <tbody id="tracks-data">
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="checkbox" name="id"
+                                                                               value="course_id"/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <Label id="course_name"
+                                                                               class="control-label"></label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select size="1" id="track_status"
+                                                                                name="track_status">
+                                                                            <option value="WAITING" selected="selected">
+                                                                                WAITING
+                                                                            </option>
+                                                                            <option value="STUDYING">
+                                                                                STUDYING
+                                                                            </option>
+                                                                            <option value="CERTIFIED">
+                                                                                CERTIFIED
+                                                                            </option>
+                                                                            <option value="TEMP_STOP">
+                                                                                TEMP_STOPPED
+                                                                            </option>
+                                                                            <option value="FINAL_STOP">
+                                                                                FINAL_STOPPED
+                                                                            </option>
+                                                                            <option value="FIRED">
+                                                                                FIRED
+                                                                            </option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                    <textarea type="text" class="form-control"
+                                                                              id="track_comments"
+                                                                              style="border: none; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"
+                                                                              placeholder="More comments"
+                                                                              disabled></textarea>
+                                                                    </td>
+                                                                </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
                                     </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">
@@ -221,8 +327,7 @@
             </div>
             <!-- /.content-wrapper -->
             <!-- include footer section from the layout file -->
-            <div th:include="layout/footer :: footer">
-            </div>
+            <div th:include="layout/footer :: footer"></div>
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Create the tabs -->
@@ -422,7 +527,7 @@
         <!-- to send data from db to the map in javascript code -->
         <!-- to use attribute from the controller in javascript file -->
         <script th:inline="javascript">
-            var courses = [[${courses}]];
+            //var activityCourses = [[${activityCourses}]];
         </script>
         <!-- jQuery 2.2.3 -->
         <script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
@@ -437,12 +542,27 @@
         <!-- bootstrap datepicker -->
         <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
                 th:src="@{/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+        <!-- DataTables -->
+        <script src="../lib/plugins/datatables/jquery.dataTables.min.js"
+                th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
+        <script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
+                th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+        <!-- script to populate tracks table based on selection of activity dropdown list -->
+        <script src="../../lib/dist/js/pages/student.js" th:src="@{/lib/dist/js/pages/student.js}"></script>
 
         <script>
             $(function () {
+                $("#student-tracks").DataTable({
+                    "ordering": false
+                });
                 //Initialize Select2 Elements
-                $("#selectActivities").select2({
-                    placeholder: "Select Activities"
+                $("#selectActivity").select2({
+                    placeholder: "Select An Activity"
+                });
+
+                //Initialize Select2 Elements
+                $("#selectCountry").select2({
+                    placeholder: "Select Country"
                 });
 
                 $('#registerDatePicker').datepicker({

@@ -1,8 +1,10 @@
 package com.omarionapps.halaka.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.HashSet;
@@ -12,7 +14,7 @@ import java.util.Set;
  * Created by Omar on 30-Apr-17.
  */
 @Entity
-public class Course {
+public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -112,52 +114,34 @@ public class Course {
         this.name = name;
     }
 
+    @JsonIgnore
     public Teacher getTeacher() {
         return teacher;
     }
 
+    @JsonIgnore
     public void setTeacher(Teacher teachers) {
         this.teacher = teachers;
     }
 
+    @JsonIgnore
     public Activity getActivity() {
         return activity;
     }
 
+    @JsonIgnore
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Set<StudentTrack> getStudentTracks() {
-        return studentTracks;
-    }
-
-    public void setStudentTracks(Set<StudentTrack> studentTracks) {
-        this.studentTracks = studentTracks;
-    }
-
+    @JsonIgnore
     public Set<CourseTrack> getCourseTracks() {
         return courseTracks;
     }
 
+    @JsonIgnore
     public void setCourseTracks(Set<CourseTrack> courseTracks) {
         this.courseTracks = courseTracks;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 
     public Date getArchivedDate() {
@@ -180,9 +164,35 @@ public class Course {
         long currentStudy = getStudentTracks()
                 .stream()
                 .filter((st) -> st.getStatus().equalsIgnoreCase(StudentStatus.STUDYING.toString())
-                                && st.getCourse().getId() == this.getId())
+                        && st.getCourse().getId() == this.getId())
                 .count();
         return (currentStudy == getCapacity());
+    }
+
+    @JsonIgnore
+    public Set<StudentTrack> getStudentTracks() {
+        return studentTracks;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    @JsonIgnore
+    public void setStudentTracks(Set<StudentTrack> studentTracks) {
+        this.studentTracks = studentTracks;
     }
 
     public long getFreePlaces(){
@@ -191,20 +201,8 @@ public class Course {
     }
 
     @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", activityName='" + activity.getName() + "'\'" +
-                ", teacheName='" + teacher.getName() + "'\'" +
-                ", name='" + name + "\'" +
-                ", days='" + days + "\'" +
-                ", capacity='" + capacity + "\'" +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", comments='" + comments + "\'}";
-
+    public int hashCode() {
+        return getId();
     }
 
     @Override
@@ -219,7 +217,19 @@ public class Course {
     }
 
     @Override
-    public int hashCode() {
-        return getId();
+    public String toString() {
+        return "{" +
+                "id:" + id +
+                ", activityName:'" + activity.getName() + "'\'" +
+                ", teacherName:'" + teacher.getName() + "'\'" +
+                ", name:'" + name + "\'" +
+                ", days:'" + days + "\'" +
+                ", capacity:'" + capacity + "\'" +
+                ", startDate:'" + startDate + "\'" +
+                ", endDate:'" + endDate + "\'" +
+                ", startTime:'" + startTime + "\'" +
+                ", endTime:'" + endTime + "\'" +
+                ", comments:'" + comments + "\'}";
+
     }
 }

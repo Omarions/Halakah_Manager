@@ -65,10 +65,12 @@ public class StudentController {
      */
     private ModelAndView addStudent() {
         ModelAndView model = new ModelAndView("admin/register-student");
-
+        //System.out.println("ActivityCourses: " + activityService.getActivityCourses());
         model.addObject("student", new Student());
         model.addObject("studentTrack", new StudentTrack());
-        model.addObject("countries", countryService.findAllByOrderByEnglishNameAsc());
+        model.addObject("activities", activityService.findAllOrderByName());
+        //model.addObject("activityCourses", activityService.getActivityCourses());
+        model.addObject("countries", countryService.findAllByOrderByArabicNameAsc());
         return model;
     }
 
@@ -86,6 +88,7 @@ public class StudentController {
         modelAndView.addObject("countries", countryService.findAllByOrderByEnglishNameAsc());
         return modelAndView;
     }
+
 
     /**
      * Process the get request of delete operation

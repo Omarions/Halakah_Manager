@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CountryRepository extends CrudRepository<Country, Integer> {
     Iterable<Country> findAllByOrderByEnglishNameAsc();
+
+    Iterable<Country> findAllByOrderByArabicNameAsc();
 }

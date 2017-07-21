@@ -25,10 +25,6 @@ public class CountryService {
         this.countryRepository = countryRepository;
     }
 
-    public Iterable<Country> getAll(){
-        return countryRepository.findAll();
-    }
-
     public Map<String, Integer> getAllCountryCodeStudentsCountMap(){
         Iterable<Country> list = this.getAll();
         Map<String, Integer> map = new HashMap<>();
@@ -39,6 +35,10 @@ public class CountryService {
         });
         System.out.println("CountryCode Map" + map);
         return map;
+    }
+
+    public Iterable<Country> getAll() {
+        return countryRepository.findAll();
     }
 
     public Map<String, Integer> getCountryCodeStudentsCountMapFromStudetns(Set<Student> students){
@@ -81,17 +81,6 @@ public class CountryService {
         return countryRepository.findAllByOrderByEnglishNameAsc();
     }
 
-    public Set<Country> getCountriesHasStudents() {
-        Set<Country> countries = new HashSet<>();
-        getAll().forEach((country) -> {
-            if (country.getStudents().size() > 0)
-                countries.add(country);
-        });
-
-        return countries;
-    }
-
-
     public Map<String, Integer> getCountryStudentsCountMapByGender(StudentGender gender) {
         Map<String, Integer> map = new HashMap<>();
         Set<Country> countries = getCountriesHasStudents();
@@ -103,6 +92,16 @@ public class CountryService {
         });
 
         return map;
+    }
+
+    public Set<Country> getCountriesHasStudents() {
+        Set<Country> countries = new HashSet<>();
+        getAll().forEach((country) -> {
+            if (country.getStudents().size() > 0)
+                countries.add(country);
+        });
+
+        return countries;
     }
 
     public Map<String, Map<String, Integer>> getCountryStudentsCountByGenderMap() {
@@ -126,5 +125,9 @@ public class CountryService {
         });
 
         return map;
+    }
+
+    public Iterable<Country> findAllByOrderByArabicNameAsc() {
+        return countryRepository.findAllByOrderByArabicNameAsc();
     }
 }
