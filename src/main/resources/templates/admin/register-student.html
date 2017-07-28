@@ -37,7 +37,9 @@
         <!-- Select2 -->
         <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
               th:href="@{/lib/plugins/select2/select2.min.css}"/>
-
+        <!-- iCheck -->
+        <link rel="stylesheet" href="../lib/plugins/iCheck/square/blue.css"
+              th:href="@{/lib/plugins/iCheck/square/blue.css}"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -81,31 +83,30 @@
                                 </div>
                                 <!-- /.box-header -->
                                 <!-- form start -->
-                                <form id="frmRegisteredCourse" class="form-horizontal" action="#"
-                                      th:action="@{/admin/students/student}"
-                                      th:object="${student}" method="post">
+                                <form id="frmRegisterStudent" class="form-horizontal"
+                                      th:object="${student}">
 
-                                    <input type="hidden" th:field="*{id}"/>
+                                    <input type="hidden" id="input-id" th:field="*{id}"/>
 
                                     <div class="box-body">
                                         <div class="form-group">
                                             <div class="col-sm-offset-6 col-sm-6">
 
-                                                <img src="../lib/dist/img/user/user2-160x160.jpg"
+                                                <img id="img-photo" src="../lib/dist/img/user/user2-160x160.jpg"
                                                      th:src="@{/lib/dist/img/user/user2-160x160.jpg}"
                                                      class="img-circle" alt="User Image"/>
 
-                                                <input type="file" id="inputPhoto" th:field="*{photo}"/>
+                                                <input type="file" class="hidden" id="input-photo" th:field="*{photo}"/>
 
                                             </div>
                                         </div>
                                         <!-- input for name -->
                                         <div th:class="form-group"
                                              th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                                            <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                            <label for="input-name" class="col-sm-2 control-label">Name</label>
 
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputName"
+                                                <input type="text" class="form-control" id="input-name"
                                                        placeholder="Name"
                                                        th:field="*{name}"/>
                                                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
@@ -116,11 +117,11 @@
 
                                         <!-- select for Country -->
                                         <div class="form-group">
-                                            <label for="selectCountry" class="col-sm-2 control-label">Select
-                                                                                                      Country </label>
+                                            <label for="select-country" class="col-sm-2 control-label">Select
+                                                                                                       Country </label>
 
                                             <div class="col-sm-10">
-                                                <select id="selectCountry" class="select2 form-control">
+                                                <select id="select-country" class="select2 form-control">
                                                     <option value="null" text="Select Country">Select Country</option>
                                                     <option th:each="country: ${countries}" th:value="${country.id}"
                                                             th:text="${country.arabicName}">Select Country
@@ -132,10 +133,10 @@
 
                                         <!-- input for email -->
                                         <div class="form-group">
-                                            <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                                            <label for="input-email" class="col-sm-2 control-label">Email</label>
 
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputEmail"
+                                                <input type="text" class="form-control" id="input-email"
                                                        placeholder="Email"
                                                        th:field="*{email}"/>
                                                 <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
@@ -146,10 +147,10 @@
 
                                         <!-- input for tel -->
                                         <div class="form-group">
-                                            <label for="inputTel" class="col-sm-2 control-label">Tel</label>
+                                            <label for="input-tel" class="col-sm-2 control-label">Tel</label>
 
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputTel"
+                                                <input type="text" class="form-control" id="input-tel"
                                                        placeholder="Tel"
                                                        th:field="*{tel}"/>
                                                 <span th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"
@@ -160,10 +161,11 @@
 
                                         <!-- input for education -->
                                         <div class="form-group">
-                                            <label for="inputEducation" class="col-sm-2 control-label">Education</label>
+                                            <label for="input-education"
+                                                   class="col-sm-2 control-label">Education</label>
 
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputEducation"
+                                                <input type="text" class="form-control" id="input-education"
                                                        placeholder="Education"
                                                        th:field="*{education}"/>
                                                 <span th:if="${#fields.hasErrors('education')}" th:errors="*{education}"
@@ -174,10 +176,10 @@
 
                                         <!-- input for job -->
                                         <div class="form-group">
-                                            <label for="inputJob" class="col-sm-2 control-label">Job</label>
+                                            <label for="input-job" class="col-sm-2 control-label">Job</label>
 
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputJob"
+                                                <input type="text" class="form-control" id="input-job"
                                                        placeholder="Job"
                                                        th:field="*{job}"/>
                                                 <span th:if="${#fields.hasErrors('job')}" th:errors="*{job}"
@@ -186,32 +188,12 @@
                                         </div>
                                         <!-- /.input-for-job -->
 
-                                        <!-- Hire Date Picker -->
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Register Date</label>
-
-                                            <div class="col-sm-10">
-                                                <div class="input-group date">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </div>
-                                                    <input type="text" class="form-control pull-right"
-                                                           id="registerDatePicker"
-                                                           th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
-                                                           th:field="${studentTrack.registerDate}">
-                                                </div>
-
-                                                <!-- /.input group -->
-                                            </div>
-                                        </div>
-                                        <!-- /.register-date-picker -->
-
                                         <!-- Input for Comments -->
                                         <div class="form-group">
-                                            <label for="inputComments" class="col-sm-2 control-label">Comment</label>
+                                            <label for="input-comments" class="col-sm-2 control-label">Comment</label>
 
                                             <div class="col-sm-10">
-                                        <textarea type="text" class="form-control" id="inputComments"
+                                        <textarea type="text" class="form-control" id="input-comments"
                                                   placeholder="Set comments for the student if needed"
                                                   th:field="*{comments}">Extra info</textarea>
                                             </div>
@@ -223,11 +205,11 @@
                                                 <h4 class="box-title">Register Student's Tracks</h4>
 
                                                 <div class="form-group">
-                                                    <label for="selectActivity" class="col-sm-2 control-label">Select
-                                                                                                               Activity: </label>
+                                                    <label for="select-activity" class="col-sm-2 control-label">Select
+                                                                                                                Activity: </label>
 
                                                     <div class="col-sm-10">
-                                                        <select id="selectActivity" class="select2"
+                                                        <select id="select-activity" class="select2"
                                                                 th:onchange="'javascript:populateTracksTable();'">
                                                             <option th:each="act: ${activities}" th:value="${act.id}"
                                                                     th:text="${act.name}">Select Activity
@@ -247,6 +229,7 @@
                                                                 <tr>
                                                                     <th>Select</th>
                                                                     <th>Course Name</th>
+                                                                    <th>Register Date</th>
                                                                     <th>Status</th>
                                                                     <th>Comments</th>
                                                                 </tr>
@@ -255,6 +238,7 @@
                                                                 <tr>
                                                                     <th>Select</th>
                                                                     <th>Course Name</th>
+                                                                    <th>Register Date</th>
                                                                     <th>Status</th>
                                                                     <th>Comments</th>
                                                                 </tr>
@@ -262,12 +246,27 @@
                                                             <tbody id="tracks-data">
                                                                 <tr>
                                                                     <td>
-                                                                        <input type="checkbox" name="id"
-                                                                               value="course_id"/>
+                                                                        <div class="checkbox icheck">
+                                                                            <label>
+                                                                                <input type="checkbox"
+                                                                                       id="cb-select-row"
+                                                                                       value="course_id"/>
+                                                                            </label>
+                                                                        </div>
                                                                     </td>
                                                                     <td>
                                                                         <Label id="course_name"
                                                                                class="control-label"></label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="input-group date">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </div>
+                                                                            <input type="text"
+                                                                                   class="datepicker form-control pull-right"
+                                                                                   id="register-datepicker"/>
+                                                                        </div>
                                                                     </td>
                                                                     <td>
                                                                         <select size="1" id="track_status"
@@ -308,14 +307,13 @@
                                         </div>
 
                                     </div>
-                                    <!-- /.box-body -->
-                                    <div class="box-footer">
-                                        <button type="submit" class="btn btn-info pull-right"
-                                                th:onclick="'javascript:getFormObject();'">Register
-                                        </button>
-                                    </div>
+
                                     <!-- /.box-footer -->
                                 </form>
+                                <!-- /.box-body -->
+                                <div class="box-footer">
+                                    <button id="btn-register" class="btn btn-info pull-right">Register</button>
+                                </div>
                             </div>
                             <!-- /.form-box -->
                         </div>
@@ -542,6 +540,9 @@
         <!-- bootstrap datepicker -->
         <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
                 th:src="@{/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+        <!-- iCheck -->
+        <script src="/lib/plugins/iCheck/icheck.min.js" th:src="@{/lib/plugins/iCheck/icheck.min.js}"></script>
+
         <!-- DataTables -->
         <script src="../lib/plugins/datatables/jquery.dataTables.min.js"
                 th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
@@ -552,20 +553,21 @@
 
         <script>
             $(function () {
+
                 $("#student-tracks").DataTable({
                     "ordering": false
                 });
                 //Initialize Select2 Elements
-                $("#selectActivity").select2({
+                $("#select-activity").select2({
                     placeholder: "Select An Activity"
                 });
 
                 //Initialize Select2 Elements
-                $("#selectCountry").select2({
+                $("#select-country").select2({
                     placeholder: "Select Country"
                 });
 
-                $('#registerDatePicker').datepicker({
+                $('.datepicker').datepicker({
                     format: 'yyyy-mm-dd',
                     todayBtn: true,
                     todayHighlight: true,

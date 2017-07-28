@@ -114,7 +114,7 @@ public class StudentController {
      * @return redirect to the saved student profile page
      */
     @PostMapping("/admin/students/student")
-    public String saveStudent(@Valid Student student, @Valid StudentTrack studentTrack, BindingResult bindingResult, Model model) {
+    public String saveStudent(@Valid Student student, @Valid List<StudentTrack> studentTracks, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
 

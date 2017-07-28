@@ -130,4 +130,8 @@ public class CountryService {
     public Iterable<Country> findAllByOrderByArabicNameAsc() {
         return countryRepository.findAllByOrderByArabicNameAsc();
     }
+
+    public Country findById(int id) {
+        return countryRepository.findOne(id);
+    }
 }
