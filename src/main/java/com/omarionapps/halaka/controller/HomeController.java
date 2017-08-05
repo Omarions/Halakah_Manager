@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.controller;
 
+import com.omarionapps.halaka.model.Task;
 import com.omarionapps.halaka.repository.UserRepository;
 import com.omarionapps.halaka.service.CountryService;
 import com.omarionapps.halaka.service.HouseService;
@@ -45,6 +46,7 @@ public class HomeController {
         modelAndView.addObject("houseMaxCapacity", houseService.getTotalCapacity());
         //modelAndView.addObject("housesOccupy", houseService.findAllOrderById());
         modelAndView.addObject("mapCounts", countryService.getAllCountryCodeStudentsCountMap());
+        modelAndView.addObject("task", new Task());
         modelAndView.setViewName("admin/index");
 
 

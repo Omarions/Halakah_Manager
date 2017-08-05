@@ -7,6 +7,7 @@ import com.omarionapps.halaka.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,7 @@ public class UserController {
     @PostMapping("/admin/user/tasks/task")
     public String createTask(@Valid Task task, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            BindingResult br = new BeanPropertyBindingResult(task, "task");
             return "";
         } else {
             Task savedTask = null;
