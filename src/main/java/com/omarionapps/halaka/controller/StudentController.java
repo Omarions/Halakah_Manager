@@ -1,6 +1,8 @@
 package com.omarionapps.halaka.controller;
 
+import com.omarionapps.halaka.model.CourseTrack;
 import com.omarionapps.halaka.model.Student;
+import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.model.StudentTrack;
 import com.omarionapps.halaka.service.ActivityService;
 import com.omarionapps.halaka.service.CountryService;
@@ -11,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,10 +66,21 @@ public class StudentController {
      */
     private ModelAndView addStudent() {
         ModelAndView model = new ModelAndView("admin/register-student");
+        List<StudentTrack> tracks = new ArrayList<>();
+        List<CourseTrack> courseTracks = new ArrayList<>();
+        courseTracks.add(new CourseTrack());
+        for (int i = 0; i < 7; i++) {
+            tracks.add(new StudentTrack());
+        }
+        Student student = new Student();
+        student.getStudentTracks().add(new StudentTrack());
         //System.out.println("ActivityCourses: " + activityService.getActivityCourses());
-        model.addObject("student", new Student());
-        model.addObject("studentTrack", new StudentTrack());
+        model.addObject("student", student);
         model.addObject("activities", activityService.findAllOrderByName());
+        for (StudentStatus sts : StudentStatus.values()) {
+            System.out.println(sts.getTrackStatus());
+        }
+        model.addObject("trackStatuses", StudentStatus.values());
         //model.addObject("activityCourses", activityService.getActivityCourses());
         model.addObject("countries", countryService.findAllByOrderByArabicNameAsc());
         return model;
@@ -114,27 +126,17 @@ public class StudentController {
      * @return redirect to the saved student profile page
      */
     @PostMapping("/admin/students/student")
-    public String saveStudent(@Valid Student student, @Valid List<StudentTrack> studentTracks, BindingResult bindingResult, Model model) {
+    public String saveStudent(@Valid Student student, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
 
-            List<FieldError> fErrors = bindingResult.getFieldErrors();
-            BindingResult bResultStudent = new BeanPropertyBindingResult(student, "student");
 
-            for (FieldError error : fErrors) {
-                System.out.println("Error message: " + error);
-                String field = error.getField();
-                System.out.println("Field : " + field + ", Error Code: " + error.getCode());
-
-                bResultStudent.rejectValue(field, field + " is required");
-
-            }
 
             return (student.getId() == 0) ? "admin/register-student" : "redirect:/admin/students/student?id=" + student.getId();
 
         } else {
             Student returnedStudent = null;
-            System.out.println(student);
+            System.out.println("Student: " + student);
             returnedStudent = studentService.save(student);
             return "redirect:/admin/students/student?id=" + returnedStudent.getId();
         }

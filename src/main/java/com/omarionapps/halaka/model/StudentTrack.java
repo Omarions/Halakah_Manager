@@ -2,7 +2,7 @@ package com.omarionapps.halaka.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by Omar on 03-May-17.
@@ -20,23 +20,13 @@ public class StudentTrack implements Serializable {
     private Course course;
     @OneToOne(mappedBy = "studentTrack")
     private Certificate certificate;
-    @Temporal(TemporalType.DATE)
     private Date registerDate;
-    @Temporal(TemporalType.DATE)
     private Date startDate;
     private String status;
     private int evaluation;
     private String comments;
 
     public StudentTrack(){}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public Student getStudent() {
         return student;
@@ -103,17 +93,8 @@ public class StudentTrack implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "StudentTrack{" +
-                "id=" + id +
-                ", student=" + student +
-                ", course=" + course.getName() +
-                ", registerDate=" + registerDate +
-                ", startDate=" + startDate +
-                ", status='" + status + '\'' +
-                ", evaluation=" + evaluation +
-                ", comments='" + comments + '\'' +
-                '}';
+    public int hashCode() {
+        return getId();
     }
 
     @Override
@@ -128,7 +109,24 @@ public class StudentTrack implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        return getId();
+    public String toString() {
+        return "StudentTrack{" +
+                "id=" + id +
+                ", student=" + student +
+                ", course=" + course.getName() +
+                ", registerDate=" + registerDate +
+                ", startDate=" + startDate +
+                ", status='" + status + '\'' +
+                ", evaluation=" + evaluation +
+                ", comments='" + comments + '\'' +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

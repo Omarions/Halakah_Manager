@@ -9,7 +9,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
-              th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+              th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
         <!-- Font Awesome -->
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
@@ -17,29 +17,30 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
         <!-- bootstrap datepicker -->
         <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
-              th:href="@{/lib/plugins/datepicker/datepicker3.css}"/>
+              th:href="@{~/lib/plugins/datepicker/datepicker3.css}"/>
         <!-- Theme style -->
-        <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
+        <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <!-- use skin-blue -->
         <link rel="stylesheet" href="../../lib/dist/css/skins/_all-skins.min.css"
-              th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
+              th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
         <!-- iCheck -->
         <link rel="stylesheet" href="../../lib/plugins/iCheck/flat/blue.css"
-              th:href="@{/lib/plugins/iCheck/flat/blue.css}"/>
+              th:href="@{~/lib/plugins/iCheck/flat/blue.css}"/>
         <!-- DataTables -->
         <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css"
-              th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
-        <!-- bootstrap wysihtml5 - text editor -->
-        <link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
-              th:href="@{/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
-        <!-- Select2 -->
-        <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
-              th:href="@{/lib/plugins/select2/select2.min.css}"/>
+              th:href="@{~/lib/plugins/datatables/dataTables.bootstrap.css}"/>
         <!-- iCheck -->
         <link rel="stylesheet" href="../lib/plugins/iCheck/square/blue.css"
-              th:href="@{/lib/plugins/iCheck/square/blue.css}"/>
+              th:href="@{~/lib/plugins/iCheck/square/blue.css}"/>
+        <!-- bootstrap wysihtml5 - text editor -->
+        <link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+              th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
+        <!-- Select2 -->
+        <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
+              th:href="@{~/lib/plugins/select2/select2.min.css}"/>
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -66,7 +67,7 @@
                     <ol class="breadcrumb">
                         <li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li><a href="#" th:href="@{/admin/students}"> Students</a></li>
-                        <li class="active">Student Registeration</li>
+                        <li class="active">Student Registration</li>
                     </ol>
                 </section>
 
@@ -82,38 +83,65 @@
                                         Form</h3>
                                 </div>
                                 <!-- /.box-header -->
-                                <!-- form start -->
-                                <form id="frmRegisterStudent" class="form-horizontal"
-                                      th:object="${student}">
 
-                                    <input type="hidden" id="input-id" th:field="*{id}"/>
+                                <!-- form start -->
+                                <form id="frmRegisterStudent" class="form-horizontal" action="#"
+                                      th:action="@{/admin/students/student}" method="post" th:object="${student}">
 
                                     <div class="box-body">
+
+                                        <input type="hidden" name="id" th:field="*{id}"/>
+
+                                        <!-- input for photo -->
                                         <div class="form-group">
                                             <div class="col-sm-offset-6 col-sm-6">
 
-                                                <img id="img-photo" src="../lib/dist/img/user/user2-160x160.jpg"
-                                                     th:src="@{/lib/dist/img/user/user2-160x160.jpg}"
-                                                     class="img-circle" alt="User Image"/>
+                                                <img src="../lib/dist/img/student/avatar5.png"
+                                                     th:src="@{/lib/dist/img/student/avatar5.png}"
+                                                     id="img-photo" name="photo" class="img-circle" alt="User Image"
+                                                     style="width: 160px; height: 160px"/>
 
-                                                <input type="file" class="hidden" id="input-photo" th:field="*{photo}"/>
+                                                <input type="file" name="photo" id="input-photo" class="hidden"
+                                                       th:field="*{photo}"/>
 
                                             </div>
                                         </div>
+                                        <!-- /.input-for-photo -->
+
                                         <!-- input for name -->
-                                        <div th:class="form-group"
+                                        <div class="form-group"
                                              th:classappend="${#fields.hasErrors('name')}? 'has-error'">
                                             <label for="input-name" class="col-sm-2 control-label">Name</label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-name"
-                                                       placeholder="Name"
-                                                       th:field="*{name}"/>
+                                                       placeholder="Name" name="name" th:field="*{name}"/>
                                                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                                                       th:class="help-block">Name Errors</span>
                                             </div>
                                         </div>
                                         <!-- /.input-for-name -->
+
+                                        <!-- input for gender -->
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Gender</label>
+
+                                            <div class="col-sm-10">
+                                                <div class="iradio">
+                                                    <label>
+                                                        <input type="radio" name="gender" id="male-radio"
+                                                               value="MALE" checked="true"/> Male
+                                                    </label>
+                                                </div>
+                                                <div class="iradio">
+                                                    <label>
+                                                        <input type="radio" name="gender" id="female-radio"
+                                                               value="FEMALE"/> Female
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.input-for-gender -->
 
                                         <!-- select for Country -->
                                         <div class="form-group">
@@ -121,7 +149,8 @@
                                                                                                        Country </label>
 
                                             <div class="col-sm-10">
-                                                <select id="select-country" class="select2 form-control">
+                                                <select id="select-country" class="select2 form-control"
+                                                        th:field="*{country}" name="country">
                                                     <option value="null" text="Select Country">Select Country</option>
                                                     <option th:each="country: ${countries}" th:value="${country.id}"
                                                             th:text="${country.arabicName}">Select Country
@@ -137,8 +166,7 @@
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-email"
-                                                       placeholder="Email"
-                                                       th:field="*{email}"/>
+                                                       name="email" placeholder="Email" th:field="*{email}"/>
                                                 <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                                       th:class="help-block">Email Errors</span>
                                             </div>
@@ -151,7 +179,7 @@
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-tel"
-                                                       placeholder="Tel"
+                                                       name="tel" placeholder="Tel"
                                                        th:field="*{tel}"/>
                                                 <span th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"
                                                       th:class="help-block">Tel Errors</span>
@@ -166,7 +194,7 @@
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-education"
-                                                       placeholder="Education"
+                                                       name="education" placeholder="Education"
                                                        th:field="*{education}"/>
                                                 <span th:if="${#fields.hasErrors('education')}" th:errors="*{education}"
                                                       th:class="help-block">Education Errors</span>
@@ -180,7 +208,7 @@
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-job"
-                                                       placeholder="Job"
+                                                       name="job" placeholder="Job"
                                                        th:field="*{job}"/>
                                                 <span th:if="${#fields.hasErrors('job')}" th:errors="*{job}"
                                                       th:class="help-block">Job Errors</span>
@@ -193,132 +221,138 @@
                                             <label for="input-comments" class="col-sm-2 control-label">Comment</label>
 
                                             <div class="col-sm-10">
-                                        <textarea type="text" class="form-control" id="input-comments"
-                                                  placeholder="Set comments for the student if needed"
-                                                  th:field="*{comments}">Extra info</textarea>
+                                                <textarea type="text" class="form-control" id="input-comments"
+                                                          name="comments"
+                                                          placeholder="Set comments for the student if needed"
+                                                          th:field="*{comments}">Extra info</textarea>
                                             </div>
                                         </div>
                                         <!-- /.input-for-comments -->
 
-                                        <div class="box box-info">
-                                            <div class="box-header with-border">
-                                                <h4 class="box-title">Register Student's Tracks</h4>
+                                        <div class="form-group">
 
-                                                <div class="form-group">
-                                                    <label for="select-activity" class="col-sm-2 control-label">Select
-                                                                                                                Activity: </label>
+                                            <label for="table-tracks" class="col-sm-2 control-label">Tracks</label>
 
-                                                    <div class="col-sm-10">
-                                                        <select id="select-activity" class="select2"
-                                                                th:onchange="'javascript:populateTracksTable();'">
-                                                            <option th:each="act: ${activities}" th:value="${act.id}"
-                                                                    th:text="${act.name}">Select Activity
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                            <!-- table of created tracks -->
+                                            <div class="col-sm-12">
+                                                <table id="table-tracks"
+                                                       class="table table-bordered table-striped dataTable"
+                                                       role="grid" width="100%"
+                                                       aria-describedby="example1_info">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Track ID</th>
+                                                            <th>Activity</th>
+                                                            <th>Course Name</th>
+                                                            <th>Track Status</th>
+                                                            <th>Register Date</th>
+                                                            <th>Start Date</th>
+                                                            <th>Evaluation</th>
+                                                            <th>Comments</th>
+                                                            <th>Tools</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tracks-data">
+                                                        <tr th:each="studentTrack, stat :  *{studentTracks}"
+                                                        >
+                                                            <td><input type="hidden" th:value="0" name="id"
+                                                                       th:field="*{studentTracks[__${stat.index}__].id}"/>
+                                                            </td>
+                                                            <td><label th:text="${activities[3].name}"></label></td>
+                                                            <td>
+                                                                <select id="select-course"
+                                                                        class="select2 form-control table-selects"
+                                                                        th:field="*{studentTracks[__${stat.index}__].course}">
+                                                                    <option th:each="cs : ${activities[3].courses}"
+                                                                            th:value="${cs.id}"
+                                                                            th:text="${cs.name}"
+                                                                    >
+                                                                        Select
+                                                                        Course
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <select id="select-status"
+                                                                        class="select2 form-control table-selects"
+                                                                        th:field="*{studentTracks[__${stat.index}__].status}">
+
+                                                                    <option th:each="sts : ${trackStatuses}"
+                                                                            th:value="${sts.toString()}"
+                                                                            th:text="${sts.toString()}">
+                                                                        Waiting
+                                                                    </option>
+
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <div class="input-group date form-control">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                    <input type="text"
+                                                                           class="form-control pull-right date-picker"
+                                                                           id="register-datepicker"
+                                                                           th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
+                                                                           name="registerDate"
+                                                                           th:field="*{studentTracks[__${stat.index}__].registerDate}"/>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="input-group date">
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </div>
+                                                                    <input type="text"
+                                                                           class="form-control pull-right date-picker"
+                                                                           id="start-datepicker"
+                                                                           th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
+                                                                           name="startDate"
+                                                                           th:field="*{studentTracks[__${stat.index}__].startDate}"/>
+                                                                </div>
+
+                                                            </td>
+                                                            <td>
+                                                                <input type="text"
+                                                                       id="input-evaluation"
+                                                                       placeholder="Evaluation"
+                                                                       value="0"
+                                                                       name="evaluation"
+                                                                       th:field="*{studentTracks[__${stat.index}__].evaluation}"/>
+                                                            </td>
+                                                            <td>
+                                                                <textarea type="text" class="form-control"
+                                                                          id="track-comments"
+                                                                          placeholder="Set comments for the track if needed"
+                                                                          th:field="*{studentTracks[__${stat.index}__].comments}"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#"><i class="fa fa-trash-o fa-3x"></i></a>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                            <div class="box-body">
-                                                <div class="form-group">
-                                                    <div class="col-sm-10 pull-right">
-                                                        <table id="student-tracks"
-                                                               class="table table-bordered table-striped dataTable"
-                                                               role="grid"
-                                                               aria-describedby="example1_info">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Select</th>
-                                                                    <th>Course Name</th>
-                                                                    <th>Register Date</th>
-                                                                    <th>Status</th>
-                                                                    <th>Comments</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tfoot>
-                                                                <tr>
-                                                                    <th>Select</th>
-                                                                    <th>Course Name</th>
-                                                                    <th>Register Date</th>
-                                                                    <th>Status</th>
-                                                                    <th>Comments</th>
-                                                                </tr>
-                                                            </tfoot>
-                                                            <tbody id="tracks-data">
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="checkbox icheck">
-                                                                            <label>
-                                                                                <input type="checkbox"
-                                                                                       id="cb-select-row"
-                                                                                       value="course_id"/>
-                                                                            </label>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <Label id="course_name"
-                                                                               class="control-label"></label>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="input-group date">
-                                                                            <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
-                                                                            </div>
-                                                                            <input type="text"
-                                                                                   class="datepicker form-control pull-right"
-                                                                                   id="register-datepicker"/>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select size="1" id="track_status"
-                                                                                name="track_status">
-                                                                            <option value="WAITING" selected="selected">
-                                                                                WAITING
-                                                                            </option>
-                                                                            <option value="STUDYING">
-                                                                                STUDYING
-                                                                            </option>
-                                                                            <option value="CERTIFIED">
-                                                                                CERTIFIED
-                                                                            </option>
-                                                                            <option value="TEMP_STOP">
-                                                                                TEMP_STOPPED
-                                                                            </option>
-                                                                            <option value="FINAL_STOP">
-                                                                                FINAL_STOPPED
-                                                                            </option>
-                                                                            <option value="FIRED">
-                                                                                FIRED
-                                                                            </option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                    <textarea type="text" class="form-control"
-                                                                              id="track_comments"
-                                                                              style="border: none; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"
-                                                                              placeholder="More comments"
-                                                                              disabled></textarea>
-                                                                    </td>
-                                                                </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                            <!-- /.table-of-created-tracks -->
                                         </div>
+                                        <!-- /.box-body -->
 
+                                        <div class="box-footer">
+                                            <button type="submit" id="btn-register" class="btn btn-info pull-right">
+                                                Register
+                                            </button>
+                                        </div>
+                                        <!-- /.box-footer -->
                                     </div>
-
-                                    <!-- /.box-footer -->
                                 </form>
-                                <!-- /.box-body -->
-                                <div class="box-footer">
-                                    <button id="btn-register" class="btn btn-info pull-right">Register</button>
-                                </div>
+                                <!-- /.student-form -->
                             </div>
-                            <!-- /.form-box -->
+                            <!-- /.box-info -->
                         </div>
+                        <!-- /.col -->
                     </div>
-
+                    <!-- /.row -->
 
                 </section>
                 <!-- /.content -->
@@ -522,58 +556,52 @@
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
-        <!-- to send data from db to the map in javascript code -->
-        <!-- to use attribute from the controller in javascript file -->
-        <script th:inline="javascript">
-            //var activityCourses = [[${activityCourses}]];
-        </script>
+
         <!-- jQuery 2.2.3 -->
         <script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-                th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+                th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
         <!-- Bootstrap 3.3.6 -->
-        <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
         <!-- Select2 -->
         <script src="../../lib/plugins/select2/select2.full.min.js"
-                th:src="@{/lib/plugins/select2/select2.full.min.js}"></script>
+                th:src="@{~/lib/plugins/select2/select2.full.min.js}"></script>
         <!-- iCheck -->
-        <script src="../../lib/plugins/iCheck/icheck.min.js" th:src="@{/lib/plugins/iCheck/icheck.min.js}"></script>
+        <script src="../../lib/plugins/iCheck/icheck.min.js" th:src="@{~/lib/plugins/iCheck/icheck.min.js}"></script>
         <!-- bootstrap datepicker -->
         <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
-                th:src="@{/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
-        <!-- iCheck -->
-        <script src="/lib/plugins/iCheck/icheck.min.js" th:src="@{/lib/plugins/iCheck/icheck.min.js}"></script>
-
+                th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
         <!-- DataTables -->
         <script src="../lib/plugins/datatables/jquery.dataTables.min.js"
-                th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
+                th:src="@{~/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
         <script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
-                th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+                th:src="@{~/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
         <!-- script to populate tracks table based on selection of activity dropdown list -->
-        <script src="../../lib/dist/js/pages/student.js" th:src="@{/lib/dist/js/pages/student.js}"></script>
+        <script src="../../lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
 
         <script>
             $(function () {
-
-                $("#student-tracks").DataTable({
-                    "ordering": false
+                $("#table-tracks").DataTable({
+                    "ordering": false,
+                    "scrollX": true
                 });
+
+                $(".table-selects").select2();
+
                 //Initialize Select2 Elements
                 $("#select-activity").select2({
                     placeholder: "Select An Activity"
                 });
-
                 //Initialize Select2 Elements
                 $("#select-country").select2({
                     placeholder: "Select Country"
                 });
 
-                $('.datepicker').datepicker({
+                $('.date-picker').datepicker({
                     format: 'yyyy-mm-dd',
                     todayBtn: true,
                     todayHighlight: true,
                     autoclose: true
                 }).datepicker("setDate", new Date());
-
                 $('input').iCheck({
                     checkboxClass: 'icheckbox_square-blue',
                     radioClass: 'iradio_square-blue',
