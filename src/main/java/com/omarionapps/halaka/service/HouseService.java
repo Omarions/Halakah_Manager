@@ -21,7 +21,7 @@ public class HouseService {
         this.houseRepository = houseRepository;
     }
 
-    public House getById(Integer id) {
+	public House findById(Integer id) {
         return houseRepository.findOne(id);
     }
 

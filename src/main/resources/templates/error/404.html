@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -30,10 +30,10 @@
 <div class="wrapper" style="height: auto;">
 
   <!-- Main Header -->
-  <div th:include="/layout/header :: header"></div>
+  <!-- Removed because it gives error at #httpSesssion....-->
 
   <!-- Left side column. contains the logo and sidebar -->
-  <div th:include="/layout/sidebarnav :: sidebarnav"></div>
+  <!-- Removed because it gives error at #httpSesssion....-->
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="min-height: 1125px;">
@@ -43,7 +43,7 @@
         404 Error Page
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">404 error</li>
       </ol>
     </section>
@@ -81,7 +81,7 @@
   </div>
   <!-- /.content-wrapper -->
 
-    <!-- Main Footer -->
+  <!-- Main Footer -->
     <div th:include="/layout/footer :: footer"></div>
 
   <!-- Control Sidebar -->

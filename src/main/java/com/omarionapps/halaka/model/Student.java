@@ -7,9 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Omar on 09-Apr-17.
@@ -50,9 +48,9 @@ public class Student {
     private House house;
     private String comments;
     @OneToMany(mappedBy = "student")
-    private Set<CourseTrack> courseTracks = new HashSet<>();
+    private List<CourseTrack> courseTracks = new ArrayList<>();
     @OneToMany(mappedBy = "student")
-    private Set<StudentTrack> studentTracks = new HashSet<>();
+    private List<StudentTrack> studentTracks = new ArrayList<>();
     @Transient
     private List<Certificate> certificates = new ArrayList<>();
     @Transient
@@ -188,11 +186,11 @@ public class Student {
         this.comments = comments;
     }
 
-    public Set<CourseTrack> getCourseTracks() {
+    public List<CourseTrack> getCourseTracks() {
         return courseTracks;
     }
 
-    public void setCourseTracks(Set<CourseTrack> courseTracks) {
+    public void setCourseTracks(List<CourseTrack> courseTracks) {
         this.courseTracks = courseTracks;
     }
 
@@ -204,11 +202,11 @@ public class Student {
         return certificates;
     }
 
-    public Set<StudentTrack> getStudentTracks() {
+    public List<StudentTrack> getStudentTracks() {
         return studentTracks;
     }
 
-    public void setStudentTracks(Set<StudentTrack> studentTracks) {
+    public void setStudentTracks(List<StudentTrack> studentTracks) {
         this.studentTracks = studentTracks;
     }
 

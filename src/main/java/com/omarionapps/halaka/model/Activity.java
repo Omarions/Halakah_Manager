@@ -1,6 +1,7 @@
 package com.omarionapps.halaka.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +10,7 @@ import java.util.Set;
  * Created by Omar on 16-Apr-17.
  */
 @Entity
-public class Activity{
+public class Activity implements Serializable {
     @Id
     @GeneratedValue
     private int id;
@@ -27,17 +28,13 @@ public class Activity{
 
     public Activity(){}
 
+	public Activity(String name) {
+		this.name = name;
+	}
+
     public Activity(String name, String comments) {
         this.name = name;
         this.comments = comments;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -97,19 +94,8 @@ public class Activity{
     }
 
     @Override
-    public String toString() {
-        StringBuilder teachers = new StringBuilder();
-        StringBuilder activityCourses = new StringBuilder();
-
-        teacher.forEach((t) -> teachers.append(t.getName()).append(','));
-        courses.forEach((c) -> activityCourses.append(c.getName()).append(','));
-
-        return "Activity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", comments='" + comments + '\'' +
-                ", teachers=[" + teachers + "]" +
-                ", courses=[" + activityCourses + "]}";
+    public int hashCode() {
+        return getId();
     }
 
     @Override
@@ -123,8 +109,27 @@ public class Activity{
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
-    public int hashCode() {
-        return getId();
+    public String toString() {
+        StringBuilder teachers = new StringBuilder();
+        StringBuilder activityCourses = new StringBuilder();
+
+        teacher.forEach((t) -> teachers.append(t.getName()).append(','));
+        courses.forEach((c) -> activityCourses.append(c.getName()).append(','));
+
+        return "Activity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", comments='" + comments + '\'' +
+                ", teachers=[" + teachers + "]" +
+                ", courses=[" + activityCourses + "]}";
     }
 }

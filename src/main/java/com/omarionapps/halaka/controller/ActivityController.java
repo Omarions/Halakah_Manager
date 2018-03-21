@@ -55,44 +55,6 @@ public class ActivityController {
         return (null == id) ? addActivity() : getActivity(id);
     }
 
-    @PostMapping("/admin/activities/activity")
-    public String updateActivity(@Valid Activity activity, Model model) {
-        Activity returnedActivity = null;
-        if (activity.getId() != 0) {
-            activity.setTeacher(activityService.getTeachersByActivity(activity));
-        }
-        returnedActivity = activityService.save(activity);
-        model.addAttribute("activity", returnedActivity);
-        return "redirect:/admin/activities/activity?id=" + returnedActivity.getId();
-    }
-
-    /**
-     * Send the activity to archive
-     *
-     * @param id            the activity ID to be archived
-     * @param redirectAttrs the message to be send with the link to be directed to after archiving success.
-     * @return the link to be directed to after success.
-     */
-    @GetMapping("/admin/activities/activity/delete")
-    public String archiveActivity(@RequestParam(value = "id") int id, RedirectAttributes redirectAttrs) {
-        Activity activity = activityService.findById(id);
-        activity.setArchived(true);
-        activity.setArchivedDate(Date.valueOf(LocalDate.now()));
-        Activity archivedActivity = activityService.save(activity);
-        if (archivedActivity != null) {
-            Set<Course> courses = archivedActivity.getCourses();
-            courses.forEach((course) -> {
-                course.setArchived(true);
-                course.setArchivedDate(Date.valueOf(LocalDate.now()));
-                courseService.save(course);
-            });
-        }
-        //activityService.delete(id);
-        redirectAttrs.addFlashAttribute("message", "Activity with ID( " + id + " ) was archived successfully");
-        return "redirect:/admin/activities";
-    }
-
-
     private ModelAndView addActivity() {
         ModelAndView model = new ModelAndView("admin/register-activity");
         model.addObject("activity", new Activity());
@@ -155,5 +117,42 @@ public class ActivityController {
             return modelAndView;
         }
 
+    }
+
+    @PostMapping("/admin/activities/activity")
+    public String updateActivity(@Valid Activity activity, Model model) {
+        Activity returnedActivity = null;
+        if (activity.getId() != 0) {
+            activity.setTeacher(activityService.getTeachersByActivity(activity));
+        }
+        returnedActivity = activityService.save(activity);
+        model.addAttribute("activity", returnedActivity);
+        return "redirect:/admin/activities/activity?id=" + returnedActivity.getId();
+    }
+
+    /**
+     * Send the activity to archive
+     *
+     * @param id            the activity ID to be archived
+     * @param redirectAttrs the message to be send with the link to be directed to after archiving success.
+     * @return the link to be directed to after success.
+     */
+    @GetMapping("/admin/activities/activity/delete")
+    public String archiveActivity(@RequestParam(value = "id") int id, RedirectAttributes redirectAttrs) {
+        Activity activity = activityService.findById(id);
+        activity.setArchived(true);
+        activity.setArchivedDate(Date.valueOf(LocalDate.now()));
+        Activity archivedActivity = activityService.save(activity);
+        if (archivedActivity != null) {
+            Set<Course> courses = archivedActivity.getCourses();
+            courses.forEach((course) -> {
+                course.setArchived(true);
+                course.setArchivedDate(Date.valueOf(LocalDate.now()));
+                courseService.save(course);
+            });
+        }
+        //activityService.delete(id);
+        redirectAttrs.addFlashAttribute("message", "Activity with ID( " + id + " ) was archived successfully");
+        return "redirect:/admin/activities";
     }
 }

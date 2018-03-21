@@ -21,7 +21,8 @@ public class House {
     @OneToMany(mappedBy = "house")
     private Set<Student> students;
 
-    private House(){}
+	public House() {
+	}
 
     public int getId() {
         return id;

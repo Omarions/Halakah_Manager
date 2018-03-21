@@ -119,7 +119,7 @@
                                 <div class="row" th:remove="all-but-first">
                                     <div class="col-sm-12">
                                         <table id="example1" class="table table-bordered table-striped dataTable"
-                                               role="grid"
+                                               role="grid" width="100%"
                                                aria-describedby="example1_info">
                                             <thead>
                                                 <tr role="row">
@@ -587,7 +587,7 @@
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
-        <!-- to send data from db to the map in javascript code -->
+
         <!-- jQuery 2.2.3 -->
         <script src="../lib/plugins/jQuery/jquery-2.2.3.min.js"
                 th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
@@ -604,6 +604,7 @@
         <script src="../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
         <script>
             $(function () {
+
                 $("#example1").DataTable({
                     "scrollX": true
                 });

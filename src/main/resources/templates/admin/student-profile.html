@@ -9,29 +9,29 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
-          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+          th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
     <!-- Select2 -->
     <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
-          th:href="@{/lib/plugins/select2/select2.min.css}"/>
+          th:href="@{~/lib/plugins/select2/select2.min.css}"/>
     <!-- bootstrap datepicker -->
     <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
           th:href="@{/lib/plugins/datepicker/datepicker3.css}"/>
     <!-- DataTables -->
     <link rel="stylesheet" href="../../lib/plugins/datatables/dataTables.bootstrap.css"
-          th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
+          th:href="@{~/lib/plugins/datatables/dataTables.bootstrap.css}"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
+    <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.css" th:href="@{/lib/dist/css/AdminLTE.css}"/>
+    <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.css" th:href="@{~/lib/dist/css/AdminLTE.css}"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <!-- use skin-blue -->
     <link rel="stylesheet" href="../../lib/dist/css/skins/_all-skins.min.css"
-          th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
+          th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,8 +57,8 @@
                 Student Profile
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#">Students</a></li>
+                <li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="#" th:href="@{/admin/students}">Students</a></li>
                 <li class="active">Student</li>
             </ol>
         </section>
@@ -73,8 +73,8 @@
                     <div class="box box-primary">
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle"
-                                 src="../../lib/dist/img/user4-128x128.jpg"
-                                 th:src="@{'/lib/dist/img/' + ${student.photo}}" alt="User profile picture"/>
+                                 src="../../lib/dist/img/student/user4-128x128.jpg"
+                                 th:src="@{'~/lib/dist/img/student/' + ${student.photo}}" alt="User profile picture"/>
 
                             <h3 class="profile-username text-center" th:text="${student.name}">Nina Mcintire</h3>
 
@@ -610,7 +610,8 @@
                                                                 </th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody th:remove="all-but-first">
+                                                        <tbody th:remove="all-but-first"
+                                                               th:if="(${#lists.size(student.certificates)}) > 0">
                                                             <tr rol="row" th:each="cert : ${student.certificates}"
                                                                 th:class="${certStat.odd}? 'odd' : 'even'">
                                                                 <td class="sorting_1" th:text="${cert.id}">Certificate
@@ -625,7 +626,7 @@
                                                                        th:href="@{/admin/teachers/teacher(id=${cert.studentTrack.course.teacher.id})}"><span
                                                                         th:text="${cert.studentTrack.course.teacher.name}">Teacher Name</span></a>
                                                                 </td>
-                                                                <td th:text="${cert.releaseDate}">Release Date</td>
+                                                                <td th:text="${cert.event.eventDate}">Release Date</td>
                                                                 <td><img src="#"
                                                                          th:src="@{'/lib/dist/img/credit/' + ${cert.image}}"
                                                                          alt="Certificate Photo"/></td>
@@ -1160,24 +1161,24 @@
 
 <!-- jQuery 2.2.3 -->
     <script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-            th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+            th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
-    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- Select2 -->
     <script src="../../lib/plugins/select2/select2.full.min.js"
-            th:src="@{/lib/plugins/select2/select2.full.min.js}"></script>
+            th:src="@{~/lib/plugins/select2/select2.full.min.js}"></script>
 <!-- bootstrap datepicker -->
     <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
-            th:src="@{/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+            th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
 <!-- DataTables -->
     <script src="../../lib/plugins/datatables/jquery.dataTables.min.js"
-            th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
+            th:src="@{~/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
     <script src="../../lib/plugins/datatables/dataTables.bootstrap.min.js"
-            th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+            th:src="@{~/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
 <!-- FastClick -->
-    <script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{/lib/plugins/fastclick/fastclick.js}"></script>
+    <script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
 <!-- AdminLTE App -->
-    <script src="../../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
+    <script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
 <script>
     $(function () {
         //Initialize Select2 Elements

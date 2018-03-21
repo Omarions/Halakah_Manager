@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.service;
 
+import com.omarionapps.halaka.model.RegisteringStudent;
 import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.model.StudentTrack;
@@ -18,17 +19,17 @@ public class StudentService {
     long countByStatus = 0;
     long totalStudents;
     private StudentRepository studentRepository;
+    private StudentTrackService studentTrackService;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository){
+    public StudentService(StudentRepository studentRepository, StudentTrackService studentTrackService) {
         this.studentRepository = studentRepository;
+        this.studentTrackService = studentTrackService;
     }
 
     public Student getById(Integer id) {
         return studentRepository.findOne(id);
     }
-
-    public Iterable<Student> getAll (){ return studentRepository.findAll(); }
 
     public Iterable<Student> findAllOrderByCountry(){ return studentRepository.findAllByOrderByCountry(); }
 
@@ -50,10 +51,44 @@ public class StudentService {
         return countByStatus;
     }
 
+    public Iterable<Student> getAll() {
+        return studentRepository.findAll();
+    }
+
+	public Student registerStudent(RegisteringStudent student) {
+        /*
+        Student returnedStudent = studentRepository.save(student);
+        for (StudentTrack st : student.getStudentTracks()) {
+            if (st != null) {
+                //System.out.println("Returned Student: " + returnedStudent);
+                //System.out.println("ST: " + st);
+                st.setStudent(returnedStudent);
+                studentTrackService.save(st);
+            } else {
+                System.out.println("No Student Track");
+            }
+
+        }
+        return studentRepository.save(student);
+        */
+		return null;
+	}
+
     public Student save(Student student) {
 
-        return studentRepository.save(student);
+        Student returnedStudent = studentRepository.save(student);
+        for (StudentTrack st : student.getStudentTracks()) {
+            if (st != null) {
+	            //System.out.println("Returned Student: " + returnedStudent);
+	            //System.out.println("ST: " + st);
+                st.setStudent(returnedStudent);
+                studentTrackService.save(st);
+            } else {
+                System.out.println("No Student Track");
+            }
 
+        }
+        return studentRepository.save(student);
     }
 
     public void delete(int id) {
