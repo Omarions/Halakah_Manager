@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>Halaka Manager</name>
-	<description>Halaka Manager Web app for Halaka Foundation</description>
+    <description>Halaka Manager Web app for Halakah Foundation</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

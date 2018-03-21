@@ -1,12 +1,10 @@
 package com.omarionapps.halaka.service;
 
 import com.omarionapps.halaka.model.Activity;
-import com.omarionapps.halaka.model.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.Locale;
 
 /**
@@ -16,8 +14,9 @@ import java.util.Locale;
 public class ActivityConverter implements Formatter<Activity> {
     @Autowired
     ActivityService activityService;
+
     @Override
-    public Activity parse(String s, Locale locale) throws ParseException {
+    public Activity parse(String s, Locale locale) {
         if(null != s){
             try {
                 int id = Integer.valueOf(s);

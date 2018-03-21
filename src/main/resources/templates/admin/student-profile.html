@@ -610,7 +610,8 @@
                                                                 </th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody th:remove="all-but-first">
+                                                        <tbody th:remove="all-but-first"
+                                                               th:if="(${#lists.size(student.certificates)}) > 0">
                                                             <tr rol="row" th:each="cert : ${student.certificates}"
                                                                 th:class="${certStat.odd}? 'odd' : 'even'">
                                                                 <td class="sorting_1" th:text="${cert.id}">Certificate

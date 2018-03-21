@@ -86,7 +86,7 @@
 
                                 <!-- form start -->
                                 <form id="frmRegisterStudent" class="form-horizontal" action="#"
-                                      th:action="@{/admin/students/student}" method="post" th:object="${student}">
+                                      th:action="@{/admin/students/student}" method="post" th:object="${reg_student}">
 
                                     <div class="box-body">
 
@@ -99,10 +99,10 @@
                                                 <img src="../lib/dist/img/student/avatar5.png"
                                                      th:src="@{/lib/dist/img/student/avatar5.png}"
                                                      id="img-photo" name="photo" class="img-circle" alt="User Image"
-                                                     style="width: 160px; height: 160px"/>
+                                                     style="width: 160px; height: 160px" th:field="*{student.photo}"/>
 
                                                 <input type="file" name="photo" id="input-photo" class="hidden"
-                                                       th:field="*{photo}"/>
+                                                       th:field="*{student.photo}"/>
 
                                             </div>
                                         </div>
@@ -110,13 +110,14 @@
 
                                         <!-- input for name -->
                                         <div class="form-group"
-                                             th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+                                             th:classappend="${#fields.hasErrors('student.name')}? 'has-error'">
                                             <label for="input-name" class="col-sm-2 control-label">Name</label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-name"
-                                                       placeholder="Name" name="name" th:field="*{name}"/>
-                                                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                                       placeholder="Name" name="name" th:field="*{student.name}"/>
+                                                <span th:if="${#fields.hasErrors('student.name')}"
+                                                      th:errors="*{student.name}"
                                                       th:class="help-block">Name Errors</span>
                                             </div>
                                         </div>
@@ -130,13 +131,14 @@
                                                 <div class="iradio">
                                                     <label>
                                                         <input type="radio" name="gender" id="male-radio"
-                                                               value="MALE" checked="true"/> Male
+                                                               value="MALE" checked="true"
+                                                               th:field="*{student.gender}"/> Male
                                                     </label>
                                                 </div>
                                                 <div class="iradio">
                                                     <label>
                                                         <input type="radio" name="gender" id="female-radio"
-                                                               value="FEMALE"/> Female
+                                                               value="FEMALE" th:field="*{student.gender}"/> Female
                                                     </label>
                                                 </div>
                                             </div>
@@ -150,7 +152,7 @@
 
                                             <div class="col-sm-10">
                                                 <select id="select-country" class="select2 form-control"
-                                                        th:field="*{country}" name="country">
+                                                        th:field="*{student.country}" name="country">
                                                     <option value="null" text="Select Country">Select Country</option>
                                                     <option th:each="country: ${countries}" th:value="${country.id}"
                                                             th:text="${country.arabicName}">Select Country
@@ -166,8 +168,9 @@
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-email"
-                                                       name="email" placeholder="Email" th:field="*{email}"/>
-                                                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                                       name="email" placeholder="Email" th:field="*{student.email}"/>
+                                                <span th:if="${#fields.hasErrors('student.email')}"
+                                                      th:errors="*{student.email}"
                                                       th:class="help-block">Email Errors</span>
                                             </div>
                                         </div>
@@ -180,8 +183,9 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-tel"
                                                        name="tel" placeholder="Tel"
-                                                       th:field="*{tel}"/>
-                                                <span th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"
+                                                       th:field="*{student.tel}"/>
+                                                <span th:if="${#fields.hasErrors('student.tel')}"
+                                                      th:errors="*{student.tel}"
                                                       th:class="help-block">Tel Errors</span>
                                             </div>
                                         </div>
@@ -195,8 +199,9 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-education"
                                                        name="education" placeholder="Education"
-                                                       th:field="*{education}"/>
-                                                <span th:if="${#fields.hasErrors('education')}" th:errors="*{education}"
+                                                       th:field="*{student.education}"/>
+                                                <span th:if="${#fields.hasErrors('student.education')}"
+                                                      th:errors="*{student.education}"
                                                       th:class="help-block">Education Errors</span>
                                             </div>
                                         </div>
@@ -209,8 +214,9 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-job"
                                                        name="job" placeholder="Job"
-                                                       th:field="*{job}"/>
-                                                <span th:if="${#fields.hasErrors('job')}" th:errors="*{job}"
+                                                       th:field="*{student.job}"/>
+                                                <span th:if="${#fields.hasErrors('student.job')}"
+                                                      th:errors="*{student.job}"
                                                       th:class="help-block">Job Errors</span>
                                             </div>
                                         </div>
@@ -224,7 +230,7 @@
                                                 <textarea type="text" class="form-control" id="input-comments"
                                                           name="comments"
                                                           placeholder="Set comments for the student if needed"
-                                                          th:field="*{comments}">Extra info</textarea>
+                                                          th:field="*{student.comments}">Extra info</textarea>
                                             </div>
                                         </div>
                                         <!-- /.input-for-comments -->
@@ -241,7 +247,7 @@
                                                        aria-describedby="example1_info">
                                                     <thead>
                                                         <tr>
-                                                            <th>Track ID</th>
+                                                            <th>Select</th>
                                                             <th>Activity</th>
                                                             <th>Course Name</th>
                                                             <th>Track Status</th>
@@ -253,29 +259,51 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="tracks-data">
-                                                        <tr th:each="studentTrack, stat :  *{studentTracks}"
-                                                        >
-                                                            <td><input type="hidden" th:value="0" name="id"
-                                                                       th:field="*{studentTracks[__${stat.index}__].id}"/>
+                                                    <tr th:each="wish, stat :  *{wishes}">
+                                                        <td>
+                                                            <div class="checkbox icheck">
+                                                                <input type="checkbox" id="selected" name="selected"
+                                                                       th:field="*{wishes[__${stat.index}__].selected}"/>
+                                                            </div>
                                                             </td>
-                                                            <td><label th:text="${activities[3].name}"></label></td>
+                                                        <td>
+                                                            <select id="select-activity"
+                                                                    class="select2 form-control table-selects"
+                                                                    th:field="*{wishes[__${stat.index}__].activityId}">
+                                                                <option th:each="act : ${activities[__${stat.index}__]}"
+                                                                        th:value="${act.id}"
+                                                                        th:text="${act.name}">
+                                                                    Select Course
+                                                                </option>
+                                                            </select>
+
+                                                        </td>
                                                             <td>
                                                                 <select id="select-course"
                                                                         class="select2 form-control table-selects"
-                                                                        th:field="*{studentTracks[__${stat.index}__].course}">
-                                                                    <option th:each="cs : ${activities[3].courses}"
+                                                                        th:field="*{wishes[__${stat.index}__].house}"
+                                                                        th:if="(${activities[__${stat.index}__].id}) == 7">
+                                                                    <option th:each="house : ${houses}"
+                                                                            th:value="${house.id}"
+                                                                            th:text="${house.name}">
+                                                                        Select Course
+                                                                    </option>
+                                                                </select>
+                                                                <select id="select-course"
+                                                                        class="select2 form-control table-selects"
+                                                                        th:field="*{wishes[__${stat.index}__].course}"
+                                                                        th:if="(${#lists.size(activities[__${stat.index}__].courses)}) > 0">
+                                                                    <option th:each="cs : ${activities[__${stat.index}__].courses}"
                                                                             th:value="${cs.id}"
-                                                                            th:text="${cs.name}"
-                                                                    >
-                                                                        Select
-                                                                        Course
+                                                                            th:text="${cs.name}">
+                                                                        Select Course
                                                                     </option>
                                                                 </select>
                                                             </td>
                                                             <td>
                                                                 <select id="select-status"
                                                                         class="select2 form-control table-selects"
-                                                                        th:field="*{studentTracks[__${stat.index}__].status}">
+                                                                        th:field="*{wishes[__${stat.index}__].status}">
 
                                                                     <option th:each="sts : ${trackStatuses}"
                                                                             th:value="${sts.toString()}"
@@ -295,7 +323,7 @@
                                                                            id="register-datepicker"
                                                                            th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
                                                                            name="registerDate"
-                                                                           th:field="*{studentTracks[__${stat.index}__].registerDate}"/>
+                                                                           th:field="*{wishes[__${stat.index}__].registerDate}"/>
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -308,7 +336,7 @@
                                                                            id="start-datepicker"
                                                                            th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
                                                                            name="startDate"
-                                                                           th:field="*{studentTracks[__${stat.index}__].startDate}"/>
+                                                                           th:field="*{wishes[__${stat.index}__].startDate}"/>
                                                                 </div>
 
                                                             </td>
@@ -318,13 +346,13 @@
                                                                        placeholder="Evaluation"
                                                                        value="0"
                                                                        name="evaluation"
-                                                                       th:field="*{studentTracks[__${stat.index}__].evaluation}"/>
+                                                                       th:field="*{wishes[__${stat.index}__].evaluation}"/>
                                                             </td>
                                                             <td>
                                                                 <textarea type="text" class="form-control"
                                                                           id="track-comments"
                                                                           placeholder="Set comments for the track if needed"
-                                                                          th:field="*{studentTracks[__${stat.index}__].comments}"></textarea>
+                                                                          th:field="*{wishes[__${stat.index}__].comments}"></textarea>
                                                             </td>
                                                             <td>
                                                                 <a href="#"><i class="fa fa-trash-o fa-3x"></i></a>

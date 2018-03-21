@@ -9,24 +9,35 @@ import java.sql.Date;
  */
 @Entity
 public class StudentTrack implements Serializable {
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @ManyToOne
+    private int         id;
+	@ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private Student student;
-    @ManyToOne
+    private Student     student;
+	@ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id")
-    private Course course;
-    @OneToOne(mappedBy = "studentTrack")
+    private Course      course;
+	@OneToOne(mappedBy = "studentTrack")
     private Certificate certificate;
-    private Date registerDate;
-    private Date startDate;
-    private String status;
-    private int evaluation;
-    private String comments;
+	private Date        registerDate;
+	private Date        startDate;
+	private String      status;
+	private int         evaluation;
+	private String      comments;
+	@Transient
+	private String      ActivityName;
+
 
     public StudentTrack(){}
+
+	public String getActivityName() {
+		return ActivityName;
+	}
+
+	public void setActivityName(String activityName) {
+		ActivityName = activityName;
+	}
 
     public Student getStudent() {
         return student;

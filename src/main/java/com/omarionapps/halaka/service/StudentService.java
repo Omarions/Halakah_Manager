@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.service;
 
+import com.omarionapps.halaka.model.RegisteringStudent;
 import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.model.StudentTrack;
@@ -54,12 +55,13 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student save(Student student) {
+	public Student registerStudent(RegisteringStudent student) {
+        /*
         Student returnedStudent = studentRepository.save(student);
         for (StudentTrack st : student.getStudentTracks()) {
             if (st != null) {
-                System.out.println("Returned Student: " + returnedStudent);
-                System.out.println("ST: " + st);
+                //System.out.println("Returned Student: " + returnedStudent);
+                //System.out.println("ST: " + st);
                 st.setStudent(returnedStudent);
                 studentTrackService.save(st);
             } else {
@@ -68,7 +70,25 @@ public class StudentService {
 
         }
         return studentRepository.save(student);
+        */
+		return null;
+	}
 
+    public Student save(Student student) {
+
+        Student returnedStudent = studentRepository.save(student);
+        for (StudentTrack st : student.getStudentTracks()) {
+            if (st != null) {
+	            //System.out.println("Returned Student: " + returnedStudent);
+	            //System.out.println("ST: " + st);
+                st.setStudent(returnedStudent);
+                studentTrackService.save(st);
+            } else {
+                System.out.println("No Student Track");
+            }
+
+        }
+        return studentRepository.save(student);
     }
 
     public void delete(int id) {

@@ -28,6 +28,10 @@ public class Activity implements Serializable {
 
     public Activity(){}
 
+	public Activity(String name) {
+		this.name = name;
+	}
+
     public Activity(String name, String comments) {
         this.name = name;
         this.comments = comments;
