@@ -8,7 +8,7 @@
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
         <!-- Bootstrap 3.3.6 -->
-        <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+        <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
               th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
         <!-- Font Awesome -->
         <link rel="stylesheet"
@@ -16,16 +16,16 @@
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
         <!-- DataTables -->
-        <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css"
+        <link rel="stylesheet" href="../../static/lib/plugins/datatables/dataTables.bootstrap.css"
               th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
         <!-- Theme style -->
-        <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
+        <link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
         <!-- Theme style -->
-        <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css" th:href="@{/lib/dist/css/AdminLTE.css}"/>
+        <link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.css" th:href="@{/lib/dist/css/AdminLTE.css}"/>
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <!-- use skin-blue -->
-        <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"
+        <link rel="stylesheet" href="../../static/lib/dist/css/skins/_all-skins.min.css"
               th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -181,7 +181,7 @@
                                                         <a href="#"
                                                            th:href="@{/admin/teachers/teacher(id=${teacher.id})}">
                                                             <img class="profile-user-img img-responsive img-circle"
-                                                                 src="../../lib/dist/img/user4-128x128.jpg"
+                                                                 src="../../../static/lib/dist/img/user4-128x128.jpg"
                                                                  th:src="@{'/lib/dist/img/teacher/' + ${teacher.photo}}"
                                                                  alt="User profile picture"/>
 
@@ -500,19 +500,19 @@
         <!-- ./wrapper -->
         <!-- to send data from db to the map in javascript code -->
         <!-- jQuery 2.2.3 -->
-        <script src="../lib/plugins/jQuery/jquery-2.2.3.min.js"
+        <script src="../../static/lib/plugins/jQuery/jquery-2.2.3.min.js"
                 th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
         <!-- Bootstrap 3.3.6 -->
-        <script src="../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
         <!-- DataTables -->
-        <script src="../lib/plugins/datatables/jquery.dataTables.min.js"
+        <script src="../../static/lib/plugins/datatables/jquery.dataTables.min.js"
                 th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
-        <script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
+        <script src="../../static/lib/plugins/datatables/dataTables.bootstrap.min.js"
                 th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
         <!-- FastClick -->
-        <script src="../lib/plugins/fastclick/fastclick.js" th:src="@{/lib/plugins/fastclick/fastclick.js}"></script>
+        <script src="../../static/lib/plugins/fastclick/fastclick.js" th:src="@{/lib/plugins/fastclick/fastclick.js}"></script>
         <!-- AdminLTE App -->
-        <script src="../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
+        <script src="../../static/lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
         <script>
             $(function () {
                 $("#example1").DataTable();
