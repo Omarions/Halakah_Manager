@@ -22,13 +22,7 @@
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" th:href="@{/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"
     />
-    <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../static/lib/plugins/datepicker/datepicker3.css" th:href="@{/lib/plugins/datepicker/datepicker3.css}">
-
     <link rel="stylesheet" href="../../static/lib/plugins/select2/select2.min.css" th:href="@{/lib/plugins/select2/select2.min.css}"
-    />
-    <!-- Bootstrap Time picker -->
-    <link rel="stylesheet" href="../../static/lib/plugins/timepicker/bootstrap-timepicker.min.css" th:href="@{/lib/plugins/timepicker/bootstrap-timepicker.min.css}"
     />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -71,7 +65,7 @@
             <section class="content">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                        <i class="fa fa-newspaper-o" aria-hidden="true"></i>
                         <h3 class="box-title">Certificate Registration</h3>
                     </div>
                     <!-- /.box-header -->
@@ -83,7 +77,8 @@
                                         <!-- Select Student -->
                                         <div class="form-group">
                                             <label>Student Name</label>
-                                            <select class="form-control select2" style="width: 100%;">
+                                            <select class="form-control select2" id="select-student" style="width: 100%;">
+                                                <option selected="selected" value="1">select a student</option>
                                                 <option>أحمد محمد</option>
                                                 <option>مصطفى السيد</option>
                                                 <option>حسن حامد</option>
@@ -96,25 +91,25 @@
                                         <!-- Select Activity -->
                                         <div class="form-group">
                                             <label>Course</label>
-                                            <select class="form-control select2" disabled="disabled" style="width: 100%;">
-                                                <option selected="selected">خط الرقعة</option>
-                                                <option></option>
+                                            <select class="form-control select2" id="select-course" disabled="disabled" style="width: 100%;">
+                                                <option selected="selected" value="1">select a course</option>
+                                                <option>خط الرقعة</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Party Date</label>
-                                            <div class="input-group date">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
-                                                <input class="form-control pull-right" id="datepicker" type="text">
-                                            </div>
-                                            <!-- /.input group -->
+                                            <select class="form-control select2" style="width: 100%;">
+                                                <option selected="selected" value="1">select a party</option>
+                                                <option>May 11, 2015</option>
+                                                <option>Nov 22, 2015</option>
+                                                <option>Mar 3, 2016</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputFile">Certificate Photo</label>
-                                            <input id="exampleInputFile" type="file">
-                                            <p class="help-block">Upload Certificate Photo</p>
+                                            <label for="exampleInputFile">Certificate Image</label>
+                                            <img id="img-upload" src="../../static/lib/dist/img/photo1.png" alt="certificate-image" style="max-width: 300px;display:block;cursor: pointer">
+                                            <input id="exampleInputFile browse-btn" type="file" class="hidden">
+                                            <p class="help-block">Upload Certificate Image</p>
                                         </div>
                                         <div class="box-footer">
                                             <button type="submit" class="btn btn-primary pull-right">Register</button>
@@ -139,12 +134,6 @@
     <script src="../../static/lib/bootstrap/js/bootstrap.min.js"></script>
     <!-- select2 -->
     <script src="../../static/lib/plugins/select2/select2.full.min.js"></script>
-    <!-- InputMask -->
-    <script src="../../static/lib/plugins/input-mask/jquery.inputmask.js"></script>
-    <script src="../../static/lib/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-    <script src="../../static/lib/plugins/input-mask/jquery.inputmask.extensions.js"></script>
-    <!-- bootstrap datepicker -->
-    <script src="../../static/lib/plugins/datepicker/bootstrap-datepicker.js"></script>
     <!-- AdminLTE App -->
     <script src="../../static/lib/dist/js/app.min.js"></script>
 
@@ -153,10 +142,29 @@
             //Initialize Select2 Elements
             $('.select2').select2();
 
-            //Date picker
-            $('#datepicker').datepicker({
-                autoclose: true,
-                format: 'dd/mm/yyyy'
+            $('#select-student').val(1);
+            $('#select-course').attr('disabled', 'disabled');
+            $('#select-student').change(function () {
+                if ($(this).val() === $(this).children().first().text()) {
+                    $('#select-course').attr('disabled', 'disabled');
+                } else {
+                    // Make http request to get student courses
+                    $('#select-course').removeAttr('disabled');
+                }
+            });
+
+            $('#img-upload').click(function () {
+                $('input[type="file"]').click();
+            });
+
+            $('input[type="file"]').on('change', function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#img-upload').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
             });
         });
     </script>
