@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
  * Created by Omar on 07-Jul-17.
  */
 @Repository
-public interface CertificateRepository extends CrudRepository<Certificate, Long> {
+public interface CertificateRepository extends CrudRepository<Certificate, Integer> {
 
 }

@@ -370,7 +370,4 @@ public class ActivityService {
     public void delete(int id) {
         activityRepository.delete(id);
     }
-
-
-
 }

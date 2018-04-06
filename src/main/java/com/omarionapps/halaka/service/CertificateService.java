@@ -20,7 +20,7 @@ public class CertificateService {
      * @param id to look for
      * @return the certificate with the given id
      */
-    public Certificate findById(long id) {
+    public Certificate findById(int id) {
         return certificateRepository.findOne(id);
     }
 
@@ -44,5 +44,9 @@ public class CertificateService {
 	 */
 	public Certificate save(Certificate certificate) {
 		return certificateRepository.save(certificate);
+	}
+
+	public void delete(int certId) {
+		certificateRepository.delete(certId);
 	}
 }

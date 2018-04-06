@@ -9,30 +9,22 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
-          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"
-    />
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../../static/lib/plugins/datatables/dataTables.bootstrap.css"
-          th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"
-    />
+    <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css"
+          th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
-          th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css" th:href="@{/lib/dist/css/AdminLTE.css}"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <!-- use skin-blue -->
-    <link rel="stylesheet" href="../../static/lib/dist/css/skins/_all-skins.min.css"
-          th:href="@{/lib/dist/css/skins/skin-blue.min.css}"
-    />
-    <!-- iCheck -->
-    <link rel="stylesheet" href="../../static/lib/plugins/iCheck/flat/blue.css"
-          th:href="@{/lib/plugins/iCheck/flat/blue.css}"
-    />
+    <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"
+          th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
     <link rel="stylesheet" href="../../static/lib/dist/css/certificates-custom.css"
           th:href="@{/lib/dist/css/certificates-custom.css}"/>
 
@@ -59,131 +51,288 @@
         <section class="content-header">
             <h1>
                 Dashboard
-                <small>Control Panel</small>
+                <small>Control panel</small>
             </h1>
             <ol class="breadcrumb">
-                <li>
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i> Dashboard</a>
-                </li>
-                <li>
-                    <a href="#">Certificates</a>
-                </li>
-                <li class="active">Certificates List</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active">Certificates</li>
             </ol>
         </section>
 
         <!-- Main content -->
         <section class="content">
-            <div class="row">
-                <div class="col-xs-12">
 
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Halaka Certificates List</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <table id="example1" class="display nowrap table table-bordered table-striped"
-                                   style="width:100%">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Activity</th>
-                                    <th>Student</th>
-                                    <th>Teacher</th>
-                                    <th>Event Date</th>
-                                    <th>Photo</th>
-                                </tr>
-                                </thead>
+            <div class="box">
+                <!-- box header -->
+                <div class="box-header">
 
-                                <tbody th:remove="all-but-first">
-                                <tr role="row" th:each="certificate : ${certificates}"
-                                    th:class="${certificateStat.odd}? 'odd' : 'even'">
-                                    <td class="sorting_1" th:text="${certificate.id}">1</td>
-                                    <td><a href="#" th:text="${certificate.name}">خط الرقعة</a></td>
-                                    <td><a href="#"
-                                           th:href="@{/admin/activities/activity(id=${certificate.studentTrack.course.activity.id})}">
-                                        <span th:text="${certificate.studentTrack.course.activity.name}">Activity Name</span></a>
-                                    </td>
-                                    <td><a href="#"
-                                           th:href="@{/admin/students/student(id=${certificate.studentTrack.student.id})}"><span
-                                            th:text="${certificate.studentTrack.student.name}">Student Name</span> </a>
-                                    </td>
-                                    <td><a href="#"
-                                           th:href="@{/admin/teachers/teacher(id=${certificate.studentTrack.course.teacher.id})}"><span
-                                            th:text="${certificate.studentTrack.course.teacher.name}">Teacher Name</span>
-                                    </a></td>
-                                    <td th:text="${certificate.event.eventDate}">April 7, 2016</td>
-                                    <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
-                                             th:src="@{'/lib/dist/img/certificate/' + ${certificate.image}}"
-                                             alt="certificate image">
-                                    </td>
-                                </tr>
-                                <tr role="row" class="odd">
-                                    <td class="sorting_1">1</td>
-                                    <td><a href="#">خط الرقعة</a></td>
-                                    <td><a href="#">الخط العربي</a></td>
-                                    <td><a href="#">أحمد محمد</a></td>
-                                    <td><a href="#">أ مصطفى محمد</a></td>
-                                    <td>April 7, 2016</td>
-                                    <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
-                                             alt="certificate image">
-                                    </td>
-                                </tr>
-                                <tr role="row" class="odd">
-                                    <td class="sorting_1">1</td>
-                                    <td><a href="#">خط الرقعة</a></td>
-                                    <td><a href="#">الخط العربي</a></td>
-                                    <td><a href="#">أحمد محمد</a></td>
-                                    <td><a href="#">أ مصطفى محمد</a></td>
-                                    <td>April 7, 2016</td>
-                                    <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
-                                             alt="certificate image">
-                                    </td>
-                                </tr>
-                                <tr role="row" class="odd">
-                                    <td class="sorting_1">1</td>
-                                    <td><a href="#">خط الرقعة</a></td>
-                                    <td><a href="#">الخط العربي</a></td>
-                                    <td><a href="#">أحمد محمد</a></td>
-                                    <td><a href="#">أ مصطفى محمد</a></td>
-                                    <td>April 7, 2016</td>
-                                    <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
-                                             alt="certificate image">
-                                    </td>
-                                </tr>
-
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Activity</th>
-                                    <th>Student</th>
-                                    <th>Teacher</th>
-                                    <th>Event Date</th>
-                                    <th>Photo</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <!-- /.box-body -->
+                    <div class="col-sm-6">
+                        <h3 class="box-title">Halaka Certificates List</h3>
                     </div>
-                    <!-- /.box -->
+
+                    <!-- Error message -->
+                    <div th:if="${message}">
+                        <div><br/></div>
+                        <div class="col-sm-12">
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                                <span th:text="${message}">Success alert preview. This alert is dismissable.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Error message -->
+
                 </div>
-                <!-- /.col -->
+                <!-- /.box-header -->
+
+                <!-- box body -->
+                <div class="box-body">
+                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row" th:remove="all">
+                            <div class="col-sm-6">
+                                <div class="dataTables_length" id="example1_length">
+                                    <label>Show
+                                        <select name="example1_length" aria-controls="example1"
+                                                class="form-control input-sm">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                        entries</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div id="example1_filter" class="dataTables_filter">
+                                    <label>Search:<input type="search" class="form-control input-sm"
+                                                         placeholder="Teacher Name" aria-controls="example1"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" th:remove="all-but-first">
+                            <div class="col-sm-12">
+                                <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                                       aria-describedby="example1_info">
+
+                                    <!-- Header of the table -->
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="ID: activate to sort column descending"
+                                            style="width: 130.4px;">ID
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                            colspan="1" aria-label="Name: activate to sort column ascending"
+                                            style="width: 266.4px;">Name
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                            colspan="1" aria-label="Activity: activate to sort column ascending"
+                                            style="width: 237.4px;">Activity
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                            colspan="1" aria-label="Student: activate to sort column ascending"
+                                            style="width: 186.4px;">Student
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                            colspan="1" aria-label="Teacher: activate to sort column ascending"
+                                            style="width: 135.2px;">Teacher
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                            colspan="1" aria-label="Date: activate to sort column ascending"
+                                            style="width: 266.2px;">Date
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                            colspan="1" aria-label="Photo: activate to sort column ascending"
+                                            style="width: 135.2px;">Photo
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                            colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                            style="width: 266.2px;">Tools
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <!-- End of header -->
+
+                                    <!-- Body of the table -->
+                                    <tbody th:remove="all-but-first">
+                                    <tr rol="row" th:each="cert : ${certificates}"
+                                        th:class="${certStat.odd}? 'odd' : 'even'">
+                                        <td class="sorting_1" th:text="${cert.id}">ID</td>
+                                        <td th:text="${cert.name}">Name</td>
+                                        <td><a href="#"
+                                               th:href="@{/admin/activities/activity(id=${cert.studentTrack.course.activity.id})}">
+                                            <span th:text="${cert.studentTrack.course.activity.name}">Activity
+                                                Name</span> </a></td>
+                                        <td><a href="#"
+                                               th:href="@{/admin/students/student(id=${cert.studentTrack.student.id})}"><span
+                                                th:text="${cert.studentTrack.student.name}">Student Name</span></a></td>
+                                        <td><a href="#"
+                                               th:href="@{/admin/teachers/teacher(id=${cert.studentTrack.course.teacher.id})}"><span
+                                                th:text="${cert.studentTrack.course.teacher.name}">Teacher
+                                            Name</span></a></td>
+                                        <td><a href="#"
+                                               th:href="@{/admin/events/event(id=${cert.event.id})}"><span
+                                                th:text="${cert.event.eventDate}">Event Date</span></a></td>
+                                        <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
+                                                 th:src="@{'/lib/dist/img/certificate/' + ${cert.image}}"
+                                                 alt="certificate image"></td>
+                                        <td>
+                                            <ul class="dtt">
+                                                <li>
+                                                    <div class="tools">
+                                                        <a href="#"
+                                                           th:href="@{/admin/certificates/certificate(id=${cert.id})}"><i
+                                                                class="fa fa-edit fa-3x"></i></a>
+                                                        <a href="#"
+                                                           th:href="@{/admin/certificates/certificate/delete(id=${cert.id})}"><i
+                                                                class="fa fa-trash-o fa-3x"></i></a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Firefox 1.0</td>
+                                        <td>Win 98+ / OSX.2+</td>
+                                        <td>1.7</td>
+                                        <td>A</td>
+                                    </tr>
+                                    <tr role="row" class="even">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Firefox 1.5</td>
+                                        <td>Win 98+ / OSX.2+</td>
+                                        <td>1.8</td>
+                                        <td>A</td>
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Firefox 2.0</td>
+                                        <td>Win 98+ / OSX.2+</td>
+                                        <td>1.8</td>
+                                        <td>A</td>
+                                    </tr>
+                                    <tr role="row" class="even">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Firefox 3.0</td>
+                                        <td>Win 2k+ / OSX.3+</td>
+                                        <td>1.9</td>
+                                        <td>A</td>
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Camino 1.0</td>
+                                        <td>OSX.2+</td>
+                                        <td>1.8</td>
+                                        <td>A</td>
+                                    </tr>
+                                    <tr role="row" class="even">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Camino 1.5</td>
+                                        <td>OSX.3+</td>
+                                        <td>1.8</td>
+                                        <td>A</td>
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Netscape 7.2</td>
+                                        <td>Win 95+ / Mac OS 8.6-9.2</td>
+                                        <td>1.7</td>
+                                        <td>A</td>
+                                    </tr>
+                                    <tr role="row" class="even">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Netscape Browser 8</td>
+                                        <td>Win 98SE+</td>
+                                        <td>1.7</td>
+                                        <td>A</td>
+                                    </tr>
+                                    <tr role="row" class="odd">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Netscape Navigator 9</td>
+                                        <td>Win 98+ / OSX.2+</td>
+                                        <td>1.8</td>
+                                        <td>A</td>
+                                    </tr>
+                                    <tr role="row" class="even">
+                                        <td class="sorting_1">Gecko</td>
+                                        <td>Mozilla 1.0</td>
+                                        <td>Win 95+ / OSX.1+</td>
+                                        <td>1</td>
+                                        <td>A</td>
+                                    </tr>
+                                    </tbody>
+                                    <!-- End of body -->
+
+                                    <!-- Footer of the table -->
+                                    <tfoot>
+                                    <tr>
+                                        <th rowspan="1" colspan="1">ID</th>
+                                        <th rowspan="1" colspan="1">Name</th>
+                                        <th rowspan="1" colspan="1">Activity</th>
+                                        <th rowspan="1" colspan="1">Student</th>
+                                        <th rowspan="1" colspan="1">Teacher</th>
+                                        <th rowspan="1" colspan="1">Event Date</th>
+                                        <th rowspan="1" colspan="1">Photo</th>
+                                        <th rowspan="1" colspan="1">Tools</th>
+                                    </tr>
+                                    </tfoot>
+                                    <!-- End of footer -->
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row" th:remove="all">
+                            <div class="col-sm-5">
+                                <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing
+                                    1 to 10 of 57 entries
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button previous disabled" id="example1_previous"><a href="#"
+                                                                                                                aria-controls="example1"
+                                                                                                                data-dt-idx="0"
+                                                                                                                tabindex="0">Previous</a>
+                                        </li>
+                                        <li class="paginate_button active"><a href="#" aria-controls="example1"
+                                                                              data-dt-idx="1" tabindex="0">1</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                                        data-dt-idx="2" tabindex="0">2</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                                        data-dt-idx="3" tabindex="0">3</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                                        data-dt-idx="4" tabindex="0">4</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                                        data-dt-idx="5" tabindex="0">5</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                                        data-dt-idx="6" tabindex="0">6</a></li>
+                                        <li class="paginate_button next" id="example1_next"><a href="#"
+                                                                                               aria-controls="example1"
+                                                                                               data-dt-idx="7"
+                                                                                               tabindex="0">Next</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
             </div>
-            <!-- /.row -->
+
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
     <!-- include footer section from the layout file -->
-    <div th:include="layout/footer :: footer">
-    </div>
+    <div th:include="layout/footer :: footer"></div>
+
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -374,30 +523,25 @@
         </div>
     </aside>
     <!-- /.control-sidebar -->
+
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
+
 <!-- jQuery 2.2.3 -->
-<script src="../../static/lib/plugins/jQuery/jquery-2.2.3.min.js"
-        th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+<script src="../lib/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- DataTables -->
-<script src="../../static/lib/plugins/datatables/jquery.dataTables.min.js"
+<script src="../lib/plugins/datatables/jquery.dataTables.min.js"
         th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
-<script src="../../static/lib/plugins/datatables/dataTables.bootstrap.min.js"
+<script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
         th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
-<!-- FastClick -->
-<script src="../../static/lib/plugins/fastclick/fastclick.js" th:src="@{/lib/plugins/fastclick/fastclick.js}"></script>
-<!-- AdminLTE App -->
-<script src="../../static/lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
 <script>
     $(function () {
-        $("#example1").DataTable({
-            "scrollX": true,
-        });
+        $("#example1").DataTable();
 
         // images click event
         $('.box-body').click(function (e) {
