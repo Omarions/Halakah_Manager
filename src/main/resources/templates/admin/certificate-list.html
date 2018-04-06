@@ -88,63 +88,83 @@
                                    style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>Certificate</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
                                     <th>Activity</th>
                                     <th>Student</th>
-                                    <th>Country</th>
-                                    <th>Date</th>
                                     <th>Teacher</th>
-                                    <th>Party</th>
+                                    <th>Event Date</th>
                                     <th>Photo</th>
                                 </tr>
                                 </thead>
 
-                                <tbody>
-                                <tr role="row" class="odd">
-                                    <td class="sorting_1">1</td>
-                                    <td><a href="#">الخط العربي</a></td>
-                                    <td><a href="#">خط الرقعة</a></td>
-                                    <td><a href="#">أحمد محمد</a></td>
-                                    <td><a href="#">مصر</a></td>
-                                    <td><a href="#">مصطفى محمد</a></td>
-                                    <td>April 7, 2016</td>
-                                    <td><img class="cert-img" src="../lib/dist/img/photo2.png" alt="certificate image">
+                                <tbody th:remove="all-but-first">
+                                <tr role="row" th:each="certificate : ${certificates}"
+                                    th:class="${certificateStat.odd}? 'odd' : 'even'">
+                                    <td class="sorting_1" th:text="${certificate.id}">1</td>
+                                    <td><a href="#" th:text="${certificate.name}">خط الرقعة</a></td>
+                                    <td><a href="#"
+                                           th:href="@{/admin/activities/activity(id=${certificate.studentTrack.course.activity.id})}">
+                                        <span th:text="${certificate.studentTrack.course.activity.name}">Activity Name</span></a>
                                     </td>
+                                    <td><a href="#"
+                                           th:href="@{/admin/students/student(id=${certificate.studentTrack.student.id})}"><span
+                                            th:text="${certificate.studentTrack.student.name}">Student Name</span> </a>
+                                    </td>
+                                    <td><a href="#"
+                                           th:href="@{/admin/teachers/teacher(id=${certificate.studentTrack.course.teacher.id})}"><span
+                                            th:text="${certificate.studentTrack.course.teacher.name}">Teacher Name</span>
+                                    </a></td>
+                                    <td th:text="${certificate.event.eventDate}">April 7, 2016</td>
+                                    <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
+                                             th:src="@{'/lib/dist/img/certificate/' + ${certificate.image}}"
+                                             alt="certificate image">
+                                    </td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">1</td>
+                                    <td><a href="#">خط الرقعة</a></td>
+                                    <td><a href="#">الخط العربي</a></td>
+                                    <td><a href="#">أحمد محمد</a></td>
+                                    <td><a href="#">أ مصطفى محمد</a></td>
+                                    <td>April 7, 2016</td>
+                                    <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
+                                             alt="certificate image">
+                                    </td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">1</td>
+                                    <td><a href="#">خط الرقعة</a></td>
+                                    <td><a href="#">الخط العربي</a></td>
+                                    <td><a href="#">أحمد محمد</a></td>
+                                    <td><a href="#">أ مصطفى محمد</a></td>
+                                    <td>April 7, 2016</td>
+                                    <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
+                                             alt="certificate image">
+                                    </td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">1</td>
+                                    <td><a href="#">خط الرقعة</a></td>
+                                    <td><a href="#">الخط العربي</a></td>
+                                    <td><a href="#">أحمد محمد</a></td>
+                                    <td><a href="#">أ مصطفى محمد</a></td>
+                                    <td>April 7, 2016</td>
+                                    <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
+                                             alt="certificate image">
+                                    </td>
+                                </tr>
 
-                                </tr>
-                                <tr role="row" class="odd">
-                                    <td class="sorting_1">1</td>
-                                    <td><a href="#">الخط العربي</a></td>
-                                    <td><a href="#">خط الرقعة</a></td>
-                                    <td><a href="#">أحمد محمد</a></td>
-                                    <td><a href="#">مصر</a></td>
-                                    <td><a href="#">مصطفى محمد</a></td>
-                                    <td>April 7, 2016</td>
-                                    <td><img class="cert-img" src="../lib/dist/img/photo4.jpg"
-                                             alt="certificate image"></td>
-                                </tr>
-                                <tr role="row" class="odd">
-                                    <td class="sorting_1">1</td>
-                                    <td><a href="#">الخط العربي</a></td>
-                                    <td><a href="#">خط الرقعة</a></td>
-                                    <td><a href="#">أحمد محمد</a></td>
-                                    <td><a href="#">مصر</a></td>
-                                    <td><a href="#">مصطفى محمد</a></td>
-                                    <td>April 7, 2016</td>
-                                    <td><img class="cert-img" src="../lib/dist/img/photo3.jpg"
-                                             alt="certificate image"></td>
-                                </tr>
                                 </tbody>
 
                                 <tfoot>
                                 <tr>
-                                    <th>Certificate</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
                                     <th>Activity</th>
                                     <th>Student</th>
-                                    <th>Country</th>
-                                    <th>Date</th>
                                     <th>Teacher</th>
-                                    <th>Party</th>
+                                    <th>Event Date</th>
                                     <th>Photo</th>
                                 </tr>
                                 </tfoot>
