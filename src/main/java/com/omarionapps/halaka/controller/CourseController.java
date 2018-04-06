@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.controller;
 
+import com.omarionapps.halaka.model.Activity;
 import com.omarionapps.halaka.model.Course;
 import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.model.StudentStatus;
@@ -66,11 +67,11 @@ public class CourseController {
     /**
      * Process the post request of updating existing course or creating new one
      *
-     * @param course the course to be updated or created
+     * @param course the course to be updated
      * @return redirect to the saved course profile page
      */
     @PostMapping("/admin/courses/course")
-    public String saveCourse(@Valid Course course, BindingResult bindingResult, Model model) {
+    public String updateCourse(@Valid Course course, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
 
@@ -81,13 +82,23 @@ public class CourseController {
                 bResult.rejectValue(field, field + " is required");
             }
             bindingResult = bResult;
+            //System.out.println(course);
             model.addAttribute("activities", activityService.findAllOrderByName());
             model.addAttribute("teachers", activityService.getActivityTeachersMap());
             return (course.getId() == 0) ? "admin/register-course" : "redirect:/admin/courses/course?id=" + course.getId();
 
         } else {
             Course returnedCourse = null;
-            System.out.println(course);
+            //System.out.println(course);
+            if (course.getId() != 0) {
+                Map<Integer, Set<Course>> activities = activityService.getActivityCourses();
+                for (Integer actId : activities.keySet()) {
+                    if (activities.get(actId).contains(course)) {
+                        Activity activity = activityService.findById(actId);
+                        course.setActivity(activity);
+                    }
+                }
+            }
             returnedCourse = courseService.save(course);
             return "redirect:/admin/courses/course?id=" + returnedCourse.getId();
         }

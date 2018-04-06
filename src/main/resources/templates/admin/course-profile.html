@@ -1035,7 +1035,7 @@
                                     <!-- Settings Tab -->
                                     <div class="tab-pane" id="settings">
                                         <form id="frmRegisteredCourse" class="form-horizontal" action="#"
-                                              th:action="@{/admin/courses/course}"
+                                              th:action="@{/admin/courses/course(id=${course.id})}"
                                               th:object="${course}" method="post">
                                             <input type="hidden" th:field="*{id}"/>
 
@@ -1062,7 +1062,8 @@
 
                                                     <div class="col-sm-10">
                                                         <input type="text" class="form-control" id="inputActivity"
-                                                               th:value="*{activity.name}" disabled/>
+                                                               th:value="*{activity.name}" th:field="*{activity}"
+                                                               disabled/>
 
                                                     </div>
                                                 </div>

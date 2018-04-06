@@ -69,6 +69,8 @@
                             </button>
                         </form>
                     </div>
+
+                    <!-- Error message -->
                     <div th:if="${message}">
                         <div><br/></div>
                         <div class="col-sm-12">
@@ -79,6 +81,8 @@
                             </div>
                         </div>
                     </div>
+                    <!-- End of Error message -->
+                    
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -108,6 +112,8 @@
                             <div class="col-sm-12">
                                 <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
                                        aria-describedby="example1_info">
+
+                                    <!-- Header of the table -->
                                     <thead>
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
@@ -141,6 +147,9 @@
                                         </th>
                                     </tr>
                                     </thead>
+                                    <!-- End of header -->
+
+                                    <!-- Body of the table -->
                                     <tbody th:remove="all-but-first">
                                     <tr rol="row" th:each="activity : ${activities}"
                                         th:class="${activityStat.odd}? 'odd' : 'even'">
@@ -237,6 +246,9 @@
                                         <td>A</td>
                                     </tr>
                                     </tbody>
+                                    <!-- End of body -->
+
+                                    <!-- Footer of the table -->
                                     <tfoot>
                                     <tr>
                                         <th rowspan="1" colspan="1">ID</th>
@@ -248,9 +260,12 @@
                                         <th rowspan="1" colspan="1">Tools</th>
                                     </tr>
                                     </tfoot>
+                                    <!-- End of footer -->
+
                                 </table>
                             </div>
                         </div>
+
                         <div class="row" th:remove="all">
                             <div class="col-sm-5">
                                 <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing

@@ -1,10 +1,10 @@
 package com.omarionapps.halaka.service;
 
 import com.omarionapps.halaka.model.Country;
+import com.omarionapps.halaka.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 
-import java.text.ParseException;
 import java.util.Locale;
 
 /**
@@ -15,14 +15,10 @@ public class CountryConverter implements Formatter<Country> {
     private CountryService countryService;
 
     @Override
-    public Country parse(String s, Locale locale) throws ParseException {
+    public Country parse(String s, Locale locale) {
         if (null != s) {
-            try {
-                int id = Integer.valueOf(s);
-                return countryService.findById(id);
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
+            int id = Utils.convertToID(s);
+            return countryService.findById(id);
         }
 
         return new Country();

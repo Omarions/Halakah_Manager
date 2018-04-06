@@ -28,10 +28,7 @@ public class CertificateService {
      * Get the count of certificates
      */
     public long getCount() {
-        count = 0;
-        findAll().forEach((certificate) -> count++);
-
-        return count;
+	    return certificateRepository.count();
     }
 
     /**
@@ -42,4 +39,10 @@ public class CertificateService {
     }
 
 
+	/**
+	 * Save new or update certificate
+	 */
+	public Certificate save(Certificate certificate) {
+		return certificateRepository.save(certificate);
+	}
 }

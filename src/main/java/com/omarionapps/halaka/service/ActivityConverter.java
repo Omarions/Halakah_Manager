@@ -1,6 +1,7 @@
 package com.omarionapps.halaka.service;
 
 import com.omarionapps.halaka.model.Activity;
+import com.omarionapps.halaka.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,8 @@ public class ActivityConverter implements Formatter<Activity> {
     @Override
     public Activity parse(String s, Locale locale) {
         if(null != s){
-            try {
-                int id = Integer.valueOf(s);
-                return activityService.findById(id);
-            }catch (Exception e){
-                System.out.println("Exception occurred in Activity Converter");
-                System.out.println(e.toString());
-            }
+            int id = Utils.convertToID(s);
+            return activityService.findById(id);
         }
 
         return new Activity();

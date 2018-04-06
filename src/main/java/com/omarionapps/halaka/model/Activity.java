@@ -11,13 +11,14 @@ import java.util.Set;
  */
 @Entity
 public class Activity implements Serializable {
-    @Id
+	@Id
     @GeneratedValue
-    private int id;
-    private String name;
-    private String comments;
-    private Date startDate;
-    private Date archivedDate;
+    private int    id;
+	private String name;
+	private String comments;
+	private String logo;
+	private Date   startDate;
+	private Date   archivedDate;
     @JoinTable(name = "activity_teacher")
     @ManyToMany
     private Set<Teacher> teacher = new HashSet<>();
@@ -93,7 +94,8 @@ public class Activity implements Serializable {
         this.archived = archived;
     }
 
-    @Override
+
+	@Override
     public int hashCode() {
         return getId();
     }
@@ -117,6 +119,14 @@ public class Activity implements Serializable {
         this.id = id;
     }
 
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
     @Override
     public String toString() {
         StringBuilder teachers = new StringBuilder();
@@ -129,6 +139,7 @@ public class Activity implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", comments='" + comments + '\'' +
+		        ", logo= '" + logo + '\'' +
                 ", teachers=[" + teachers + "]" +
                 ", courses=[" + activityCourses + "]}";
     }
