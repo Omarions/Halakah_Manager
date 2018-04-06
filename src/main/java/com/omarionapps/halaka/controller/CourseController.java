@@ -170,9 +170,14 @@ public class CourseController {
 		Course course = courseService.findById(id);
 		course.setArchived(true);
 		course.setArchivedDate(Date.valueOf(LocalDate.now()));
-		courseService.save(course);
-		//activityService.delete(id);
-		redirectAttrs.addFlashAttribute("message", "Course with ID( " + id + " ) was archived successfully");
+		Course archivedCourse = courseService.save(course);
+		if (null != archivedCourse) {
+			redirectAttrs.addFlashAttribute("message", "Course with ID( " + id + " ) was archived successfully");
+		} else {
+			redirectAttrs.addFlashAttribute("message", "An error happens while archiving the course with ID( " + id +
+					"" + " )");
+		}
+
 		return "redirect:/admin/courses";
 	}
 

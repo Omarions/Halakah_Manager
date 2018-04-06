@@ -142,8 +142,14 @@ public class StudentController {
         Student student = studentService.getById(id);
         student.setArchived(true);
         student.setArchivedDate(Date.valueOf(LocalDate.now()));
-        studentService.save(student);
-        redirectAttrs.addFlashAttribute("message", "Student with ID( " + id + " ) was archived successfully");
+	    Student archivedStudent = studentService.save(student);
+	    if (null != archivedStudent) {
+		    redirectAttrs.addFlashAttribute("message", "Student with ID( " + id + " ) was archived successfully");
+	    } else {
+		    redirectAttrs.addFlashAttribute("message", "An error happens while archiving the student with ID( " +
+				    id + " )");
+	    }
+
         return "redirect:/admin/students";
     }
 

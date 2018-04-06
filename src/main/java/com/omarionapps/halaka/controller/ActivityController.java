@@ -150,9 +150,12 @@ public class ActivityController {
                 course.setArchivedDate(Date.valueOf(LocalDate.now()));
                 courseService.save(course);
             });
+	        redirectAttrs.addFlashAttribute("message", "Activity with ID( " + id + " ) was archived successfully");
+        } else {
+	        redirectAttrs.addFlashAttribute("message", "An error happens while archiving the activity with ID( " +
+			        id + " )");
         }
-        //activityService.delete(id);
-        redirectAttrs.addFlashAttribute("message", "Activity with ID( " + id + " ) was archived successfully");
+
         return "redirect:/admin/activities";
     }
 }
