@@ -1,12 +1,3 @@
-div.dataTables_wrapper {
-    width: 800px;
-    margin: 0 auto;
-}
-
-td {
-    white-space: nowrap;
-}
-
 #close-img {
     font-size: 36px;
     color: #fff;
