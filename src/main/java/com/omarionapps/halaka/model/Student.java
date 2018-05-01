@@ -264,7 +264,8 @@ public class Student {
 
         result.append("Student{")
                 .append("id=").append(id)
-                .append(", name=" + name + "\'")
+		        .append(", name='" + name + "\'")
+		        .append(", photo='" + photo + "\'")
                 .append(", identityID='" + identityId + '\'')
                 .append(", egyptAddress='" + egyptAddress + "\'")
                 .append(", homeAddress='" + homeAddress + '\'')

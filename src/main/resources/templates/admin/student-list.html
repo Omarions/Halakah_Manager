@@ -236,7 +236,7 @@
                                                     <td class="sorting_1" th:text="${student.id}">Student ID</td>
                                                     <td>
                                                         <a href="#"
-                                                           th:href="@{/admin/students/student(id=${student.id})}">
+                                                           th:href="@{'/admin/students/student/' + ${student.id}}">
                                                             <img class="profile-user-img img-responsive img-circle"
                                                                  src="../../lib/dist/img/user4-128x128.jpg"
                                                                  th:src="@{'/lib/dist/img/student/' + ${student.photo}}"
@@ -292,10 +292,10 @@
                                                             <li>
                                                                 <div class="tools">
                                                                     <a href="#"
-                                                                       th:href="@{/admin/students/student(id=${student.id})}"><i
+                                                                       th:href="@{'/admin/students/student/' + ${student.id}+ '/update'}"><i
                                                                             class="fa fa-edit fa-3x"></i></a>
                                                                     <a href="#"
-                                                                       th:href="@{/admin/students/student(id=${student.id})}"><i
+                                                                       th:href="@{'/admin/students/student/' + ${student.id} + '/archive'}"><i
                                                                             class="fa fa-trash-o fa-3x"></i></a>
                                                                 </div>
                                                             </li>

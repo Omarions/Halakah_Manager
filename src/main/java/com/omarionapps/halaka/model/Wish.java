@@ -7,7 +7,7 @@ public class Wish extends StudentTrack {
 	private boolean      selected;
 	private int          activityId;
 	private House        house;
-	private StudentTrack track;
+	private StudentTrack track; 
 
 	public Wish() {
 	}
@@ -39,6 +39,14 @@ public class Wish extends StudentTrack {
 
 	public void setHouse(House house) {
 		this.house = house;
+	}
+
+	public StudentTrack getTrack() {
+		return track;
+	}
+
+	public void setTrack(StudentTrack track) {
+		this.track = track;
 	}
 
 	@Override

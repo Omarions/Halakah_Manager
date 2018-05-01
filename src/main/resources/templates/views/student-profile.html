@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:javascript="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -1169,6 +1169,8 @@
 <script src="../lib/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../lib/dist/js/demo.js"></script>
+<!-- script to populate tracks table based on selection of activity dropdown list -->
+<script src="../../lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
 <script>
   $(function(){
     //Initialize Select2 Elements

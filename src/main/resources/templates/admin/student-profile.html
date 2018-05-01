@@ -17,6 +17,9 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
           th:href="@{~/lib/plugins/select2/select2.min.css}"/>
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../lib/plugins/iCheck/flat/blue.css"
+          th:href="@{~/lib/plugins/iCheck/flat/blue.css}"/>
     <!-- bootstrap datepicker -->
     <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
           th:href="@{/lib/plugins/datepicker/datepicker3.css}"/>
@@ -74,32 +77,35 @@
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle"
                                  src="../../lib/dist/img/student/user4-128x128.jpg"
-                                 th:src="@{'~/lib/dist/img/student/' + ${student.photo}}" alt="User profile picture"/>
+                                 th:src="@{'~/lib/dist/img/student/' + ${regStudent.student.photo}}"
+                                 alt="User profile picture"/>
 
-                            <h3 class="profile-username text-center" th:text="${student.name}">Nina Mcintire</h3>
+                            <h3 class="profile-username text-center" th:text="${regStudent.student.name}">Nina
+                                Mcintire</h3>
 
-                            <p class="text-muted text-center" th:text="${student.country.arabicName}">China</p>
+                            <p class="text-muted text-center" th:text="${regStudent.student.country.arabicName}">
+                                China</p>
 
-                            <p class="text-muted text-center" th:text="${student.job}">China</p>
+                            <p class="text-muted text-center" th:text="${regStudent.student.job}">China</p>
 
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
                                     <a><b>Tracks</b>
                                         <samll class="label pull-right bg-blue"
-                                               th:text="${student.studentTracks.size()}">1,322
+                                               th:text="${regStudent.student.studentTracks.size()}">1,322
                                         </samll>
                                     </a>
                                 </li>
                                 <li class="list-group-item">
                                     <a><b>Certificates</b>
                                         <small class="label pull-right bg-blue"
-                                               th:text="${student.certificates.size()}">543
+                                               th:text="${regStudent.student.certificates.size()}">543
                                         </small>
                                     </a>
                                 </li>
                             </ul>
                             <a href="#" class="btn btn-primary btn-block"><b>Add Certificate</b></a>
-                            <a href="#" class="btn btn-primary btn-block"><b>Add Course</b></a>
+                            <a href="#" class="btn btn-primary btn-block"><b>Add Track</b></a>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -117,34 +123,34 @@
                             <p>
                                 <strong><i class="fa fa-credit-card margin-r-5"></i> Identity ID</strong>
 
-                            <p class="text-muted" th:text="${student.identityId}">Identity ID</p>
+                            <p class="text-muted" th:text="${regStudent.student.identityId}">Identity ID</p>
                             <strong><i class="fa fa-birthday-cake margin-r-5"></i> Birth Date</strong>
 
-                            <p class="text-muted" th:text="${student.birthDate}">2015-3-23</p>
+                            <p class="text-muted" th:text="${regStudent.student.birthDate}">2015-3-23</p>
                             <strong><i class="fa fa-map-marker margin-r-5"></i> Birth Location</strong>
 
-                            <p class="text-muted" th:text="${student.birthLocation}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.student.birthLocation}">Malibu, California</p>
                             </p>
 
                             <hr>
 
                             <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
 
-                            <p class="text-muted" th:text="${student.country.arabicName}">China</p>
+                            <p class="text-muted" th:text="${regStudent.student.country.arabicName}">China</p>
                             <strong><i class="fa fa-map-marker margin-r-7"></i> Address At Home</strong>
 
-                            <p class="text-muted" th:text="${student.homeAddress}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.student.homeAddress}">Malibu, California</p>
 
 
                             <strong><i class="fa fa-map-marker margin-r-7"></i> Address At Egypt</strong>
 
-                            <p class="text-muted" th:text="${student.egyptAddress}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.student.egyptAddress}">Malibu, California</p>
 
                             <hr>
 
                             <strong><i class="fa fa-institution margin-r-5"></i> Education</strong>
 
-                            <p class="text-muted" th:text="${student.education}">
+                            <p class="text-muted" th:text="${regStudent.student.education}">
                                 B.S. in Computer Science from the University of Tennessee at Knoxville
                             </p>
 
@@ -155,16 +161,16 @@
                             <p>
                                 <strong><i class="fa fa-phone margin-r-7"></i> Tel</strong>
 
-                            <p class="text-muted" th:text="${student.tel}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.student.tel}">Malibu, California</p>
 
 
                             <strong><i class="fa fa-envelope-o margin-r-7"></i> Email</strong>
 
-                            <p class="text-muted" th:text="${student.email}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.student.email}">Malibu, California</p>
 
                             <strong><i class="fa fa-facebook-official margin-r-7"></i> Facebook</strong>
 
-                            <p class="text-muted" th:text="${student.facebook}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.student.facebook}">Malibu, California</p>
 
                             </p>
 
@@ -174,20 +180,20 @@
 
                             <p>
 
-                            <div th:each="st: ${student.studentTracks}">
+                            <div th:each="st: ${regStudent.student.studentTracks}">
                                 <div th:switch="${st.status}">
-                  <span th:case="'WAITING'" class="label label-warning"
-                        th:text="${st.course.activity.name}">Waiting Activity</span>
-                  <span th:case="'STUDYING'" class="label label-primary"
-                        th:text="${st.course.activity.name}">Studying Activity</span>
-                  <span th:case="'CERTIFIED'" class="label label-success"
-                        th:text="${st.course.activity.name}">Certified Activity</span>
-                  <span th:case="'FIRED'" class="label label-danger"
-                        th:text="${st.course.activity.name}">Fired Activity</span>
-                  <span th:case="'TEMP_STOPPED'" class="label label-info"
-                        th:text="${st.course.activity.name}">Temp_Stopped Activity</span>
-                  <span th:case="'FINAL_STOPPED'" class="label label-info"
-                        th:text="${st.course.activity.name}">Final Stopped Activity</span>
+                                      <span th:case="'WAITING'" class="label label-warning"
+                                            th:text="${st.course.activity.name}">Waiting Activity</span>
+                                    <span th:case="'STUDYING'" class="label label-primary"
+                                          th:text="${st.course.activity.name}">Studying Activity</span>
+                                    <span th:case="'CERTIFIED'" class="label label-success"
+                                          th:text="${st.course.activity.name}">Certified Activity</span>
+                                    <span th:case="'FIRED'" class="label label-danger"
+                                          th:text="${st.course.activity.name}">Fired Activity</span>
+                                    <span th:case="'TEMP_STOPPED'" class="label label-info"
+                                          th:text="${st.course.activity.name}">Temp_Stopped Activity</span>
+                                    <span th:case="'FINAL_STOPPED'" class="label label-info"
+                                          th:text="${st.course.activity.name}">Final Stopped Activity</span>
                                 </div>
                             </div>
 
@@ -197,9 +203,10 @@
 
                             <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
 
-                            <p th:text="${student.comments}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                             Etiam fermentum
-                                                             enim neque.</p>
+                            <p th:text="${regStudent.student.comments}">Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit.
+                                Etiam fermentum
+                                enim neque.</p>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -215,6 +222,7 @@
                             <li><a href="#settings" data-toggle="tab">Settings</a></li>
                         </ul>
                         <div class="tab-content">
+                            <!-- home tab pane -->
                             <div class="active tab-pane" id="home">
                                 <div class="box">
                                     <div class="box-header">
@@ -227,7 +235,9 @@
                                     <!-- /.box-body -->
                                 </div>
                             </div>
-                            <!-- /.tab-pane -->
+                            <!-- /.home-tab-pane -->
+
+                            <!-- tracks tab pane -->
                             <div class="tab-pane" id="tracks">
                                 <div class="box">
                                     <div class="box-header">
@@ -257,7 +267,7 @@
                                                                 <option value="50">50</option>
                                                                 <option value="100">100</option>
                                                             </select>
-                                                               entries</label>
+                                                            entries</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -275,172 +285,176 @@
                                                            role="grid"
                                                            aria-describedby="coursesDT_info">
                                                         <thead>
-                                                            <tr role="row">
-                                                                <th class="sorting_asc" tabindex="0"
-                                                                    aria-controls="coursesDT" rowspan="1"
-                                                                    colspan="1" aria-sort="ascending"
-                                                                    aria-label="ID: activate to sort column descending"
-                                                                    style="width: 130.4px;">ID
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="coursesDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Name: activate to sort column ascending"
-                                                                    style="width: 266.4px;">Course Name
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="coursesDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Teacher Name: activate to sort column ascending"
-                                                                    style="width: 186.4px;">Teacher Name
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="coursesDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Name: activate to sort column ascending"
-                                                                    style="width: 266.4px;">Activity Name
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="coursesDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Days: activate to sort column ascending"
-                                                                    style="width: 135.2px;">Register Date
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="coursesDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Start Time: activate to sort column ascending"
-                                                                    style="width: 135.2px;">Start Date
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="coursesDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="End Time: activate to sort column ascending"
-                                                                    style="width: 135.2px;">Evaluation
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="coursesDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Start Date: activate to sort column ascending"
-                                                                    style="width: 135.2px;">Status
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="coursesDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="CSS grade: activate to sort column ascending"
-                                                                    style="width: 266.2px;">Comments
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="coursesDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="CSS grade: activate to sort column ascending"
-                                                                    style="width: 266.2px;">Tools
-                                                                </th>
-                                                            </tr>
+                                                        <tr role="row">
+                                                            <th class="sorting_asc" tabindex="0"
+                                                                aria-controls="coursesDT" rowspan="1"
+                                                                colspan="1" aria-sort="ascending"
+                                                                aria-label="ID: activate to sort column descending"
+                                                                style="width: 130.4px;">ID
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="coursesDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Name: activate to sort column ascending"
+                                                                style="width: 266.4px;">Course Name
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="coursesDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Teacher Name: activate to sort column ascending"
+                                                                style="width: 186.4px;">Teacher Name
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="coursesDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Name: activate to sort column ascending"
+                                                                style="width: 266.4px;">Activity Name
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="coursesDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Days: activate to sort column ascending"
+                                                                style="width: 135.2px;">Register Date
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="coursesDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Start Time: activate to sort column ascending"
+                                                                style="width: 135.2px;">Start Date
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="coursesDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="End Time: activate to sort column ascending"
+                                                                style="width: 135.2px;">Evaluation
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="coursesDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Start Date: activate to sort column ascending"
+                                                                style="width: 135.2px;">Status
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="coursesDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="CSS grade: activate to sort column ascending"
+                                                                style="width: 266.2px;">Comments
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="coursesDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="CSS grade: activate to sort column ascending"
+                                                                style="width: 266.2px;">Tools
+                                                            </th>
+                                                        </tr>
                                                         </thead>
                                                         <tbody th:remove="all-but-first">
-                                                            <tr rol="row" th:each="track : ${student.studentTracks}"
-                                                                th:class="${trackStat.odd}? 'odd' : 'even'">
-                                                                <td class="sorting_1" th:text="${track.id}">Track ID
-                                                                </td>
-                                                                <td><a href="#"
-                                                                       th:href="@{/admin/courses/course(id=${track.course.id})}"><span
-                                                                        th:text="${track.course.name}">Course Name</span></a>
-                                                                </td>
-                                                                <td><a href="#"
-                                                                       th:href="@{/admin/teachers/teacher(id=${track.course.teacher.id})}"><span
-                                                                        th:text="${track.course.teacher.name}">Teacher Name</span></a>
-                                                                </td>
-                                                                <td><a href="#"
-                                                                       th:href="@{/admin/activities/activity(id=${track.course.activity.id})}"><span
-                                                                        th:text="${track.course.activity.name}">Activity Name</span></a>
-                                                                </td>
-                                                                <td th:text="${track.registerDate}">Register Date</td>
-                                                                <td th:text="${track.startDate}">Start Date</td>
-                                                                <td th:text="${track.evaluation}">Evaluation</td>
-                                                                <td>
-                                                                    <div th:switch="${track.status}">
+                                                        <tr rol="row"
+                                                            th:each="track : ${regStudent.student.studentTracks}"
+                                                            th:class="${trackStat.odd}? 'odd' : 'even'">
+                                                            <td class="sorting_1" th:text="${track.id}">Track ID
+                                                            </td>
+                                                            <td><a href="#"
+                                                                   th:href="@{/admin/courses/course(id=${track.course.id})}"><span
+                                                                    th:text="${track.course.name}">Course Name</span></a>
+                                                            </td>
+                                                            <td><a href="#"
+                                                                   th:href="@{/admin/teachers/teacher(id=${track.course.teacher.id})}"><span
+                                                                    th:text="${track.course.teacher.name}">Teacher Name</span></a>
+                                                            </td>
+                                                            <td><a href="#"
+                                                                   th:href="@{/admin/activities/activity(id=${track.course.activity.id})}"><span
+                                                                    th:text="${track.course.activity.name}">Activity Name</span></a>
+                                                            </td>
+                                                            <td th:text="${track.registerDate}">Register Date</td>
+                                                            <td th:text="${track.startDate}">Start Date</td>
+                                                            <td th:text="${track.evaluation}">Evaluation</td>
+                                                            <td>
+                                                                <div th:switch="${track.status}">
                                   <span th:case="'WAITING'" class="label label-warning"
                                         th:text="${track.status}">Waiting status</span>
-                                  <span th:case="'STUDYING'" class="label label-primary"
-                                        th:text="${track.status}">Studying status</span>
-                                  <span th:case="'CERTIFIED'" class="label label-success"
-                                        th:text="${track.status}">Certified status</span>
-                                  <span th:case="'FIRED'" class="label label-danger"
-                                        th:text="${track.status}">Fired status</span>
-                                  <span th:case="'TEMP_STOP'" class="label label-info"
-                                        th:text="${track.status}">Temp_Stopped status</span>
-                                  <span th:case="'FINAL_STOP'" class="label label-info"
-                                        th:text="${track.status}">Final Stopped status</span>
-                                                                    </div>
-                                                                </td>
-                                                                <td th:text="${track.comments}">Track Comments</td>
-                                                                <td>
-                                                                    <ul class="dtt">
-                                                                        <li>
-                                                                            <div class="tools">
-                                                                                <a href="#"
-                                                                                   th:href="@{/admin/student-tracks/track(id=${track.id})}"><i
-                                                                                        class="fa fa-edit fa-3x"></i></a>
-                                                                                <a href="#"
-                                                                                   th:href="@{/admin/student-tracks/track(id=${track.id})}"><i
-                                                                                        class="fa fa-trash-o fa-3x"></i></a>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>
-                                                            </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Netscape 7.2</td>
-                                                                <td>Win 95+ / Mac OS 8.6-9.2</td>
-                                                                <td>1.7</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Netscape Browser 8</td>
-                                                                <td>Win 98SE+</td>
-                                                                <td>1.7</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Netscape Navigator 9</td>
-                                                                <td>Win 98+ / OSX.2+</td>
-                                                                <td>1.8</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Mozilla 1.0</td>
-                                                                <td>Win 95+ / OSX.1+</td>
-                                                                <td>1</td>
-                                                                <td>A</td>
-                                                            </tr>
+                                                                    <span th:case="'STUDYING'"
+                                                                          class="label label-primary"
+                                                                          th:text="${track.status}">Studying status</span>
+                                                                    <span th:case="'CERTIFIED'"
+                                                                          class="label label-success"
+                                                                          th:text="${track.status}">Certified status</span>
+                                                                    <span th:case="'FIRED'" class="label label-danger"
+                                                                          th:text="${track.status}">Fired status</span>
+                                                                    <span th:case="'TEMP_STOP'" class="label label-info"
+                                                                          th:text="${track.status}">Temp_Stopped status</span>
+                                                                    <span th:case="'FINAL_STOP'"
+                                                                          class="label label-info"
+                                                                          th:text="${track.status}">Final Stopped status</span>
+                                                                </div>
+                                                            </td>
+                                                            <td th:text="${track.comments}">Track Comments</td>
+                                                            <td>
+                                                                <ul class="dtt">
+                                                                    <li>
+                                                                        <div class="tools">
+                                                                            <a href="#"
+                                                                               th:href="@{/admin/student-tracks/track(id=${track.id})}"><i
+                                                                                    class="fa fa-edit fa-3x"></i></a>
+                                                                            <a href="#"
+                                                                               th:href="@{/admin/student-tracks/track(id=${track.id})}"><i
+                                                                                    class="fa fa-trash-o fa-3x"></i></a>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Netscape 7.2</td>
+                                                            <td>Win 95+ / Mac OS 8.6-9.2</td>
+                                                            <td>1.7</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Netscape Browser 8</td>
+                                                            <td>Win 98SE+</td>
+                                                            <td>1.7</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Netscape Navigator 9</td>
+                                                            <td>Win 98+ / OSX.2+</td>
+                                                            <td>1.8</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Mozilla 1.0</td>
+                                                            <td>Win 95+ / OSX.1+</td>
+                                                            <td>1</td>
+                                                            <td>A</td>
+                                                        </tr>
                                                         </tbody>
                                                         <tfoot>
-                                                            <tr>
-                                                                <th rowspan="1" colspan="1">ID</th>
-                                                                <th rowspan="1" colspan="1">Name</th>
-                                                                <th rowspan="1" colspan="1">Teacher Name</th>
-                                                                <th rowspan="1" colspan="1">Activity Name</th>
-                                                                <th rowspan="1" colspan="1">Register Date</th>
-                                                                <th rowspan="1" colspan="1">Start Date</th>
-                                                                <th rowspan="1" colspan="1">Evaulation</th>
-                                                                <th rowspan="1" colspan="1">Status</th>
-                                                                <th rowspan="1" colspan="1">Comments</th>
-                                                                <th rowspan="1" colspan="1">Tools</th>
-                                                            </tr>
+                                                        <tr>
+                                                            <th rowspan="1" colspan="1">ID</th>
+                                                            <th rowspan="1" colspan="1">Name</th>
+                                                            <th rowspan="1" colspan="1">Teacher Name</th>
+                                                            <th rowspan="1" colspan="1">Activity Name</th>
+                                                            <th rowspan="1" colspan="1">Register Date</th>
+                                                            <th rowspan="1" colspan="1">Start Date</th>
+                                                            <th rowspan="1" colspan="1">Evaulation</th>
+                                                            <th rowspan="1" colspan="1">Status</th>
+                                                            <th rowspan="1" colspan="1">Comments</th>
+                                                            <th rowspan="1" colspan="1">Tools</th>
+                                                        </tr>
                                                         </tfoot>
                                                     </table>
                                                 </div>
@@ -449,7 +463,7 @@
                                                 <div class="col-sm-5">
                                                     <div class="dataTables_info" id="coursesDT_info" role="status"
                                                          aria-live="polite">Showing
-                                                                            1 to 10 of 57 entries
+                                                        1 to 10 of 57 entries
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-7">
@@ -502,7 +516,9 @@
                                     <!-- /.box-body -->
                                 </div>
                             </div>
-                            <!-- /.tab-pane -->
+                            <!-- /.tracks-tab-pane -->
+
+                            <!-- certificates tab pane -->
                             <div class="tab-pane" id="certificates">
                                 <div class="box">
                                     <div class="box-header">
@@ -513,7 +529,7 @@
                                             <div class="col-sm-6">
                                                 <button type="button" class="btn btn-default pull-right"><i
                                                         class="fa fa-plus"></i> Add
-                                                                                Certificate
+                                                    Certificate
                                                 </button>
                                             </div>
                                         </div>
@@ -534,7 +550,7 @@
                                                                 <option value="50">50</option>
                                                                 <option value="100">100</option>
                                                             </select>
-                                                               entries</label>
+                                                            entries</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
@@ -552,182 +568,183 @@
                                                            role="grid"
                                                            aria-describedby="studentsDT_info">
                                                         <thead>
-                                                            <tr role="row">
-                                                                <th class="sorting_asc" tabindex="0"
-                                                                    aria-controls="studentsDT" rowspan="1"
-                                                                    colspan="1" aria-sort="ascending"
-                                                                    aria-label="ID: activate to sort column descending"
-                                                                    style="width: 130.4px;">ID
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Name: activate to sort column ascending"
-                                                                    style="width: 266.4px;">Name
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Activity: activate to sort column ascending"
-                                                                    style="width: 160.4px;">Activity
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Teacher Name: activate to sort column ascending"
-                                                                    style="width: 160.2px;">Teacher Name
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Release Date: activate to sort column ascending"
-                                                                    style="width: 135.2px;">Release Date
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Certificate Photo: activate to sort column ascending"
-                                                                    style="width: 266.2px;">Certificate Photo
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Comments: activate to sort column ascending"
-                                                                    style="width: 266.2px;">Comments
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="CSS grade: activate to sort column ascending"
-                                                                    style="width: 266.2px;">Tools
-                                                                </th>
-                                                            </tr>
+                                                        <tr role="row">
+                                                            <th class="sorting_asc" tabindex="0"
+                                                                aria-controls="studentsDT" rowspan="1"
+                                                                colspan="1" aria-sort="ascending"
+                                                                aria-label="ID: activate to sort column descending"
+                                                                style="width: 130.4px;">ID
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="studentsDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Name: activate to sort column ascending"
+                                                                style="width: 266.4px;">Name
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="studentsDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Activity: activate to sort column ascending"
+                                                                style="width: 160.4px;">Activity
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="studentsDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Teacher Name: activate to sort column ascending"
+                                                                style="width: 160.2px;">Teacher Name
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="studentsDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Release Date: activate to sort column ascending"
+                                                                style="width: 135.2px;">Release Date
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="studentsDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Certificate Photo: activate to sort column ascending"
+                                                                style="width: 266.2px;">Certificate Photo
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="studentsDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="Comments: activate to sort column ascending"
+                                                                style="width: 266.2px;">Comments
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="studentsDT"
+                                                                rowspan="1"
+                                                                colspan="1"
+                                                                aria-label="CSS grade: activate to sort column ascending"
+                                                                style="width: 266.2px;">Tools
+                                                            </th>
+                                                        </tr>
                                                         </thead>
                                                         <tbody th:remove="all-but-first"
-                                                               th:if="(${#lists.size(student.certificates)}) > 0">
-                                                            <tr rol="row" th:each="cert : ${student.certificates}"
-                                                                th:class="${certStat.odd}? 'odd' : 'even'">
-                                                                <td class="sorting_1" th:text="${cert.id}">Certificate
-                                                                                                           ID
-                                                                </td>
-                                                                <td th:text="${cert.name}">Certificate's name</td>
-                                                                <td><a href="#"
-                                                                       th:href="@{/admin/activities/activity(id=${cert.studentTrack.course.activity.id})}"><span
-                                                                        th:text="${cert.studentTrack.course.activity.name}">Activity Name</span></a>
-                                                                </td>
-                                                                <td><a href="#"
-                                                                       th:href="@{/admin/teachers/teacher(id=${cert.studentTrack.course.teacher.id})}"><span
-                                                                        th:text="${cert.studentTrack.course.teacher.name}">Teacher Name</span></a>
-                                                                </td>
-                                                                <td th:text="${cert.event.eventDate}">Release Date</td>
-                                                                <td><img src="#"
-                                                                         th:src="@{'/lib/dist/img/credit/' + ${cert.image}}"
-                                                                         alt="Certificate Photo"/></td>
-                                                                <td th:text="${cert.comments}">Certificate comments</td>
-                                                                <td>
-                                                                    <ul class="dtt">
-                                                                        <li>
-                                                                            <div class="tools">
-                                                                                <a href="#"
-                                                                                   th:href="@{/admin/students/student(id=${student.id})}"><i
-                                                                                        class="fa fa-edit fa-3x"></i></a>
-                                                                                <a href="#"
-                                                                                   th:href="@{/admin/students/student(id=${student.id})}"><i
-                                                                                        class="fa fa-trash-o fa-3x"></i></a>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>
-                                                            </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Firefox 1.0</td>
-                                                                <td>Win 98+ / OSX.2+</td>
-                                                                <td>1.7</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Firefox 1.5</td>
-                                                                <td>Win 98+ / OSX.2+</td>
-                                                                <td>1.8</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Firefox 2.0</td>
-                                                                <td>Win 98+ / OSX.2+</td>
-                                                                <td>1.8</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Firefox 3.0</td>
-                                                                <td>Win 2k+ / OSX.3+</td>
-                                                                <td>1.9</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Camino 1.0</td>
-                                                                <td>OSX.2+</td>
-                                                                <td>1.8</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Camino 1.5</td>
-                                                                <td>OSX.3+</td>
-                                                                <td>1.8</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Netscape 7.2</td>
-                                                                <td>Win 95+ / Mac OS 8.6-9.2</td>
-                                                                <td>1.7</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Netscape Browser 8</td>
-                                                                <td>Win 98SE+</td>
-                                                                <td>1.7</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="odd">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Netscape Navigator 9</td>
-                                                                <td>Win 98+ / OSX.2+</td>
-                                                                <td>1.8</td>
-                                                                <td>A</td>
-                                                            </tr>
-                                                            <tr role="row" class="even">
-                                                                <td class="sorting_1">Gecko</td>
-                                                                <td>Mozilla 1.0</td>
-                                                                <td>Win 95+ / OSX.1+</td>
-                                                                <td>1</td>
-                                                                <td>A</td>
-                                                            </tr>
+                                                               th:if="(${#lists.size(regStudent.student.certificates)}) > 0">
+                                                        <tr rol="row"
+                                                            th:each="cert : ${regStudent.student.certificates}"
+                                                            th:class="${certStat.odd}? 'odd' : 'even'">
+                                                            <td class="sorting_1" th:text="${cert.id}">Certificate
+                                                                ID
+                                                            </td>
+                                                            <td th:text="${cert.name}">Certificate's name</td>
+                                                            <td><a href="#"
+                                                                   th:href="@{/admin/activities/activity(id=${cert.studentTrack.course.activity.id})}"><span
+                                                                    th:text="${cert.studentTrack.course.activity.name}">Activity Name</span></a>
+                                                            </td>
+                                                            <td><a href="#"
+                                                                   th:href="@{/admin/teachers/teacher(id=${cert.studentTrack.course.teacher.id})}"><span
+                                                                    th:text="${cert.studentTrack.course.teacher.name}">Teacher Name</span></a>
+                                                            </td>
+                                                            <td th:text="${cert.event.eventDate}">Release Date</td>
+                                                            <td><img src="#"
+                                                                     th:src="@{'/lib/dist/img/credit/' + ${cert.image}}"
+                                                                     alt="Certificate Photo"/></td>
+                                                            <td th:text="${cert.comments}">Certificate comments</td>
+                                                            <td>
+                                                                <ul class="dtt">
+                                                                    <li>
+                                                                        <div class="tools">
+                                                                            <a href="#"
+                                                                               th:href="@{/admin/students/student(id=${regStudent.student.id})}"><i
+                                                                                    class="fa fa-edit fa-3x"></i></a>
+                                                                            <a href="#"
+                                                                               th:href="@{/admin/students/student(id=${regStudent.student.id})}"><i
+                                                                                    class="fa fa-trash-o fa-3x"></i></a>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Firefox 1.0</td>
+                                                            <td>Win 98+ / OSX.2+</td>
+                                                            <td>1.7</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Firefox 1.5</td>
+                                                            <td>Win 98+ / OSX.2+</td>
+                                                            <td>1.8</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Firefox 2.0</td>
+                                                            <td>Win 98+ / OSX.2+</td>
+                                                            <td>1.8</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Firefox 3.0</td>
+                                                            <td>Win 2k+ / OSX.3+</td>
+                                                            <td>1.9</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Camino 1.0</td>
+                                                            <td>OSX.2+</td>
+                                                            <td>1.8</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Camino 1.5</td>
+                                                            <td>OSX.3+</td>
+                                                            <td>1.8</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Netscape 7.2</td>
+                                                            <td>Win 95+ / Mac OS 8.6-9.2</td>
+                                                            <td>1.7</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Netscape Browser 8</td>
+                                                            <td>Win 98SE+</td>
+                                                            <td>1.7</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="odd">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Netscape Navigator 9</td>
+                                                            <td>Win 98+ / OSX.2+</td>
+                                                            <td>1.8</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr role="row" class="even">
+                                                            <td class="sorting_1">Gecko</td>
+                                                            <td>Mozilla 1.0</td>
+                                                            <td>Win 95+ / OSX.1+</td>
+                                                            <td>1</td>
+                                                            <td>A</td>
+                                                        </tr>
                                                         </tbody>
                                                         <tfoot>
-                                                            <tr>
-                                                                <th rowspan="1" colspan="1">ID</th>
-                                                                <th rowspan="1" colspan="1">Name</th>
-                                                                <th rowspan="1" colspan="1">Activity Name</th>
-                                                                <th rowspan="1" colspan="1">Teacher Name</th>
-                                                                <th rowspan="1" colspan="1">Release Date</th>
-                                                                <th rowspan="1" colspan="1">Certificate Photo</th>
-                                                                <th rowspan="1" colspan="1">Comments</th>
-                                                                <th rowspan="1" colspan="1">Tools</th>
-                                                            </tr>
+                                                        <tr>
+                                                            <th rowspan="1" colspan="1">ID</th>
+                                                            <th rowspan="1" colspan="1">Name</th>
+                                                            <th rowspan="1" colspan="1">Activity Name</th>
+                                                            <th rowspan="1" colspan="1">Teacher Name</th>
+                                                            <th rowspan="1" colspan="1">Release Date</th>
+                                                            <th rowspan="1" colspan="1">Certificate Photo</th>
+                                                            <th rowspan="1" colspan="1">Comments</th>
+                                                            <th rowspan="1" colspan="1">Tools</th>
+                                                        </tr>
                                                         </tfoot>
                                                     </table>
                                                 </div>
@@ -736,7 +753,7 @@
                                                 <div class="col-sm-5">
                                                     <div class="dataTables_info" id="studentsDT_info" role="status"
                                                          aria-live="polite">Showing
-                                                                            1 to 10 of 57 entries
+                                                        1 to 10 of 57 entries
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-7">
@@ -789,33 +806,89 @@
                                     <!-- /.box-body -->
                                 </div>
                             </div>
-                            <!-- /.tab-pane -->
+                            <!-- /.certificates-tab-pane -->
+
+                            <!-- settings tab pane -->
                             <div class="tab-pane" id="settings">
-                                <form class="form-horizontal" action="#" th:action="@{/admin/students/student}"
-                                      th:object="${student}" method="post">
+                                <!-- form -->
+                                <form class="form-horizontal" action="#"
+                                      th:action="@{/admin/students/student}"
+                                      th:object="${regStudent}" method="post" enctype="multipart/form-data">
+
+                                    <!-- input for ID -->
                                     <input type="hidden" th:field="*{id}"/>
+                                    <!-- /.input-for-ID -->
 
+                                    <!-- input for photo -->
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                        <div class="col-sm-offset-6 col-sm-6">
 
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputName" placeholder="Name"
-                                                   th:field="*{name}"/>
+                                            <img src="../lib/dist/img/student/avatar5.png"
+                                                 th:src=" @{'/lib/dist/img/student/' + *{student.photo}}"
+                                                 id="img-photo" name="photo" class="img-circle" alt="Student Image"
+                                                 style="width: 160px; height: 160px"/>
+
+                                            <input type="file" name="photo" id="input-photo" class="hidden"
+                                                   th:field="*{photo}"
+                                                   th:value="(*{student} != null) ?
+                                            *{student.photo} : 'null'"/>
+
                                         </div>
                                     </div>
+                                    <!-- /.input-for-photo -->
+
+                                    <!-- input for name -->
+                                    <div class="form-group"
+                                         th:classappend="${#fields.hasErrors('student.name')}? 'has-error'">
+                                        <label for="input-name" class="col-sm-2 control-label">Name</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="input-name"
+                                                   placeholder="Name" name="name" th:field="*{student.name}"/>
+                                            <span th:if="${#fields.hasErrors('student.name')}"
+                                                  th:errors="*{student.name}"
+                                                  th:class="help-block">Name Errors</span>
+                                        </div>
+                                    </div>
+                                    <!-- /.input-for-name -->
+
+                                    <!-- input for gender -->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Gender</label>
+
+                                        <div class="col-sm-10">
+                                            <div class="iradio">
+                                                <label>
+                                                    <input type="radio" name="gender" id="male-radio"
+                                                           value="MALE" checked="true"
+                                                           th:field="*{student.gender}"/> Male
+                                                </label>
+                                            </div>
+                                            <div class="iradio">
+                                                <label>
+                                                    <input type="radio" name="gender" id="female-radio"
+                                                           value="FEMALE" th:field="*{student.gender}"/> Female
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.input-for-gender -->
+
+                                    <!-- input for Identity ID -->
                                     <div class="form-group">
                                         <label for="inputIdentityId" class="col-sm-2 control-label">Identity ID</label>
 
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputIdentityId"
                                                    placeholder="Identity ID"
-                                                   th:field="*{identityId}"/>
+                                                   th:field="*{student.identityId}"/>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-Identity ID -->
 
                                     <!-- Birth Date Picker -->
                                     <div class="form-group"
-                                         th:classappend="${#fields.hasErrors('birthDate')}? 'has-error'">
+                                         th:classappend="${#fields.hasErrors('student.birthDate')}? 'has-error'">
                                         <label class="col-sm-2 control-label">Birth Date</label>
 
                                         <div class="col-sm-10">
@@ -826,34 +899,37 @@
 
                                                 <input type="text" class="form-control pull-right"
                                                        id="birthDatePicker"
-                                                       th:value="Null" th:field="*{birthDate}">
+                                                       th:value="Null" th:field="*{student.birthDate}">
                                             </div>
-                                        <span th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"
-                                              th:class="help-block">Birth Date Error</span>
+                                            <span th:if="${#fields.hasErrors('student.birthDate')}"
+                                                  th:errors="*{student.birthDate}"
+                                                  th:class="help-block">Birth Date Error</span>
                                             <!-- /.input group -->
                                         </div>
                                     </div>
                                     <!-- /.start-date-picker -->
 
-
+                                    <!-- input for birth location -->
                                     <div class="form-group">
                                         <label for="inputBirthLocation" class="col-sm-2 control-label">Birth
-                                                                                                       Location</label>
+                                            Location</label>
 
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputBirthLocation"
                                                    placeholder="Birth Location"
-                                                   th:field="*{birthLocation}"/>
+                                                   th:field="*{student.birthLocation}"/>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-birth-location -->
 
+                                    <!-- country dropdown list -->
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Country</label>
 
                                         <div class="col-sm-10">
                                             <select class="form-control select2 select2-hidden-accessible"
                                                     style="width: 100%;"
-                                                    tabindex="-1" aria-hidden="true" th:field="*{country}">
+                                                    tabindex="-1" aria-hidden="true" th:field="*{student.country}">
                                                 <option value="" selected="selected">Select Country</option>
                                                 <option th:each="country : ${countries}" th:value="${country.id}"
                                                         th:text="${country.englishName}">Country Name
@@ -861,92 +937,261 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <!-- /.country-dropdown-list -->
 
+                                    <!-- input for home address -->
                                     <div class="form-group">
                                         <label for="inputHomeAddress" class="col-sm-2 control-label">Home
-                                                                                                     Address</label>
+                                            Address</label>
 
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputHomeAddress"
                                                    placeholder="Home Address"
-                                                   th:field="*{homeAddress}"/>
+                                                   th:field="*{student.homeAddress}"/>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-home-address -->
 
+                                    <!-- input for egypt address -->
                                     <div class="form-group">
                                         <label for="inputEgyptAddress" class="col-sm-2 control-label">Egypt
-                                                                                                      Address</label>
+                                            Address</label>
 
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputEgyptAddress"
                                                    placeholder="Egypt Address"
-                                                   th:field="*{egyptAddress}"/>
+                                                   th:field="*{student.egyptAddress}"/>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-egypt-address -->
 
+                                    <!-- input for tel -->
                                     <div class="form-group">
-                                        <label for="inputTel" class="col-sm-2 control-label">Tel</label>
+                                        <label for="input-tel" class="col-sm-2 control-label">Tel</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputTel" placeholder="Tel"
-                                                   th:field="*{tel}"/>
+                                            <input type="text" class="form-control" id="input-tel"
+                                                   name="tel" placeholder="Tel"
+                                                   th:field="*{student.tel}"/>
+                                            <span th:if="${#fields.hasErrors('student.tel')}"
+                                                  th:errors="*{student.tel}"
+                                                  th:class="help-block">Tel Errors</span>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-tel -->
+
+                                    <!-- input for email -->
                                     <div class="form-group">
-                                        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                                        <label for="input-email" class="col-sm-2 control-label">Email</label>
 
                                         <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputEmail" placeholder="Email"
-                                                   th:field="*{email}"/>
+                                            <input type="text" class="form-control" id="input-email"
+                                                   name="email" placeholder="Email" th:field="*{student.email}"/>
+                                            <span th:if="${#fields.hasErrors('student.email')}"
+                                                  th:errors="*{student.email}"
+                                                  th:class="help-block">Email Errors</span>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-email -->
 
+                                    <!-- input for facebook -->
                                     <div class="form-group">
                                         <label for="inputFacebook" class="col-sm-2 control-label">Facebook</label>
 
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputFacebook"
                                                    placeholder="Facebook"
-                                                   th:field="*{facebook}"/>
+                                                   th:field="*{student.facebook}"/>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-facebook -->
 
+                                    <!-- input for education -->
                                     <div class="form-group">
-                                        <label for="inputEducation" class="col-sm-2 control-label">Education</label>
+                                        <label for="input-education"
+                                               class="col-sm-2 control-label">Education</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputEducation"
-                                                   placeholder="Education"
-                                                   th:field="*{education}"/>
+                                            <input type="text" class="form-control" id="input-education"
+                                                   name="education" placeholder="Education"
+                                                   th:field="*{student.education}"/>
+                                            <span th:if="${#fields.hasErrors('student.education')}"
+                                                  th:errors="*{student.education}"
+                                                  th:class="help-block">Education Errors</span>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-education -->
 
+                                    <!-- input for job -->
                                     <div class="form-group">
-                                        <label for="inputJob" class="col-sm-2 control-label">Job</label>
+                                        <label for="input-job" class="col-sm-2 control-label">Job</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputJob" placeholder="Job"
-                                                   th:field="*{job}"/>
+                                            <input type="text" class="form-control" id="input-job"
+                                                   name="job" placeholder="Job"
+                                                   th:field="*{student.job}"/>
+                                            <span th:if="${#fields.hasErrors('student.job')}"
+                                                  th:errors="*{student.job}"
+                                                  th:class="help-block">Job Errors</span>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-job -->
 
+                                    <!-- Input for Comments -->
                                     <div class="form-group">
-                                        <label for="inputComments" class="col-sm-2 control-label">Comments</label>
+                                        <label for="input-comments" class="col-sm-2 control-label">Comment</label>
 
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" id="inputComments" placeholder="Comments"
-                                                      th:field="*{comments}">Comments</textarea>
+                                                <textarea type="text" class="form-control" id="input-comments"
+                                                          name="comments"
+                                                          placeholder="Set comments for the student if needed"
+                                                          th:field="*{student.comments}">Extra info</textarea>
                                         </div>
                                     </div>
+                                    <!-- /.input-for-comments -->
 
+                                    <!-- tracks -->
+                                    <div class="box box-info">
+                                        <div class="box-header">
+                                            <label for="table-tracks" class="col-sm-2 control-label">Tracks</label>
+                                        </div>
+                                        <div class="box-body">
+                                            <!-- table of created tracks -->
+                                            <table id="table-tracks"
+                                                   class="table table-bordered table-striped dataTable"
+                                                   role="grid" width="100%"
+                                                   aria-describedby="example1_info">
+                                                <thead>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>Activity</th>
+                                                    <th>Course</th>
+                                                    <th>Status</th>
+                                                    <th>Register Date</th>
+                                                    <th>Start Date</th>
+                                                    <th>Evaluation</th>
+                                                    <th>Comments</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="tracks-data">
+                                                <tr th:each="wish, stat :  *{wishes}">
+                                                    <td>
+                                                        <div class="checkbox icheck">
+                                                            <input type="checkbox" id="selected" name="selected"
+                                                                   th:field="*{wishes[__${stat.index}__].selected}"
+                                                                   th:selected="*{wishes[__${stat.index}__].selected}"/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <select id="select-activity"
+                                                                class="select2 form-control table-selects"
+                                                                th:field="*{wishes[__${stat.index}__].activityId}">
+                                                            <option th:each="act : ${activities[__${stat.index}__]}"
+                                                                    th:value="${act.id}"
+                                                                    th:text="${act.name}">
+                                                                Select Course
+                                                            </option>
+                                                        </select>
+
+                                                    </td>
+                                                    <td>
+                                                        <select id="select-course"
+                                                                class="select2 form-control table-selects"
+                                                                th:field="*{wishes[__${stat.index}__].house}"
+                                                                th:if="(${activities[__${stat.index}__].id}) == 7">
+                                                            <option th:each="house : ${houses}"
+                                                                    th:value="${house.id}"
+                                                                    th:text="${house.name}">
+                                                                Select Course
+                                                            </option>
+                                                        </select>
+                                                        <select id="select-course"
+                                                                class="select2 form-control table-selects"
+                                                                th:field="*{wishes[__${stat.index}__].course}"
+                                                                th:if="(${#lists.size(activities[__${stat.index}__].courses)}) > 0">
+                                                            <option th:each="cs : ${activities[__${stat.index}__].courses}"
+                                                                    th:value="${cs.id}"
+                                                                    th:text="${cs.name}" th:selected="${cs}">
+                                                                Select Course
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select id="select-status"
+                                                                class="select2 form-control table-selects"
+                                                                th:field="*{wishes[__${stat.index}__].status}">
+
+                                                            <option th:each="sts : ${trackStatuses}"
+                                                                    th:value="${sts.toString()}"
+                                                                    th:text="${sts.toString()}">
+                                                                Waiting
+                                                            </option>
+
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group date form-control">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </div>
+                                                            <input type="text"
+                                                                   class="form-control pull-right date-picker"
+                                                                   id="register-datepicker"
+                                                                   th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
+                                                                   name="registerDate"
+                                                                   th:field="*{wishes[__${stat.index}__].registerDate}"/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group date">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </div>
+                                                            <input type="text"
+                                                                   class="form-control pull-right date-picker"
+                                                                   id="start-datepicker"
+                                                                   th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
+                                                                   name="startDate"
+                                                                   th:field="*{wishes[__${stat.index}__].startDate}"/>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <input type="text"
+                                                               id="input-evaluation"
+                                                               placeholder="Evaluation"
+                                                               value="0"
+                                                               name="evaluation"
+                                                               th:field="*{wishes[__${stat.index}__].evaluation}"/>
+                                                    </td>
+                                                    <td>
+                                                                <textarea type="text" class="form-control"
+                                                                          id="track-comments"
+                                                                          placeholder="Set comments for the track if needed"
+                                                                          th:field="*{wishes[__${stat.index}__].comments}"></textarea>
+                                                    </td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                            <!-- /.table-of-created-tracks -->
+                                        </div>
+
+                                    </div>
+                                    <!-- /.tracks -->
+
+                                    <!-- submit button -->
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <button type="submit" class="btn btn-danger">Submit</button>
                                         </div>
                                     </div>
+                                    <!-- /.submit-button -->
+
                                 </form>
+                                <!-- .form -->
                             </div>
-                            <!-- /.tab-pane -->
+                            <!-- /.settings-tab-pane -->
                         </div>
                         <!-- /.tab-content -->
                     </div>
@@ -1153,6 +1398,7 @@
         </div>
     </aside>
     <!-- /.control-sidebar -->
+
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
@@ -1160,25 +1406,31 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.3 -->
-    <script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-            th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
+        th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
-    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- Select2 -->
-    <script src="../../lib/plugins/select2/select2.full.min.js"
-            th:src="@{~/lib/plugins/select2/select2.full.min.js}"></script>
+<script src="../../lib/plugins/select2/select2.full.min.js"
+        th:src="@{~/lib/plugins/select2/select2.full.min.js}"></script>
+<!-- iCheck -->
+<script src="../../lib/plugins/iCheck/icheck.min.js" th:src="@{~/lib/plugins/iCheck/icheck.min.js}"></script>
 <!-- bootstrap datepicker -->
-    <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
-            th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+<script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
+        th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
 <!-- DataTables -->
-    <script src="../../lib/plugins/datatables/jquery.dataTables.min.js"
-            th:src="@{~/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
-    <script src="../../lib/plugins/datatables/dataTables.bootstrap.min.js"
-            th:src="@{~/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+<script src="../../lib/plugins/datatables/jquery.dataTables.min.js"
+        th:src="@{~/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
+<script src="../../lib/plugins/datatables/dataTables.bootstrap.min.js"
+        th:src="@{~/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
 <!-- FastClick -->
-    <script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
+<script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
 <!-- AdminLTE App -->
-    <script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
+<script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
+<!-- script to populate tracks table based on selection of activity dropdown list -->
+<script src="../../lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
+
+
 <script>
     $(function () {
         //Initialize Select2 Elements
@@ -1192,11 +1444,33 @@
         });
 
         $("#example1").DataTable();
+
         $("#coursesDT").DataTable({
             "scrollX": true
         });
         $("#studentsDT").DataTable({
             "scrollX": true
+        });
+
+        //Initialize Select2 Elements
+        $("#select-activity").select2({
+            placeholder: "Select An Activity"
+        });
+        //Initialize Select2 Elements
+        $("#select-country").select2({
+            placeholder: "Select Country"
+        });
+
+        $('.date-picker').datepicker({
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: true,
+            autoclose: true
+        }).datepicker("setDate", new Date());
+
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
         });
     });
 

@@ -165,7 +165,7 @@ public class CourseController {
 	 * @param redirectAttrs the message to be send with the link to be directed to after archiving success.
 	 * @return the link to be directed to after success.
 	 */
-	@GetMapping("/admin/activities/activity/delete")
+	@GetMapping("/admin/courses/course/archive")
 	public String archiveCourse(@RequestParam(value = "id") int id, RedirectAttributes redirectAttrs) {
 		Course course = courseService.findById(id);
 		course.setArchived(true);

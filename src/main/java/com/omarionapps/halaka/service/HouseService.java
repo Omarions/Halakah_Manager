@@ -29,6 +29,9 @@ public class HouseService {
         return houseRepository.findAll();
     }
 
+	public House findByName(String name) {
+		return houseRepository.findHouseByName(name);
+	}
     public Map<String, Integer> getHousingOccupyingMap(){
         Iterable<House> list = this.findAllOrderById();
         Map<String, Integer> map = new HashMap<>();

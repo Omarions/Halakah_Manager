@@ -88,7 +88,7 @@ public class StudentService {
             }
 
         }
-        return studentRepository.save(student);
+        return returnedStudent;
     }
 
     public void delete(int id) {

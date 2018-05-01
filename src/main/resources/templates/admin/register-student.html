@@ -74,8 +74,12 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
+
                         <div class="col-md-12">
+
+                            <!-- box info -->
                             <div class="box box-info">
+                                <!-- box header -->
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                         Student
@@ -86,23 +90,26 @@
 
                                 <!-- form start -->
                                 <form id="frmRegisterStudent" class="form-horizontal" action="#"
-                                      th:action="@{/admin/students/student}" method="post" th:object="${reg_student}">
+                                      th:action="@{/admin/students/student}" method="post" th:object="${regStudent}"
+                                      enctype="multipart/form-data">
 
+                                    <!-- box body -->
                                     <div class="box-body">
-
-                                        <input type="hidden" name="id" th:field="*{id}"/>
+                                        <!-- input for ID -->
+                                        <input type="hidden" th:field="*{id}"/>
+                                        <!-- /.input-for-ID -->
 
                                         <!-- input for photo -->
                                         <div class="form-group">
                                             <div class="col-sm-offset-6 col-sm-6">
 
                                                 <img src="../lib/dist/img/student/avatar5.png"
-                                                     th:src="@{/lib/dist/img/student/avatar5.png}"
-                                                     id="img-photo" name="photo" class="img-circle" alt="User Image"
-                                                     style="width: 160px; height: 160px" th:field="*{student.photo}"/>
+                                                     th:src="@{'/lib/dist/img/student/avatar5.png'}"
+                                                     id="img-photo" name="photo" class="img-circle" alt="Student Image"
+                                                     style="width: 160px; height: 160px" th:field="*{photo}"/>
 
                                                 <input type="file" name="photo" id="input-photo" class="hidden"
-                                                       th:field="*{student.photo}"/>
+                                                       th:field="*{photo}"/>
 
                                             </div>
                                         </div>
@@ -145,36 +152,98 @@
                                         </div>
                                         <!-- /.input-for-gender -->
 
-                                        <!-- select for Country -->
+                                        <!-- input for Identity ID -->
                                         <div class="form-group">
-                                            <label for="select-country" class="col-sm-2 control-label">Select
-                                                                                                       Country </label>
+                                            <label for="inputIdentityId" class="col-sm-2 control-label">Identity
+                                                ID</label>
 
                                             <div class="col-sm-10">
-                                                <select id="select-country" class="select2 form-control"
-                                                        th:field="*{student.country}" name="country">
-                                                    <option value="null" text="Select Country">Select Country</option>
-                                                    <option th:each="country: ${countries}" th:value="${country.id}"
-                                                            th:text="${country.arabicName}">Select Country
+                                                <input type="text" class="form-control" id="inputIdentityId"
+                                                       placeholder="Identity ID"
+                                                       th:field="*{student.identityId}"/>
+                                            </div>
+                                        </div>
+                                        <!-- /.input-for-Identity ID -->
+
+                                        <!-- Birth Date Picker -->
+                                        <div class="form-group"
+                                             th:classappend="${#fields.hasErrors('student.birthDate')}? 'has-error'">
+                                            <label class="col-sm-2 control-label">Birth Date</label>
+
+                                            <div class="col-sm-10">
+                                                <div class="input-group date">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+
+                                                    <input type="text" class="form-control pull-right"
+                                                           id="birthDatePicker"
+                                                           th:value="Null" th:field="*{student.birthDate}">
+                                                </div>
+                                                <span th:if="${#fields.hasErrors('student.birthDate')}"
+                                                      th:errors="*{student.birthDate}"
+                                                      th:class="help-block">Birth Date Error</span>
+                                                <!-- /.input group -->
+                                            </div>
+                                        </div>
+                                        <!-- /.start-date-picker -->
+
+                                        <!-- input for birth location -->
+                                        <div class="form-group">
+                                            <label for="inputBirthLocation" class="col-sm-2 control-label">Birth
+                                                Location</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputBirthLocation"
+                                                       placeholder="Birth Location"
+                                                       th:field="*{student.birthLocation}"/>
+                                            </div>
+                                        </div>
+                                        <!-- /.input-for-birth-location -->
+
+                                        <!-- country dropdown list -->
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Country</label>
+
+                                            <div class="col-sm-10">
+                                                <select id="select-country"
+                                                        class="form-control select2 select2-hidden-accessible"
+                                                        style="width: 100%;"
+                                                        tabindex="-1" aria-hidden="true" th:field="*{student.country}">
+                                                    <option value="" selected="selected">Select Country</option>
+                                                    <option th:each="country : ${countries}" th:value="${country.id}"
+                                                            th:text="${country.englishName}">Country Name
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <!-- /.select-for-country -->
+                                        <!-- /.country-dropdown-list -->
 
-                                        <!-- input for email -->
+                                        <!-- input for home address -->
                                         <div class="form-group">
-                                            <label for="input-email" class="col-sm-2 control-label">Email</label>
+                                            <label for="inputHomeAddress" class="col-sm-2 control-label">Home
+                                                Address</label>
 
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="input-email"
-                                                       name="email" placeholder="Email" th:field="*{student.email}"/>
-                                                <span th:if="${#fields.hasErrors('student.email')}"
-                                                      th:errors="*{student.email}"
-                                                      th:class="help-block">Email Errors</span>
+                                                <input type="text" class="form-control" id="inputHomeAddress"
+                                                       placeholder="Home Address"
+                                                       th:field="*{student.homeAddress}"/>
                                             </div>
                                         </div>
-                                        <!-- /.input-for-email -->
+                                        <!-- /.input-for-home-address -->
+
+                                        <!-- input for egypt address -->
+                                        <div class="form-group">
+                                            <label for="inputEgyptAddress" class="col-sm-2 control-label">Egypt
+                                                Address</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputEgyptAddress"
+                                                       placeholder="Egypt Address"
+                                                       th:field="*{student.egyptAddress}"/>
+                                            </div>
+                                        </div>
+                                        <!-- /.input-for-egypt-address -->
 
                                         <!-- input for tel -->
                                         <div class="form-group">
@@ -190,6 +259,32 @@
                                             </div>
                                         </div>
                                         <!-- /.input-for-tel -->
+
+                                        <!-- input for email -->
+                                        <div class="form-group">
+                                            <label for="input-email" class="col-sm-2 control-label">Email</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="input-email"
+                                                       name="email" placeholder="Email" th:field="*{student.email}"/>
+                                                <span th:if="${#fields.hasErrors('student.email')}"
+                                                      th:errors="*{student.email}"
+                                                      th:class="help-block">Email Errors</span>
+                                            </div>
+                                        </div>
+                                        <!-- /.input-for-email -->
+
+                                        <!-- input for facebook -->
+                                        <div class="form-group">
+                                            <label for="inputFacebook" class="col-sm-2 control-label">Facebook</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputFacebook"
+                                                       placeholder="Facebook"
+                                                       th:field="*{student.facebook}"/>
+                                            </div>
+                                        </div>
+                                        <!-- /.input-for-facebook -->
 
                                         <!-- input for education -->
                                         <div class="form-group">
@@ -235,6 +330,7 @@
                                         </div>
                                         <!-- /.input-for-comments -->
 
+                                        <!-- tracks -->
                                         <div class="form-group">
 
                                             <label for="table-tracks" class="col-sm-2 control-label">Tracks</label>
@@ -249,13 +345,12 @@
                                                         <tr>
                                                             <th>Select</th>
                                                             <th>Activity</th>
-                                                            <th>Course Name</th>
+                                                            <th>Course</th>
                                                             <th>Track Status</th>
                                                             <th>Register Date</th>
                                                             <th>Start Date</th>
                                                             <th>Evaluation</th>
                                                             <th>Comments</th>
-                                                            <th>Tools</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="tracks-data">
@@ -269,11 +364,12 @@
                                                         <td>
                                                             <select id="select-activity"
                                                                     class="select2 form-control table-selects"
-                                                                    th:field="*{wishes[__${stat.index}__].activityId}">
+                                                                    th:field="*{wishes[__${stat.index}__].activityId}"
+                                                                    disabled="disabled">
                                                                 <option th:each="act : ${activities[__${stat.index}__]}"
                                                                         th:value="${act.id}"
                                                                         th:text="${act.name}">
-                                                                    Select Course
+                                                                    Select activity
                                                                 </option>
                                                             </select>
 
@@ -354,9 +450,6 @@
                                                                           placeholder="Set comments for the track if needed"
                                                                           th:field="*{wishes[__${stat.index}__].comments}"></textarea>
                                                             </td>
-                                                            <td>
-                                                                <a href="#"><i class="fa fa-trash-o fa-3x"></i></a>
-                                                            </td>
                                                         </tr>
 
                                                     </tbody>
@@ -364,6 +457,8 @@
                                             </div>
                                             <!-- /.table-of-created-tracks -->
                                         </div>
+                                        <!-- /.tracks -->
+
                                         <!-- /.box-body -->
 
                                         <div class="box-footer">
@@ -373,6 +468,8 @@
                                         </div>
                                         <!-- /.box-footer -->
                                     </div>
+                                    <!-- /.box-body -->
+
                                 </form>
                                 <!-- /.student-form -->
                             </div>
@@ -613,7 +710,10 @@
                     "scrollX": true
                 });
 
-                $(".table-selects").select2();
+                $('#birthDatePicker').datepicker({
+                    format: 'yyyy-mm-dd',
+                    autoclose: true
+                });
 
                 //Initialize Select2 Elements
                 $("#select-activity").select2({
@@ -630,6 +730,7 @@
                     todayHighlight: true,
                     autoclose: true
                 }).datepicker("setDate", new Date());
+
                 $('input').iCheck({
                     checkboxClass: 'icheckbox_square-blue',
                     radioClass: 'iradio_square-blue',
