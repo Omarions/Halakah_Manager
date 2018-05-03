@@ -8,36 +8,16 @@ import java.util.List;
 /**
  * Created by Omar on 23-Sep-17.
  */
-public class RegisteringStudent {
-	private int           id;
-	private Student       student;
-	private MultipartFile photo;
+public class RegisteringStudent extends Student {
+	private MultipartFile image;
 	private List<Wish> wishes = new ArrayList<>();
 
 	public RegisteringStudent() {
 	}
 
-	public RegisteringStudent(int id, Student student, List<Wish> wishes, MultipartFile photo) {
-		this.id = id;
-		this.student = student;
+	public RegisteringStudent(List<Wish> wishes, MultipartFile image) {
 		this.wishes = wishes;
-		this.setPhoto(photo);
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Student getStudent() {
-		return student;
-	}
-
-	public void setStudent(Student student) {
-		this.student = student;
+		this.setImage(image);
 	}
 
 	public List<Wish> getWishes() {
@@ -48,11 +28,11 @@ public class RegisteringStudent {
 		this.wishes = wishes;
 	}
 
-	public MultipartFile getPhoto() {
-		return photo;
+	public MultipartFile getImage() {
+		return image;
 	}
 
-	public void setPhoto(MultipartFile photo) {
-		this.photo = photo;
+	public void setImage(MultipartFile image) {
+		this.image = image;
 	}
 }

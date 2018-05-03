@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 /**
  * Created by Omar on 05-Aug-17.
  */
@@ -39,7 +41,7 @@ public class CertificateController {
 	 */
 	@GetMapping("/admin/certificates/certificate/delete")
 	public String deleteCertificate(@RequestParam(value = "id") int id, RedirectAttributes redirectAttrs) {
-		Certificate cert = certificateService.findById(id);
+		Optional<Certificate> cert = certificateService.findById(id);
 		if (null != cert) {
 			certificateService.delete(id);
 			redirectAttrs.addFlashAttribute("message", "Certificate with ID( " + id + " ) has been deleted successfully");

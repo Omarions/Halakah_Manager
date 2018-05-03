@@ -20,7 +20,7 @@ public class ActivityConverter implements Formatter<Activity> {
     public Activity parse(String s, Locale locale) {
         if(null != s){
             int id = Utils.convertToID(s);
-            return activityService.findById(id);
+	        return activityService.findById(id).get();
         }
 
         return new Activity();

@@ -5,6 +5,8 @@ import com.omarionapps.halaka.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 /**
  * Created by Omar on 05-Aug-17.
@@ -22,8 +24,8 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public Task findById(int id) {
-        return taskRepository.findOne(id);
+	public Optional<Task> findById(int id) {
+		return taskRepository.findById(id);
     }
 
     public Task save(Task task) {

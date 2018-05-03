@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StudentTrackRepository extends CrudRepository<StudentTrack, Integer> {
-    StudentTrack save(StudentTrack studentTrack);
 }

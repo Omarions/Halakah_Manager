@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -62,13 +63,14 @@ public class ActivityController {
     }
 
     private ModelAndView getActivity(int id) {
-        ModelAndView modelAndView = new ModelAndView("admin/activity-profile");
-        Activity activity = activityService.findById(id);
-        Set<Student> activityStudents = activityService.getStudentsByActivity(activity);
+        ModelAndView       modelAndView     = new ModelAndView("admin/activity-profile");
+	    Optional<Activity> optActivity      = activityService.findById(id);
+	    Activity           activity         = optActivity.get();
+        Set<Student>       activityStudents = activityService.getStudentsByActivity(activity);
         System.out.println("activity students: " + activityStudents.size());
         modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(activityStudents));
 
-        if (id != 7) {
+	    if (id != 7) {
             long totalStudents = activityService.getTotalStudentsByActivity(activity);
             long totalStudying = activityService.getTotalStudentsByStatus(activity, StudentStatus.STUDYING);
             long totalWaiting = activityService.getTotalStudentsByStatus(activity, StudentStatus.WAITING);
@@ -139,7 +141,8 @@ public class ActivityController {
      */
     @GetMapping("/admin/activities/activity/delete")
     public String archiveActivity(@RequestParam(value = "id") int id, RedirectAttributes redirectAttrs) {
-        Activity activity = activityService.findById(id);
+	    Optional<Activity> optActivity = activityService.findById(id);
+	    Activity           activity    = optActivity.get();
         activity.setArchived(true);
         activity.setArchivedDate(Date.valueOf(LocalDate.now()));
         Activity archivedActivity = activityService.save(activity);

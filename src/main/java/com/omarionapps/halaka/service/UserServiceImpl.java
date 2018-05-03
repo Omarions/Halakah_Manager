@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -17,25 +17,19 @@ import java.util.Set;
 /**
  * Created by Omar on 22-Apr-17.
  */
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService, UserDetailsService {
-
-
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository  userRepository;
     @Autowired
-    private RoleRepository roleRepository;
+    private RoleRepository  roleRepository;
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Override
-    public User findUserById(long id) {
-        return userRepository.findOne(id);
-    }
+    private PasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public User findUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
+
         return user;
     }
 

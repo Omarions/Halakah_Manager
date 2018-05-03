@@ -7,10 +7,7 @@ import com.omarionapps.halaka.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Omar on 08-May-17.
@@ -131,7 +128,7 @@ public class CountryService {
         return countryRepository.findAllByOrderByArabicNameAsc();
     }
 
-    public Country findById(int id) {
-        return countryRepository.findOne(id);
+	public Optional<Country> findById(int id) {
+		return countryRepository.findById(id);
     }
 }

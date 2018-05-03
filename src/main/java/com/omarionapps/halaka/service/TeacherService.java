@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -42,8 +43,8 @@ public class TeacherService {
         return teacherRepository.findAllByOrderByName();
     }
 
-    public Teacher findOneById(int id) {
-        return teacherRepository.findOne(id);
+	public Optional<Teacher> findOneById(int id) {
+		return teacherRepository.findById(id);
     }
 
     public Iterable<Teacher> findAllByActivity(int activityId){

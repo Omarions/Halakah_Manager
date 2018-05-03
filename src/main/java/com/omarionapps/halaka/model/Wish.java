@@ -3,7 +3,7 @@ package com.omarionapps.halaka.model;
 /**
  * Created by Omar on 23-Sep-17.
  */
-public class Wish extends StudentTrack {
+public class Wish {
 	private boolean      selected;
 	private int          activityId;
 	private House        house;

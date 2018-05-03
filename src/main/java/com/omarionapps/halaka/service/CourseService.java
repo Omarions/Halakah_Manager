@@ -7,10 +7,7 @@ import com.omarionapps.halaka.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Omar on 30-Apr-17.
@@ -42,42 +39,45 @@ public class CourseService {
     }
 
     /**
-     * Get Course by its ID
-     * @param id the id of the course to search for
-     * @return the course with the specified ID
-     */
-    public Course findById(int id) {
-        return courseRepository.findOne(id);
-    }
-
-    /**
-     * Get the total number of students related to the course with specified ID
-     * @param course the course you look for
-     * @return the total number of students for a specified course
-     */
-    public int totalStudentsByCourse(Course course){
-        return course.getStudentTracks().size();
-    }
-
-    /**
      * Get the total number of students related to the course with specified ID
      * @param courseId the id of course you look for
      * @return the total number of students for a specified course
      */
     public int totalStudentsByCourse(int courseId){
-        Course course = this.findById(courseId);
+	    Optional<Course> course = this.findById(courseId);
 
-        return course.getStudentTracks().size();
+	    return course.get().getStudentTracks().size();
     }
+
+	/**
+	 * Get the total number of students related to the course with specified ID
+	 *
+	 * @param course the course you look for
+	 * @return the total number of students for a specified course
+	 */
+	public int totalStudentsByCourse(Course course) {
+		return course.getStudentTracks().size();
+	}
+
+	/**
+	 * Get Course by its ID
+	 *
+	 * @param id the id of the course to search for
+	 * @return the course with the specified ID
+	 */
+	public Optional<Course> findById(int id) {
+		return courseRepository.findById(id);
+	}
 
     /**
      * Get the total number of students by status that related to the course with specified ID
      * @param courseId the id of course you look for
      * @return the total number of students with specified status for a specified course
      */
-    public long totalStudentsByStatus(int courseId, StudentStatus status){
-        Course course = this.findById(courseId);
-        long total = course.getStudentTracks().stream().filter((studentTrack) -> studentTrack.getStatus().equalsIgnoreCase(status.toString())).count();
+    public long totalStudentsByStatus(int courseId, StudentStatus status) {
+	    Optional<Course> course = this.findById(courseId);
+	    long total = course.get().getStudentTracks().stream().filter((studentTrack) -> studentTrack.getStatus()
+			    .equalsIgnoreCase(status.toString())).count();
         return total;
     }
 
@@ -88,8 +88,8 @@ public class CourseService {
      */
     public Set<Student> getStudentsByStatus(int courseId, StudentStatus status){
         Set<Student> students = new HashSet<>();
-        Course course = this.findById(courseId);
-        course.getStudentTracks()
+	    Optional<Course> course = this.findById(courseId);
+	    course.get().getStudentTracks()
                 .stream()
                 .filter((studentTrack) -> studentTrack.getStatus().equalsIgnoreCase(status.toString()))
                 .forEach((st) -> students.add(st.getStudent()));
@@ -171,7 +171,7 @@ public class CourseService {
      * @param id the id of the course to be deleted
      */
     public void delete(int id) {
-        courseRepository.delete(id);
+	    courseRepository.deleteById(id);
     }
 
     public Set<Course> findAllByArchive(boolean isArchived) {

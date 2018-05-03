@@ -5,6 +5,8 @@ import com.omarionapps.halaka.repository.CertificateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * Created by Omar on 07-Jul-17.
  */
@@ -20,8 +22,8 @@ public class CertificateService {
      * @param id to look for
      * @return the certificate with the given id
      */
-    public Certificate findById(int id) {
-        return certificateRepository.findOne(id);
+    public Optional<Certificate> findById(int id) {
+	    return certificateRepository.findById(id);
     }
 
     /**
@@ -47,6 +49,6 @@ public class CertificateService {
 	}
 
 	public void delete(int certId) {
-		certificateRepository.delete(certId);
+		certificateRepository.deleteById(certId);
 	}
 }

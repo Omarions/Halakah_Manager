@@ -18,7 +18,7 @@ public class CountryConverter implements Formatter<Country> {
     public Country parse(String s, Locale locale) {
         if (null != s) {
             int id = Utils.convertToID(s);
-            return countryService.findById(id);
+	        return countryService.findById(id).get();
         }
 
         return new Country();

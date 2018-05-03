@@ -77,29 +77,29 @@
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle"
                                  src="../../lib/dist/img/student/user4-128x128.jpg"
-                                 th:src="@{'~/lib/dist/img/student/' + ${regStudent.student.photo}}"
+                                 th:src="@{${studentPhotosPath} + ${regStudent.photo}}"
                                  alt="User profile picture"/>
 
-                            <h3 class="profile-username text-center" th:text="${regStudent.student.name}">Nina
+                            <h3 class="profile-username text-center" th:text="${regStudent.name}">Nina
                                 Mcintire</h3>
 
-                            <p class="text-muted text-center" th:text="${regStudent.student.country.arabicName}">
+                            <p class="text-muted text-center" th:text="${regStudent.country.arabicName}">
                                 China</p>
 
-                            <p class="text-muted text-center" th:text="${regStudent.student.job}">China</p>
+                            <p class="text-muted text-center" th:text="${regStudent.job}">China</p>
 
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
                                     <a><b>Tracks</b>
                                         <samll class="label pull-right bg-blue"
-                                               th:text="${regStudent.student.studentTracks.size()}">1,322
+                                               th:text="${regStudent.studentTracks.size()}">1,322
                                         </samll>
                                     </a>
                                 </li>
                                 <li class="list-group-item">
                                     <a><b>Certificates</b>
                                         <small class="label pull-right bg-blue"
-                                               th:text="${regStudent.student.certificates.size()}">543
+                                               th:text="${regStudent.certificates.size()}">543
                                         </small>
                                     </a>
                                 </li>
@@ -123,34 +123,34 @@
                             <p>
                                 <strong><i class="fa fa-credit-card margin-r-5"></i> Identity ID</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.identityId}">Identity ID</p>
+                            <p class="text-muted" th:text="${regStudent.identityId}">Identity ID</p>
                             <strong><i class="fa fa-birthday-cake margin-r-5"></i> Birth Date</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.birthDate}">2015-3-23</p>
+                            <p class="text-muted" th:text="${regStudent.birthDate}">2015-3-23</p>
                             <strong><i class="fa fa-map-marker margin-r-5"></i> Birth Location</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.birthLocation}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.birthLocation}">Malibu, California</p>
                             </p>
 
                             <hr>
 
                             <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.country.arabicName}">China</p>
+                            <p class="text-muted" th:text="${regStudent.country.arabicName}">China</p>
                             <strong><i class="fa fa-map-marker margin-r-7"></i> Address At Home</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.homeAddress}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.homeAddress}">Malibu, California</p>
 
 
                             <strong><i class="fa fa-map-marker margin-r-7"></i> Address At Egypt</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.egyptAddress}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.egyptAddress}">Malibu, California</p>
 
                             <hr>
 
                             <strong><i class="fa fa-institution margin-r-5"></i> Education</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.education}">
+                            <p class="text-muted" th:text="${regStudent.education}">
                                 B.S. in Computer Science from the University of Tennessee at Knoxville
                             </p>
 
@@ -161,16 +161,16 @@
                             <p>
                                 <strong><i class="fa fa-phone margin-r-7"></i> Tel</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.tel}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.tel}">Malibu, California</p>
 
 
                             <strong><i class="fa fa-envelope-o margin-r-7"></i> Email</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.email}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.email}">Malibu, California</p>
 
                             <strong><i class="fa fa-facebook-official margin-r-7"></i> Facebook</strong>
 
-                            <p class="text-muted" th:text="${regStudent.student.facebook}">Malibu, California</p>
+                            <p class="text-muted" th:text="${regStudent.facebook}">Malibu, California</p>
 
                             </p>
 
@@ -180,7 +180,7 @@
 
                             <p>
 
-                            <div th:each="st: ${regStudent.student.studentTracks}">
+                            <div th:each="st: ${regStudent.studentTracks}">
                                 <div th:switch="${st.status}">
                                       <span th:case="'WAITING'" class="label label-warning"
                                             th:text="${st.course.activity.name}">Waiting Activity</span>
@@ -203,7 +203,7 @@
 
                             <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
 
-                            <p th:text="${regStudent.student.comments}">Lorem ipsum dolor sit amet, consectetur
+                            <p th:text="${regStudent.comments}">Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit.
                                 Etiam fermentum
                                 enim neque.</p>
@@ -359,7 +359,7 @@
                                                         </thead>
                                                         <tbody th:remove="all-but-first">
                                                         <tr rol="row"
-                                                            th:each="track : ${regStudent.student.studentTracks}"
+                                                            th:each="track : ${regStudent.studentTracks}"
                                                             th:class="${trackStat.odd}? 'odd' : 'even'">
                                                             <td class="sorting_1" th:text="${track.id}">Track ID
                                                             </td>
@@ -627,9 +627,9 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody th:remove="all-but-first"
-                                                               th:if="(${#lists.size(regStudent.student.certificates)}) > 0">
+                                                               th:if="(${#lists.size(regStudent.certificates)}) > 0">
                                                         <tr rol="row"
-                                                            th:each="cert : ${regStudent.student.certificates}"
+                                                            th:each="cert : ${regStudent.certificates}"
                                                             th:class="${certStat.odd}? 'odd' : 'even'">
                                                             <td class="sorting_1" th:text="${cert.id}">Certificate
                                                                 ID
@@ -653,10 +653,10 @@
                                                                     <li>
                                                                         <div class="tools">
                                                                             <a href="#"
-                                                                               th:href="@{/admin/students/student(id=${regStudent.student.id})}"><i
+                                                                               th:href="@{/admin/students/student(id=${regStudent.id})}"><i
                                                                                     class="fa fa-edit fa-3x"></i></a>
                                                                             <a href="#"
-                                                                               th:href="@{/admin/students/student(id=${regStudent.student.id})}"><i
+                                                                               th:href="@{/admin/students/student(id=${regStudent.id})}"><i
                                                                                     class="fa fa-trash-o fa-3x"></i></a>
                                                                         </div>
                                                                     </li>
@@ -812,7 +812,7 @@
                             <div class="tab-pane" id="settings">
                                 <!-- form -->
                                 <form class="form-horizontal" action="#"
-                                      th:action="@{/admin/students/student}"
+                                      th:action="@{'/admin/students/student/' + ${regStudent.id}}"
                                       th:object="${regStudent}" method="post" enctype="multipart/form-data">
 
                                     <!-- input for ID -->
@@ -823,15 +823,13 @@
                                     <div class="form-group">
                                         <div class="col-sm-offset-6 col-sm-6">
 
-                                            <img src="../lib/dist/img/student/avatar5.png"
-                                                 th:src=" @{'/lib/dist/img/student/' + *{student.photo}}"
-                                                 id="img-photo" name="photo" class="img-circle" alt="Student Image"
-                                                 style="width: 160px; height: 160px"/>
+                                            <img src="../../lib/dist/img/student/avatar5.png"
+                                                 th:src=" @{${studentPhotosPath} + *{photo}}"
+                                                 id="img-photo" name="image" class="img-circle" alt="Student Image"
+                                                 style="width: 160px; height: 160px" th:field="*{image}"/>
 
-                                            <input type="file" name="photo" id="input-photo" class="hidden"
-                                                   th:field="*{photo}"
-                                                   th:value="(*{student} != null) ?
-                                            *{student.photo} : 'null'"/>
+                                            <input type="file" name="image" id="input-photo" class="hidden"
+                                                   th:field="*{image}"/>
 
                                         </div>
                                     </div>
@@ -839,14 +837,14 @@
 
                                     <!-- input for name -->
                                     <div class="form-group"
-                                         th:classappend="${#fields.hasErrors('student.name')}? 'has-error'">
+                                         th:classappend="${#fields.hasErrors('name')}? 'has-error'">
                                         <label for="input-name" class="col-sm-2 control-label">Name</label>
 
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="input-name"
-                                                   placeholder="Name" name="name" th:field="*{student.name}"/>
-                                            <span th:if="${#fields.hasErrors('student.name')}"
-                                                  th:errors="*{student.name}"
+                                                   placeholder="Name" name="name" th:field="*{name}"/>
+                                            <span th:if="${#fields.hasErrors('name')}"
+                                                  th:errors="*{name}"
                                                   th:class="help-block">Name Errors</span>
                                         </div>
                                     </div>
@@ -861,13 +859,13 @@
                                                 <label>
                                                     <input type="radio" name="gender" id="male-radio"
                                                            value="MALE" checked="true"
-                                                           th:field="*{student.gender}"/> Male
+                                                           th:field="*{gender}"/> Male
                                                 </label>
                                             </div>
                                             <div class="iradio">
                                                 <label>
                                                     <input type="radio" name="gender" id="female-radio"
-                                                           value="FEMALE" th:field="*{student.gender}"/> Female
+                                                           value="FEMALE" th:field="*{gender}"/> Female
                                                 </label>
                                             </div>
                                         </div>
@@ -881,14 +879,14 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputIdentityId"
                                                    placeholder="Identity ID"
-                                                   th:field="*{student.identityId}"/>
+                                                   th:field="*{identityId}"/>
                                         </div>
                                     </div>
                                     <!-- /.input-for-Identity ID -->
 
                                     <!-- Birth Date Picker -->
                                     <div class="form-group"
-                                         th:classappend="${#fields.hasErrors('student.birthDate')}? 'has-error'">
+                                         th:classappend="${#fields.hasErrors('birthDate')}? 'has-error'">
                                         <label class="col-sm-2 control-label">Birth Date</label>
 
                                         <div class="col-sm-10">
@@ -899,10 +897,10 @@
 
                                                 <input type="text" class="form-control pull-right"
                                                        id="birthDatePicker"
-                                                       th:value="Null" th:field="*{student.birthDate}">
+                                                       th:value="Null" th:field="*{birthDate}">
                                             </div>
-                                            <span th:if="${#fields.hasErrors('student.birthDate')}"
-                                                  th:errors="*{student.birthDate}"
+                                            <span th:if="${#fields.hasErrors('birthDate')}"
+                                                  th:errors="*{birthDate}"
                                                   th:class="help-block">Birth Date Error</span>
                                             <!-- /.input group -->
                                         </div>
@@ -917,7 +915,7 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputBirthLocation"
                                                    placeholder="Birth Location"
-                                                   th:field="*{student.birthLocation}"/>
+                                                   th:field="*{birthLocation}"/>
                                         </div>
                                     </div>
                                     <!-- /.input-for-birth-location -->
@@ -929,7 +927,7 @@
                                         <div class="col-sm-10">
                                             <select class="form-control select2 select2-hidden-accessible"
                                                     style="width: 100%;"
-                                                    tabindex="-1" aria-hidden="true" th:field="*{student.country}">
+                                                    tabindex="-1" aria-hidden="true" th:field="*{country}">
                                                 <option value="" selected="selected">Select Country</option>
                                                 <option th:each="country : ${countries}" th:value="${country.id}"
                                                         th:text="${country.englishName}">Country Name
@@ -947,7 +945,7 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputHomeAddress"
                                                    placeholder="Home Address"
-                                                   th:field="*{student.homeAddress}"/>
+                                                   th:field="*{homeAddress}"/>
                                         </div>
                                     </div>
                                     <!-- /.input-for-home-address -->
@@ -960,7 +958,7 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputEgyptAddress"
                                                    placeholder="Egypt Address"
-                                                   th:field="*{student.egyptAddress}"/>
+                                                   th:field="*{egyptAddress}"/>
                                         </div>
                                     </div>
                                     <!-- /.input-for-egypt-address -->
@@ -972,9 +970,9 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="input-tel"
                                                    name="tel" placeholder="Tel"
-                                                   th:field="*{student.tel}"/>
-                                            <span th:if="${#fields.hasErrors('student.tel')}"
-                                                  th:errors="*{student.tel}"
+                                                   th:field="*{tel}"/>
+                                            <span th:if="${#fields.hasErrors('tel')}"
+                                                  th:errors="*{tel}"
                                                   th:class="help-block">Tel Errors</span>
                                         </div>
                                     </div>
@@ -986,9 +984,9 @@
 
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="input-email"
-                                                   name="email" placeholder="Email" th:field="*{student.email}"/>
-                                            <span th:if="${#fields.hasErrors('student.email')}"
-                                                  th:errors="*{student.email}"
+                                                   name="email" placeholder="Email" th:field="*{email}"/>
+                                            <span th:if="${#fields.hasErrors('email')}"
+                                                  th:errors="*{email}"
                                                   th:class="help-block">Email Errors</span>
                                         </div>
                                     </div>
@@ -1001,7 +999,7 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputFacebook"
                                                    placeholder="Facebook"
-                                                   th:field="*{student.facebook}"/>
+                                                   th:field="*{facebook}"/>
                                         </div>
                                     </div>
                                     <!-- /.input-for-facebook -->
@@ -1014,9 +1012,9 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="input-education"
                                                    name="education" placeholder="Education"
-                                                   th:field="*{student.education}"/>
-                                            <span th:if="${#fields.hasErrors('student.education')}"
-                                                  th:errors="*{student.education}"
+                                                   th:field="*{education}"/>
+                                            <span th:if="${#fields.hasErrors('education')}"
+                                                  th:errors="*{education}"
                                                   th:class="help-block">Education Errors</span>
                                         </div>
                                     </div>
@@ -1029,9 +1027,9 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="input-job"
                                                    name="job" placeholder="Job"
-                                                   th:field="*{student.job}"/>
-                                            <span th:if="${#fields.hasErrors('student.job')}"
-                                                  th:errors="*{student.job}"
+                                                   th:field="*{job}"/>
+                                            <span th:if="${#fields.hasErrors('job')}"
+                                                  th:errors="*{job}"
                                                   th:class="help-block">Job Errors</span>
                                         </div>
                                     </div>
@@ -1045,7 +1043,7 @@
                                                 <textarea type="text" class="form-control" id="input-comments"
                                                           name="comments"
                                                           placeholder="Set comments for the student if needed"
-                                                          th:field="*{student.comments}">Extra info</textarea>
+                                                          th:field="*{comments}">Extra info</textarea>
                                         </div>
                                     </div>
                                     <!-- /.input-for-comments -->
@@ -1107,7 +1105,7 @@
                                                         </select>
                                                         <select id="select-course"
                                                                 class="select2 form-control table-selects"
-                                                                th:field="*{wishes[__${stat.index}__].course}"
+                                                                th:field="*{wishes[__${stat.index}__].track.course}"
                                                                 th:if="(${#lists.size(activities[__${stat.index}__].courses)}) > 0">
                                                             <option th:each="cs : ${activities[__${stat.index}__].courses}"
                                                                     th:value="${cs.id}"
@@ -1119,7 +1117,7 @@
                                                     <td>
                                                         <select id="select-status"
                                                                 class="select2 form-control table-selects"
-                                                                th:field="*{wishes[__${stat.index}__].status}">
+                                                                th:field="*{wishes[__${stat.index}__].track.status}">
 
                                                             <option th:each="sts : ${trackStatuses}"
                                                                     th:value="${sts.toString()}"
@@ -1139,7 +1137,7 @@
                                                                    id="register-datepicker"
                                                                    th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
                                                                    name="registerDate"
-                                                                   th:field="*{wishes[__${stat.index}__].registerDate}"/>
+                                                                   th:field="*{wishes[__${stat.index}__].track.registerDate}"/>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -1152,7 +1150,7 @@
                                                                    id="start-datepicker"
                                                                    th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
                                                                    name="startDate"
-                                                                   th:field="*{wishes[__${stat.index}__].startDate}"/>
+                                                                   th:field="*{wishes[__${stat.index}__].track.startDate}"/>
                                                         </div>
 
                                                     </td>
@@ -1162,13 +1160,13 @@
                                                                placeholder="Evaluation"
                                                                value="0"
                                                                name="evaluation"
-                                                               th:field="*{wishes[__${stat.index}__].evaluation}"/>
+                                                               th:field="*{wishes[__${stat.index}__].track.evaluation}"/>
                                                     </td>
                                                     <td>
                                                                 <textarea type="text" class="form-control"
                                                                           id="track-comments"
                                                                           placeholder="Set comments for the track if needed"
-                                                                          th:field="*{wishes[__${stat.index}__].comments}"></textarea>
+                                                                          th:field="*{wishes[__${stat.index}__].track.comments}"></textarea>
                                                     </td>
                                                 </tr>
 
@@ -1471,6 +1469,7 @@
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
         });
     });
 

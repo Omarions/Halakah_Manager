@@ -20,7 +20,7 @@ public class HouseConverter implements Formatter<House> {
 	public House parse(String s, Locale locale) {
 		if (null != s) {
 			int id = Utils.convertToID(s);
-			return houseService.findById(id);
+			return houseService.findById(id).get();
 		}
 
 		return new House();

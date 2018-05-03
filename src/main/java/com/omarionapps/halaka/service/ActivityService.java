@@ -16,7 +16,8 @@ public class ActivityService {
     long totalByStatus = 0;
     int countByCountry = 0;
     long totalActivities = 0;
-    private ActivityRepository activityRepository;
+
+	private ActivityRepository activityRepository;
     private CourseService courseService;
     private CountryService countryService;
 
@@ -59,17 +60,17 @@ public class ActivityService {
      * @return get the count of students of an activity
      */
     public long getTotalStudentsByActivity(int activityId) {
-        Activity activity = this.findById(activityId);
+	    Optional<Activity> activity = this.findById(activityId);
         totalStudents = 0;
-        activity.getCourses().stream().forEach((course) -> {
+	    activity.get().getCourses().stream().forEach((course) -> {
             totalStudents += courseService.totalStudentsByCourse(course.getId());
         });
 
         return totalStudents;
     }
 
-    public Activity findById(int id) {
-        return activityRepository.findOne(id);
+	public Optional<Activity> findById(int id) {
+		return activityRepository.findById(id);
     }
 
     /**
@@ -107,9 +108,9 @@ public class ActivityService {
     }
 
     public long getTotalStudentsByStatus(int id, StudentStatus status){
-        Activity activity = this.findById(id);
+	    Optional<Activity> activity = this.findById(id);
         totalByStatus = 0;
-        activity.getCourses().stream().forEach((course) -> {
+	    activity.get().getCourses().stream().forEach((course) -> {
             totalByStatus += courseService.totalStudentsByStatus(course.getId(), status);
         });
 
@@ -126,9 +127,9 @@ public class ActivityService {
     }
 
     public long totalCourseStudentsByStatus(int id,int courseId, StudentStatus status){
-        Activity activity = this.findById(id);
+	    Optional<Activity> activity = this.findById(id);
         totalByStatus = 0;
-        activity.getCourses().stream().filter((c)-> c.getId() == courseId).forEach((course) -> {
+	    activity.get().getCourses().stream().filter((c) -> c.getId() == courseId).forEach((course) -> {
             totalByStatus = courseService.totalStudentsByStatus(course.getId(), status);
         });
 
@@ -145,11 +146,11 @@ public class ActivityService {
     }
 
     public Map<Integer, Integer> getTeacherCoursesByActivity(int activityId){
-        Map<Integer, Integer> map = new HashMap<>();
-        int count = 0;
-        Activity activity = this.findById(activityId);
-        Set<Teacher> teachers = activity.getTeacher();
-        Set<Course> courses = activity.getCourses();
+        Map<Integer, Integer> map      = new HashMap<>();
+        int                   count    = 0;
+	    Optional<Activity>    activity = this.findById(activityId);
+	    Set<Teacher>          teachers = activity.get().getTeacher();
+	    Set<Course>           courses  = activity.get().getCourses();
         for (Teacher teacher : teachers){
             for(Course course : teacher.getCourse()){
                 if(course.getActivity().getId() == activityId){
@@ -163,8 +164,8 @@ public class ActivityService {
     }
 
     public Set<Teacher> getTeachersByActivity(int activityId){
-        Activity activity = this.findById(activityId);
-        return activity.getTeacher();
+	    Optional<Activity> activity = this.findById(activityId);
+	    return activity.get().getTeacher();
     }
 
     public Set<Teacher> getTeachersByActivity(Activity activity){
@@ -172,8 +173,8 @@ public class ActivityService {
     }
 
     public Set<Course> getCoursesByActivity(int activityId){
-        Activity activity = this.findById(activityId);
-        return activity.getCourses();
+	    Optional<Activity> activity = this.findById(activityId);
+	    return activity.get().getCourses();
     }
 
     public Set<Course> getCoursesByActivity(Activity activity){
@@ -195,9 +196,9 @@ public class ActivityService {
     }
 
     public Set<Student> getStudentsByActivity(int activityId) {
-        Activity activity = this.findById(activityId);
-        Set<Student> students = new HashSet<>();
-        activity.getCourses().forEach((course) -> {
+	    Optional<Activity> activity = this.findById(activityId);
+        Set<Student>       students = new HashSet<>();
+	    activity.get().getCourses().forEach((course) -> {
             course.getStudentTracks().forEach((studentTrack -> students.add(studentTrack.getStudent())));
         });
 
@@ -368,6 +369,6 @@ public class ActivityService {
     }
 
     public void delete(int id) {
-        activityRepository.delete(id);
+	    activityRepository.deleteById(id);
     }
 }

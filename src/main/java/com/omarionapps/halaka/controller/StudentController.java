@@ -10,7 +10,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,6 +25,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Omar on 09-Apr-17.
@@ -64,8 +68,9 @@ public class StudentController {
 
 	@GetMapping("/admin/students/student/{id}")
 	public ModelAndView processStudentRequest(@PathVariable(value = "id") Integer id) {
-		ModelAndView modelAndView;
-		Student      student = studentService.getById(id);
+		ModelAndView      modelAndView;
+		Optional<Student> optStudent = studentService.getById(id);
+		Student           student    = optStudent.get();
 		if (null == student) {
 			modelAndView = new ModelAndView("admin/students-list");
 			modelAndView.addObject("message", "There is no student with ID (" + id + ")...");
@@ -80,13 +85,13 @@ public class StudentController {
 	private void prepareModel(ModelAndView model, Student student) {
 		//create the student and the registering student objects
 		RegisteringStudent regStudent = new RegisteringStudent();
+
 		//create the list of wishes
 		List<Wish> wishes = new ArrayList<>();
 
 		if (null == student) {
 			//student.setStudentTracks(tracks);
 			student = new Student();
-			regStudent.setStudent(student);
 			for (int i = 0; i < 7; i++) {
 				//tracks.add(new StudentTrack());
 				wishes.add(new Wish());
@@ -94,7 +99,21 @@ public class StudentController {
 
 		} else {
 			regStudent.setId(student.getId());
-			regStudent.setStudent(student);
+			regStudent.setName(student.getName());
+			regStudent.setBirthDate(student.getBirthDate());
+			regStudent.setBirthLocation(student.getBirthLocation());
+			regStudent.setCountry(student.getCountry());
+			regStudent.setComments(student.getComments());
+			regStudent.setEducation(student.getEducation());
+			regStudent.setIdentityId(student.getIdentityId());
+			regStudent.setJob(student.getJob());
+			regStudent.setTel(student.getTel());
+			regStudent.setEgyptAddress(student.getEgyptAddress());
+			regStudent.setHomeAddress(student.getHomeAddress());
+			regStudent.setFacebook(student.getFacebook());
+			regStudent.setGender(student.getGender());
+			regStudent.setEmail(student.getEmail());
+			regStudent.setPhoto(student.getPhoto());
 
 			student.getStudentTracks().forEach((track -> {
 				Wish wish = new Wish();
@@ -103,18 +122,10 @@ public class StudentController {
 				wish.setActivityId(track.getCourse().getActivity().getId());
 				House house = houseService.findByName(track.getCourse().getActivity().getName());
 				wish.setHouse(house);
-				wish.setActivityName(track.getActivityName());
-				wish.setCertificate(track.getCertificate());
-				wish.setComments(track.getComments());
-
 				wishes.add(wish);
 			}));
-			System.out.println("Wishes before: " + wishes);
-			for (int i = 0; i < (7 - wishes.size()); i++) {
-				wishes.add(new Wish());
-			}
-			System.out.println("Wishes after: " + wishes);
 		}
+		regStudent.setWishes(wishes);
 
 		//create the list of paths'tracks and course's tracks.
 		//List<StudentTrack> tracks = new ArrayList<>();
@@ -128,7 +139,7 @@ public class StudentController {
 		//fill activities and houses lists with data from DB
 		itrActivities.forEach((activity -> activities.add(activity)));
 		itrHouses.forEach((house) -> houses.add(house));
-		regStudent.setWishes(wishes);
+
 		//System.out.println("ActivityCourses: " + activityService.getActivityCourses());
 		//model.addObject("student", student);
 		//send object of the registering student to the view to be filled
@@ -141,7 +152,7 @@ public class StudentController {
 		model.addObject("trackStatuses", StudentStatus.values());
 		//send the countries to the view.
 		model.addObject("countries", countryService.findAllByOrderByArabicNameAsc());
-		model.addObject("studentPhotoPath", studentPhotosPath);
+		model.addObject("studentPhotosPath", studentPhotosPath);
 
 	}
 
@@ -162,18 +173,57 @@ public class StudentController {
 		return model;
 	}
 
-	@PutMapping("/admin/students/student/id")
-	public String updateStudent(@Valid RegisteringStudent regStudent, @RequestParam("photo") MultipartFile photo, BindingResult bindingResult, Model model) {
+	@PostMapping("/admin/students/student/{id}")
+	public String updateStudent(@Valid RegisteringStudent regStudent, @RequestParam("image") MultipartFile image, @PathVariable Integer id, BindingResult bindingResult) {
+		Student student = studentService.getById(id).get();
+		student.setName(regStudent.getName());
+		student.setBirthDate(regStudent.getBirthDate());
+		student.setArchived(false);
+		student.setEmail(regStudent.getEmail());
+		student.setFacebook(regStudent.getFacebook());
+		student.setGender(regStudent.getGender());
+		student.setHomeAddress(regStudent.getHomeAddress());
+		student.setEgyptAddress(regStudent.getEgyptAddress());
+		student.setEducation(regStudent.getEducation());
+		student.setCountry(regStudent.getCountry());
+		student.setBirthLocation(regStudent.getBirthLocation());
+		regStudent.getWishes().forEach(wish ->
+				student.getStudentTracks().add(wish.getTrack())
+		);
+		if (null == image) {
+			System.out.println("file is null");
+			student.setPhoto(student.getPhoto());
+		} else {
+			try {
+				image.transferTo(new File(studentPhotosPath + image.getOriginalFilename()));
+				student.setPhoto(image.getOriginalFilename());
+			} catch (IOException e) {
+				System.out.println(e.toString());
+			}
+		}
+		Student returnedStudent = studentService.save(student);
+		return "redirect:/admin/students/student/" + returnedStudent.getId();
+	}
 
-		model.addAttribute("regStudent", regStudent);
-		return save(regStudent, photo, bindingResult);
+	/**
+	 * Process the post request of updating existing student or creating new one
+	 *
+	 * @param regStudent the student to be updated or created
+	 * @return redirect to the saved student profile page
+	 */
+	@PostMapping("/admin/students/student")
+	public String registerStudent(@Valid RegisteringStudent regStudent, @RequestParam("photo") MultipartFile image,
+	                              BindingResult bindingResult, Model model) {
+
+		return save(regStudent, image, bindingResult);
+
 	}
 
 	private String save(RegisteringStudent regStudent, MultipartFile photo, BindingResult bindingResult) {
 		List<StudentTrack> tracks = new ArrayList<>();
 
 		if (bindingResult.hasErrors()) {
-			return (regStudent.getId() == 0) ? "admin/register-student" : "redirect:/admin/students/student/" + regStudent.getStudent().getId();
+			return (regStudent.getId() == 0) ? "admin/register-student" : "redirect:/admin/students/student/" + regStudent.getId();
 
 		} else {
 			Student returnedStudent = null;
@@ -185,27 +235,27 @@ public class StudentController {
 
 							if (wish.getActivityId() == 7) {
 								System.out.println("Choose housing...");
-								regStudent.getStudent().setHouse(wish.getHouse());
+								regStudent.setHouse(wish.getHouse());
 							} else {
 								StudentTrack track = new StudentTrack();
-								track.setStudent(regStudent.getStudent());
-								track.setRegisterDate(wish.getRegisterDate());
-								track.setCertificate(wish.getCertificate());
-								track.setCourse(wish.getCourse());
-								track.setComments(wish.getComments());
-								track.setEvaluation(wish.getEvaluation());
-								track.setStartDate(wish.getStartDate());
-								track.setStatus(wish.getStatus());
+								track.setStudent(regStudent);
+								track.setRegisterDate(wish.getTrack().getRegisterDate());
+								track.setCertificate(wish.getTrack().getCertificate());
+								track.setCourse(wish.getTrack().getCourse());
+								track.setComments(wish.getTrack().getComments());
+								track.setEvaluation(wish.getTrack().getEvaluation());
+								track.setStartDate(wish.getTrack().getStartDate());
+								track.setStatus(wish.getTrack().getStatus());
 
 								tracks.add(track);
-								regStudent.getStudent().setStudentTracks(tracks);
+								regStudent.setStudentTracks(tracks);
 							}
 
 						});
 
 			} else {
 				List<Wish> wishes = new ArrayList<>();
-				regStudent.getStudent().getStudentTracks().stream()
+				regStudent.getStudentTracks().stream()
 						.forEach((track) -> {
 							Wish wish = new Wish();
 							wish.setActivityId(track.getCourse().getActivity().getId());
@@ -217,19 +267,19 @@ public class StudentController {
 				//regStudent.getStudent().setPhoto(regStudent.getPhoto().getOriginalFilename());
 				regStudent.setWishes(wishes);
 			}
-			System.out.println("Student: " + regStudent.getStudent());
+			System.out.println("Student: " + regStudent);
 			if (null == photo) {
 				System.out.println("file is null");
-				regStudent.getStudent().setPhoto(regStudent.getStudent().getPhoto());
+				regStudent.setPhoto(regStudent.getPhoto());
 			}
 			try {
 				System.out.println("Photo Name: " + photo.getOriginalFilename());
 				photo.transferTo(new File(studentPhotosPath + photo.getOriginalFilename()));
-				regStudent.getStudent().setPhoto(photo.getOriginalFilename());
+				regStudent.setPhoto(photo.getOriginalFilename());
 			} catch (IOException e) {
 				System.out.println(e.toString());
 			}
-			returnedStudent = studentService.save(regStudent.getStudent());
+			returnedStudent = studentService.save(regStudent);
 			return "redirect:/admin/students/student/" + returnedStudent.getId();
 		}
 	}
@@ -243,7 +293,8 @@ public class StudentController {
 	 */
 	@GetMapping("/admin/students/student/{id}/archive")
 	public String archiveStudent(@PathVariable(value = "id") int id, RedirectAttributes redirectAttrs) {
-		Student student = studentService.getById(id);
+		Optional<Student> optStudent = studentService.getById(id);
+		Student           student    = optStudent.get();
 		student.setArchived(true);
 		student.setArchivedDate(Date.valueOf(LocalDate.now()));
 		Student archivedStudent = studentService.save(student);
@@ -256,18 +307,4 @@ public class StudentController {
 
 		return "redirect:/admin/students";
 	}
-
-	/**
-	 * Process the post request of updating existing student or creating new one
-	 *
-	 * @param regStudent the student to be updated or created
-	 * @return redirect to the saved student profile page
-	 */
-	@PostMapping("/admin/students/student")
-	public String registerStudent(@Valid RegisteringStudent regStudent, @RequestParam("photo") MultipartFile photo, BindingResult bindingResult, Model model) {
-
-		return save(regStudent, photo, bindingResult);
-
-	}
-
 }

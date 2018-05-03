@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by Omar on 15-Apr-17.
@@ -21,8 +22,8 @@ public class HouseService {
         this.houseRepository = houseRepository;
     }
 
-	public House findById(Integer id) {
-        return houseRepository.findOne(id);
+	public Optional<House> findById(Integer id) {
+		return houseRepository.findById(id);
     }
 
     public Iterable<House> findAllOrderById(){

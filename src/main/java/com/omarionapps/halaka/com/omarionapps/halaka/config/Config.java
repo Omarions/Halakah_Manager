@@ -12,9 +12,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRedisHttpSession
 public class Config {
     @Bean
-    public LettuceConnectionFactory connectionFactory(){
-        LettuceConnectionFactory lcf = new LettuceConnectionFactory();
-
-        return lcf;
+    public LettuceConnectionFactory connectionFactory() {
+	    return new LettuceConnectionFactory();
     }
-}
+}  

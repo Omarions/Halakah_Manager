@@ -18,7 +18,7 @@ public class CourseConverter implements Formatter<Course> {
 	public Course parse(String s, Locale locale) {
 		if (null != s) {
 			int    id     = Utils.convertToID(s);
-			Course course = courseService.findById(id);
+			Course course = courseService.findById(id).get();
 			if (null != course)
 				return course;
 		}

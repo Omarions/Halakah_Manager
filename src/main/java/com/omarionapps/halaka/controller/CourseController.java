@@ -87,13 +87,13 @@ public class CourseController {
 	 * @return model of the page with its details of the course.
 	 */
 	private ModelAndView getCourse(int id) {
-		ModelAndView                   modelAndView      = new ModelAndView("admin/course-profile");
-		Course                         course            = courseService.findById(id);
-		Set<Student>                   students          = courseService.getStudentsByCourse(course);
-		Map<String, Map<String, Long>> countryStudents   = courseService.getCountryCodeStudentsStatusCountMap(course);
-		long                           totalStudents     = courseService.totalStudentsByCourse(id);
-		long                           totalStudying     = courseService.totalStudentsByStatus(id, StudentStatus.STUDYING);
-		long                           totalWaiting      = courseService.totalStudentsByStatus(id, StudentStatus.WAITING);
+		ModelAndView                   modelAndView    = new ModelAndView("admin/course-profile");
+		Course                         course          = courseService.findById(id).get();
+		Set<Student>                   students        = courseService.getStudentsByCourse(course);
+		Map<String, Map<String, Long>> countryStudents = courseService.getCountryCodeStudentsStatusCountMap(course);
+		long                           totalStudents   = courseService.totalStudentsByCourse(id);
+		long                           totalStudying   = courseService.totalStudentsByStatus(id, StudentStatus.STUDYING);
+		long                           totalWaiting    = courseService.totalStudentsByStatus(id, StudentStatus.WAITING);
 		long                           totalCertified    = courseService.totalStudentsByStatus(id, StudentStatus.CERTIFIED);
 		long                           totalFired        = courseService.totalStudentsByStatus(id, StudentStatus.FIRED);
 		long                           totalTempStopped  = courseService.totalStudentsByStatus(id, StudentStatus.TEMP_STOP);
@@ -146,7 +146,7 @@ public class CourseController {
 				Map<Integer, Set<Course>> activities = activityService.getActivityCourses();
 				for (Integer actId : activities.keySet()) {
 					if (activities.get(actId).contains(course)) {
-						Activity activity = activityService.findById(actId);
+						Activity activity = activityService.findById(actId).get();
 						course.setActivity(activity);
 					}
 				}
@@ -167,7 +167,7 @@ public class CourseController {
 	 */
 	@GetMapping("/admin/courses/course/archive")
 	public String archiveCourse(@RequestParam(value = "id") int id, RedirectAttributes redirectAttrs) {
-		Course course = courseService.findById(id);
+		Course course = courseService.findById(id).get();
 		course.setArchived(true);
 		course.setArchivedDate(Date.valueOf(LocalDate.now()));
 		Course archivedCourse = courseService.save(course);

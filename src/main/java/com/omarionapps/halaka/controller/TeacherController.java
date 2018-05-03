@@ -73,7 +73,7 @@ public class TeacherController {
 
     @GetMapping("/admin/teachers/teacher/archive")
     public String archiveTeacher(@RequestParam(value = "id") int id, RedirectAttributes redirectAttrs) {
-        Teacher teacher = teacherService.findOneById(id);
+	    Teacher teacher = teacherService.findOneById(id).get();
         teacher.setArchived(true);
         teacher.setArchivedDate(Date.valueOf(LocalDate.now()));
         Teacher archivedTeacher = teacherService.save(teacher);

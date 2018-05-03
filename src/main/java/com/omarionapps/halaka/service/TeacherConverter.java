@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.Locale;
 
 /**
@@ -16,11 +15,11 @@ public class TeacherConverter implements Formatter<Teacher> {
     @Autowired
     TeacherService teacherService;
     @Override
-    public Teacher parse(String s, Locale locale) throws ParseException {
+    public Teacher parse(String s, Locale locale) {
         if(null != s){
             try {
                 int id = Integer.valueOf(s);
-                return teacherService.findOneById(id);
+	            return teacherService.findOneById(id).get();
             }catch (Exception e){
                 System.out.println("Exception occurred in Teacher Converter");
                 System.out.println(e.toString());
