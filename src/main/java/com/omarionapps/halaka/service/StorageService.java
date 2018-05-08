@@ -1,12 +1,15 @@
 package com.omarionapps.halaka.service;
 
 
+import com.omarionapps.halaka.customeexceptions.StorageException;
+import com.omarionapps.halaka.utils.LocationTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -19,16 +22,35 @@ import java.nio.file.StandardCopyOption;
 
 @Service
 public class StorageService {
-	private final Path rootLocation = Paths.get("upload-dir");
+	private final String rootFolder          = "upload-dir";
+	private final Path   rootLocationStudent = Paths.get(rootFolder + File.separator + "students");
+	private final Path   rootLocationTeacher = Paths.get(rootFolder + File.separator + "teachers");
+	private final Path   rootLocationCerts   = Paths.get(rootFolder + File.separator + "certificates");
+	private final Path   rootLocationEvents  = Paths.get(rootFolder + File.separator + "events");
+
 	Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-//	private final Path rootLocation = Paths.get("/lib/dist/img/student/");
+	public void store(MultipartFile file, LocationTag locationTag) {
+		switch (locationTag) {
+			case STUDENTS_STORE_LOC:
+				copyPhoto(file, rootLocationStudent);
+				break;
+			case TEACHERS_STORE_LOC:
+				copyPhoto(file, rootLocationTeacher);
+				break;
+			case CERT_STORE_LOC:
+				copyPhoto(file, rootLocationCerts);
+				break;
+			case EVENTS_STORE_LOC:
+				copyPhoto(file, rootLocationEvents);
+				break;
+		}
+	}
 
-	/*
-		public void store(MultipartFile file) {
-		String filename = StringUtils.cleanPath(file.getOriginalFilename());
+	private void copyPhoto(MultipartFile photo, Path location) {
+		String filename = StringUtils.cleanPath(photo.getOriginalFilename());
 		try {
-			if (file.isEmpty()) {
+			if (photo.isEmpty()) {
 				throw new StorageException("Failed to store empty file " + filename);
 			}
 			if (filename.contains("..")) {
@@ -37,49 +59,108 @@ public class StorageService {
 						"Cannot store file with relative path outside current directory "
 								+ filename);
 			}
-			Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
+			Files.copy(photo.getInputStream(), location.resolve(filename),
 					StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			throw new StorageException("Failed to store file " + filename, e);
 		}
 	}
-	*/
 
-	public void store(MultipartFile file) {
-		try {
-			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()),
-					StandardCopyOption.REPLACE_EXISTING);
-		} catch (Exception e) {
-			throw new RuntimeException("FAIL!");
+	public Resource loadFile(String filename, LocationTag locationTag) {
+		Path path = null;
+		switch (locationTag) {
+			case STUDENTS_STORE_LOC:
+				path = rootLocationStudent.resolve(filename);
+				break;
+			case TEACHERS_STORE_LOC:
+				path = rootLocationTeacher.resolve(filename);
+				break;
+			case CERT_STORE_LOC:
+				path = rootLocationCerts.resolve(filename);
+				break;
+			case EVENTS_STORE_LOC:
+				path = rootLocationEvents.resolve(filename);
+				break;
 		}
+		System.out.println("Load photo from path: " + path.toString());
+		return loadPhoto(path);
 	}
 
-	public Resource loadFile(String filename) {
+	private Resource loadPhoto(Path file) {
 		try {
-			Path     file     = rootLocation.resolve(filename);
 			Resource resource = new UrlResource(file.toUri());
+			System.out.println("Resource:" + resource.toString());
 			if (resource.exists() || resource.isReadable()) {
 				return resource;
 			} else {
-				throw new RuntimeException("FAIL!");
+				throw new StorageException("Failed to load file " + file.getFileName().toString());
 			}
 		} catch (MalformedURLException e) {
 			throw new RuntimeException("FAIL!");
 		}
 	}
 
-	public void deleteAll() {
-		FileSystemUtils.deleteRecursively(rootLocation.toFile());
+	public void deleteAll(LocationTag locationTag) {
+		switch (locationTag) {
+			case STUDENTS_STORE_LOC:
+				FileSystemUtils.deleteRecursively(rootLocationStudent.toFile());
+				break;
+			case TEACHERS_STORE_LOC:
+				FileSystemUtils.deleteRecursively(rootLocationTeacher.toFile());
+				break;
+			case CERT_STORE_LOC:
+				FileSystemUtils.deleteRecursively(rootLocationCerts.toFile());
+				break;
+			case EVENTS_STORE_LOC:
+				FileSystemUtils.deleteRecursively(rootLocationEvents.toFile());
+				break;
+		}
 	}
 
-	public void deletePhotoByName(String photoName) {
-		FileSystemUtils.deleteRecursively(Paths.get(rootLocation + File.separator + photoName).toFile());
+	public void deletePhotoByName(String photoName, LocationTag locationTag) {
+		Path path = null;
+		switch (locationTag) {
+			case STUDENTS_STORE_LOC:
+				path = Paths.get(rootLocationStudent + File.separator + photoName);
+				deletePhoto(path);
+				break;
+			case TEACHERS_STORE_LOC:
+				path = Paths.get(rootLocationTeacher + File.separator + photoName);
+				deletePhoto(path);
+				break;
+			case CERT_STORE_LOC:
+				path = Paths.get(rootLocationCerts + File.separator + photoName);
+				deletePhoto(path);
+				break;
+			case EVENTS_STORE_LOC:
+				path = Paths.get(rootLocationEvents + File.separator + photoName);
+				deletePhoto(path);
+				break;
+		}
+
+
+	}
+
+	private void deletePhoto(Path path) {
+		if (path.toFile().exists()) {
+			FileSystemUtils.deleteRecursively(path.toFile());
+		} else {
+			throw new StorageException("Failed to delete file " + path.getFileName().toString());
+		}
+
 	}
 
 	public void init() {
 		try {
-			if (!Files.exists(rootLocation))
-				Files.createDirectory(rootLocation);
+			if (!Files.exists(rootLocationStudent))
+				Files.createDirectory(rootLocationStudent);
+			if (!Files.exists(rootLocationTeacher))
+				Files.createDirectory(rootLocationTeacher);
+			if (!Files.exists(rootLocationCerts))
+				Files.createDirectory(rootLocationCerts);
+			if (!Files.exists(rootLocationEvents))
+				Files.createDirectory(rootLocationEvents);
+
 		} catch (IOException e) {
 			throw new RuntimeException("Could not initialize storage!");
 		}

@@ -2,6 +2,7 @@ package com.omarionapps.halaka.controller;
 
 import com.omarionapps.halaka.model.*;
 import com.omarionapps.halaka.service.*;
+import com.omarionapps.halaka.utils.LocationTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,27 @@ public class StudentController {
 		}
 	}
 
+	@GetMapping("/admin/students/student")
+	public ModelAndView processRegisterStudentRequest() {
+		return addStudent();
+	}
+
+	/**
+	 * Create model for add course page
+	 *
+	 * @return model of page with its attributes
+	 */
+	private ModelAndView addStudent() {
+		//set the model view.
+		ModelAndView model = new ModelAndView("admin/register-student");
+		prepareModel(model, null);
+		return model;
+	}
+
 	private void prepareModel(ModelAndView model, Student student) {
+		//create the list object for the activities to be sent to the view.
+		List<Activity> activities = new ArrayList<>();
+		List<House>    houses     = new ArrayList<>();
 		String imagePath = null;
 		//create the student and the registering student objects
 		RegisteringStudent regStudent = new RegisteringStudent();
@@ -120,15 +141,11 @@ public class StudentController {
 			regStudent.setEmail(student.getEmail());
 			//regStudent.setPhoto(student.getPhoto());
 
-			//Resource file = storageService.loadFile(student.getPhoto());
-			//System.out.println("file image: " + file.toString());
 			imagePath = MvcUriComponentsBuilder
 					.fromMethodName(StudentController.class, "getFile", student.getPhoto()).build().toString();
-			//imagePath = MvcUriComponentsBuilder
-			//		.fromMethodName(StudentController.class, "getFile", file).build().toString()  ;
 
-			//	log.debug("Image Path: " + imagePath);
 			System.out.println("Image Path: " + imagePath);
+
 			student.getStudentTracks().forEach((track -> {
 				Wish wish = new Wish();
 				wish.setTrack(track);
@@ -141,21 +158,13 @@ public class StudentController {
 		}
 		regStudent.setWishes(wishes);
 
-		//create the list of paths'tracks and course's tracks.
-		//List<StudentTrack> tracks = new ArrayList<>();
-		//List<CourseTrack> courseTracks = new ArrayList<>();
 		//get the list of activities and houses from the DB
 		Iterable<Activity> itrActivities = activityService.findAllOrderByName();
 		Iterable<House>    itrHouses     = houseService.findAllOrderById();
-		//create the list object for the activities to be sent to the view.
-		List<Activity> activities = new ArrayList<>();
-		List<House>    houses     = new ArrayList<>();
 		//fill activities and houses lists with data from DB
 		itrActivities.forEach((activity -> activities.add(activity)));
 		itrHouses.forEach((house) -> houses.add(house));
 
-		//System.out.println("ActivityCourses: " + activityService.getActivityCourses());
-		//model.addObject("student", student);
 		//send object of the registering student to the view to be filled
 		model.addObject("regStudent", regStudent);
 		//send the list of activities to the view.
@@ -170,30 +179,28 @@ public class StudentController {
 
 	}
 
-	@GetMapping("/files/{filename:.+}")
-	@ResponseBody
-	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-		Resource file = storageService.loadFile(filename);
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-				.body(file);
-	}
-
-	@GetMapping("/admin/students/student")
-	public ModelAndView processRegisterStudentRequest() {
-		return addStudent();
-	}
-
 	/**
-	 * Create model for add course page
+	 * Process the get request of archive operation
 	 *
-	 * @return model of page with its attributes
+	 * @param id            the student id to be archived
+	 * @param redirectAttrs to send message of success or failure of the operation
+	 * @return redirect to the same page of courses list with new info and archive operation result message
 	 */
-	private ModelAndView addStudent() {
-		//set the model view.
-		ModelAndView model = new ModelAndView("admin/register-student");
-		prepareModel(model, null);
-		return model;
+	@GetMapping("/admin/students/student/{id}/archive")
+	public String archiveStudent(@PathVariable(value = "id") int id, RedirectAttributes redirectAttrs) {
+		Optional<Student> optStudent = studentService.getById(id);
+		Student           student    = optStudent.get();
+		student.setArchived(true);
+		student.setArchivedDate(Date.valueOf(LocalDate.now()));
+		Student archivedStudent = studentService.save(student);
+		if (null != archivedStudent) {
+			redirectAttrs.addFlashAttribute("message", "Student with ID( " + id + " ) was archived successfully");
+		} else {
+			redirectAttrs.addFlashAttribute("message", "An error happens while archiving the student with ID( " +
+					id + " )");
+		}
+
+		return "redirect:/admin/students";
 	}
 
 	@PostMapping("/admin/students/student/{id}")
@@ -218,9 +225,10 @@ public class StudentController {
 			student.setPhoto(student.getPhoto());
 		} else {
 			try {
-				storageService.store(image);
+				System.out.println("New Image: " + image.getOriginalFilename());
+				storageService.store(image, LocationTag.STUDENTS_STORE_LOC);
 				System.out.println("Old Student Photo: " + student.getPhoto());
-				storageService.deletePhotoByName(student.getPhoto());
+				storageService.deletePhotoByName(student.getPhoto(), LocationTag.STUDENTS_STORE_LOC);
 				student.setPhoto(image.getOriginalFilename());
 			} catch (Exception e) {
 				log.error("Fails to Store the image!");
@@ -320,27 +328,13 @@ public class StudentController {
 		}
 	}
 
-	/**
-	 * Process the get request of archive operation
-	 *
-	 * @param id            the student id to be archived
-	 * @param redirectAttrs to send message of success or failure of the operation
-	 * @return redirect to the same page of courses list with new info and archive operation result message
-	 */
-	@GetMapping("/admin/students/student/{id}/archive")
-	public String archiveStudent(@PathVariable(value = "id") int id, RedirectAttributes redirectAttrs) {
-		Optional<Student> optStudent = studentService.getById(id);
-		Student           student    = optStudent.get();
-		student.setArchived(true);
-		student.setArchivedDate(Date.valueOf(LocalDate.now()));
-		Student archivedStudent = studentService.save(student);
-		if (null != archivedStudent) {
-			redirectAttrs.addFlashAttribute("message", "Student with ID( " + id + " ) was archived successfully");
-		} else {
-			redirectAttrs.addFlashAttribute("message", "An error happens while archiving the student with ID( " +
-					id + " )");
-		}
-
-		return "redirect:/admin/students";
+	@GetMapping("/files/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+		Resource file = storageService.loadFile(filename, LocationTag.STUDENTS_STORE_LOC);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+				.body(file);
 	}
+
 }
