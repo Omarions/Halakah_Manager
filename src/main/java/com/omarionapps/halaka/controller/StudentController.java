@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -142,7 +142,7 @@ public class StudentController {
 			//regStudent.setPhoto(student.getPhoto());
 
 			imagePath = MvcUriComponentsBuilder
-					.fromMethodName(StudentController.class, "getFile", student.getPhoto()).build().toString();
+					.fromMethodName(PhotoController.class, "getFile", student.getPhoto()).build().toString();
 
 			System.out.println("Image Path: " + imagePath);
 
@@ -225,25 +225,13 @@ public class StudentController {
 			student.setPhoto(student.getPhoto());
 		} else {
 			try {
-				System.out.println("New Image: " + image.getOriginalFilename());
 				storageService.store(image, LocationTag.STUDENTS_STORE_LOC);
-				System.out.println("Old Student Photo: " + student.getPhoto());
 				storageService.deletePhotoByName(student.getPhoto(), LocationTag.STUDENTS_STORE_LOC);
 				student.setPhoto(image.getOriginalFilename());
 			} catch (Exception e) {
 				log.error("Fails to Store the image!");
 				log.error(e.toString());
 			}
-			/*
-			try {
-				String path = image.getOriginalFilename();
-				System.out.println("Path: " + path);
-				image.transferTo(new File(studentPhotosPath + path));
-				student.setPhoto(image.getOriginalFilename());
-			} catch (IOException e) {
-				System.out.println(e.toString());
-			}
-			*/
 		}
 		Student returnedStudent = studentService.save(student);
 		return "redirect:/admin/students/student/" + returnedStudent.getId();
@@ -326,15 +314,6 @@ public class StudentController {
 			returnedStudent = studentService.save(regStudent);
 			return "redirect:/admin/students/student/" + returnedStudent.getId();
 		}
-	}
-
-	@GetMapping("/files/{filename:.+}")
-	@ResponseBody
-	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-		Resource file = storageService.loadFile(filename, LocationTag.STUDENTS_STORE_LOC);
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-				.body(file);
 	}
 
 }
