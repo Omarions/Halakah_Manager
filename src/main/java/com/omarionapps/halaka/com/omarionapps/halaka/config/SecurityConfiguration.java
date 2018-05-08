@@ -1,6 +1,7 @@
 package com.omarionapps.halaka.com.omarionapps.halaka.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,10 +21,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private PasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
+	@Qualifier("userServiceImpl")
 	private UserDetailsService userDetailsService;
 
 	@Override
@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) {
 		web
 				.ignoring()
-				.antMatchers("/resource/**", "/static/**", "/lib/**", "/plugins/**", "/css/**", "/js/**", "/img/**");
+				.antMatchers("/resource/**", "/static/**", "/lib/**", "/plugins/**", "/css/**", "/js/**", "/img/**", "/admin/students/images/**");
 	}
 
 	@Override
@@ -63,9 +63,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 				.rememberMe()
 				.alwaysRemember(true);
-
-
 	}
+
+	
 
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
@@ -79,5 +79,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
-	
+
+
 }

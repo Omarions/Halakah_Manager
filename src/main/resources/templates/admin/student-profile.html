@@ -77,7 +77,7 @@
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle"
                                  src="../../lib/dist/img/student/user4-128x128.jpg"
-                                 th:src="@{${studentPhotosPath} + ${regStudent.photo}}"
+                                 th:src="@{${imagePath}}"
                                  alt="User profile picture"/>
 
                             <h3 class="profile-username text-center" th:text="${regStudent.name}">Nina
@@ -824,7 +824,7 @@
                                         <div class="col-sm-offset-6 col-sm-6">
 
                                             <img src="../../lib/dist/img/student/avatar5.png"
-                                                 th:src=" @{${studentPhotosPath} + *{photo}}"
+                                                 th:src=" @{${imagePath}}"
                                                  id="img-photo" name="image" class="img-circle" alt="Student Image"
                                                  style="width: 160px; height: 160px" th:field="*{image}"/>
 

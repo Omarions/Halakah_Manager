@@ -7,15 +7,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -33,23 +34,26 @@ import java.util.Optional;
 @Controller
 @PropertySource(ignoreResourceNotFound = true, value = "classpath:resources_photos.properties")
 public class StudentController {
-	Logger logger = LoggerFactory.getLogger(StudentController.class);
-	@Value("${student_photos_path}")
+	Logger log = LoggerFactory.getLogger(this.getClass().getName());
+
+	@Value("C:\\halaka\\resources\\images\\")
 	String studentPhotosPath;
 	private StudentService  studentService;
 	private ActivityService activityService;
 	private CourseService   courseService;
 	private CountryService  countryService;
 	private HouseService    houseService;
+	private StorageService  storageService;
 
 	@Autowired
 	public StudentController(StudentService studentService, ActivityService activityService, CourseService courseService,
-	                         HouseService houseService, CountryService countryService) {
+	                         HouseService houseService, CountryService countryService, StorageService storageService) {
 		this.studentService = studentService;
 		this.activityService = activityService;
 		this.courseService = courseService;
 		this.houseService = houseService;
 		this.countryService = countryService;
+		this.storageService = storageService;
 	}
 
 	/**
@@ -83,6 +87,7 @@ public class StudentController {
 	}
 
 	private void prepareModel(ModelAndView model, Student student) {
+		String imagePath = null;
 		//create the student and the registering student objects
 		RegisteringStudent regStudent = new RegisteringStudent();
 
@@ -113,8 +118,17 @@ public class StudentController {
 			regStudent.setFacebook(student.getFacebook());
 			regStudent.setGender(student.getGender());
 			regStudent.setEmail(student.getEmail());
-			regStudent.setPhoto(student.getPhoto());
+			//regStudent.setPhoto(student.getPhoto());
 
+			//Resource file = storageService.loadFile(student.getPhoto());
+			//System.out.println("file image: " + file.toString());
+			imagePath = MvcUriComponentsBuilder
+					.fromMethodName(StudentController.class, "getFile", student.getPhoto()).build().toString();
+			//imagePath = MvcUriComponentsBuilder
+			//		.fromMethodName(StudentController.class, "getFile", file).build().toString()  ;
+
+			//	log.debug("Image Path: " + imagePath);
+			System.out.println("Image Path: " + imagePath);
 			student.getStudentTracks().forEach((track -> {
 				Wish wish = new Wish();
 				wish.setTrack(track);
@@ -152,8 +166,17 @@ public class StudentController {
 		model.addObject("trackStatuses", StudentStatus.values());
 		//send the countries to the view.
 		model.addObject("countries", countryService.findAllByOrderByArabicNameAsc());
-		model.addObject("studentPhotosPath", studentPhotosPath);
+		model.addObject("imagePath", imagePath);
 
+	}
+
+	@GetMapping("/files/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+		Resource file = storageService.loadFile(filename);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+				.body(file);
 	}
 
 	@GetMapping("/admin/students/student")
@@ -195,11 +218,24 @@ public class StudentController {
 			student.setPhoto(student.getPhoto());
 		} else {
 			try {
-				image.transferTo(new File(studentPhotosPath + image.getOriginalFilename()));
+				storageService.store(image);
+				System.out.println("Old Student Photo: " + student.getPhoto());
+				storageService.deletePhotoByName(student.getPhoto());
+				student.setPhoto(image.getOriginalFilename());
+			} catch (Exception e) {
+				log.error("Fails to Store the image!");
+				log.error(e.toString());
+			}
+			/*
+			try {
+				String path = image.getOriginalFilename();
+				System.out.println("Path: " + path);
+				image.transferTo(new File(studentPhotosPath + path));
 				student.setPhoto(image.getOriginalFilename());
 			} catch (IOException e) {
 				System.out.println(e.toString());
 			}
+			*/
 		}
 		Student returnedStudent = studentService.save(student);
 		return "redirect:/admin/students/student/" + returnedStudent.getId();
@@ -274,7 +310,7 @@ public class StudentController {
 			}
 			try {
 				System.out.println("Photo Name: " + photo.getOriginalFilename());
-				photo.transferTo(new File(studentPhotosPath + photo.getOriginalFilename()));
+				photo.transferTo(new File("/images/" + photo.getOriginalFilename()));
 				regStudent.setPhoto(photo.getOriginalFilename());
 			} catch (IOException e) {
 				System.out.println(e.toString());

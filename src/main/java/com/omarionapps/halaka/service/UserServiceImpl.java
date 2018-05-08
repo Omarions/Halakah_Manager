@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * Created by Omar on 22-Apr-17.
  */
-@Service
+@Service("userServiceImpl")
 public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserRepository  userRepository;
