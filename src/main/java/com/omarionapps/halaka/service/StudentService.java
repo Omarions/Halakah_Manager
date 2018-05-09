@@ -56,23 +56,28 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-	public Student registerStudent(RegisteringStudent student) {
-        /*
-        Student returnedStudent = studentRepository.save(student);
-        for (StudentTrack st : student.getStudentTracks()) {
-            if (st != null) {
-                //System.out.println("Returned Student: " + returnedStudent);
-                //System.out.println("ST: " + st);
-                st.setStudent(returnedStudent);
-                studentTrackService.save(st);
-            } else {
-                System.out.println("No Student Track");
-            }
-
-        }
-        return studentRepository.save(student);
-        */
-		return null;
+    public Student registerStudent(RegisteringStudent regStudent) {
+        Student student = new Student();
+        student.setName(regStudent.getName());
+        student.setGender(regStudent.getGender());
+        student.setIdentityId(regStudent.getIdentityId());
+        student.setBirthDate(regStudent.getBirthDate());
+        student.setBirthLocation(regStudent.getBirthLocation());
+        student.setCountry(regStudent.getCountry());
+        student.setHomeAddress(regStudent.getHomeAddress());
+        student.setEgyptAddress(regStudent.getEgyptAddress());
+        student.setTel(regStudent.getTel());
+        student.setEmail(regStudent.getEmail());
+        student.setFacebook(regStudent.getFacebook());
+        student.setEducation(regStudent.getEducation());
+        student.setJob(regStudent.getJob());
+        student.setComments(regStudent.getComments());
+        student.setStudentTracks(regStudent.getStudentTracks());
+        student.setPhoto(regStudent.getPhoto());
+        student.setArchived(false);
+        student.setArchivedDate(null);
+        System.out.println("Student after cast: " + student);
+        return save(student);
 	}
 
     public Student save(Student student) {
@@ -110,7 +115,6 @@ public class StudentService {
 
         return archivedStudents;
     }
-
 
     private Iterable<Student> findAll() {
         return studentRepository.findAll();

@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Created by Omar on 23-Sep-17.
  */
+
 public class RegisteringStudent extends Student {
 	private MultipartFile image;
 	private List<Wish> wishes = new ArrayList<>();

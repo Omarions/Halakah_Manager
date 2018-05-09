@@ -20,6 +20,9 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="../../lib/plugins/iCheck/flat/blue.css"
           th:href="@{~/lib/plugins/iCheck/flat/blue.css}"/>
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../lib/plugins/iCheck/square/blue.css"
+          th:href="@{~/lib/plugins/iCheck/square/blue.css}"/>
     <!-- bootstrap datepicker -->
     <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
           th:href="@{/lib/plugins/datepicker/datepicker3.css}"/>
@@ -92,7 +95,7 @@
                                 <li class="list-group-item">
                                     <a><b>Tracks</b>
                                         <samll class="label pull-right bg-blue"
-                                               th:text="${regStudent.studentTracks.size()}">1,322
+                                               th:text="${regStudent.getStudentTracks().size()}">1,322
                                         </samll>
                                     </a>
                                 </li>
@@ -380,8 +383,9 @@
                                                             <td th:text="${track.evaluation}">Evaluation</td>
                                                             <td>
                                                                 <div th:switch="${track.status}">
-                                  <span th:case="'WAITING'" class="label label-warning"
-                                        th:text="${track.status}">Waiting status</span>
+                                                                    <span th:case="'WAITING'"
+                                                                          class="label label-warning"
+                                                                          th:text="${track.status}">Waiting status</span>
                                                                     <span th:case="'STUDYING'"
                                                                           class="label label-primary"
                                                                           th:text="${track.status}">Studying status</span>
@@ -402,9 +406,6 @@
                                                                 <ul class="dtt">
                                                                     <li>
                                                                         <div class="tools">
-                                                                            <a href="#"
-                                                                               th:href="@{/admin/student-tracks/track(id=${track.id})}"><i
-                                                                                    class="fa fa-edit fa-3x"></i></a>
                                                                             <a href="#"
                                                                                th:href="@{/admin/student-tracks/track(id=${track.id})}"><i
                                                                                     class="fa fa-trash-o fa-3x"></i></a>

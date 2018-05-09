@@ -144,8 +144,6 @@ public class StorageService {
 	private void deletePhoto(Path path) {
 		if (path.toFile().exists()) {
 			FileSystemUtils.deleteRecursively(path.toFile());
-		} else {
-			throw new StorageException("Failed to delete file " + path.getFileName().toString());
 		}
 
 	}

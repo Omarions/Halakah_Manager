@@ -103,28 +103,27 @@
                                         <div class="form-group">
                                             <div class="col-sm-offset-6 col-sm-6">
 
-                                                <img src="../lib/dist/img/student/avatar5.png"
-                                                     th:src="@{'/lib/dist/img/student/avatar5.png'}"
-                                                     id="img-photo" name="photo" class="img-circle" alt="Student Image"
-                                                     style="width: 160px; height: 160px" th:field="*{photo}"/>
+                                                <img src="../lib/dist/img/avatar5.png"
+                                                     th:src="@{'/lib/dist/img/avatar5.png'}"
+                                                     id="img-photo" name="image" class="img-circle" alt="Student Image"
+                                                     style="width: 160px; height: 160px" th:field="*{image}"/>
 
-                                                <input type="file" name="photo" id="input-photo" class="hidden"
-                                                       th:field="*{photo}"/>
-
+                                                <input type="file" name="image" id="input-photo" class="hidden"
+                                                       th:field="*{image}"/>
                                             </div>
                                         </div>
                                         <!-- /.input-for-photo -->
 
                                         <!-- input for name -->
                                         <div class="form-group"
-                                             th:classappend="${#fields.hasErrors('student.name')}? 'has-error'">
+                                             th:classappend="${#fields.hasErrors('name')}? 'has-error'">
                                             <label for="input-name" class="col-sm-2 control-label">Name</label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-name"
-                                                       placeholder="Name" name="name" th:field="*{student.name}"/>
-                                                <span th:if="${#fields.hasErrors('student.name')}"
-                                                      th:errors="*{student.name}"
+                                                       placeholder="Name" name="name" th:field="*{name}"/>
+                                                <span th:if="${#fields.hasErrors('name')}"
+                                                      th:errors="*{name}"
                                                       th:class="help-block">Name Errors</span>
                                             </div>
                                         </div>
@@ -139,13 +138,13 @@
                                                     <label>
                                                         <input type="radio" name="gender" id="male-radio"
                                                                value="MALE" checked="true"
-                                                               th:field="*{student.gender}"/> Male
+                                                               th:field="*{gender}"/> Male
                                                     </label>
                                                 </div>
                                                 <div class="iradio">
                                                     <label>
                                                         <input type="radio" name="gender" id="female-radio"
-                                                               value="FEMALE" th:field="*{student.gender}"/> Female
+                                                               value="FEMALE" th:field="*{gender}"/> Female
                                                     </label>
                                                 </div>
                                             </div>
@@ -160,14 +159,14 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputIdentityId"
                                                        placeholder="Identity ID"
-                                                       th:field="*{student.identityId}"/>
+                                                       th:field="*{identityId}"/>
                                             </div>
                                         </div>
                                         <!-- /.input-for-Identity ID -->
 
                                         <!-- Birth Date Picker -->
                                         <div class="form-group"
-                                             th:classappend="${#fields.hasErrors('student.birthDate')}? 'has-error'">
+                                             th:classappend="${#fields.hasErrors('birthDate')}? 'has-error'">
                                             <label class="col-sm-2 control-label">Birth Date</label>
 
                                             <div class="col-sm-10">
@@ -178,10 +177,10 @@
 
                                                     <input type="text" class="form-control pull-right"
                                                            id="birthDatePicker"
-                                                           th:value="Null" th:field="*{student.birthDate}">
+                                                           th:value="Null" th:field="*{birthDate}">
                                                 </div>
-                                                <span th:if="${#fields.hasErrors('student.birthDate')}"
-                                                      th:errors="*{student.birthDate}"
+                                                <span th:if="${#fields.hasErrors('birthDate')}"
+                                                      th:errors="*{birthDate}"
                                                       th:class="help-block">Birth Date Error</span>
                                                 <!-- /.input group -->
                                             </div>
@@ -196,7 +195,7 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputBirthLocation"
                                                        placeholder="Birth Location"
-                                                       th:field="*{student.birthLocation}"/>
+                                                       th:field="*{birthLocation}"/>
                                             </div>
                                         </div>
                                         <!-- /.input-for-birth-location -->
@@ -209,7 +208,7 @@
                                                 <select id="select-country"
                                                         class="form-control select2 select2-hidden-accessible"
                                                         style="width: 100%;"
-                                                        tabindex="-1" aria-hidden="true" th:field="*{student.country}">
+                                                        tabindex="-1" aria-hidden="true" th:field="*{country}">
                                                     <option value="" selected="selected">Select Country</option>
                                                     <option th:each="country : ${countries}" th:value="${country.id}"
                                                             th:text="${country.englishName}">Country Name
@@ -227,7 +226,7 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputHomeAddress"
                                                        placeholder="Home Address"
-                                                       th:field="*{student.homeAddress}"/>
+                                                       th:field="*{homeAddress}"/>
                                             </div>
                                         </div>
                                         <!-- /.input-for-home-address -->
@@ -240,7 +239,7 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputEgyptAddress"
                                                        placeholder="Egypt Address"
-                                                       th:field="*{student.egyptAddress}"/>
+                                                       th:field="*{egyptAddress}"/>
                                             </div>
                                         </div>
                                         <!-- /.input-for-egypt-address -->
@@ -252,9 +251,9 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-tel"
                                                        name="tel" placeholder="Tel"
-                                                       th:field="*{student.tel}"/>
-                                                <span th:if="${#fields.hasErrors('student.tel')}"
-                                                      th:errors="*{student.tel}"
+                                                       th:field="*{tel}"/>
+                                                <span th:if="${#fields.hasErrors('tel')}"
+                                                      th:errors="*{tel}"
                                                       th:class="help-block">Tel Errors</span>
                                             </div>
                                         </div>
@@ -266,9 +265,9 @@
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-email"
-                                                       name="email" placeholder="Email" th:field="*{student.email}"/>
-                                                <span th:if="${#fields.hasErrors('student.email')}"
-                                                      th:errors="*{student.email}"
+                                                       name="email" placeholder="Email" th:field="*{email}"/>
+                                                <span th:if="${#fields.hasErrors('email')}"
+                                                      th:errors="*{email}"
                                                       th:class="help-block">Email Errors</span>
                                             </div>
                                         </div>
@@ -281,7 +280,7 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputFacebook"
                                                        placeholder="Facebook"
-                                                       th:field="*{student.facebook}"/>
+                                                       th:field="*{facebook}"/>
                                             </div>
                                         </div>
                                         <!-- /.input-for-facebook -->
@@ -294,9 +293,9 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-education"
                                                        name="education" placeholder="Education"
-                                                       th:field="*{student.education}"/>
-                                                <span th:if="${#fields.hasErrors('student.education')}"
-                                                      th:errors="*{student.education}"
+                                                       th:field="*{education}"/>
+                                                <span th:if="${#fields.hasErrors('education')}"
+                                                      th:errors="*{education}"
                                                       th:class="help-block">Education Errors</span>
                                             </div>
                                         </div>
@@ -309,9 +308,9 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-job"
                                                        name="job" placeholder="Job"
-                                                       th:field="*{student.job}"/>
-                                                <span th:if="${#fields.hasErrors('student.job')}"
-                                                      th:errors="*{student.job}"
+                                                       th:field="*{job}"/>
+                                                <span th:if="${#fields.hasErrors('job')}"
+                                                      th:errors="*{job}"
                                                       th:class="help-block">Job Errors</span>
                                             </div>
                                         </div>
@@ -325,7 +324,7 @@
                                                 <textarea type="text" class="form-control" id="input-comments"
                                                           name="comments"
                                                           placeholder="Set comments for the student if needed"
-                                                          th:field="*{student.comments}">Extra info</textarea>
+                                                          th:field="*{comments}">Extra info</textarea>
                                             </div>
                                         </div>
                                         <!-- /.input-for-comments -->
@@ -387,7 +386,7 @@
                                                                 </select>
                                                                 <select id="select-course"
                                                                         class="select2 form-control table-selects"
-                                                                        th:field="*{wishes[__${stat.index}__].course}"
+                                                                        th:field="*{wishes[__${stat.index}__].track.course}"
                                                                         th:if="(${#lists.size(activities[__${stat.index}__].courses)}) > 0">
                                                                     <option th:each="cs : ${activities[__${stat.index}__].courses}"
                                                                             th:value="${cs.id}"
@@ -399,7 +398,7 @@
                                                             <td>
                                                                 <select id="select-status"
                                                                         class="select2 form-control table-selects"
-                                                                        th:field="*{wishes[__${stat.index}__].status}">
+                                                                        th:field="*{wishes[__${stat.index}__].track.status}">
 
                                                                     <option th:each="sts : ${trackStatuses}"
                                                                             th:value="${sts.toString()}"
@@ -419,7 +418,7 @@
                                                                            id="register-datepicker"
                                                                            th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
                                                                            name="registerDate"
-                                                                           th:field="*{wishes[__${stat.index}__].registerDate}"/>
+                                                                           th:field="*{wishes[__${stat.index}__].track.registerDate}"/>
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -432,7 +431,7 @@
                                                                            id="start-datepicker"
                                                                            th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
                                                                            name="startDate"
-                                                                           th:field="*{wishes[__${stat.index}__].startDate}"/>
+                                                                           th:field="*{wishes[__${stat.index}__].track.startDate}"/>
                                                                 </div>
 
                                                             </td>
@@ -442,13 +441,13 @@
                                                                        placeholder="Evaluation"
                                                                        value="0"
                                                                        name="evaluation"
-                                                                       th:field="*{wishes[__${stat.index}__].evaluation}"/>
+                                                                       th:field="*{wishes[__${stat.index}__].track.evaluation}"/>
                                                             </td>
                                                             <td>
                                                                 <textarea type="text" class="form-control"
                                                                           id="track-comments"
                                                                           placeholder="Set comments for the track if needed"
-                                                                          th:field="*{wishes[__${stat.index}__].comments}"></textarea>
+                                                                          th:field="*{wishes[__${stat.index}__].track.comments}"></textarea>
                                                             </td>
                                                         </tr>
 

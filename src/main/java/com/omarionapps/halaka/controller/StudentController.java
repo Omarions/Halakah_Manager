@@ -6,10 +6,7 @@ import com.omarionapps.halaka.utils.LocationTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +18,6 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,12 +28,9 @@ import java.util.Optional;
  * Created by Omar on 09-Apr-17.
  */
 @Controller
-@PropertySource(ignoreResourceNotFound = true, value = "classpath:resources_photos.properties")
 public class StudentController {
 	Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-	@Value("C:\\halaka\\resources\\images\\")
-	String studentPhotosPath;
 	private StudentService  studentService;
 	private ActivityService activityService;
 	private CourseService   courseService;
@@ -63,7 +55,7 @@ public class StudentController {
 	 * @return ModelAndView page "student-list" with all students as internal object.
 	 */
 	@GetMapping("/admin/students")
-	public ModelAndView getStudentsList() {
+	public ModelAndView getStudentsListView() {
 		ModelAndView model = new ModelAndView("admin/student-list");
 
 		model.addObject("students", studentService.getAll());
@@ -71,9 +63,17 @@ public class StudentController {
 		return model;
 	}
 
+	/**
+	 * Get the profile of student with specific ID
+	 *
+	 * @param id of student to search for
+	 * @return the profile view with populated data
+	 */
 	@GetMapping("/admin/students/student/{id}")
-	public ModelAndView processStudentRequest(@PathVariable(value = "id") Integer id) {
-		ModelAndView      modelAndView;
+	public ModelAndView getStudentProfile(@PathVariable(value = "id") Integer id) {
+		ModelAndView modelAndView;
+		String       imagePath = "";
+
 		Optional<Student> optStudent = studentService.getById(id);
 		Student           student    = optStudent.get();
 		if (null == student) {
@@ -82,48 +82,11 @@ public class StudentController {
 			return modelAndView;
 		} else {
 			modelAndView = new ModelAndView("admin/student-profile");
-			prepareModel(modelAndView, student);
-			return modelAndView;
-		}
-	}
+			//prepareModel(modelAndView, student);
+			List<Wish> wishes = new ArrayList<>();
+			//create the student and the registering student objects
+			RegisteringStudent regStudent = new RegisteringStudent();
 
-	@GetMapping("/admin/students/student")
-	public ModelAndView processRegisterStudentRequest() {
-		return addStudent();
-	}
-
-	/**
-	 * Create model for add course page
-	 *
-	 * @return model of page with its attributes
-	 */
-	private ModelAndView addStudent() {
-		//set the model view.
-		ModelAndView model = new ModelAndView("admin/register-student");
-		prepareModel(model, null);
-		return model;
-	}
-
-	private void prepareModel(ModelAndView model, Student student) {
-		//create the list object for the activities to be sent to the view.
-		List<Activity> activities = new ArrayList<>();
-		List<House>    houses     = new ArrayList<>();
-		String imagePath = null;
-		//create the student and the registering student objects
-		RegisteringStudent regStudent = new RegisteringStudent();
-
-		//create the list of wishes
-		List<Wish> wishes = new ArrayList<>();
-
-		if (null == student) {
-			//student.setStudentTracks(tracks);
-			student = new Student();
-			for (int i = 0; i < 7; i++) {
-				//tracks.add(new StudentTrack());
-				wishes.add(new Wish());
-			}
-
-		} else {
 			regStudent.setId(student.getId());
 			regStudent.setName(student.getName());
 			regStudent.setBirthDate(student.getBirthDate());
@@ -139,12 +102,8 @@ public class StudentController {
 			regStudent.setFacebook(student.getFacebook());
 			regStudent.setGender(student.getGender());
 			regStudent.setEmail(student.getEmail());
-			//regStudent.setPhoto(student.getPhoto());
-
-			imagePath = MvcUriComponentsBuilder
-					.fromMethodName(PhotoController.class, "getFile", student.getPhoto()).build().toString();
-
-			System.out.println("Image Path: " + imagePath);
+			regStudent.setPhoto(student.getPhoto());
+			regStudent.setStudentTracks(student.getStudentTracks());
 
 			student.getStudentTracks().forEach((track -> {
 				Wish wish = new Wish();
@@ -155,8 +114,29 @@ public class StudentController {
 				wish.setHouse(house);
 				wishes.add(wish);
 			}));
+			regStudent.setWishes(wishes);
+
+			imagePath = MvcUriComponentsBuilder
+					.fromMethodName(PhotoController.class, "getFile", student.getPhoto()).build().toString();
+
+			modelAndView.addObject("regStudent", regStudent);
+			modelAndView.addObject("imagePath", imagePath);
+			prepareTracksTable(modelAndView);
+
+			return modelAndView;
 		}
-		regStudent.setWishes(wishes);
+
+	}
+
+	/**
+	 * Prepare the student tracks table
+	 *
+	 * @param model to add required objects and send to the view.
+	 */
+	private void prepareTracksTable(ModelAndView model) {
+		//create the list object for the activities to be sent to the view.
+		List<Activity> activities = new ArrayList<>();
+		List<House>    houses     = new ArrayList<>();
 
 		//get the list of activities and houses from the DB
 		Iterable<Activity> itrActivities = activityService.findAllOrderByName();
@@ -165,8 +145,7 @@ public class StudentController {
 		itrActivities.forEach((activity -> activities.add(activity)));
 		itrHouses.forEach((house) -> houses.add(house));
 
-		//send object of the registering student to the view to be filled
-		model.addObject("regStudent", regStudent);
+
 		//send the list of activities to the view.
 		model.addObject("activities", itrActivities);
 		//send the houses list to the view.
@@ -175,8 +154,6 @@ public class StudentController {
 		model.addObject("trackStatuses", StudentStatus.values());
 		//send the countries to the view.
 		model.addObject("countries", countryService.findAllByOrderByArabicNameAsc());
-		model.addObject("imagePath", imagePath);
-
 	}
 
 	/**
@@ -203,8 +180,43 @@ public class StudentController {
 		return "redirect:/admin/students";
 	}
 
+	/**
+	 * Get the register view to add new student
+	 *
+	 * @return the register student view
+	 */
+	@GetMapping("/admin/students/student")
+	public ModelAndView getRegisterStudentView() {
+		//set the model view.
+		ModelAndView model = new ModelAndView("admin/register-student");
+		//prepareModel(model, null);
+		//student.setStudentTracks(tracks);
+		RegisteringStudent regStudent = new RegisteringStudent();
+		List<Wish>         wishes     = new ArrayList<>();
+		for (int i = 0; i < 7; i++) {
+			//tracks.add(new StudentTrack());
+			wishes.add(new Wish());
+		}
+		regStudent.setWishes(wishes);
+		//send object of the registering student to the view to be filled
+		model.addObject("regStudent", regStudent);
+		prepareTracksTable(model);
+
+		return model;
+	}
+
+	/**
+	 * Update student data and redirect to his profile with updated data
+	 *
+	 * @param regStudent    the form object of update student data
+	 * @param image         the profile photo
+	 * @param id            the id of student to update his data
+	 * @param bindingResult to bind errors with the object regstudent
+	 * @return redirected URL of student profile after update
+	 */
 	@PostMapping("/admin/students/student/{id}")
-	public String updateStudent(@Valid RegisteringStudent regStudent, @RequestParam("image") MultipartFile image, @PathVariable Integer id, BindingResult bindingResult) {
+	public String updateStudent(@Valid RegisteringStudent regStudent, @RequestParam("image") MultipartFile
+			image, @PathVariable Integer id, BindingResult bindingResult) {
 		Student student = studentService.getById(id).get();
 		student.setName(regStudent.getName());
 		student.setBirthDate(regStudent.getBirthDate());
@@ -217,9 +229,13 @@ public class StudentController {
 		student.setEducation(regStudent.getEducation());
 		student.setCountry(regStudent.getCountry());
 		student.setBirthLocation(regStudent.getBirthLocation());
-		regStudent.getWishes().forEach(wish ->
-				student.getStudentTracks().add(wish.getTrack())
-		);
+		regStudent.getWishes().stream()
+				.filter(wish -> wish.isSelected())
+				.forEach(wish -> {
+					student.getStudentTracks().add(wish.getTrack());
+				});
+		student.setHouse(regStudent.getHouse());
+
 		if (null == image) {
 			System.out.println("file is null");
 			student.setPhoto(student.getPhoto());
@@ -244,24 +260,19 @@ public class StudentController {
 	 * @return redirect to the saved student profile page
 	 */
 	@PostMapping("/admin/students/student")
-	public String registerStudent(@Valid RegisteringStudent regStudent, @RequestParam("photo") MultipartFile image,
-	                              BindingResult bindingResult, Model model) {
+	public String registerStudent(@Valid RegisteringStudent regStudent, @RequestParam("image") MultipartFile image,
+	                              BindingResult bindingResult) {
 
-		return save(regStudent, image, bindingResult);
-
-	}
-
-	private String save(RegisteringStudent regStudent, MultipartFile photo, BindingResult bindingResult) {
 		List<StudentTrack> tracks = new ArrayList<>();
 
 		if (bindingResult.hasErrors()) {
-			return (regStudent.getId() == 0) ? "admin/register-student" : "redirect:/admin/students/student/" + regStudent.getId();
-
+			return "admin/register-student";
 		} else {
 			Student returnedStudent = null;
 			if (regStudent.getWishes() != null) {
 				System.out.println("Not Null Wish...");
-				regStudent.getWishes().stream().filter((wish) -> wish.isSelected())
+				regStudent.getWishes().stream()
+						.filter((wish) -> wish.isSelected())
 						.forEach((wish) -> {
 							System.out.println("Wish: " + wish.toString());
 
@@ -270,14 +281,14 @@ public class StudentController {
 								regStudent.setHouse(wish.getHouse());
 							} else {
 								StudentTrack track = new StudentTrack();
-								track.setStudent(regStudent);
-								track.setRegisterDate(wish.getTrack().getRegisterDate());
-								track.setCertificate(wish.getTrack().getCertificate());
+								//track.setStudent(regStudent);
 								track.setCourse(wish.getTrack().getCourse());
-								track.setComments(wish.getTrack().getComments());
-								track.setEvaluation(wish.getTrack().getEvaluation());
+								track.setCertificate(wish.getTrack().getCertificate());
+								track.setRegisterDate(wish.getTrack().getRegisterDate());
 								track.setStartDate(wish.getTrack().getStartDate());
 								track.setStatus(wish.getTrack().getStatus());
+								track.setEvaluation(wish.getTrack().getEvaluation());
+								track.setComments(wish.getTrack().getComments());
 
 								tracks.add(track);
 								regStudent.setStudentTracks(tracks);
@@ -285,35 +296,27 @@ public class StudentController {
 
 						});
 
-			} else {
-				List<Wish> wishes = new ArrayList<>();
-				regStudent.getStudentTracks().stream()
-						.forEach((track) -> {
-							Wish wish = new Wish();
-							wish.setActivityId(track.getCourse().getActivity().getId());
-							wish.setSelected(true);
-							wish.setTrack(track);
-
-							wishes.add(wish);
-						});
-				//regStudent.getStudent().setPhoto(regStudent.getPhoto().getOriginalFilename());
-				regStudent.setWishes(wishes);
 			}
+			System.out.println("Image: " + image.getOriginalFilename());
 			System.out.println("Student: " + regStudent);
-			if (null == photo) {
-				System.out.println("file is null");
-				regStudent.setPhoto(regStudent.getPhoto());
+			if (image.getOriginalFilename().isEmpty()) {
+				System.out.println("Image: avatar5.png");
+				regStudent.setPhoto("avatar5.png");
+			} else {
+				try {
+					storageService.store(image, LocationTag.STUDENTS_STORE_LOC);
+					regStudent.setPhoto(image.getOriginalFilename());
+				} catch (Exception e) {
+					log.error("Fails to Store the image!");
+					log.error(e.toString());
+				}
 			}
-			try {
-				System.out.println("Photo Name: " + photo.getOriginalFilename());
-				photo.transferTo(new File("/images/" + photo.getOriginalFilename()));
-				regStudent.setPhoto(photo.getOriginalFilename());
-			} catch (IOException e) {
-				System.out.println(e.toString());
-			}
-			returnedStudent = studentService.save(regStudent);
+
+			returnedStudent = studentService.registerStudent(regStudent);
 			return "redirect:/admin/students/student/" + returnedStudent.getId();
 		}
+
 	}
+
 
 }
