@@ -249,7 +249,8 @@
                                                 <h3 class="box-title">Tracks List</h3>
                                             </div>
                                             <div class="col-sm-6">
-                                                <button type="button" class="btn btn-default pull-right"><i
+                                                <button id="btn-new-track" type="button"
+                                                        class="btn btn-default pull-right"><i
                                                         class="fa fa-plus"></i> Add Track
                                                 </button>
                                             </div>
@@ -515,6 +516,164 @@
                                         </div>
                                     </div>
                                     <!-- /.box-body -->
+                                    <div class="box-footer">
+                                        <div id="new-tracks" class="hidden box box-info">
+                                            <div class="box-header">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <h3 class="box-title">Add Tracks</h3>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="box-body">
+                                                <!-- form start -->
+                                                <form id="frmRegisterStudent" class="form-horizontal" action="#"
+                                                      th:action="@{'/admin/students/student/'+ ${regStudent.id} + '/tracks'}"
+                                                      method="post">
+                                                    <!-- tracks -->
+                                                    <div class="form-group">
+
+                                                        <!-- table of created tracks -->
+                                                        <div class="col-sm-12">
+                                                            <table id="table-tracks"
+                                                                   class="table table-bordered table-striped dataTable"
+                                                                   role="grid" width="100%"
+                                                                   aria-describedby="example1_info">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Select</th>
+                                                                    <th>Activity</th>
+                                                                    <th>Course</th>
+                                                                    <th>Track Status</th>
+                                                                    <th>Register Date</th>
+                                                                    <th>Start Date</th>
+                                                                    <th>Evaluation</th>
+                                                                    <th>Comments</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody id="tracks-data">
+                                                                <tr th:each="wish, stat :  ${regStudent.wishes}">
+                                                                    <td>
+                                                                        <div class="checkbox icheck">
+                                                                            <input type="checkbox" id="selected"
+                                                                                   name="selected"
+                                                                                   th:field="${regStudent.wishes[__${stat.index}__].selected}"/>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select id="select-activity"
+                                                                                class="select2 form-control table-selects"
+                                                                                th:field="${regStudent.wishes[__${stat.index}__].activityId}"
+                                                                                disabled="disabled">
+                                                                            <option th:each="act : ${activities[__${stat.index}__]}"
+                                                                                    th:value="${act.id}"
+                                                                                    th:text="${act.name}">
+                                                                                Select activity
+                                                                            </option>
+                                                                        </select>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <select id="select-course"
+                                                                                class="select2 form-control table-selects"
+                                                                                th:field="${regStudent.wishes[__${stat.index}__].house}"
+                                                                                th:if="(${activities[__${stat.index}__].id}) == 7">
+                                                                            <option th:each="house : ${houses}"
+                                                                                    th:value="${house.id}"
+                                                                                    th:text="${house.name}">
+                                                                                Select Course
+                                                                            </option>
+                                                                        </select>
+                                                                        <select id="select-course"
+                                                                                class="select2 form-control table-selects"
+                                                                                th:field="${regStudent.wishes[__${stat.index}__].track.course}"
+                                                                                th:if="(${#lists.size(activities[__${stat.index}__].courses)}) > 0">
+                                                                            <option th:each="cs : ${activities[__${stat.index}__].courses}"
+                                                                                    th:value="${cs.id}"
+                                                                                    th:text="${cs.name}">
+                                                                                Select Course
+                                                                            </option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select id="select-status"
+                                                                                class="select2 form-control table-selects"
+                                                                                th:field="${regStudent.wishes[__${stat.index}__].track.status}">
+
+                                                                            <option th:each="sts : ${trackStatuses}"
+                                                                                    th:value="${sts.toString()}"
+                                                                                    th:text="${sts.toString()}">
+                                                                                Waiting
+                                                                            </option>
+
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="input-group date form-control">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </div>
+                                                                            <input type="text"
+                                                                                   class="form-control pull-right date-picker"
+                                                                                   id="register-datepicker"
+                                                                                   th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
+                                                                                   name="registerDate"
+                                                                                   th:field="${regStudent.wishes[__${stat.index}__].track.registerDate}"/>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="input-group date">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="fa fa-calendar"></i>
+                                                                            </div>
+                                                                            <input type="text"
+                                                                                   class="form-control pull-right date-picker"
+                                                                                   id="start-datepicker"
+                                                                                   th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
+                                                                                   name="startDate"
+                                                                                   th:field="${regStudent.wishes[__${stat.index}__].track.startDate}"/>
+                                                                        </div>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text"
+                                                                               id="input-evaluation"
+                                                                               placeholder="Evaluation"
+                                                                               value="0"
+                                                                               name="evaluation"
+                                                                               th:field="${regStudent.wishes[__${stat.index}__].track.evaluation}"/>
+                                                                    </td>
+                                                                    <td>
+                                                                <textarea type="text" class="form-control"
+                                                                          id="track-comments"
+                                                                          placeholder="Set comments for the track if needed"
+                                                                          th:field="${regStudent.wishes[__${stat.index}__].track.comments}"></textarea>
+                                                                    </td>
+                                                                </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- /.table-of-created-tracks -->
+                                                    </div>
+                                                    <!-- /.tracks -->
+                                                    <div class="box-footer">
+                                                        <button type="submit" id="btn-save-tracks"
+                                                                class="btn btn-info pull-right">
+                                                            Save
+                                                        </button>
+                                                        <button type="button" id="btn-cancel-tracks"
+                                                                class="btn btn-info">
+                                                            Cancel
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.tracks-tab-pane -->
@@ -1049,135 +1208,6 @@
                                     </div>
                                     <!-- /.input-for-comments -->
 
-                                    <!-- tracks -->
-                                    <div class="box box-info">
-                                        <div class="box-header">
-                                            <label for="table-tracks" class="col-sm-2 control-label">Tracks</label>
-                                        </div>
-                                        <div class="box-body">
-                                            <!-- table of created tracks -->
-                                            <table id="table-tracks"
-                                                   class="table table-bordered table-striped dataTable"
-                                                   role="grid" width="100%"
-                                                   aria-describedby="example1_info">
-                                                <thead>
-                                                <tr>
-                                                    <th>Select</th>
-                                                    <th>Activity</th>
-                                                    <th>Course</th>
-                                                    <th>Status</th>
-                                                    <th>Register Date</th>
-                                                    <th>Start Date</th>
-                                                    <th>Evaluation</th>
-                                                    <th>Comments</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id="tracks-data">
-                                                <tr th:each="wish, stat :  *{wishes}">
-                                                    <td>
-                                                        <div class="checkbox icheck">
-                                                            <input type="checkbox" id="selected" name="selected"
-                                                                   th:field="*{wishes[__${stat.index}__].selected}"
-                                                                   th:selected="*{wishes[__${stat.index}__].selected}"/>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <select id="select-activity"
-                                                                class="select2 form-control table-selects"
-                                                                th:field="*{wishes[__${stat.index}__].activityId}">
-                                                            <option th:each="act : ${activities[__${stat.index}__]}"
-                                                                    th:value="${act.id}"
-                                                                    th:text="${act.name}">
-                                                                Select Course
-                                                            </option>
-                                                        </select>
-
-                                                    </td>
-                                                    <td>
-                                                        <select id="select-course"
-                                                                class="select2 form-control table-selects"
-                                                                th:field="*{wishes[__${stat.index}__].house}"
-                                                                th:if="(${activities[__${stat.index}__].id}) == 7">
-                                                            <option th:each="house : ${houses}"
-                                                                    th:value="${house.id}"
-                                                                    th:text="${house.name}">
-                                                                Select Course
-                                                            </option>
-                                                        </select>
-                                                        <select id="select-course"
-                                                                class="select2 form-control table-selects"
-                                                                th:field="*{wishes[__${stat.index}__].track.course}"
-                                                                th:if="(${#lists.size(activities[__${stat.index}__].courses)}) > 0">
-                                                            <option th:each="cs : ${activities[__${stat.index}__].courses}"
-                                                                    th:value="${cs.id}"
-                                                                    th:text="${cs.name}" th:selected="${cs}">
-                                                                Select Course
-                                                            </option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select id="select-status"
-                                                                class="select2 form-control table-selects"
-                                                                th:field="*{wishes[__${stat.index}__].track.status}">
-
-                                                            <option th:each="sts : ${trackStatuses}"
-                                                                    th:value="${sts.toString()}"
-                                                                    th:text="${sts.toString()}">
-                                                                Waiting
-                                                            </option>
-
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <div class="input-group date form-control">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </div>
-                                                            <input type="text"
-                                                                   class="form-control pull-right date-picker"
-                                                                   id="register-datepicker"
-                                                                   th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
-                                                                   name="registerDate"
-                                                                   th:field="*{wishes[__${stat.index}__].track.registerDate}"/>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="input-group date">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </div>
-                                                            <input type="text"
-                                                                   class="form-control pull-right date-picker"
-                                                                   id="start-datepicker"
-                                                                   th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
-                                                                   name="startDate"
-                                                                   th:field="*{wishes[__${stat.index}__].track.startDate}"/>
-                                                        </div>
-
-                                                    </td>
-                                                    <td>
-                                                        <input type="text"
-                                                               id="input-evaluation"
-                                                               placeholder="Evaluation"
-                                                               value="0"
-                                                               name="evaluation"
-                                                               th:field="*{wishes[__${stat.index}__].track.evaluation}"/>
-                                                    </td>
-                                                    <td>
-                                                                <textarea type="text" class="form-control"
-                                                                          id="track-comments"
-                                                                          placeholder="Set comments for the track if needed"
-                                                                          th:field="*{wishes[__${stat.index}__].track.comments}"></textarea>
-                                                    </td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                            <!-- /.table-of-created-tracks -->
-                                        </div>
-
-                                    </div>
-                                    <!-- /.tracks -->
 
                                     <!-- submit button -->
                                     <div class="form-group">
@@ -1429,9 +1459,14 @@
 <!-- script to populate tracks table based on selection of activity dropdown list -->
 <script src="../../lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
 
-
 <script>
     $(function () {
+        $('#btn-new-track').click(function () {
+            $('#new-tracks').removeClass('hidden');
+        });
+        $('#btn-cancel-tracks').click(function () {
+            $('#new-tracks').addClass('hidden');
+        });
         //Initialize Select2 Elements
         $(".select2").select2({
             placheholder: "Country"
@@ -1472,6 +1507,7 @@
             radioClass: 'iradio_square-blue',
             increaseArea: '20%' // optional
         });
+
     });
 
 </script>

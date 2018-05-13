@@ -123,8 +123,8 @@ public class StudentTrack implements Serializable {
     public String toString() {
         return "StudentTrack{" +
                 "id=" + id +
-                ", student=" + student +
-                ", course=" + course.getName() +
+		        ", student=" + student.getId() +
+		        ", course=" + course.getId() +
                 ", registerDate=" + registerDate +
                 ", startDate=" + startDate +
                 ", status='" + status + '\'' +

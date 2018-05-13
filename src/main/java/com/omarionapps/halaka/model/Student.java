@@ -276,13 +276,15 @@ public class Student {
                 .append(", StudentTracks[");
 
         for (StudentTrack track : studentTracks) {
-            result.append("Track[id=" + track.getId())
+	        result.append("Track[id=" + track.getId() + "], ]}");
+            /*
                     .append(", course=[" + track.getCourse().getName() + "]")
                     .append(", registerDate=" + track.getRegisterDate())
                     .append(", startDate=" + track.getStartDate())
                     .append(", status='" + track.getStatus())
                     .append(", evaluation=" + track.getEvaluation())
                     .append(", comments='" + comments + "]]}");
+            */
         }
         return result.toString();
     }

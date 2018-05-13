@@ -17,106 +17,133 @@ import java.util.Set;
  */
 @Service
 public class StudentService {
-    long countByStatus = 0;
-    long totalStudents;
-    private StudentRepository studentRepository;
-    private StudentTrackService studentTrackService;
+	long countByStatus = 0;
+	long totalStudents;
+	private StudentRepository   studentRepository;
+	private StudentTrackService studentTrackService;
 
-    @Autowired
-    public StudentService(StudentRepository studentRepository, StudentTrackService studentTrackService) {
-        this.studentRepository = studentRepository;
-        this.studentTrackService = studentTrackService;
-    }
-
-	public Optional<Student> getById(Integer id) {
-		return studentRepository.findById(id);
-    }
-
-    public Iterable<Student> findAllOrderByCountry(){ return studentRepository.findAllByOrderByCountry(); }
-
-    public int getCountWaitingStudentsByCourse(int studentId, int courseId){
-        return -1;
-    }
-
-    public long getCountByStatus(StudentStatus status, boolean isArchived) {
-        countByStatus = 0;
-        Iterable<Student> students = this.getAll();
-
-        students.forEach((student) -> {
-            System.out.println("Student: " + student);
-            for (StudentTrack st : student.getStudentTracks()) {
-                if (st.getStatus().equalsIgnoreCase(status.name()) && student.isArchived() == isArchived)
-                    countByStatus++;
-            }
-        });
-        return countByStatus;
-    }
-
-    public Iterable<Student> getAll() {
-        return studentRepository.findAll();
-    }
-
-    public Student registerStudent(RegisteringStudent regStudent) {
-        Student student = new Student();
-        student.setName(regStudent.getName());
-        student.setGender(regStudent.getGender());
-        student.setIdentityId(regStudent.getIdentityId());
-        student.setBirthDate(regStudent.getBirthDate());
-        student.setBirthLocation(regStudent.getBirthLocation());
-        student.setCountry(regStudent.getCountry());
-        student.setHomeAddress(regStudent.getHomeAddress());
-        student.setEgyptAddress(regStudent.getEgyptAddress());
-        student.setTel(regStudent.getTel());
-        student.setEmail(regStudent.getEmail());
-        student.setFacebook(regStudent.getFacebook());
-        student.setEducation(regStudent.getEducation());
-        student.setJob(regStudent.getJob());
-        student.setComments(regStudent.getComments());
-        student.setStudentTracks(regStudent.getStudentTracks());
-        student.setPhoto(regStudent.getPhoto());
-        student.setArchived(false);
-        student.setArchivedDate(null);
-        System.out.println("Student after cast: " + student);
-        return save(student);
+	@Autowired
+	public StudentService(StudentRepository studentRepository, StudentTrackService studentTrackService) {
+		this.studentRepository = studentRepository;
+		this.studentTrackService = studentTrackService;
 	}
 
-    public Student save(Student student) {
+	public Optional<Student> findById(Integer id) {
+		return studentRepository.findById(id);
+	}
 
-        Student returnedStudent = studentRepository.save(student);
-        for (StudentTrack st : student.getStudentTracks()) {
-            if (st != null) {
-	            //System.out.println("Returned Student: " + returnedStudent);
-	            //System.out.println("ST: " + st);
-                st.setStudent(returnedStudent);
-                studentTrackService.save(st);
-            } else {
-                System.out.println("No Student Track");
-            }
+	public Iterable<Student> findAllOrderByCountry() {
+		return studentRepository.findAllByOrderByCountry();
+	}
 
-        }
-        return returnedStudent;
-    }
+	public int getCountWaitingStudentsByCourse(int studentId, int courseId) {
+		return -1;
+	}
 
-    public void delete(int id) {
-	    studentRepository.deleteById(id);
-    }
+	public long getCountByStatus(StudentStatus status, boolean isArchived) {
+		countByStatus = 0;
+		Iterable<Student> students = this.getAll();
 
-    public long getCountByArchived(boolean isArchived) {
-        return findAllByArchive(isArchived).size();
-    }
+		students.forEach((student) -> {
+			System.out.println("Student: " + student);
+			for (StudentTrack st : student.getStudentTracks()) {
+				if (st.getStatus().equalsIgnoreCase(status.name()) && student.isArchived() == isArchived)
+					countByStatus++;
+			}
+		});
+		return countByStatus;
+	}
 
-    public Set<Student> findAllByArchive(boolean isArchived) {
-        Set<Student> archivedStudents = new HashSet<>();
-        Iterable<Student> students = findAll();
-        students.forEach((student) -> {
-            if (student.isArchived() == isArchived)
-                archivedStudents.add(student);
-        });
+	public Iterable<Student> getAll() {
+		return studentRepository.findAll();
+	}
 
-        return archivedStudents;
-    }
+	public Student registerStudent(RegisteringStudent regStudent) {
+		Student student = new Student();
+		student.setName(regStudent.getName());
+		student.setGender(regStudent.getGender());
+		student.setIdentityId(regStudent.getIdentityId());
+		student.setBirthDate(regStudent.getBirthDate());
+		student.setBirthLocation(regStudent.getBirthLocation());
+		student.setCountry(regStudent.getCountry());
+		student.setHomeAddress(regStudent.getHomeAddress());
+		student.setEgyptAddress(regStudent.getEgyptAddress());
+		student.setTel(regStudent.getTel());
+		student.setEmail(regStudent.getEmail());
+		student.setFacebook(regStudent.getFacebook());
+		student.setEducation(regStudent.getEducation());
+		student.setJob(regStudent.getJob());
+		student.setComments(regStudent.getComments());
+		student.setStudentTracks(regStudent.getStudentTracks());
+		student.setPhoto(regStudent.getPhoto());
+		student.setArchived(false);
+		student.setArchivedDate(null);
+		System.out.println("Student after cast: " + student);
+		return save(student);
+	}
 
-    private Iterable<Student> findAll() {
-        return studentRepository.findAll();
-    }
+	public Student save(Student student) {
+
+		Student returnedStudent = studentRepository.save(student);
+		System.out.println("Returned Student: " + returnedStudent);
+		for (StudentTrack st : student.getStudentTracks()) {
+			if (st != null) {
+				st.setStudent(returnedStudent);
+				System.out.println("There is new track");
+				System.out.println("New Track: " + st);
+				studentTrackService.save(st);
+			} else {
+				System.out.println("No Student Track");
+			}
+
+		}
+		return returnedStudent;
+	}
+
+	public Student updateStudent(Student student) {
+
+		Student returnedStudent = studentRepository.save(student);
+		/*
+		for (StudentTrack st : student.getStudentTracks()) {
+			if (st != null) {
+				Optional<StudentTrack> track = studentTrackService.findById(st.getId());
+				if(track.isPresent()){
+					System.out.println("Found Track: " + st);
+				}else{
+					st.setStudent(returnedStudent);
+					System.out.println("There is new track");
+					System.out.println("New Track: " + st);
+					studentTrackService.save(st);
+				}
+			} else {
+				System.out.println("No Student Track");
+			}
+
+		}
+		*/
+		return returnedStudent;
+	}
+
+	public void delete(int id) {
+		studentRepository.deleteById(id);
+	}
+
+	public long getCountByArchived(boolean isArchived) {
+		return findAllByArchive(isArchived).size();
+	}
+
+	public Set<Student> findAllByArchive(boolean isArchived) {
+		Set<Student>      archivedStudents = new HashSet<>();
+		Iterable<Student> students         = findAll();
+		students.forEach((student) -> {
+			if (student.isArchived() == isArchived)
+				archivedStudents.add(student);
+		});
+
+		return archivedStudents;
+	}
+
+	private Iterable<Student> findAll() {
+		return studentRepository.findAll();
+	}
 }

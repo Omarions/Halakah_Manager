@@ -261,6 +261,7 @@ $('#btn-register').click(function () {
     });
 });
 */
+
 $('#save-track').click(function () {
     var track = createTrack();
 
@@ -272,3 +273,4 @@ $('#save-track').click(function () {
 
     //populateCreatedTracksTable(createTrack());
 });
+
