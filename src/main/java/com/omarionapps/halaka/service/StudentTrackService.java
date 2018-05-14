@@ -30,4 +30,8 @@ public class StudentTrackService {
     public Optional<StudentTrack> findById(int id) {
         return studentTrackRepository.findById(id);
     }
+
+    public void deleteById(int id) {
+        studentTrackRepository.deleteById(id);
+    }
 }
