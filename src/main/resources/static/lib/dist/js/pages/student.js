@@ -158,6 +158,10 @@ $('#student-tracks tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
 });
 
+$('#coursesDT tbody').on('click', 'tr', function () {
+    $(this).toggleClass('selected');
+});
+
 function createTracks() {
     var tableTracks = $('#student-tracks').DataTable();
     tableTracks.rows().every(function (rowIdx, tableLoop, rowLoop) {

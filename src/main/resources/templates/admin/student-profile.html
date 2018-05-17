@@ -408,9 +408,16 @@
                                                                 <ul class="dtt">
                                                                     <li>
                                                                         <div class="tools">
-                                                                            <a href="#"
-                                                                               th:href="@{'/admin/student-tracks/track/' + ${track.id} + '/?remove=1'}"><i
-                                                                                    class="fa fa-trash-o fa-3x"></i></a>
+                                                                            <a
+                                                                                    th:href="@{'/admin/student-tracks/track/' + ${track.id}}"><i
+                                                                                    class="fa fa-edit-o fa-3x"></i>Edit
+                                                                            </a>
+                                                                            <a id="update-track-link" href="#"
+                                                                               th:href="@{'/admin/student-tracks/track/' + ${track.id} + '/remove'}"><i
+                                                                                    class="fa fa-trash-o fa-3x"></i>Delete
+                                                                            </a>
+
+
                                                                         </div>
                                                                     </li>
                                                                 </ul>
@@ -459,6 +466,7 @@
                                                             <th rowspan="1" colspan="1">Tools</th>
                                                         </tr>
                                                         </tfoot>
+
                                                     </table>
                                                 </div>
                                             </div>
@@ -518,10 +526,10 @@
                                     </div>
                                     <!-- /.box-body -->
                                     <div class="box-footer">
-
                                     </div>
                                 </div>
                                 <!-- /.box for registered tracks -->
+
                                 <!-- box for adding new tracks table -->
                                 <div id="new-tracks" class="hidden box box-info">
                                     <div class="box-header">
@@ -681,6 +689,7 @@
 
                                 </div>
                                 <!-- /.box for adding new tracks table -->
+
                             </div>
                             <!-- /.tracks-tab-pane -->
 
