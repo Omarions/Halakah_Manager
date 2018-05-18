@@ -27,8 +27,10 @@
     <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
           th:href="@{/lib/plugins/datepicker/datepicker3.css}"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css"
-          th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
+    <link rel="stylesheet" href="../lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css"
+          th:href="@{/lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css}"/>
+    <link rel="stylesheet" href="../lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css"
+          th:href="@{/lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css}"/>
     <!-- Theme style -->
     <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
     <!-- Theme style -->
@@ -287,8 +289,8 @@
                                             <div class="row" th:remove="all-but-first">
                                                 <div class="col-sm-12">
                                                     <table id="coursesDT"
-                                                           class="table table-bordered table-striped dataTable"
-                                                           role="grid" width="100%"
+                                                           class="table table-bordered table-striped dataTable dt-responsive"
+                                                           role="grid" style="width: 100%;"
                                                            aria-describedby="coursesDT_info">
                                                         <thead>
                                                         <tr role="row">
@@ -303,21 +305,14 @@
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Name: activate to sort column ascending"
-                                                                style="width: 266.4px;">Course Name
-                                                            </th>
-                                                            <th class="sorting" tabindex="0"
-                                                                aria-controls="coursesDT"
-                                                                rowspan="1"
-                                                                colspan="1"
-                                                                aria-label="Teacher Name: activate to sort column ascending"
-                                                                style="width: 186.4px;">Teacher Name
+                                                                style="width: 266.4px;">Course
                                                             </th>
                                                             <th class="sorting" tabindex="0"
                                                                 aria-controls="coursesDT"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Name: activate to sort column ascending"
-                                                                style="width: 266.4px;">Activity Name
+                                                                style="width: 266.4px;">Activity
                                                             </th>
                                                             <th class="sorting" tabindex="0"
                                                                 aria-controls="coursesDT"
@@ -371,11 +366,11 @@
                                                             </td>
                                                             <td><a href="#"
                                                                    th:href="@{/admin/courses/course(id=${track.course.id})}"><span
-                                                                    th:text="${track.course.name}">Course Name</span></a>
-                                                            </td>
-                                                            <td><a href="#"
-                                                                   th:href="@{/admin/teachers/teacher(id=${track.course.teacher.id})}"><span
-                                                                    th:text="${track.course.teacher.name}">Teacher Name</span></a>
+                                                                    th:text="${track.course.name}">Course Name</span></a><i>
+                                                                | <a href="#"
+                                                                     th:href="@{/admin/teachers/teacher(id=${track.course.teacher.id})}"><span
+                                                                    th:text="${track.course.teacher.name}">Teacher
+                                                                Name</span></a></i>
                                                             </td>
                                                             <td><a href="#"
                                                                    th:href="@{/admin/activities/activity(id=${track.course.activity.id})}"><span
@@ -537,7 +532,7 @@
 
                                                 <!-- table of created tracks -->
                                                     <table id="table-tracks"
-                                                           class="table table-bordered table-striped dataTable"
+                                                           class="table table-bordered table-striped dataTable dt-responsive"
                                                            role="grid" width="100%"
                                                            aria-describedby="table-tracks_info">
                                                         <thead>
@@ -1448,10 +1443,15 @@
 <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
         th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
 <!-- DataTables -->
-<script src="../lib/plugins/datatables/jquery.dataTables.min.js"
-        th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
-<script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
-        th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+<script src="../lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js"
+        th:src="@{/lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js}"></script>
+<script src="../lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"
+        th:src="@{/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
+<!-- Responsive extension for DataTables -->
+<script src="../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
+        th:src="@{/lib/plugins/atatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
+<script src="../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
+        th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
 <!-- FastClick -->
 <script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
 <!-- AdminLTE App -->
@@ -1479,9 +1479,10 @@
             autoclose: true
         });
         $("#coursesDT").DataTable({
-            "scrollX": true
+            responsive: true,
         });
         $("#studentsDT").DataTable({
+            responsive: true,
             "scrollX": true
         });
 
