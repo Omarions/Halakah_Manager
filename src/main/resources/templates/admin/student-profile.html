@@ -27,8 +27,8 @@
     <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
           th:href="@{/lib/plugins/datepicker/datepicker3.css}"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../../lib/plugins/datatables/dataTables.bootstrap.css"
-          th:href="@{~/lib/plugins/datatables/dataTables.bootstrap.css}"/>
+    <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css"
+          th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
     <!-- Theme style -->
     <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
     <!-- Theme style -->
@@ -186,17 +186,18 @@
                             <div th:each="st: ${regStudent.studentTracks}">
                                 <div th:switch="${st.status}">
                                       <span th:case="'WAITING'" class="label label-warning"
-                                            th:text="${st.course.activity.name}">Waiting Activity</span>
+                                            th:text="${st.course.activity.name} + '|' + ${st.course.name}">Waiting
+                                          Activity</span>
                                     <span th:case="'STUDYING'" class="label label-primary"
-                                          th:text="${st.course.activity.name}">Studying Activity</span>
+                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Studying Activity</span>
                                     <span th:case="'CERTIFIED'" class="label label-success"
-                                          th:text="${st.course.activity.name}">Certified Activity</span>
+                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Certified Activity</span>
                                     <span th:case="'FIRED'" class="label label-danger"
-                                          th:text="${st.course.activity.name}">Fired Activity</span>
+                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Fired Activity</span>
                                     <span th:case="'TEMP_STOPPED'" class="label label-info"
-                                          th:text="${st.course.activity.name}">Temp_Stopped Activity</span>
+                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Temp_Stopped Activity</span>
                                     <span th:case="'FINAL_STOPPED'" class="label label-info"
-                                          th:text="${st.course.activity.name}">Final Stopped Activity</span>
+                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Final Stopped Activity</span>
                                 </div>
                             </div>
 
@@ -287,7 +288,7 @@
                                                 <div class="col-sm-12">
                                                     <table id="coursesDT"
                                                            class="table table-bordered table-striped dataTable"
-                                                           role="grid"
+                                                           role="grid" width="100%"
                                                            aria-describedby="coursesDT_info">
                                                         <thead>
                                                         <tr role="row">
@@ -410,11 +411,11 @@
                                                                         <div class="tools">
                                                                             <a
                                                                                     th:href="@{'/admin/student-tracks/track/' + ${track.id}}"><i
-                                                                                    class="fa fa-edit-o fa-3x"></i>Edit
+                                                                                    class="fa fa-edit fa-3x"></i>
                                                                             </a>
                                                                             <a id="update-track-link" href="#"
                                                                                th:href="@{'/admin/student-tracks/track/' + ${track.id} + '/remove'}"><i
-                                                                                    class="fa fa-trash-o fa-3x"></i>Delete
+                                                                                    class="fa fa-trash-o fa-3x"></i>
                                                                             </a>
 
 
@@ -452,20 +453,6 @@
                                                             <td>A</td>
                                                         </tr>
                                                         </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                            <th rowspan="1" colspan="1">ID</th>
-                                                            <th rowspan="1" colspan="1">Name</th>
-                                                            <th rowspan="1" colspan="1">Teacher Name</th>
-                                                            <th rowspan="1" colspan="1">Activity Name</th>
-                                                            <th rowspan="1" colspan="1">Register Date</th>
-                                                            <th rowspan="1" colspan="1">Start Date</th>
-                                                            <th rowspan="1" colspan="1">Evaulation</th>
-                                                            <th rowspan="1" colspan="1">Status</th>
-                                                            <th rowspan="1" colspan="1">Comments</th>
-                                                            <th rowspan="1" colspan="1">Tools</th>
-                                                        </tr>
-                                                        </tfoot>
 
                                                     </table>
                                                 </div>
@@ -549,7 +536,6 @@
                                             <div class="form-group">
 
                                                 <!-- table of created tracks -->
-                                                <div width="100%">
                                                     <table id="table-tracks"
                                                            class="table table-bordered table-striped dataTable"
                                                            role="grid" width="100%"
@@ -668,7 +654,6 @@
 
                                                         </tbody>
                                                     </table>
-                                                </div>
                                                 <!-- /.table-of-created-tracks -->
                                             </div>
                                             <!-- /.tracks -->
@@ -1463,10 +1448,10 @@
 <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
         th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
 <!-- DataTables -->
-<script src="../../lib/plugins/datatables/jquery.dataTables.min.js"
-        th:src="@{~/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
-<script src="../../lib/plugins/datatables/dataTables.bootstrap.min.js"
-        th:src="@{~/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+<script src="../lib/plugins/datatables/jquery.dataTables.min.js"
+        th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
+<script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
+        th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
 <!-- FastClick -->
 <script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
 <!-- AdminLTE App -->
@@ -1483,6 +1468,7 @@
         $('#btn-cancel-tracks').click(function () {
             $('#new-tracks').addClass('hidden');
         });
+
         //Initialize Select2 Elements
         $(".select2").select2({
             placheholder: "Country"
@@ -1492,7 +1478,9 @@
             format: 'yyyy-mm-dd',
             autoclose: true
         });
-
+        $("#coursesDT").DataTable({
+            "scrollX": true
+        });
         $("#studentsDT").DataTable({
             "scrollX": true
         });

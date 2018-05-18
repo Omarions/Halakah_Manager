@@ -227,56 +227,24 @@
                         <div class="tab-content">
                             <!-- student tracks form tab pane -->
                             <div class="active tab-pane" id="student-tracks-form">
-                                <!-- box for update a track -->
-                                <form id="frmAddTracks" class="form-horizontal" action="#"
-                                      th:action="@{/admin/student-tracks/tracks}"
-                                      method="post" th:object="${stTrack}">
-                                    <div id="update-track" class="box box-info">
-                                        <div class="box-header">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <h3 class="box-title">Update Track</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="box-body" width="80%">
-                                            <!-- form start -->
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3
+                                                th:text="'Update Track (' + ${stTrack.id} + ')'">Update
+                                            Track</h3>
+                                        <i><span th:text="'Course Name: ' +
+                                            ${stTrack.course.name}"/><br/>
+                                            <span th:text="'Activity Name: ' +
+                                            ${stTrack.course.activity.name}"/></i>
+                                    </div>
+                                    <div class="box-body">
+                                        <form id="frmUpdateTracks" class="form-horizontal" action="#"
+                                              th:action="@{/admin/student-tracks/tracks}"
+                                              method="post" th:object="${stTrack}">
 
-
-                                            <!-- input for course name -->
-                                            <div class="form-group">
-                                                <label for="inputTrackId"
-                                                       class="col-sm-2 control-label">Track ID</label>
-
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control"
-                                                           id="inputTrackId"
-                                                           placeholder="Track ID"
-                                                           th:field="*{id}" disabled/>
-                                                </div>
-                                            </div>
-
-                                            <!-- input for course name -->
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Course Name
-                                                </label>
-
-                                                <div class="col-sm-10">
-                                                    <select id="select-course"
-                                                            class="form-control select2 select2-hidden-accessible"
-                                                            style="width: 100%;"
-                                                            tabindex="-1" aria-hidden="true"
-                                                            th:field="*{course}" disabled>
-                                                        <option
-                                                                th:value="*{course.id}"
-                                                                th:text="*{course.name}"
-                                                                selected="selected">
-                                                            Course Name
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!-- /.input-for-course-name -->
+                                            <!-- input for ID -->
+                                            <input type="hidden" th:field="*{id}"/>
+                                            <!-- /.input-for-ID -->
 
                                             <!-- Status dropdown list -->
                                             <div class="form-group">
@@ -316,8 +284,7 @@
                                                         </div>
 
                                                         <input type="text" class="form-control pull-right"
-                                                               id="registerDatePicker"
-                                                               th:value="Null" th:field="*{registerDate}">
+                                                               id="registerDatePicker" th:field="*{registerDate}">
                                                     </div>
                                                     <span
                                                             th:if="${#fields.hasErrors('registerDate')}"
@@ -342,8 +309,7 @@
                                                         </div>
 
                                                         <input type="text" class="form-control pull-right"
-                                                               id="startDatePicker"
-                                                               th:value="Null" th:field="*{startDate}">
+                                                               id="startDatePicker" th:field="*{startDate}">
                                                     </div>
                                                     <span th:if="${#fields.hasErrors('startDate')}"
                                                           th:errors="*{startDate}"
@@ -381,20 +347,24 @@
                                                 </div>
                                             </div>
                                             <!-- /.input-for-comments -->
-                                        </div>
-                                        <!-- /.box-body -->
-                                        <div class="box-footer">
-                                            <button type="submit" id="btn-save-track"
-                                                    class="btn btn-info pull-right">
-                                                Save
-                                            </button>
-                                        </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-10">
+                                                    <button type="submit" id="btn-save-track"
+                                                            class="btn btn-info pull-right">
+                                                        Save
+                                                    </button>
+                                                </div>
+
+                                            </div>
 
 
-                                        <!-- /.box-footer -->
+                                            <!-- /.tracks -->
+                                        </form>
                                     </div>
-                                    <!-- /.tracks -->
-                                </form>
+
+                                </div>
+
 
                                 <!-- /.box-for-update-track -->
                             </div>

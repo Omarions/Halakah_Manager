@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -51,10 +52,20 @@ public class StudentTrackController {
 	}
 
 	@PostMapping("/admin/student-tracks/tracks")
-	public String updateTrack(StudentTrack stTrack) {
-		Student student = stTrack.getStudent();
+	public String updateTrack(@Valid StudentTrack stTrack) {
+		StudentTrack track = studentTrackService.findById(stTrack.getId()).get();
+		track.setRegisterDate(stTrack.getRegisterDate());
+		track.setStartDate(stTrack.getStartDate());
+		track.setEvaluation(stTrack.getEvaluation());
+		track.setStatus(stTrack.getStatus());
+		track.setComments(stTrack.getComments());
 
-		studentTrackService.save(stTrack);
+
+		StudentTrack updatedTrack = studentTrackService.save(track);
+		Student      student      = updatedTrack.getStudent();
+
+		System.out.println("Updated Track ID : " + updatedTrack.getId());
+
 		return "redirect:/admin/students/student/" + student.getId();
 	}
 }
