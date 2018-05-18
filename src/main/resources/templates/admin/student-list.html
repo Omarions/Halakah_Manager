@@ -258,10 +258,12 @@
                                                                 <div th:switch="${stTrack.status}">
                                                       <span th:case="'WAITING'" class="label label-warning"
                                                             th:text="${stTrack.course.activity.name}">Waiting Activity</span>
-                                                      <span th:case="'STUDYING'" class="label label-success"
-                                                            th:text="${stTrack.course.activity.name}">Studying Activity</span>
-                                                      <span th:case="'CERTIFIED'" class="label label-primary"
-                                                            th:text="${stTrack.course.activity.name}">Certified Activity</span>
+                                                                    <span th:case="'STUDYING'"
+                                                                          class="label label-primary "
+                                                                          th:text="${stTrack.course.activity.name}">Studying Activity</span>
+                                                                    <span th:case="'CERTIFIED'"
+                                                                          class="label label-success"
+                                                                          th:text="${stTrack.course.activity.name}">Certified Activity</span>
                                                       <span th:case="'FIRED'" class="label label-danger"
                                                             th:text="${stTrack.course.activity.name}">Fired Activity</span>
                                                       <span th:case="'TEMP_STOP'" class="label label-info"

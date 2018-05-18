@@ -250,7 +250,7 @@
                                     <div class="box-header">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <h3 class="box-title">Tracks List</h3>
+                                                <h3 class="box-title"> Tracks List</h3>
                                             </div>
                                             <div class="col-sm-6">
                                                 <button id="btn-new-track" type="button"
@@ -263,12 +263,14 @@
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
-                                        <div id="coursesDT_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                                        <div id="student-tracks-dt_wrapper"
+                                             class="dataTables_wrapper form-inline dt-bootstrap">
                                             <div class="row" th:remove="all">
                                                 <div class="col-sm-6">
-                                                    <div class="dataTables_length" id="coursesDT_length">
+                                                    <div class="dataTables_length" id="student-tracks-dt_length">
                                                         <label>Show
-                                                            <select name="coursesDT_length" aria-controls="coursesDT"
+                                                            <select name="student-tracks-dt_length"
+                                                                    aria-controls="student-tracks-dt"
                                                                     class="form-control input-sm">
                                                                 <option value="10">10</option>
                                                                 <option value="25">25</option>
@@ -279,78 +281,78 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <div id="coursesDT_filter" class="dataTables_filter">
+                                                    <div id="student-tracks-dt_filter" class="dataTables_filter">
                                                         <label>Search:<input type="search" class="form-control input-sm"
                                                                              placeholder="Teacher Name"
-                                                                             aria-controls="coursesDT"></label>
+                                                                             aria-controls="student-tracks-dt"></label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row" th:remove="all-but-first">
                                                 <div class="col-sm-12">
-                                                    <table id="coursesDT"
+                                                    <table id="student-tracks-dt"
                                                            class="table table-bordered table-striped dataTable dt-responsive"
                                                            role="grid" style="width: 100%;"
-                                                           aria-describedby="coursesDT_info">
+                                                           aria-describedby="student-tracks-dt_info">
                                                         <thead>
                                                         <tr role="row">
                                                             <th class="sorting_asc" tabindex="0"
-                                                                aria-controls="coursesDT" rowspan="1"
+                                                                aria-controls="student-tracks-dt" rowspan="1"
                                                                 colspan="1" aria-sort="ascending"
                                                                 aria-label="ID: activate to sort column descending"
                                                                 style="width: 130.4px;">ID
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="coursesDT"
+                                                                aria-controls="student-tracks-dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Name: activate to sort column ascending"
                                                                 style="width: 266.4px;">Course
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="coursesDT"
+                                                                aria-controls="student-tracks-dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Name: activate to sort column ascending"
                                                                 style="width: 266.4px;">Activity
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="coursesDT"
+                                                                aria-controls="student-tracks-dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Days: activate to sort column ascending"
                                                                 style="width: 135.2px;">Register Date
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="coursesDT"
+                                                                aria-controls="student-tracks-dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Start Time: activate to sort column ascending"
                                                                 style="width: 135.2px;">Start Date
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="coursesDT"
+                                                                aria-controls="student-tracks-dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="End Time: activate to sort column ascending"
                                                                 style="width: 135.2px;">Evaluation
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="coursesDT"
+                                                                aria-controls="student-tracks-dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Start Date: activate to sort column ascending"
                                                                 style="width: 135.2px;">Status
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="coursesDT"
+                                                                aria-controls="student-tracks-dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="CSS grade: activate to sort column ascending"
                                                                 style="width: 266.2px;">Comments
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="coursesDT"
+                                                                aria-controls="student-tracks-dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="CSS grade: activate to sort column ascending"
@@ -448,55 +450,69 @@
                                                             <td>A</td>
                                                         </tr>
                                                         </tbody>
-
+                                                        <tfoot>
+                                                        <tr>
+                                                            <th rowspan="1" colspan="1">ID</th>
+                                                            <th rowspan="1" colspan="1">Course</th>
+                                                            <th rowspan="1" colspan="1">Activity</th>
+                                                            <th rowspan="1" colspan="1">Register Date</th>
+                                                            <th rowspan="1" colspan="1">Start Date</th>
+                                                            <th rowspan="1" colspan="1">Evaluation</th>
+                                                            <th rowspan="1" colspan="1">Status</th>
+                                                            <th rowspan="1" colspan="1">Comments</th>
+                                                            <th rowspan="1" colspan="1">Tools</th>
+                                                        </tr>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
                                             </div>
                                             <div class="row" th:remove="all">
                                                 <div class="col-sm-5">
-                                                    <div class="dataTables_info" id="coursesDT_info" role="status"
+                                                    <div class="dataTables_info" id="student-tracks-dt_info"
+                                                         role="status"
                                                          aria-live="polite">Showing
                                                         1 to 10 of 57 entries
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-7">
                                                     <div class="dataTables_paginate paging_simple_numbers"
-                                                         id="coursesDT_paginate">
+                                                         id="student-tracks-dt_paginate">
                                                         <ul class="pagination">
                                                             <li class="paginate_button previous disabled"
-                                                                id="coursesDT_previous"><a href="#"
-                                                                                           aria-controls="coursesDT"
-                                                                                           data-dt-idx="0"
-                                                                                           tabindex="0">Previous</a>
+                                                                id="student-tracks-dt_previous"><a href="#"
+                                                                                                   aria-controls="student-tracks-dt"
+                                                                                                   data-dt-idx="0"
+                                                                                                   tabindex="0">Previous</a>
                                                             </li>
                                                             <li class="paginate_button active"><a href="#"
-                                                                                                  aria-controls="coursesDT"
+                                                                                                  aria-controls="student-tracks-dt"
                                                                                                   data-dt-idx="1"
                                                                                                   tabindex="0">1</a>
                                                             </li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="coursesDT"
+                                                                                            aria-controls="student-tracks-dt"
                                                                                             data-dt-idx="2"
                                                                                             tabindex="0">2</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="coursesDT"
+                                                                                            aria-controls="student-tracks-dt"
                                                                                             data-dt-idx="3"
                                                                                             tabindex="0">3</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="coursesDT"
+                                                                                            aria-controls="student-tracks-dt"
                                                                                             data-dt-idx="4"
                                                                                             tabindex="0">4</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="coursesDT"
+                                                                                            aria-controls="student-tracks-dt"
                                                                                             data-dt-idx="5"
                                                                                             tabindex="0">5</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="coursesDT"
+                                                                                            aria-controls="student-tracks-dt"
                                                                                             data-dt-idx="6"
                                                                                             tabindex="0">6</a></li>
-                                                            <li class="paginate_button next" id="coursesDT_next"><a
+                                                            <li class="paginate_button next"
+                                                                id="student-tracks-dt_next"><a
                                                                     href="#"
-                                                                    aria-controls="coursesDT"
+                                                                    aria-controls="student-tracks-dt"
                                                                     data-dt-idx="7"
                                                                     tabindex="0">Next</a>
                                                             </li>
@@ -531,10 +547,10 @@
                                             <div class="form-group">
 
                                                 <!-- table of created tracks -->
-                                                    <table id="table-tracks"
-                                                           class="table table-bordered table-striped dataTable dt-responsive"
-                                                           role="grid" width="100%"
-                                                           aria-describedby="table-tracks_info">
+                                                <table id="add-student-tracks-dt"
+                                                       class="table table-bordered table-striped dataTable dt-responsive"
+                                                       role="grid" width="100%"
+                                                       aria-describedby="add-student-tracks-dt_info">
                                                         <thead>
                                                         <tr>
                                                             <th>Select</th>
@@ -692,13 +708,14 @@
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body">
-                                        <div id="studentsDT_wrapper"
+                                        <div id="certificatesDT_wrapper"
                                              class="dataTables_wrapper form-inline dt-bootstrap">
                                             <div class="row" th:remove="all">
                                                 <div class="col-sm-6">
-                                                    <div class="dataTables_length" id="studentsDT_length">
+                                                    <div class="dataTables_length" id="certificatesDT_length">
                                                         <label>Show
-                                                            <select name="studentsDT_length" aria-controls="studentsDT"
+                                                            <select name="certificatesDT_length"
+                                                                    aria-controls="certificatesDT"
                                                                     class="form-control input-sm">
                                                                 <option value="10">10</option>
                                                                 <option value="25">25</option>
@@ -709,71 +726,71 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <div id="studentsDT_filter" class="dataTables_filter">
+                                                    <div id="certificatesDT_filter" class="dataTables_filter">
                                                         <label>Search:<input type="search" class="form-control input-sm"
                                                                              placeholder="Student Name"
-                                                                             aria-controls="studentsDT"></label>
+                                                                             aria-controls="certificatesDT"></label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row" th:remove="all-but-first">
                                                 <div class="col-sm-12">
-                                                    <table id="studentsDT"
+                                                    <table id="certificatesDT"
                                                            class="table table-bordered table-striped dataTable"
                                                            role="grid"
-                                                           aria-describedby="studentsDT_info">
+                                                           aria-describedby="certificatesDT_info">
                                                         <thead>
                                                         <tr role="row">
                                                             <th class="sorting_asc" tabindex="0"
-                                                                aria-controls="studentsDT" rowspan="1"
+                                                                aria-controls="certificatesDT" rowspan="1"
                                                                 colspan="1" aria-sort="ascending"
                                                                 aria-label="ID: activate to sort column descending"
                                                                 style="width: 130.4px;">ID
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="studentsDT"
+                                                                aria-controls="certificatesDT"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Name: activate to sort column ascending"
                                                                 style="width: 266.4px;">Name
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="studentsDT"
+                                                                aria-controls="certificatesDT"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Activity: activate to sort column ascending"
                                                                 style="width: 160.4px;">Activity
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="studentsDT"
+                                                                aria-controls="certificatesDT"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Teacher Name: activate to sort column ascending"
                                                                 style="width: 160.2px;">Teacher Name
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="studentsDT"
+                                                                aria-controls="certificatesDT"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Release Date: activate to sort column ascending"
                                                                 style="width: 135.2px;">Release Date
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="studentsDT"
+                                                                aria-controls="certificatesDT"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Certificate Photo: activate to sort column ascending"
                                                                 style="width: 266.2px;">Certificate Photo
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="studentsDT"
+                                                                aria-controls="certificatesDT"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Comments: activate to sort column ascending"
                                                                 style="width: 266.2px;">Comments
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="studentsDT"
+                                                                aria-controls="certificatesDT"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="CSS grade: activate to sort column ascending"
@@ -906,49 +923,49 @@
                                             </div>
                                             <div class="row" th:remove="all">
                                                 <div class="col-sm-5">
-                                                    <div class="dataTables_info" id="studentsDT_info" role="status"
+                                                    <div class="dataTables_info" id="certificatesDT_info" role="status"
                                                          aria-live="polite">Showing
                                                         1 to 10 of 57 entries
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-7">
                                                     <div class="dataTables_paginate paging_simple_numbers"
-                                                         id="studentsDT_paginate">
+                                                         id="certificatesDT_paginate">
                                                         <ul class="pagination">
                                                             <li class="paginate_button previous disabled"
-                                                                id="studentsDT_previous"><a href="#"
-                                                                                            aria-controls="studentsDT"
-                                                                                            data-dt-idx="0"
-                                                                                            tabindex="0">Previous</a>
+                                                                id="certificatesDT_previous"><a href="#"
+                                                                                                aria-controls="certificatesDT"
+                                                                                                data-dt-idx="0"
+                                                                                                tabindex="0">Previous</a>
                                                             </li>
                                                             <li class="paginate_button active"><a href="#"
-                                                                                                  aria-controls="studentsDT"
+                                                                                                  aria-controls="certificatesDT"
                                                                                                   data-dt-idx="1"
                                                                                                   tabindex="0">1</a>
                                                             </li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="studentsDT"
+                                                                                            aria-controls="certificatesDT"
                                                                                             data-dt-idx="2"
                                                                                             tabindex="0">2</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="studentsDT"
+                                                                                            aria-controls="certificatesDT"
                                                                                             data-dt-idx="3"
                                                                                             tabindex="0">3</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="studentsDT"
+                                                                                            aria-controls="certificatesDT"
                                                                                             data-dt-idx="4"
                                                                                             tabindex="0">4</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="studentsDT"
+                                                                                            aria-controls="certificatesDT"
                                                                                             data-dt-idx="5"
                                                                                             tabindex="0">5</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="studentsDT"
+                                                                                            aria-controls="certificatesDT"
                                                                                             data-dt-idx="6"
                                                                                             tabindex="0">6</a></li>
-                                                            <li class="paginate_button next" id="studentsDT_next"><a
+                                                            <li class="paginate_button next" id="certificatesDT_next"><a
                                                                     href="#"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certificatesDT"
                                                                     data-dt-idx="7"
                                                                     tabindex="0">Next</a>
                                                             </li>
@@ -1471,17 +1488,21 @@
 
         //Initialize Select2 Elements
         $(".select2").select2({
-            placheholder: "Country"
+            placeholder: "Country"
         });
 
         $('#birthDatePicker').datepicker({
             format: 'yyyy-mm-dd',
             autoclose: true
         });
-        $("#coursesDT").DataTable({
-            responsive: true,
+        $("#student-tracks-dt").DataTable({
+            responsive: true
         });
-        $("#studentsDT").DataTable({
+        $("#add-student-tracks-dt").DataTable({
+            responsive: true,
+            "scrollX": true
+        });
+        $("#certificatesDT").DataTable({
             responsive: true,
             "scrollX": true
         });

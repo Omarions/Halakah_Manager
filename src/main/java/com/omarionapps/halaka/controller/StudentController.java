@@ -226,37 +226,20 @@ public class StudentController {
 		List<StudentTrack> tracks  = new ArrayList<>();
 		Student            student = studentService.findById(studentId).get();
 		student.setName(regStudent.getName());
-		student.setBirthDate(regStudent.getBirthDate());
-		student.setArchived(false);
-		student.setEmail(regStudent.getEmail());
-		student.setFacebook(regStudent.getFacebook());
 		student.setGender(regStudent.getGender());
+		student.setIdentityId(regStudent.getIdentityId());
+		student.setBirthDate(regStudent.getBirthDate());
+		student.setBirthLocation(regStudent.getBirthLocation());
+		student.setCountry(regStudent.getCountry());
 		student.setHomeAddress(regStudent.getHomeAddress());
 		student.setEgyptAddress(regStudent.getEgyptAddress());
+		student.setTel(regStudent.getTel());
+		student.setEmail(regStudent.getEmail());
+		student.setFacebook(regStudent.getFacebook());
 		student.setEducation(regStudent.getEducation());
-		student.setCountry(regStudent.getCountry());
-		student.setBirthLocation(regStudent.getBirthLocation());
-		/*
-		tracks.addAll(student.getStudentTracks());
-		regStudent.getWishes().stream()
-				.filter(wish -> wish.isSelected())
-				.forEach(wish -> {
-					StudentTrack track = new StudentTrack();
-					//track.setStudent(regStudent);
-					track.setCourse(wish.getTrack().getCourse());
-					System.out.println("Selected Course for track: " + track.getCourse().getId());
-					track.setCertificate(wish.getTrack().getCertificate());
-					track.setRegisterDate(wish.getTrack().getRegisterDate());
-					track.setStartDate(wish.getTrack().getStartDate());
-					track.setStatus(wish.getTrack().getStatus());
-					track.setEvaluation(wish.getTrack().getEvaluation());
-					track.setComments(wish.getTrack().getComments());
-					System.out.println("Tracks count before adding: " + student.getStudentTracks().size());
-					tracks.add(track);
-					student.setStudentTracks(tracks);
-					System.out.println("Tracks count after adding: " + student.getStudentTracks().size());
-				});
-				*/
+		student.setJob(regStudent.getJob());
+		student.setComments(regStudent.getComments());
+		student.setArchived(false);
 		student.setHouse(regStudent.getHouse());
 
 		if (null == image) {
