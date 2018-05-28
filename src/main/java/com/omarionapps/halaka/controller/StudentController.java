@@ -107,21 +107,9 @@ public class StudentController {
 			regStudent.setPhoto(student.getPhoto());
 			regStudent.setStudentTracks(student.getStudentTracks());
 
-			/*student.getStudentTracks().forEach((track -> {
-				Wish wish = new Wish();
-				wish.setTrack(track);
-				wish.setSelected(true);
-				wish.setActivityId(track.getCourse().getActivity().getId());
-				wish.setHouse(student.getHouse());
-
-				wishes.add(wish);
-			}));*/
-			//	System.out.println("Populated wishes: " + wishes);
-			//regStudent.setWishes(wishes);
-
-
 			imagePath = MvcUriComponentsBuilder
-					.fromMethodName(PhotoController.class, "getFile", student.getPhoto()).build().toString();
+					.fromMethodName(PhotoController.class, "getFile", student.getPhoto(), LocationTag.STUDENTS_STORE_LOC).build()
+					.toString();
 
 
 			modelAndView.addObject("imagePath", imagePath);

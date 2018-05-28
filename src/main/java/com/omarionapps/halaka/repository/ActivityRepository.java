@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by Omar on 29-Apr-17.
  */
-@Repository("activityRepository")
+@Repository
 public interface ActivityRepository extends CrudRepository<Activity, Integer> {
     Iterable<Activity> findAllByOrderByName();
 }

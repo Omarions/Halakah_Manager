@@ -89,12 +89,12 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div id="teachers-list-dt_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                                 <div class="row" th:remove="all">
                                     <div class="col-sm-6">
-                                        <div class="dataTables_length" id="example1_length">
+                                        <div class="dataTables_length" id="teachers-list-dt_length">
                                             <label>Show
-                                                <select name="example1_length" aria-controls="example1"
+                                                <select name="teachers-list-dt_length" aria-controls="teachers-list-dt"
                                                         class="form-control input-sm">
                                                     <option value="10">10</option>
                                                     <option value="25">25</option>
@@ -105,67 +105,69 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div id="example1_filter" class="dataTables_filter">
+                                        <div id="teachers-list-dt_filter" class="dataTables_filter">
                                             <label>Search:<input type="search" class="form-control input-sm"
                                                                  placeholder="Teacher Name"
-                                                                 aria-controls="example1"></label>
+                                                                 aria-controls="teachers-list-dt"></label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row" th:remove="all-but-first">
                                     <div class="col-sm-12">
-                                        <table id="example1" class="table table-bordered table-striped dataTable"
+                                        <table id="teachers-list-dt"
+                                               class="table table-bordered table-striped dataTable"
                                                role="grid"
-                                               aria-describedby="example1_info">
+                                               aria-describedby="teachers-list-dt_info">
                                             <thead>
                                                 <tr role="row">
-                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1"
+                                                    <th class="sorting_asc" tabindex="0"
+                                                        aria-controls="teachers-list-dt"
                                                         rowspan="1"
                                                         colspan="1" aria-sort="ascending"
                                                         aria-label="ID: activate to sort column descending"
                                                         style="width: 130.4px;">ID
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="sorting" tabindex="0" aria-controls="teachers-list-dt"
                                                         rowspan="1"
                                                         colspan="1" aria-label="Name: activate to sort column ascending"
                                                         style="width: 266.4px;">Name
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="sorting" tabindex="0" aria-controls="teachers-list-dt"
                                                         rowspan="1"
                                                         colspan="1"
                                                         aria-label="Activity Name: activate to sort column ascending"
                                                         style="width: 237.4px;">Activities
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="sorting" tabindex="0" aria-controls="teachers-list-dt"
                                                         rowspan="1"
                                                         colspan="1"
                                                         aria-label="Total Courses: activate to sort column ascending"
                                                         style="width: 237.4px;">Total Courses
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="sorting" tabindex="0" aria-controls="teachers-list-dt"
                                                         rowspan="1"
                                                         colspan="1"
                                                         aria-label="Email: activate to sort column ascending"
                                                         style="width: 186.4px;">Email
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="sorting" tabindex="0" aria-controls="teachers-list-dt"
                                                         rowspan="1"
                                                         colspan="1" aria-label="Tel: activate to sort column ascending"
                                                         style="width: 135.2px;">Tel
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="sorting" tabindex="0" aria-controls="teachers-list-dt"
                                                         rowspan="1"
                                                         colspan="1"
                                                         aria-label="Education Grade: activate to sort column ascending"
                                                         style="width: 135.2px;">Education Grade
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="sorting" tabindex="0" aria-controls="teachers-list-dt"
                                                         rowspan="1"
                                                         colspan="1"
                                                         aria-label="CSS grade: activate to sort column ascending"
                                                         style="width: 266.2px;">Comments
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="sorting" tabindex="0" aria-controls="teachers-list-dt"
                                                         rowspan="1"
                                                         colspan="1"
                                                         aria-label="CSS grade: activate to sort column ascending"
@@ -254,37 +256,45 @@
                                 </div>
                                 <div class="row" th:remove="all">
                                     <div class="col-sm-5">
-                                        <div class="dataTables_info" id="example1_info" role="status"
+                                        <div class="dataTables_info" id="teachers-list-dt_info" role="status"
                                              aria-live="polite">Showing
                                                                 1 to 10 of 57 entries
                                         </div>
                                     </div>
                                     <div class="col-sm-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                        <div class="dataTables_paginate paging_simple_numbers"
+                                             id="teachers-list-dt_paginate">
                                             <ul class="pagination">
-                                                <li class="paginate_button previous disabled" id="example1_previous"><a
+                                                <li class="paginate_button previous disabled"
+                                                    id="teachers-list-dt_previous"><a
                                                         href="#"
-                                                        aria-controls="example1"
+                                                        aria-controls="teachers-list-dt"
                                                         data-dt-idx="0"
                                                         tabindex="0">Previous</a>
                                                 </li>
-                                                <li class="paginate_button active"><a href="#" aria-controls="example1"
+                                                <li class="paginate_button active"><a href="#"
+                                                                                      aria-controls="teachers-list-dt"
                                                                                       data-dt-idx="1" tabindex="0">1</a>
                                                 </li>
-                                                <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                <li class="paginate_button "><a href="#"
+                                                                                aria-controls="teachers-list-dt"
                                                                                 data-dt-idx="2" tabindex="0">2</a></li>
-                                                <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                <li class="paginate_button "><a href="#"
+                                                                                aria-controls="teachers-list-dt"
                                                                                 data-dt-idx="3" tabindex="0">3</a></li>
-                                                <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                <li class="paginate_button "><a href="#"
+                                                                                aria-controls="teachers-list-dt"
                                                                                 data-dt-idx="4" tabindex="0">4</a></li>
-                                                <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                <li class="paginate_button "><a href="#"
+                                                                                aria-controls="teachers-list-dt"
                                                                                 data-dt-idx="5" tabindex="0">5</a></li>
-                                                <li class="paginate_button "><a href="#" aria-controls="example1"
+                                                <li class="paginate_button "><a href="#"
+                                                                                aria-controls="teachers-list-dt"
                                                                                 data-dt-idx="6" tabindex="0">6</a></li>
-                                                <li class="paginate_button next" id="example1_next"><a href="#"
-                                                                                                       aria-controls="example1"
-                                                                                                       data-dt-idx="7"
-                                                                                                       tabindex="0">Next</a>
+                                                <li class="paginate_button next" id="teachers-list-dt_next"><a href="#"
+                                                                                                               aria-controls="teachers-list-dt"
+                                                                                                               data-dt-idx="7"
+                                                                                                               tabindex="0">Next</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -509,13 +519,21 @@
                 th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
         <script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
                 th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+        <!-- Responsive extension for DataTables -->
+        <script src="../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
+                th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
+        <script src="../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
+                th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
+
         <!-- FastClick -->
         <script src="../lib/plugins/fastclick/fastclick.js" th:src="@{/lib/plugins/fastclick/fastclick.js}"></script>
         <!-- AdminLTE App -->
         <script src="../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
         <script>
             $(function () {
-                $("#example1").DataTable();
+                $("#teachers-list-dt").DataTable({
+                    responsive: true
+                });
             });
 
         </script>

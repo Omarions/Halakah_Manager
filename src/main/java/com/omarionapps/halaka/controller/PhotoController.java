@@ -4,7 +4,6 @@ import com.omarionapps.halaka.service.StorageService;
 import com.omarionapps.halaka.utils.LocationTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,10 +35,28 @@ public class PhotoController {
 
 	@GetMapping("/admin/files/{filename:.+}")
 	@ResponseBody
-	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-		Resource file = storageService.loadFile(filename, LocationTag.STUDENTS_STORE_LOC);
+	public ResponseEntity<Resource> getFile(@PathVariable String filename, LocationTag locTag) {
+		Resource file = null;
+		switch (locTag) {
+			case ACTIVITY_STORE_LOC:
+				file = storageService.loadFile(filename, LocationTag.ACTIVITY_STORE_LOC);
+				break;
+			case STUDENTS_STORE_LOC:
+				file = storageService.loadFile(filename, LocationTag.STUDENTS_STORE_LOC);
+				break;
+			case TEACHERS_STORE_LOC:
+				file = storageService.loadFile(filename, LocationTag.TEACHERS_STORE_LOC);
+				break;
+			case CERT_STORE_LOC:
+				file = storageService.loadFile(filename, LocationTag.CERT_STORE_LOC);
+				break;
+			case EVENTS_STORE_LOC:
+				file = storageService.loadFile(filename, LocationTag.EVENTS_STORE_LOC);
+				break;
+
+		}
+		
 		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
 	}
 

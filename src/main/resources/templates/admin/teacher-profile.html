@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <title>AdminLTE 2 | Student Profile</title>
+        <title>AdminLTE | Teacher Profile</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
         <!-- Bootstrap 3.3.6 -->
@@ -70,8 +70,9 @@
                             <div class="box box-primary">
                                 <div class="box-body box-profile">
                                     <img class="profile-user-img img-responsive img-circle"
-                                         src="../../lib/dist/img/user4-128x128.jpg"
-                                         th:src="@{'/lib/dist/img/' + ${teacher.photo}}" alt="User profile picture"/>
+                                         src="../lib/dist/img/teacher/avatar5.png"
+                                         th:src="@{${imagePath}}"
+                                         alt="User profile picture"/>
 
                                     <h3 class="profile-username text-center" th:text="${teacher.name}">Nina
                                                                                                        Mcintire</h3>
@@ -336,22 +337,29 @@
 
                                     <div class="tab-pane" id="settings">
                                         <form class="form-horizontal" action="#"
-                                              th:action="@{/admin/teachers/teacher}" th:object="${teacher}"
-                                              method="post">
+                                              th:action="@{'/admin/teachers/teacher/' + ${teacher.id}}"
+                                              th:object="${teacher}"
+                                              method="post" enctype="multipart/form-data">
+                                            <!-- input for ID -->
                                             <input type="hidden" th:field="*{id}"/>
+                                            <!-- /.input-for-ID -->
 
+                                            <!-- input for photo -->
                                             <div class="form-group">
                                                 <div class="col-sm-offset-6 col-sm-6">
 
-                                                    <img src="../lib/dist/img/user2-160x160.jpg"
-                                                         th:src="@{'/lib/dist/img/' + ${teacher.photo}}"
-                                                         class="img-circle" alt="User Image"/>
+                                                    <img src="../../lib/dist/img/teacher/avatar5.png"
+                                                         th:src=" @{${imagePath}}"
+                                                         id="img-photo" name="image" class="img-circle"
+                                                         alt="Student Image"
+                                                         style="width: 160px; height: 160px" th:field="*{image}"/>
 
-                                                    <input type="file" th:field="*{photo}"/>
+                                                    <input type="file" name="image" id="input-photo" class="hidden"
+                                                           th:field="*{image}"/>
 
                                                 </div>
                                             </div>
-
+                                            <!-- /.input-for-photo -->
                                             <div class="form-group">
                                                 <label for="inputName" class="col-sm-2 control-label">Name</label>
 
@@ -470,7 +478,7 @@
 
                                                 <div class="col-sm-10">
                                             <textarea class="form-control" id="inputComments"
-                                                      placeholder="Comments"></textarea>
+                                                      placeholder="Comments" th:field="*{comments}"></textarea>
                                                 </div>
                                             </div>
 
@@ -712,8 +720,10 @@
         <script src="../../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
         <!-- script to populate courses dropdown list based on selection of activity dropdown list -->
         <script src="../../lib/dist/js/pages/teacher.js" th:src="@{/lib/dist/js/pages/teacher.js}"></script>
+        <script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
         <script>
             $(function () {
+
                 //Initialize Select2 Elements
                 $(".select2").select2({
                     placeholder: "Select Activity"
@@ -722,12 +732,6 @@
                 $('#hireDatePicker').datepicker({
                     format: 'yyyy-mm-dd',
                     autoclose: true
-                });
-
-                $('input').iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue',
-                    increaseArea: '20%' // optional
                 });
             });
 

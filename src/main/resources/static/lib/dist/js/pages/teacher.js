@@ -9,7 +9,7 @@ function populateCoursesDropdownList() {
     //the value of the selection which is the activity ID.
     var selectedActivityIds = $("#selectActivities").val();
     console.log(selectedActivityIds);
-    console.log(courses);
+    //console.log(courses);
     //add first Option child to the dropdown list
     $('#selectCourses').html("<option value='0' text='Select Courses'>Select Courses</option>");
     /** Courses variable comes from thymeleaf template that defined in script tag with attr th:inline.

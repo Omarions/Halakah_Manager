@@ -62,8 +62,29 @@
                         <!-- /.box-header -->
                         <!-- form start -->
                         <form class="form-horizontal" action="#" th:action="@{/admin/activities/activity}"
-                              th:object="${activity}" method="post">
+                              th:object="${activity}" method="post" enctype="multipart/form-data">
                             <div class="box-body">
+
+                                <!-- input for ID -->
+                                <input type="hidden" th:field="*{id}"/>
+                                <!-- /.input-for-ID -->
+
+                                <!-- input for photo -->
+                                <div class="form-group">
+                                    <div class="col-sm-offset-6 col-sm-6">
+
+                                        <img src="../lib/dist/img/activity/activity_logo.png"
+                                             th:src="@{'/lib/dist/img/activity/activity_logo.png'}"
+                                             id="img-photo" name="logoFile" class="img-circle" alt="Activity Logo"
+                                             style="width: 160px; height: 160px" th:field="*{logoFile}"/>
+
+                                        <input type="file" name="logoFile" id="input-photo" class="hidden"
+                                               th:field="*{logoFile}"/>
+                                    </div>
+                                </div>
+                                <!-- /.input-for-photo -->
+
+                                <!-- input for name -->
                                 <div class="form-group">
                                     <label for="inputName" class="col-sm-2 control-label">Name</label>
 
@@ -72,6 +93,9 @@
                                                th:field="*{name}"/>
                                     </div>
                                 </div>
+                                <!-- /.input-for-name -->
+
+                                <!-- input for comments -->
                                 <div class="form-group">
                                     <label for="inputComments" class="col-sm-2 control-label">Comment</label>
 
@@ -81,6 +105,8 @@
                                                   th:field="*{comments}">Extra info</textarea>
                                     </div>
                                 </div>
+                                <!-- /.input-for-comments -->
+                                
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
@@ -305,6 +331,8 @@
 <script src="../../lib/dist/js/demo.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+
+<script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
 <script>
     $(function () {
         //bootstrap WYSIHTML5 - text editor

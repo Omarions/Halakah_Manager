@@ -22,11 +22,12 @@ import java.nio.file.StandardCopyOption;
 
 @Service
 public class StorageService {
-	private final String rootFolder          = "upload-dir";
-	private final Path   rootLocationStudent = Paths.get(rootFolder + File.separator + "students");
-	private final Path   rootLocationTeacher = Paths.get(rootFolder + File.separator + "teachers");
-	private final Path   rootLocationCerts   = Paths.get(rootFolder + File.separator + "certificates");
-	private final Path   rootLocationEvents  = Paths.get(rootFolder + File.separator + "events");
+	private final String rootFolder             = "upload-dir";
+	private final Path   rootLocationStudent    = Paths.get(rootFolder + File.separator + "students");
+	private final Path   rootLocationTeacher    = Paths.get(rootFolder + File.separator + "teachers");
+	private final Path   rootLocationCerts      = Paths.get(rootFolder + File.separator + "certificates");
+	private final Path   rootLocationEvents     = Paths.get(rootFolder + File.separator + "events");
+	private final Path   rootLocationActivities = Paths.get(rootFolder + File.separator + "activities");
 
 	Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
@@ -43,6 +44,9 @@ public class StorageService {
 				break;
 			case EVENTS_STORE_LOC:
 				copyPhoto(file, rootLocationEvents);
+				break;
+			case ACTIVITY_STORE_LOC:
+				copyPhoto(file, rootLocationActivities);
 				break;
 		}
 	}
@@ -81,8 +85,11 @@ public class StorageService {
 			case EVENTS_STORE_LOC:
 				path = rootLocationEvents.resolve(filename);
 				break;
+			case ACTIVITY_STORE_LOC:
+				path = rootLocationActivities.resolve(filename);
+				break;
 		}
-		System.out.println("Load photo from path: " + path.toString());
+		//System.out.println("Load photo from path: " + path.toString());
 		return loadPhoto(path);
 	}
 
@@ -113,6 +120,8 @@ public class StorageService {
 				break;
 			case EVENTS_STORE_LOC:
 				FileSystemUtils.deleteRecursively(rootLocationEvents.toFile());
+			case ACTIVITY_STORE_LOC:
+				FileSystemUtils.deleteRecursively(rootLocationActivities.toFile());
 				break;
 		}
 	}
@@ -134,6 +143,10 @@ public class StorageService {
 				break;
 			case EVENTS_STORE_LOC:
 				path = Paths.get(rootLocationEvents + File.separator + photoName);
+				deletePhoto(path);
+				break;
+			case ACTIVITY_STORE_LOC:
+				path = Paths.get(rootLocationActivities + File.separator + photoName);
 				deletePhoto(path);
 				break;
 		}
@@ -158,6 +171,9 @@ public class StorageService {
 				Files.createDirectory(rootLocationCerts);
 			if (!Files.exists(rootLocationEvents))
 				Files.createDirectory(rootLocationEvents);
+			if (!Files.exists(rootLocationActivities))
+				Files.createDirectory(rootLocationActivities);
+
 
 		} catch (IOException e) {
 			throw new RuntimeException("Could not initialize storage!");

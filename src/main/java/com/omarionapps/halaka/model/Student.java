@@ -1,5 +1,9 @@
 package com.omarionapps.halaka.model;
 
+import com.omarionapps.halaka.controller.PhotoController;
+import com.omarionapps.halaka.utils.LocationTag;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -54,6 +58,8 @@ public class Student {
     private List<Certificate> certificates = new ArrayList<>();
     @Transient
     private List<Course> courses = new ArrayList<>();
+    @Transient
+    private String photoUrl;
 
     public Student(){}
 
@@ -239,6 +245,13 @@ public class Student {
 
     public void setHouse(House house) {
         this.house = house;
+    }
+
+    public String getPhotoUrl() {
+        String url = MvcUriComponentsBuilder
+                .fromMethodName(PhotoController.class, "getFile", this.getPhoto(), LocationTag.STUDENTS_STORE_LOC).build().toString();
+        photoUrl = url;
+        return photoUrl;
     }
 
     @Override

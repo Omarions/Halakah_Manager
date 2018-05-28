@@ -82,7 +82,7 @@
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle"
                                  src="../../lib/dist/img/student/user4-128x128.jpg"
-                                 th:src="@{${imagePath}}"
+                                 th:src="@{${regStudent.photoUrl}}"
                                  alt="User profile picture"/>
 
                             <h3 class="profile-username text-center" th:text="${regStudent.name}">Nina
@@ -375,7 +375,7 @@
                                                                 Name</span></a></i>
                                                             </td>
                                                             <td><a href="#"
-                                                                   th:href="@{/admin/activities/activity(id=${track.course.activity.id})}"><span
+                                                                   th:href="@{'/admin/activities/activity/' + ${track.course.activity.id}}"><span
                                                                     th:text="${track.course.activity.name}">Activity Name</span></a>
                                                             </td>
                                                             <td th:text="${track.registerDate}">Register Date</td>
@@ -808,11 +808,11 @@
                                                             </td>
                                                             <td th:text="${cert.name}">Certificate's name</td>
                                                             <td><a href="#"
-                                                                   th:href="@{/admin/activities/activity(id=${cert.studentTrack.course.activity.id})}"><span
+                                                                   th:href="@{'/admin/activities/activity/' + ${cert.studentTrack.course.activity.id}}"><span
                                                                     th:text="${cert.studentTrack.course.activity.name}">Activity Name</span></a>
                                                             </td>
                                                             <td><a href="#"
-                                                                   th:href="@{/admin/teachers/teacher(id=${cert.studentTrack.course.teacher.id})}"><span
+                                                                   th:href="@{'/admin/teachers/teacher/' + ${cert.studentTrack.course.teacher.id}}"><span
                                                                     th:text="${cert.studentTrack.course.teacher.name}">Teacher Name</span></a>
                                                             </td>
                                                             <td th:text="${cert.event.eventDate}">Release Date</td>
@@ -996,7 +996,7 @@
                                         <div class="col-sm-offset-6 col-sm-6">
 
                                             <img src="../../lib/dist/img/student/avatar5.png"
-                                                 th:src=" @{${imagePath}}"
+                                                 th:src=" @{${regStudent.photoUrl}}"
                                                  id="img-photo" name="image" class="img-circle" alt="Student Image"
                                                  style="width: 160px; height: 160px" th:field="*{image}"/>
 
@@ -1465,16 +1465,17 @@
 <script src="../lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"
         th:src="@{/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
 <!-- Responsive extension for DataTables -->
-<script src="../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
-        th:src="@{/lib/plugins/atatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
 <script src="../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
         th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
+<script src="../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
+        th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
 <!-- FastClick -->
 <script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
 <!-- AdminLTE App -->
 <script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
 <!-- script to populate tracks table based on selection of activity dropdown list -->
 <script src="../../lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
+<script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
 
 <script>
     $(function () {

@@ -1,5 +1,10 @@
 package com.omarionapps.halaka.model;
 
+import com.omarionapps.halaka.controller.PhotoController;
+import com.omarionapps.halaka.utils.LocationTag;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -25,20 +30,24 @@ public class Teacher implements Serializable {
     private Set<TeacherTrack> teacherTracks = new HashSet<>();
     @NotEmpty
     @Column(name = "name", nullable = false)
-    private String name;
-    private String photo;
+    private String        name;
+    private String        photo;
     @NotEmpty
     @Email
-    private String email;
+    private String        email;
     @NotEmpty
-    private String tel;
-    private String education;
-    private String job;
-    private Date hireDate;
-    private Date archivedDate;
+    private String        tel;
+    private String        education;
+    private String        job;
+    private Date          hireDate;
+    private Date          archivedDate;
     @Column(name = "archived", columnDefinition = "TINYINT")
-    private boolean archived;
-    private String comments;
+    private boolean       archived;
+    private String        comments;
+    @Transient
+    private MultipartFile image;
+    @Transient
+    private String        photoUrl;
 
     public Teacher(){}
 
@@ -149,6 +158,21 @@ public class Teacher implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    public String getPhotoUrl() {
+        String url = MvcUriComponentsBuilder
+                .fromMethodName(PhotoController.class, "getFile", this.getPhoto(), LocationTag.TEACHERS_STORE_LOC).build().toString();
+        photoUrl = url;
+        return photoUrl;
     }
 
     @Override
