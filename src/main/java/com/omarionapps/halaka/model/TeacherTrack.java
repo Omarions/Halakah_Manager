@@ -87,7 +87,6 @@ public class TeacherTrack implements Serializable {
     public String toString() {
         return "TeacherTrack{" +
                 "id=" + id +
-                ", teacher=" + teacher.getName() +
                 ", dayDate=" + dayDate +
                 ", vacation=" + vacation +
                 ", startTime=" + startTime +

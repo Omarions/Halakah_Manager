@@ -188,18 +188,18 @@
                             <div th:each="st: ${regStudent.studentTracks}">
                                 <div th:switch="${st.status}">
                                       <span th:case="'WAITING'" class="label label-warning"
-                                            th:text="${st.course.activity.name} + '|' + ${st.course.name}">Waiting
+                                            th:text="${st.courses.activity.name} + '|' + ${st.courses.name}">Waiting
                                           Activity</span>
                                     <span th:case="'STUDYING'" class="label label-primary"
-                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Studying Activity</span>
+                                          th:text="${st.courses.activity.name} + '|' + ${st.courses.name}">Studying Activity</span>
                                     <span th:case="'CERTIFIED'" class="label label-success"
-                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Certified Activity</span>
+                                          th:text="${st.courses.activity.name} + '|' + ${st.courses.name}">Certified Activity</span>
                                     <span th:case="'FIRED'" class="label label-danger"
-                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Fired Activity</span>
+                                          th:text="${st.courses.activity.name} + '|' + ${st.courses.name}">Fired Activity</span>
                                     <span th:case="'TEMP_STOPPED'" class="label label-info"
-                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Temp_Stopped Activity</span>
+                                          th:text="${st.courses.activity.name} + '|' + ${st.courses.name}">Temp_Stopped Activity</span>
                                     <span th:case="'FINAL_STOPPED'" class="label label-info"
-                                          th:text="${st.course.activity.name} + '|' + ${st.course.name}">Final Stopped Activity</span>
+                                          th:text="${st.courses.activity.name} + '|' + ${st.courses.name}">Final Stopped Activity</span>
                                 </div>
                             </div>
 
@@ -367,16 +367,16 @@
                                                             <td class="sorting_1" th:text="${track.id}">Track ID
                                                             </td>
                                                             <td><a href="#"
-                                                                   th:href="@{/admin/courses/course(id=${track.course.id})}"><span
-                                                                    th:text="${track.course.name}">Course Name</span></a><i>
+                                                                   th:href="@{/admin/courses/courses(id=${track.courses.id})}"><span
+                                                                    th:text="${track.courses.name}">Course Name</span></a><i>
                                                                 | <a href="#"
-                                                                     th:href="@{/admin/teachers/teacher(id=${track.course.teacher.id})}"><span
-                                                                    th:text="${track.course.teacher.name}">Teacher
+                                                                     th:href="@{/admin/teachers/teacher(id=${track.courses.teacher.id})}"><span
+                                                                    th:text="${track.courses.teacher.name}">Teacher
                                                                 Name</span></a></i>
                                                             </td>
                                                             <td><a href="#"
-                                                                   th:href="@{'/admin/activities/activity/' + ${track.course.activity.id}}"><span
-                                                                    th:text="${track.course.activity.name}">Activity Name</span></a>
+                                                                   th:href="@{'/admin/activities/activity/' + ${track.courses.activity.id}}"><span
+                                                                    th:text="${track.courses.activity.name}">Activity Name</span></a>
                                                             </td>
                                                             <td th:text="${track.registerDate}">Register Date</td>
                                                             <td th:text="${track.startDate}">Start Date</td>
@@ -586,7 +586,7 @@
 
                                                             </td>
                                                             <td>
-                                                                <select id="select-course"
+                                                                <select id="select-courses"
                                                                         class="select2 form-control table-selects"
                                                                         th:field="${regStudent.wishes[__${stat.index}__].house}"
                                                                         th:if="(${activities[__${stat.index}__].id}) == 7">
@@ -596,9 +596,9 @@
                                                                         Select Course
                                                                     </option>
                                                                 </select>
-                                                                <select id="select-course"
+                                                                <select id="select-courses"
                                                                         class="select2 form-control table-selects"
-                                                                        th:field="${regStudent.wishes[__${stat.index}__].track.course}"
+                                                                        th:field="${regStudent.wishes[__${stat.index}__].track.courses}"
                                                                         th:if="(${#lists.size(activities[__${stat.index}__].courses)}) > 0">
                                                                     <option th:each="cs : ${activities[__${stat.index}__].courses}"
                                                                             th:value="${cs.id}"
@@ -808,12 +808,12 @@
                                                             </td>
                                                             <td th:text="${cert.name}">Certificate's name</td>
                                                             <td><a href="#"
-                                                                   th:href="@{'/admin/activities/activity/' + ${cert.studentTrack.course.activity.id}}"><span
-                                                                    th:text="${cert.studentTrack.course.activity.name}">Activity Name</span></a>
+                                                                   th:href="@{'/admin/activities/activity/' + ${cert.studentTrack.courses.activity.id}}"><span
+                                                                    th:text="${cert.studentTrack.courses.activity.name}">Activity Name</span></a>
                                                             </td>
                                                             <td><a href="#"
-                                                                   th:href="@{'/admin/teachers/teacher/' + ${cert.studentTrack.course.teacher.id}}"><span
-                                                                    th:text="${cert.studentTrack.course.teacher.name}">Teacher Name</span></a>
+                                                                   th:href="@{'/admin/teachers/teacher/' + ${cert.studentTrack.courses.teacher.id}}"><span
+                                                                    th:text="${cert.studentTrack.courses.teacher.name}">Teacher Name</span></a>
                                                             </td>
                                                             <td th:text="${cert.event.eventDate}">Release Date</td>
                                                             <td><img src="#"

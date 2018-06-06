@@ -71,7 +71,7 @@
                                 <div class="box-body box-profile">
                                     <img class="profile-user-img img-responsive img-circle"
                                          src="../lib/dist/img/teacher/avatar5.png"
-                                         th:src="@{${imagePath}}"
+                                         th:src="@{${teacher.photoUrl}}"
                                          alt="User profile picture"/>
 
                                     <h3 class="profile-username text-center" th:text="${teacher.name}">Nina
@@ -82,11 +82,11 @@
                                     <ul class="list-group list-group-unbordered">
                                         <li class="list-group-item">
                                             <b>Total Activities</b> <a class="pull-right"><span
-                                                th:text="${teacher.activity.size()}">1,322</span></a>
+                                                th:text="${teacher.activities.size()}">1,322</span></a>
                                         </li>
                                         <li class="list-group-item">
                                             <b>Total Courses</b> <a class="pull-right"><span
-                                                th:text="${teacher.course.size()}">543</span></a>
+                                                th:text="${teacher.courses.size()}">543</span></a>
                                         </li>
                                     </ul>
 
@@ -124,7 +124,7 @@
 
                                     <strong><i class="fa fa-pencil margin-r-5"></i> Activities</strong>
 
-                                    <p th:each="act : ${teacher.activity}" th:remove="all-but-first">
+                                    <p th:each="act : ${teacher.activities}" th:remove="all-but-first">
                                         <span class="label label-info" th:text="${act.name}">Javascript</span>
                                         <span class="label label-danger">UI Design</span>
                                         <span class="label label-success">Coding</span>
@@ -349,7 +349,7 @@
                                                 <div class="col-sm-offset-6 col-sm-6">
 
                                                     <img src="../../lib/dist/img/teacher/avatar5.png"
-                                                         th:src=" @{${imagePath}}"
+                                                         th:src=" @{${teacher.photoUrl}}"
                                                          id="img-photo" name="image" class="img-circle"
                                                          alt="Student Image"
                                                          style="width: 160px; height: 160px" th:field="*{image}"/>
@@ -427,50 +427,6 @@
                                                     <!-- /.input group -->
                                                 </div>
                                             </div>
-
-                                            <!-- Dropdown list of activities -->
-                                            <div class="form-group">
-                                                <label for="selectActivities"
-                                                       class="col-sm-2 control-label">Activities</label>
-
-                                                <div class="col-sm-10">
-                                                    <select class="form-control select2 select2-hidden-accessible"
-                                                            style="width: 100%;" id="selectActivities"
-                                                            multiple="multiple"
-                                                            tabindex="-1" aria-hidden="true" th:field="*{activity}">
-                                                        <option th:each="act : ${activities}"
-                                                                th:value="${act.id}" th:text="${act.name}">activity name
-                                                        </option>
-
-                                                    </select>
-                                        <span th:if="${#fields.hasErrors('activity')}" th:errors="*{activity}"
-                                              th:class="help-block">Activity Errors</span>
-
-                                                </div>
-                                            </div>
-                                            <!-- / .activity-dropdown-list -->
-
-                                            <!-- Dropdown list of courses -->
-                                            <div class="form-group">
-                                                <label for="selectCourses"
-                                                       class="col-sm-2 control-label">Courses</label>
-
-                                                <div class="col-sm-10">
-                                                    <select class="form-control select2 select2-hidden-accessible"
-                                                            style="width: 100%;" id="selectCourses" multiple="multiple"
-                                                            tabindex="-1" aria-hidden="true" th:field="*{course}"
-                                                            disabled>
-                                                        <option th:each="c : *{course}" th:value="${c.id}"
-                                                                th:text="${c.name}">Select Courses
-                                                        </option>
-
-                                                    </select>
-                                        <span th:if="${#fields.hasErrors('course')}" th:errors="*{course}"
-                                              th:class="help-block">Course Errors</span>
-
-                                                </div>
-                                            </div>
-                                            <!-- / .activity-dropdown-list -->
 
                                             <div class="form-group">
                                                 <label for="inputComments"
@@ -726,7 +682,7 @@
 
                 //Initialize Select2 Elements
                 $(".select2").select2({
-                    placeholder: "Select Activity"
+                    placeholder: "Select Courses"
                 });
 
                 $('#hireDatePicker').datepicker({

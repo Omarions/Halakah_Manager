@@ -20,7 +20,13 @@
               th:href="@{/lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css}"/>
         <!-- bootstrap datepicker -->
         <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
-              th:href="@{/lib/plugins/datepicker/datepicker3.css}"/>
+              th:href="@{~/lib/plugins/datepicker/datepicker3.css}">
+        <!-- Select2 -->
+        <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
+              th:href="@{~/lib/plugins/select2/select2.min.css}"/>
+        <!-- Bootstrap Time picker -->
+        <link rel="stylesheet" href="../../lib/plugins/timepicker/bootstrap-timepicker.min.css"
+              th:href="@{~/lib/plugins/timepicker/bootstrap-timepicker.min.css}"/>
         <!-- DataTables -->
         <link rel="stylesheet" href="../../lib/plugins/datatables/dataTables.bootstrap.css"
               th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
@@ -74,7 +80,8 @@
                             <div class="box box-primary">
                                 <div class="box-body box-profile">
                                     <img class="profile-user-img img-responsive img-circle"
-                                         src="../../lib/dist/img/user4-128x128.jpg" alt="User profile picture"/>
+                                         src="../../lib/dist/img/photo2.png" th:src="@{~/lib/dist/img/photo2.png}"
+                                         alt="course profile picture"/>
 
                                     <h3 class="profile-username text-center" th:text="${course.name}">Nina Mcintire</h3>
 
@@ -84,7 +91,7 @@
                                     <ul class="list-group list-group-unbordered">
                                         <li class="list-group-item">
                                             <a href="#"
-                                               th:href="@{/admin/teachers/teacher(id=${course.teacher.id})}"><b>Teacher:</b>
+                                               th:href="@{'/admin/teachers/teacher/' + ${course.teacher.id}}"><b>Teacher:</b>
                                                 <samll class="label pull-right bg-blue"
                                                        th:text="${course.teacher.name}">1,322
                                                 </samll>
@@ -1035,170 +1042,98 @@
                                     <!-- Settings Tab -->
                                     <div class="tab-pane" id="settings">
                                         <form id="frmRegisteredCourse" class="form-horizontal" action="#"
-                                              th:action="@{/admin/courses/course(id=${course.id})}"
+                                              th:action="@{'/admin/courses/course/' + ${course.id}}"
                                               th:object="${course}" method="post">
-                                            <input type="hidden" th:field="*{id}"/>
 
                                             <div class="box-body">
-                                                <!-- input for name -->
-                                                <div th:class="form-group"
-                                                     th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                                <input type="hidden" th:field="*{id}"/>
 
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputName"
-                                                               placeholder="Name"
-                                                               th:field="*{name}"/>
-                                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                                              th:class="help-block">Name Errors</span>
+                                                <div class="box-body">
+                                                    <!-- input for name -->
+                                                    <div th:class="form-group"
+                                                         th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+                                                        <label for="inputName"
+                                                               class="col-sm-2 control-label">Name</label>
+
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="inputName"
+                                                                   placeholder="Name"
+                                                                   th:field="*{name}"/>
+                                                            <span th:if="${#fields.hasErrors('name')}"
+                                                                  th:errors="*{name}"
+                                                                  th:class="help-block">Name Errors</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <!-- /.input-for-name -->
+                                                    <!-- /.input-for-name -->
 
-                                                <!-- input for the activity (Disabled because it must be with the same value and never changed) -->
-                                                <div class="form-group">
-                                                    <label for="inputActivity"
-                                                           class="col-sm-2 control-label">Activity</label>
-
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputActivity"
-                                                               th:value="*{activity.name}" th:field="*{activity}"
-                                                               disabled/>
-
-                                                    </div>
-                                                </div>
-                                                <!-- / .activity-dropdown-list -->
-
-                                                <!-- Dropdown list of Teachers -->
-                                                <div class="form-group"
-                                                     th:classappend="${#fields.hasErrors('teacher')}? 'has-error'">
-                                                    <label for="selectTeacher"
-                                                           class="col-sm-2 control-label">Teacher</label>
-
-                                                    <div class="col-sm-10">
-                                                        <select id="selectTeacher" class="form-control"
-                                                                th:field="*{teacher}">
-                                                            <option th:each="actTeacher : ${actTeachers}"
-                                                                    th:value="${{actTeacher}}"
-                                                                    th:text="${actTeacher.name}">
-                                                                Teacher Name
-                                                            </option>
-
-                                                        </select>
-                        <span th:if="${#fields.hasErrors('teacher')}" th:errors="*{teacher}"
-                              th:class="help-block">Teacher Errors</span>
-                                                    </div>
-                                                </div>
-                                                <!-- / .teachers-dropdown-list -->
-
-                                                <!-- input for days -->
-                                                <div class="form-group"
-                                                     th:classappend="${#fields.hasErrors('days')}? 'has-error'">
-                                                    <label for="inputDays" class="col-sm-2 control-label">Days</label>
-
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="inputDays"
-                                                               placeholder="Days"
-                                                               th:field="*{days}"/>
-                                         <span th:if="${#fields.hasErrors('days')}" th:errors="*{days}"
-                                               th:class="help-block">Days Errors</span>
-                                                    </div>
-                                                </div>
-                                                <!-- /.input-for-days -->
-
-                                                <!-- input for capacity -->
-                                                <div class="form-group"
-                                                     th:classappend="${#fields.hasErrors('capacity')}? 'has-error'">
-                                                    <label for="inputCapacity"
-                                                           class="col-sm-2 control-label">Capacity</label>
-
-                                                    <div class="col-sm-10">
-                                                        <input type="number" class="form-control" id="inputCapacity"
-                                                               placeholder="Max. places available in the course"
-                                                               th:field="*{capacity}"/>
-                                         <span th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"
-                                               th:class="help-block">Capacity Errors</span>
-                                                    </div>
-                                                </div>
-                                                <!-- /.input-for-capacity -->
-
-                                                <!-- Start Time Picker -->
-                                                <div class="bootstrap-timepicker">
-                                                    <div class="bootstrap-timepicker-widget dropdown-menu">
-                                                        <table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td><a href="#" data-action="incrementHour"><i
-                                                                            class="glyphicon glyphicon-chevron-up"></i></a>
-                                                                    </td>
-                                                                    <td class="separator">&nbsp;</td>
-                                                                    <td><a href="#" data-action="incrementMinute"><i
-                                                                            class="glyphicon glyphicon-chevron-up"></i></a>
-                                                                    </td>
-                                                                    <td class="separator">&nbsp;</td>
-                                                                    <td class="meridian-column"><a href="#"
-                                                                                                   data-action="toggleMeridian"><i
-                                                                            class="glyphicon glyphicon-chevron-up"></i></a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><span
-                                                                            class="bootstrap-timepicker-hour">12</span>
-                                                                    </td>
-                                                                    <td class="separator">:</td>
-                                                                    <td><span
-                                                                            class="bootstrap-timepicker-minute">45</span>
-                                                                    </td>
-                                                                    <td class="separator">&nbsp;</td>
-                                                                    <td><span
-                                                                            class="bootstrap-timepicker-meridian">AM</span>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td><a href="#" data-action="decrementHour"><i
-                                                                            class="glyphicon glyphicon-chevron-down"></i></a>
-                                                                    </td>
-                                                                    <td class="separator"></td>
-                                                                    <td><a href="#" data-action="decrementMinute"><i
-                                                                            class="glyphicon glyphicon-chevron-down"></i></a>
-                                                                    </td>
-                                                                    <td class="separator">&nbsp;</td>
-                                                                    <td><a href="#" data-action="toggleMeridian"><i
-                                                                            class="glyphicon glyphicon-chevron-down"></i></a>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+                                                    <!-- Dropdown list of teachers -->
                                                     <div class="form-group"
+                                                         th:classappend="${#fields.hasErrors('teacher')}? 'has-error'">
+                                                        <label for="select-teacher" class="col-sm-2 control-label">Teacher</label>
+
+                                                        <div class="col-sm-10">
+                                                            <select id="select-teacher"
+                                                                    class="form-control select2 select2-hidden-accessible"
+                                                                    style="width: 100%;"
+                                                                    tabindex="-1" aria-hidden="true"
+                                                                    th:field="*{teacher}">
+                                                                <option value="" text="Select Teacher" selected>Select
+                                                                    Teacher
+                                                                </option>
+                                                                <option th:each="teacher : ${teachers}"
+                                                                        th:value="${teacher.id}"
+                                                                        th:text="${teacher.name}">activity name
+                                                                </option>
+                                                            </select>
+                                                            <span th:if="${#fields.hasErrors('teacher')}"
+                                                                  th:errors="*{teacher}"
+                                                                  th:class="help-block">Teacher Error</span>
+                                                        </div>
+                                                    </div>
+                                                    <!-- / .teachers-dropdown-list -->
+
+                                                    <!-- input for days -->
+                                                    <div class="form-group"
+                                                         th:classappend="${#fields.hasErrors('days')}? 'has-error'">
+                                                        <label for="select-days"
+                                                               class="col-sm-2 control-label">Days</label>
+
+                                                        <div class="col-sm-10">
+                                                            <select id="select-days"
+                                                                    class="form-control select2 select2-hidden-accessible"
+                                                                    multiple="" style="width: 100%;" tabindex="-1"
+                                                                    aria-hidden="true" th:field="*{days}">
+                                                                <option value="" text="Select days" selected>Select
+                                                                    days
+                                                                </option>
+                                                                <option th:value="السبت" th:text="السبت">السبت</option>
+                                                                <option th:value="الأحد" th:text="الأحد">الأحد</option>
+                                                                <option th:value="الأثنين" th:text="الأثنين">الاثنين
+                                                                </option>
+                                                                <option th:value="الثلاثاء" th:text="الثلاثاء">
+                                                                    الثلاثاء
+                                                                </option>
+                                                                <option th:value="الأربعاء" th:text="الأربعاء">
+                                                                    الأربعاء
+                                                                </option>
+                                                                <option th:value="الخميس" th:text="الخميس">الخميس
+                                                                </option>
+                                                                <option th:value="الجمعة" th:text="الجمعة">الجمعة
+                                                                </option>
+                                                            </select>
+                                                            <span th:if="${#fields.hasErrors('days')}"
+                                                                  th:errors="*{days}"
+                                                                  th:class="help-block">Days Errors</span>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.input-for-days -->
+
+                                                    <!-- Start Time Picker -->
+                                                    <div class="bootstrap-timepicker"
                                                          th:classappend="${#fields.hasErrors('startTime')}? 'has-error'">
-                                                        <label class="col-sm-2 control-label">Start Time</label>
-
-                                                        <div class="col-sm-10">
-                                                            <div class="input-group">
-                                                                <input id="tpStartTime" type="text"
-                                                                       class="form-control timepicker"
-                                                                       th:field="*{startTime}"/>
-
-                                                                <div class="input-group-addon">
-                                                                    <i class="fa fa-clock-o"></i>
-                                                                </div>
-                                                            </div>
-
-                                            <span th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"
-                                                  th:class="help-block">Start Time Errors</span>
-                                                        </div>
-                                                        <!-- /.input group -->
-                                                    </div>
-                                                    <!-- /.form group -->
-                                                </div>
-                                                <!-- /.start-time-picker -->
-
-                                                <!-- End Time Picker -->
-                                                <div class="bootstrap-timepicker">
-                                                    <div class="bootstrap-timepicker-widget dropdown-menu">
-                                                        <table>
-                                                            <tbody>
+                                                        <div class="bootstrap-timepicker-widget dropdown-menu">
+                                                            <table>
+                                                                <tbody>
                                                                 <tr>
                                                                     <td><a href="#" data-action="incrementHour"><i
                                                                             class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1239,86 +1174,152 @@
                                                                             class="glyphicon glyphicon-chevron-down"></i></a>
                                                                     </td>
                                                                 </tr>
-                                                            </tbody>
-                                                        </table>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">Start Time</label>
+
+                                                            <div class="col-sm-10">
+                                                                <div class="input-group">
+                                                                    <input id="tpStartTime" type="text"
+                                                                           class="form-control timepicker"
+                                                                           th:field="*{startTime}"/>
+
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-clock-o"></i>
+                                                                    </div>
+                                                                </div>
+
+                                                                <span th:if="${#fields.hasErrors('startTime')}"
+                                                                      th:errors="*{startTime}"
+                                                                      th:class="help-block">Start Time Errors</span>
+                                                            </div>
+                                                            <!-- /.input group -->
+                                                        </div>
+                                                        <!-- /.form group -->
                                                     </div>
-                                                    <div class="form-group"
+                                                    <!-- /.start-time-picker -->
+
+                                                    <!-- End Time Picker -->
+                                                    <div class="bootstrap-timepicker"
                                                          th:classappend="${#fields.hasErrors('endTime')}? 'has-error'">
-                                                        <label class="col-sm-2 control-label">End Time</label>
+                                                        <div class="bootstrap-timepicker-widget dropdown-menu">
+                                                            <table>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td><a href="#" data-action="incrementHour"><i
+                                                                            class="glyphicon glyphicon-chevron-up"></i></a>
+                                                                    </td>
+                                                                    <td class="separator">&nbsp;</td>
+                                                                    <td><a href="#" data-action="incrementMinute"><i
+                                                                            class="glyphicon glyphicon-chevron-up"></i></a>
+                                                                    </td>
+                                                                    <td class="separator">&nbsp;</td>
+                                                                    <td class="meridian-column"><a href="#"
+                                                                                                   data-action="toggleMeridian"><i
+                                                                            class="glyphicon glyphicon-chevron-up"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><span
+                                                                            class="bootstrap-timepicker-hour">12</span>
+                                                                    </td>
+                                                                    <td class="separator">:</td>
+                                                                    <td><span
+                                                                            class="bootstrap-timepicker-minute">45</span>
+                                                                    </td>
+                                                                    <td class="separator">&nbsp;</td>
+                                                                    <td><span
+                                                                            class="bootstrap-timepicker-meridian">AM</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><a href="#" data-action="decrementHour"><i
+                                                                            class="glyphicon glyphicon-chevron-down"></i></a>
+                                                                    </td>
+                                                                    <td class="separator"></td>
+                                                                    <td><a href="#" data-action="decrementMinute"><i
+                                                                            class="glyphicon glyphicon-chevron-down"></i></a>
+                                                                    </td>
+                                                                    <td class="separator">&nbsp;</td>
+                                                                    <td><a href="#" data-action="toggleMeridian"><i
+                                                                            class="glyphicon glyphicon-chevron-down"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">End Time</label>
+
+                                                            <div class="col-sm-10">
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control timepicker"
+                                                                           th:field="*{endTime}"/>
+
+                                                                    <div class="input-group-addon">
+                                                                        <i class="fa fa-clock-o"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <span th:if="${#fields.hasErrors('endTime')}"
+                                                                      th:errors="*{endTime}"
+                                                                      th:class="help-block">Days Errors</span>
+                                                            </div>
+                                                            <!-- /.input group -->
+                                                        </div>
+                                                        <!-- /.form group -->
+                                                    </div>
+                                                    <!-- /.end-time-picker -->
+
+                                                    <!-- Start Date Picker -->
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Start Date</label>
 
                                                         <div class="col-sm-10">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control timepicker"
-                                                                       th:field="*{endTime}"/>
-
+                                                            <div class="input-group date">
                                                                 <div class="input-group-addon">
-                                                                    <i class="fa fa-clock-o"></i>
+                                                                    <i class="fa fa-calendar"></i>
                                                                 </div>
+                                                                <input type="text" class="form-control pull-right"
+                                                                       id="startDatePicker"
+                                                                       th:value="Null" th:field="*{startDate}">
                                                             </div>
-                                            <span th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"
-                                                  th:class="help-block">Days Errors</span>
+                                                            <!-- /.input group -->
                                                         </div>
-                                                        <!-- /.input group -->
                                                     </div>
-                                                    <!-- /.form group -->
-                                                </div>
-                                                <!-- /.end-time-picker -->
+                                                    <!-- /.start-date-picker -->
 
-                                                <!-- Start Date Picker -->
-                                                <div class="form-group"
-                                                     th:classappend="${#fields.hasErrors('startDate')}? 'has-error'">
-                                                    <label class="col-sm-2 control-label">Start Date</label>
+                                                    <!-- End Date Picker -->
+                                                    <div class="form-group">
+                                                        <label for="endDatePicker" class="col-sm-2 control-label">End
+                                                            Date</label>
 
-                                                    <div class="col-sm-10">
-                                                        <div class="input-group date">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group date">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </div>
+                                                                <input type="text" class="form-control pull-right"
+                                                                       id="endDatePicker"
+                                                                       th:value="Null" th:field="*{endDate}">
                                                             </div>
-                                                            <input type="text" class="form-control pull-right"
-                                                                   id="startDatePicker"
-                                                                   th:value="Null" th:field="*{startDate}">
+                                                            <!-- /.input group -->
                                                         </div>
-                                        <span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"
-                                              th:class="help-block">Start Date Error</span>
-                                                        <!-- /.input group -->
                                                     </div>
-                                                </div>
-                                                <!-- /.start-date-picker -->
+                                                    <!-- /.end-date-picker -->
 
-                                                <!-- End Date Picker -->
-                                                <div class="form-group"
-                                                     th:classappend="${#fields.hasErrors('endDate')}? 'has-error'">
-                                                    <label for="endDatePicker" class="col-sm-2 control-label">End
-                                                                                                              Date</label>
+                                                    <!-- Input for Comments -->
+                                                    <div class="form-group">
+                                                        <label for="inputComments" class="col-sm-2 control-label">Comment</label>
 
-                                                    <div class="col-sm-10">
-                                                        <div class="input-group date">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </div>
-                                                            <input type="text" class="form-control pull-right"
-                                                                   id="endDatePicker"
-                                                                   th:value="Null" th:field="*{endDate}">
-                                                        </div>
-                                        <span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"
-                                              th:class="help-block">End Date Error</span>
-                                                        <!-- /.input group -->
-                                                    </div>
-                                                </div>
-                                                <!-- /.end-date-picker -->
-
-                                                <!-- Input for Comments -->
-                                                <div class="form-group">
-                                                    <label for="inputComments"
-                                                           class="col-sm-2 control-label">Comment</label>
-
-                                                    <div class="col-sm-10">
+                                                        <div class="col-sm-10">
                                         <textarea type="text" class="form-control" id="inputComments"
                                                   placeholder="Set comments for the activity if needed"
                                                   th:field="*{comments}">Extra info</textarea>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <!-- /.input-for-comments -->
+                                                    <!-- /.input-for-comments -->
                                             </div>
                                             <!-- /.box-body -->
                                             <div class="box-footer">
@@ -1580,9 +1581,17 @@
                 th:src="@{/lib/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
         <!-- FastClick -->
         <script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{/lib/plugins/fastclick/fastclick.js}"></script>
+        <!-- Select2 -->
+        <script src="../../lib/plugins/select2/select2.full.min.js"
+                th:src="@{~/lib/plugins/select2/select2.full.min.js}"></script>
+        <!-- iCheck -->
+        <script src="../../lib/plugins/iCheck/icheck.min.js" th:src="@{~/lib/plugins/iCheck/icheck.min.js}"></script>
+        <!-- Time Picker -->
+        <script src="../../lib/plugins/timepicker/bootstrap-timepicker.min.js"
+                th:src="@{~/lib/plugins/timepicker/bootstrap-timepicker.min.js}"></script>
         <!-- bootstrap datepicker -->
         <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
-                th:src="@{/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+                th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <!-- used profile instead of dashboard for profile pages -->
         <script src="../../lib/dist/js/pages/profile.js" th:src="@{/lib/dist/js/pages/profile.js}"></script>
@@ -1600,19 +1609,40 @@
         <script src="../../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
         <script>
             $(function () {
-                $('#startDatePicker').datepicker({
+                $("#select-days").select2({
+                    placeholder: "Select days"
+                });
+                //Initialize Select2 Elements
+                $("#select-activity").select2({
+                    placeholder: "Select activity"
+                });
+                //Initialize Select2 Elements
+                $("#select-teacher").select2({
+                    placeholder: "Select teacher"
+                });
+                //Timepicker
+                $(".timepicker").timepicker({
+                    showSeconds: true,
+                    showMeridian: false,
+                    format: 'HH:MM',
+                    showInputs: false,
+                    explicitMode: true
+                });
+                //Start Date Picker
+                $("#startDatePicker").datepicker({
                     format: 'yyyy-mm-dd',
                     autoclose: true
                 });
-                $('#endDatePicker').datepicker({
+                //Start Date Picker
+                $("#endDatePicker").datepicker({
                     format: 'yyyy-mm-dd',
                     autoclose: true
                 });
                 $("#studyingStudentsDT").DataTable({
-                    "scrollX": true
+                    responsive: true
                 });
                 $("#waitingStudentsDT").DataTable({
-                    "scrollX": true
+                    responsive: true
                 });
             });
 

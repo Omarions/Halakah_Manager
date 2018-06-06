@@ -47,11 +47,7 @@ public class TeacherService {
 		return teacherRepository.findById(id);
     }
 
-    public Iterable<Teacher> findAllByActivity(int activityId){
-        return teacherRepository.findAllByActivityId(activityId);
-    }
-
-    public long getCountByArchived(boolean isArchived) {
+	public long getCountByArchived(boolean isArchived) {
         return findAllByArchive(isArchived).size();
     }
 

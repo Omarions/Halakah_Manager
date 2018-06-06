@@ -28,29 +28,30 @@ public class Course implements Serializable {
     private Set<CourseTrack> courseTracks = new HashSet<>();
     @OneToMany(mappedBy = "course")
     private Set<StudentTrack> studentTracks = new HashSet<>();
-    @NotEmpty
-    private String name;
-    @NotEmpty
-    private String days;
-    @Column(name = "start_date", nullable = true)
-    private Date startDate;
-    @Column(name = "end_date", nullable = true)
-    private Date endDate;
-    @Column(name = "start_time", nullable = false)
-    private Time startTime;
-    @Column(name = "end_time", nullable = false)
-    private Time endTime;
-    private int capacity;
-    @Column(name = "comments", nullable = true)
-    private String comments;
-    @Column(name = "archived", columnDefinition = "TINYINT")
+	@NotEmpty(message = "It could not be empty!")
+    private String  name;
+	@NotEmpty(message = "It could not be empty!")
+    private String  days;
+	@Column(name = "start_time", nullable = false)
+    private Time    startTime;
+	@Column(name = "end_time", nullable = false)
+    private Time    endTime;
+	@Column(name = "start_date", nullable = true)
+	private Date    startDate;
+	@Column(name = "end_date", nullable = true)
+	private Date    endDate;
+	@Column(name = "capacity")
+	private int     capacity;
+	@Column(name = "comments", nullable = true)
+    private String  comments;
+	@Column(name = "archived", columnDefinition = "TINYINT")
     private boolean archived;
-    @Column(name = "archived_date", nullable = true)
-    private Date archivedDate;
-    @Transient
+	@Column(name = "archived_date", nullable = true)
+    private Date    archivedDate;
+	@Transient
     private boolean full;
-    @Transient
-    private int freePlaces;
+	@Transient
+    private int     freePlaces;
 
     public Course(){}
 
@@ -169,12 +170,7 @@ public class Course implements Serializable {
         return (currentStudy == getCapacity());
     }
 
-    @JsonIgnore
-    public Set<StudentTrack> getStudentTracks() {
-        return studentTracks;
-    }
-
-    public int getId() {
+	public int getId() {
         return id;
     }
 
@@ -190,14 +186,20 @@ public class Course implements Serializable {
         this.capacity = capacity;
     }
 
+	public long getFreePlaces() {
+		long currentStudy = this.getStudentTracks().stream().filter((st) -> st.getStatus().equals(StudentStatus.STUDYING.toString())).count();
+		long tempStopped  = this.getStudentTracks().stream().filter((st) -> st.getStatus().equals(StudentStatus.TEMP_STOP.toString())).count();
+		return (getCapacity() - (currentStudy + tempStopped));
+	}
+
     @JsonIgnore
     public void setStudentTracks(Set<StudentTrack> studentTracks) {
         this.studentTracks = studentTracks;
     }
 
-    public long getFreePlaces(){
-        long currentStudy = getStudentTracks().stream().filter((st) -> st.getStatus().equalsIgnoreCase(StudentStatus.STUDYING.toString())).count();
-        return (getCapacity() - currentStudy);
+	@JsonIgnore
+	public Set<StudentTrack> getStudentTracks() {
+		return studentTracks;
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Omar on 30-Apr-17.
@@ -30,7 +31,7 @@ public class CourseService {
      * Get all courses ordered by name
      * @return Itrable of course ordered by name
      */
-    public Iterable<Course> findAllByOrderByName() {
+    public List<Course> findAllByOrderByName() {
         return courseRepository.findAllByOrderByName();
     }
 
@@ -46,7 +47,7 @@ public class CourseService {
     public int totalStudentsByCourse(int courseId){
 	    Optional<Course> course = this.findById(courseId);
 
-	    return course.get().getStudentTracks().size();
+	    return totalStudentsByCourse(course.get());
     }
 
 	/**
@@ -71,14 +72,11 @@ public class CourseService {
 
     /**
      * Get the total number of students by status that related to the course with specified ID
-     * @param courseId the id of course you look for
+     * @param course the course you look for
      * @return the total number of students with specified status for a specified course
      */
-    public long totalStudentsByStatus(int courseId, StudentStatus status) {
-	    Optional<Course> course = this.findById(courseId);
-	    long total = course.get().getStudentTracks().stream().filter((studentTrack) -> studentTrack.getStatus()
-			    .equalsIgnoreCase(status.toString())).count();
-        return total;
+    public long totalStudentsByStatus(Course course, StudentStatus status) {
+	    return course.getStudentTracks().stream().filter((st) -> st.getStatus().equals(status.toString())).count();
     }
 
     /**
@@ -87,14 +85,9 @@ public class CourseService {
      * @return a set of students with specified status for a specified course
      */
     public Set<Student> getStudentsByStatus(int courseId, StudentStatus status){
-        Set<Student> students = new HashSet<>();
 	    Optional<Course> course = this.findById(courseId);
-	    course.get().getStudentTracks()
-                .stream()
-                .filter((studentTrack) -> studentTrack.getStatus().equalsIgnoreCase(status.toString()))
-                .forEach((st) -> students.add(st.getStudent()));
 
-        return students;
+	    return getStudentsByStatus(course.get(), status);
     }
 
     /**
@@ -103,20 +96,11 @@ public class CourseService {
      * @return a set of students with specified status for a specified course
      */
     public Set<Student> getStudentsByStatus(Course course, StudentStatus status){
-        Set<Student> students = new HashSet<>();
-        course.getStudentTracks()
-                .stream()
-                .filter((studentTrack) -> studentTrack.getStatus().equalsIgnoreCase(status.toString()))
-                .forEach((st) -> students.add(st.getStudent()));
-
-        return students;
+	    return course.getStudentTracks().stream().filter(st -> st.getStatus().equals(status.toString())).map(st -> st.getStudent()).collect(Collectors.toSet());
     }
 
     public Set<Student> getStudentsByCourse(Course course){
-        Set<Student> students = new HashSet<>();
-        course.getStudentTracks().forEach((studentTrack -> students.add(studentTrack.getStudent())));
-
-        return students;
+	    return course.getStudentTracks().stream().map((st) -> st.getStudent()).collect(Collectors.toSet());
     }
 
     public Map<String, Map<String, Long>> getCountryCodeStudentsStatusCountMap(Course course){

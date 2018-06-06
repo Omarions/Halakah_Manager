@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.omarionapps.halaka.controller.PhotoController;
 import com.omarionapps.halaka.utils.LocationTag;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by Omar on 16-Apr-17.
@@ -24,16 +26,18 @@ public class Activity implements Serializable {
 	private String logo;
 	private Date   startDate;
 	private Date   archivedDate;
-	@Transient
-	private Set<Teacher> teacher = new HashSet<>();
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
 	private Set<Course>  courses = new HashSet<>();
 	@Column(name = "archived", columnDefinition = "TINYINT")
 	private boolean       archived;
 	@Transient
+	private Set<Teacher> teacher = new HashSet<>();
+	@Transient
 	private MultipartFile logoFile;
 	@Transient
 	private String        logoUrl;
+
 
 	public Activity() {
 	}
@@ -63,18 +67,22 @@ public class Activity implements Serializable {
 		this.comments = comments;
 	}
 
+	@JsonIgnore
 	public Set<Course> getCourses() {
 		return courses;
 	}
 
+	@JsonIgnore
 	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
 	}
 
+	@JsonIgnore
 	public Set<Teacher> getTeacher() {
 		return teacher;
 	}
 
+	@JsonIgnore
 	public void setTeacher(Set<Teacher> teacher) {
 		this.teacher = teacher;
 	}
@@ -152,18 +160,12 @@ public class Activity implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuilder teachers        = new StringBuilder();
-		StringBuilder activityCourses = new StringBuilder();
-
-		//	teacher.forEach((t) -> teachers.append(t.getName()).append(','));
-		courses.forEach((c) -> activityCourses.append(c.getName()).append(','));
-
+		String strCourses = courses.stream().map(m_course -> m_course.getName()).collect(Collectors.joining(","));
 		return "Activity{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", comments='" + comments + '\'' +
 				", logo= '" + logo + '\'' +
-				", teachers=[" + teachers + "]" +
-				", courses=[" + activityCourses + "]}";
+				", courses=[" + strCourses + "]}";
 	}
 }

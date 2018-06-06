@@ -291,7 +291,7 @@ public class Student {
         for (StudentTrack track : studentTracks) {
 	        result.append("Track[id=" + track.getId() + "], ]}");
             /*
-                    .append(", course=[" + track.getCourse().getName() + "]")
+                    .append(", course=[" + track.getCourses().getName() + "]")
                     .append(", registerDate=" + track.getRegisterDate())
                     .append(", startDate=" + track.getStartDate())
                     .append(", status='" + track.getStatus())

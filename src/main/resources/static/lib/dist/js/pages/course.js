@@ -14,6 +14,7 @@ function populateTeachersDropdownList() {
      * the teacher with his ID and name only, so we can avoid StackOverFlow error, that occurred when we send the Set
      * with the original class of Teacher with its dependencies of other classes.
      * */
+
     for (var a in teachers) {
         //check the selected activity with each key in the map
         if (a == selectedActivityId) {

@@ -15,16 +15,17 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../lib/plugins/datatables/dataTables.bootstrap.css"
-          th:href="@{/lib/plugins/datatables/dataTables.bootstrap.css}"/>
+    <link rel="stylesheet" href="../../lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css"
+          th:href="@{~/lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css}"/>
+    <link rel="stylesheet" href="../../lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css"
+          th:href="@{~/lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css}"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css" th:href="@{~/lib/dist/css/AdminLTE.css}"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"
-          th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
+    <link rel="stylesheet" href="../../lib/dist/css/skins/_all-skins.min.css"
+          th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,7 +74,25 @@
                             </form>
                         </div>
                     </div>
-
+                    <br/>
+                    <div th:if="${messageSuccess}" class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                                <span th:text="${message}">Operation success message</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${messageError}" class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                                <span th:text="${messageError}">Error Message</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -159,13 +178,13 @@
                                     <tr rol="row" th:each="course : ${courses}"
                                         th:class="${courseStat.odd}? 'odd' : 'even'">
                                         <td class="sorting_1" th:text="${course.id}">Course ID</td>
-                                        <td><a href="#" th:href="@{/admin/courses/course(id=${course.id})}"><span
+                                        <td><a href="#" th:href="@{'/admin/courses/course/' + ${course.id}}"><span
                                                 th:text="${course.name}">Course Name</span></a></td>
                                         <td><a href="#"
-                                               th:href="@{/admin/activities/activity(id=${course.activity.id})}"><span
+                                               th:href="@{'/admin/activities/activity/' + ${course.activity.id}}"><span
                                                 th:text="${course.activity.name}">Activity Name</span></a></td>
                                         <td><a href="#"
-                                               th:href="@{/admin/teachers/teacher(id=${course.teacher.id})}"><span
+                                               th:href="@{'/admin/teachers/teacher/' + ${course.teacher.id}}"><span
                                                 th:text="${course.teacher.name}">Teacher Name</span></a></td>
                                         <td th:text="${course.days}">Days</td>
                                         <td th:text="${course.startTime}">Start Time</td>
@@ -177,10 +196,11 @@
                                             <ul class="dtt">
                                                 <li>
                                                     <div class="tools">
-                                                        <a href="#" th:href="@{/admin/courses/course(id=${course.id})}"><i
+                                                        <a href="#"
+                                                           th:href="@{'/admin/courses/course/' + ${course.id}}"><i
                                                                 class="fa fa-edit fa-3x"></i></a>
                                                         <a href="#"
-                                                           th:href="@{/admin/courses/course/archive(id=${course.id})}"><i
+                                                           th:href="@{'/admin/courses/course/' + ${course.id} + '/archive'}"><i
                                                                 class="fa fa-trash-o fa-3x"></i></a>
                                                     </div>
                                                 </li>
@@ -522,26 +542,28 @@
 <!-- ./wrapper -->
 <!-- to send data from db to the map in javascript code -->
 <!-- jQuery 2.2.3 -->
-<script src="../lib/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
+        th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- DataTables -->
-<script src="../lib/plugins/datatables/jquery.dataTables.min.js"
-        th:src="@{/lib/plugins/datatables/jquery.dataTables.min.js}"></script>
-<script src="../lib/plugins/datatables/dataTables.bootstrap.min.js"
-        th:src="@{/lib/plugins/datatables/dataTables.bootstrap.min.js}"></script>
+<script src="../../lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js"
+        th:src="@{/lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js}"></script>
+<script src="../../lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"
+        th:src="@{/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
 <!-- Responsive extension for DataTables -->
-<script src="../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
+<script src="../../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
         th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
-<script src="../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
+<script src="../../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
         th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
 
 <!-- FastClick -->
-<script src="../lib/plugins/fastclick/fastclick.js" th:src="@{/lib/plugins/fastclick/fastclick.js}"></script>
+<script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
 <!-- AdminLTE App -->
-<script src="../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
+<script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../lib/dist/js/demo.js" th:src="@{/lib/dist/js/demo.js}"></script>
+<script src="../../lib/dist/js/demo.js" th:src="@{~lib/dist/js/demo.js}"></script>
+
 <script>
     $(function () {
         $("#courses-list-dt").DataTable({

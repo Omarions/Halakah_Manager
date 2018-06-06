@@ -162,15 +162,15 @@
                                         <td class="sorting_1" th:text="${cert.id}">ID</td>
                                         <td th:text="${cert.name}">Name</td>
                                         <td><a href="#"
-                                               th:href="@{/admin/activities/activity(id=${cert.studentTrack.course.activity.id})}">
-                                            <span th:text="${cert.studentTrack.course.activity.name}">Activity
+                                               th:href="@{/admin/activities/activity(id=${cert.studentTrack.courses.activity.id})}">
+                                            <span th:text="${cert.studentTrack.courses.activity.name}">Activity
                                                 Name</span> </a></td>
                                         <td><a href="#"
                                                th:href="@{/admin/students/student(id=${cert.studentTrack.student.id})}"><span
                                                 th:text="${cert.studentTrack.student.name}">Student Name</span></a></td>
                                         <td><a href="#"
-                                               th:href="@{/admin/teachers/teacher(id=${cert.studentTrack.course.teacher.id})}"><span
-                                                th:text="${cert.studentTrack.course.teacher.name}">Teacher
+                                               th:href="@{/admin/teachers/teacher(id=${cert.studentTrack.courses.teacher.id})}"><span
+                                                th:text="${cert.studentTrack.courses.teacher.name}">Teacher
                                             Name</span></a></td>
                                         <td><a href="#"
                                                th:href="@{/admin/events/event(id=${cert.event.id})}"><span

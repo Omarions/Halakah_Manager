@@ -80,7 +80,7 @@ public class StudentController {
 		Student           student    = optStudent.get();
 		if (null == student) {
 			modelAndView = new ModelAndView("admin/students-list");
-			modelAndView.addObject("message", "There is no student with ID (" + id + ")...");
+			modelAndView.addObject("messageError", "There is no student with ID (" + id + ")...");
 			return modelAndView;
 		} else {
 			modelAndView = new ModelAndView("admin/student-profile");
@@ -190,9 +190,9 @@ public class StudentController {
 		student.setArchivedDate(Date.valueOf(LocalDate.now()));
 		Student archivedStudent = studentService.save(student);
 		if (null != archivedStudent) {
-			redirectAttrs.addFlashAttribute("message", "Student with ID( " + id + " ) was archived successfully");
+			redirectAttrs.addFlashAttribute("messageSuccess", "Student with ID( " + id + " ) was archived successfully");
 		} else {
-			redirectAttrs.addFlashAttribute("message", "An error happens while archiving the student with ID( " +
+			redirectAttrs.addFlashAttribute("messageError", "An error happens while archiving the student with ID( " +
 					id + " )");
 		}
 
@@ -264,7 +264,7 @@ public class StudentController {
 			return "admin/register-student";
 		} else {
 			Student returnedStudent = null;
-			/*
+
 			if (regStudent.getWishes() != null) {
 				System.out.println("Not Null Wish...");
 				regStudent.getWishes().stream()
@@ -293,7 +293,7 @@ public class StudentController {
 						});
 
 			}
-			*/
+
 			System.out.println("Image: " + image.getOriginalFilename());
 			System.out.println("Student: " + regStudent);
 			if (image.getOriginalFilename().isEmpty()) {

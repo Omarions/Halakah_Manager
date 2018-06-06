@@ -74,10 +74,10 @@ public class StudentService {
 		student.setEducation(regStudent.getEducation());
 		student.setJob(regStudent.getJob());
 		student.setComments(regStudent.getComments());
-		student.setStudentTracks(regStudent.getStudentTracks());
 		student.setPhoto(regStudent.getPhoto());
 		student.setArchived(false);
 		student.setArchivedDate(null);
+		student.setStudentTracks(regStudent.getStudentTracks());
 		System.out.println("Student after cast: " + student);
 		return save(student);
 	}

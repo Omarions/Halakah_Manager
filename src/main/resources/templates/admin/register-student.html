@@ -105,7 +105,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-offset-6 col-sm-6">
 
-                                                <img src="../lib/dist/img/avatar5.png"
+                                                <img src="../../lib/dist/img/avatar5.png"
                                                      th:src="@{'/lib/dist/img/avatar5.png'}"
                                                      id="img-photo" name="image" class="img-circle" alt="Student Image"
                                                      style="width: 160px; height: 160px" th:field="*{image}"/>
@@ -377,7 +377,7 @@
 
                                                         </td>
                                                             <td>
-                                                                <select id="select-course"
+                                                                <select id="select-courses"
                                                                         class="select2 form-control table-selects"
                                                                         th:field="*{wishes[__${stat.index}__].house}"
                                                                         th:if="(${activities[__${stat.index}__].id}) == 7">
@@ -387,9 +387,9 @@
                                                                         Select Course
                                                                     </option>
                                                                 </select>
-                                                                <select id="select-course"
+                                                                <select id="select-courses"
                                                                         class="select2 form-control table-selects"
-                                                                        th:field="*{wishes[__${stat.index}__].track.course}"
+                                                                        th:field="*{wishes[__${stat.index}__].track.courses}"
                                                                         th:if="(${#lists.size(activities[__${stat.index}__].courses)}) > 0">
                                                                     <option th:each="cs : ${activities[__${stat.index}__].courses}"
                                                                             th:value="${cs.id}"
@@ -699,9 +699,9 @@
                 th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
         <!-- DataTables -->
         <script src="../lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js"
-                th:src="@{/lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js}"></script>
+                th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js}"></script>
         <script src="../lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"
-                th:src="@{/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
+                th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
         <script src="../../lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
 
         <script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>

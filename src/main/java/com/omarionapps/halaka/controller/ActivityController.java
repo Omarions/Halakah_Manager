@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -31,7 +30,7 @@ import java.util.Set;
  */
 @Controller
 public class ActivityController {
-	Logger log = LoggerFactory.getLogger(this.getClass().getName());
+	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	private ActivityService activityService;
 	private TeacherService  teacherService;
 	private CountryService  countryService;
@@ -72,22 +71,18 @@ public class ActivityController {
 		}
 		Activity savedActivity = activityService.save(activity);
 
-		return "redirect:/admin/activities/activity" + savedActivity.getId();
+		return "redirect:/admin/activities/activity/" + savedActivity.getId();
 	}
 
 	@GetMapping("/admin/activities/activity/{activityId}")
 	public ModelAndView getProfileView(@PathVariable(value = "activityId") Integer activityId) {
 		ModelAndView       modelAndView     = new ModelAndView("admin/activity-profile");
 		Optional<Activity> optActivity      = activityService.findById(activityId);
-		Activity           activity         = optActivity.get();
+		Activity           activity         = (optActivity.isPresent()) ? optActivity.get() : null;
 		Set<Student>       activityStudents = activityService.getStudentsByActivity(activity);
 
-		String imagePath = MvcUriComponentsBuilder
-				.fromMethodName(PhotoController.class, "getFile", activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC).build().toString();
+		activity.setTeacher(activityService.getTeachersByActivity(activity));
 
-		System.out.println("activity students: " + activityService.getTeachersByActivity(activity).size());
-		System.out.println("Teachers: " + activityService.getTeachersByActivity(activity));
-		modelAndView.addObject("imagePath", imagePath);
 		modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(activityStudents));
 
 		if (activityId != 7) {
@@ -100,26 +95,14 @@ public class ActivityController {
 			long                           totalFinalStopped = activityService.getTotalStudentsByStatus(activity, StudentStatus.FINAL_STOP);
 			Map<String, Map<String, Long>> countryStudents   = activityService.getCountryCodeStudentsStatusCountMap(activity);
 
-			int waitingStudentsCount = activityService.getStudentsByActivityByStatus(activity, StudentStatus.WAITING).size();
-			int studyingStudentsCount = activityService.getStudentsByActivityByStatus(activity, StudentStatus.STUDYING)
-					.size();
-			int certifiedStudentsCount = activityService.getStudentsByActivityByStatus(activity, StudentStatus.CERTIFIED)
-					.size();
-			int tempStoppedStudentsCount = activityService.getStudentsByActivityByStatus(activity, StudentStatus.TEMP_STOP)
-					.size();
-			int finalStoppedStudentsCount = activityService.getStudentsByActivityByStatus(activity, StudentStatus.STUDYING)
-					.size();
-			int firedStudentsCount = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FIRED).size();
-
-			Set<Student> waitStudents         = (waitingStudentsCount > 0) ? activityService.getStudentsByActivityByStatus(activity, StudentStatus.WAITING) : null;
-			Set<Student> studyStudents        = (studyingStudentsCount > 0) ? activityService.getStudentsByActivityByStatus(activity, StudentStatus.STUDYING) : null;
-			Set<Student> certifiedStudents    = (certifiedStudentsCount > 0) ? activityService.getStudentsByActivityByStatus(activity, StudentStatus.CERTIFIED) : null;
-			Set<Student> tempStoppedStudents  = (tempStoppedStudentsCount > 0) ? activityService.getStudentsByActivityByStatus(activity, StudentStatus.TEMP_STOP) : null;
-			Set<Student> finalStoppedStudents = (finalStoppedStudentsCount > 0) ? activityService.getStudentsByActivityByStatus(activity, StudentStatus.FINAL_STOP) : null;
-			Set<Student> firedStudents        = (firedStudentsCount > 0) ? activityService.getStudentsByActivityByStatus(activity, StudentStatus.FIRED) : null;
+			Set<Student> waitStudents         = activityService.getStudentsByActivityByStatus(activity, StudentStatus.WAITING);
+			Set<Student> studyStudents        = activityService.getStudentsByActivityByStatus(activity, StudentStatus.STUDYING);
+			Set<Student> certifiedStudents    = activityService.getStudentsByActivityByStatus(activity, StudentStatus.CERTIFIED);
+			Set<Student> tempStoppedStudents  = activityService.getStudentsByActivityByStatus(activity, StudentStatus.TEMP_STOP);
+			Set<Student> finalStoppedStudents = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FINAL_STOP);
+			Set<Student> firedStudents        = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FIRED);
 
 			modelAndView.addObject("activity", activity);
-			modelAndView.addObject("teacherCourses", activityService.getTeacherCoursesByActivity(activity.getId()));
 			modelAndView.addObject("students", activityStudents);
 			modelAndView.addObject("countryStudents", countryStudents);
 			modelAndView.addObject("waitingStudents", waitStudents);
@@ -157,13 +140,9 @@ public class ActivityController {
 		Activity           newActivity = optActivity.get();
 		newActivity.setName(activity.getName());
 		newActivity.setComments(activity.getComments());
+		newActivity.setCourses(activity.getCourses());
+		newActivity.setArchived(activity.isArchived());
 
-
-		if (activity.getId() != 0) {
-			//newActivity.setTeacher(activityService.getTeachersByActivity(activity));
-			newActivity.setCourses(activity.getCourses());
-			newActivity.setArchived(activity.isArchived());
-		}
 		if (null == logoFile) {
 			System.out.println("file is null");
 			newActivity.setLogo(activity.getLogo());
@@ -171,7 +150,6 @@ public class ActivityController {
 			try {
 				storageService.store(logoFile, LocationTag.ACTIVITY_STORE_LOC);
 				storageService.deletePhotoByName(activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC);
-				System.out.println("Image Logo" + logoFile.getOriginalFilename());
 				newActivity.setLogo(logoFile.getOriginalFilename());
 			} catch (Exception e) {
 				log.error("Fails to Store the image!");
@@ -179,7 +157,7 @@ public class ActivityController {
 			}
 		}
 		Activity returnedActivity = activityService.save(newActivity);
-		System.out.println("Updated Activity:" + returnedActivity);
+
 		return "redirect:/admin/activities/activity/" + returnedActivity.getId();
 	}
 
@@ -205,13 +183,13 @@ public class ActivityController {
 	/**
 	 * Send the activity to archive
 	 *
-	 * @param id            the activity ID to be archived
+	 * @param activityId            the activity ID to be archived
 	 * @param redirectAttrs the message to be send with the link to be directed to after archiving success.
 	 * @return the link to be directed to after success.
 	 */
-	@GetMapping("/admin/activities/activity/delete")
-	public String archiveActivity(@RequestParam(value = "id") int id, RedirectAttributes redirectAttrs) {
-		Optional<Activity> optActivity = activityService.findById(id);
+	@GetMapping("/admin/activities/activity/{activityId}/archive")
+	public String archiveActivity(@PathVariable(value = "activityId") int activityId, RedirectAttributes redirectAttrs) {
+		Optional<Activity> optActivity = activityService.findById(activityId);
 		Activity           activity    = optActivity.get();
 		activity.setArchived(true);
 		activity.setArchivedDate(Date.valueOf(LocalDate.now()));
@@ -223,10 +201,12 @@ public class ActivityController {
 				course.setArchivedDate(Date.valueOf(LocalDate.now()));
 				courseService.save(course);
 			});
-			redirectAttrs.addFlashAttribute("message", "Activity with ID( " + id + " ) was archived successfully");
+			redirectAttrs.addFlashAttribute("messageSuccess", "Activity with ID( " + activityId + " ) was archived " +
+					"successfully");
 		} else {
-			redirectAttrs.addFlashAttribute("message", "An error happens while archiving the activity with ID( " +
-					id + " )");
+			redirectAttrs.addFlashAttribute("messageError", "An error happens while archiving the activity with ID(" +
+					" " +
+					activityId + " )");
 		}
 
 		return "redirect:/admin/activities";
