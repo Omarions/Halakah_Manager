@@ -80,7 +80,7 @@
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle"
                                  src="../../lib/dist/img/student/user4-128x128.jpg"
-                                 th:src="@{${imagePath}}"
+                                 th:src="@{${student.photoUrl}}"
                                  alt="User profile picture"/>
 
                             <h3 class="profile-username text-center" th:text="${stTrack.student.name}">Nina
@@ -186,18 +186,18 @@
                             <div th:each="st: ${stTrack.student.studentTracks}">
                                 <div th:switch="${st.status}">
                                       <span th:case="'WAITING'" class="label label-warning"
-                                            th:text="${st.courses.activity.name} + ' | '+ ${st.courses.name}">Waiting
+                                            th:text="${st.course.activity.name} + ' | '+ ${st.course.name}">Waiting
                                     Activity</span>
                                     <span th:case="'STUDYING'" class="label label-primary"
-                                          th:text="${st.courses.activity.name}  + ' | '+ ${st.courses.name}">Studying Activity</span>
+                                          th:text="${st.course.activity.name}  + ' | '+ ${st.course.name}">Studying Activity</span>
                                     <span th:case="'CERTIFIED'" class="label label-success"
-                                          th:text="${st.courses.activity.name} + ' | '+ ${st.courses.name}">Certified Activity</span>
+                                          th:text="${st.course.activity.name} + ' | '+ ${st.course.name}">Certified Activity</span>
                                     <span th:case="'FIRED'" class="label label-danger"
-                                          th:text="${st.courses.activity.name} + ' | '+ ${st.courses.name}">Fired Activity</span>
+                                          th:text="${st.course.activity.name} + ' | '+ ${st.course.name}">Fired Activity</span>
                                     <span th:case="'TEMP_STOPPED'" class="label label-info"
-                                          th:text="${st.courses.activity.name} + ' | '+ ${st.courses.name}">Temp_Stopped Activity</span>
+                                          th:text="${st.course.activity.name} + ' | '+ ${st.course.name}">Temp_Stopped Activity</span>
                                     <span th:case="'FINAL_STOPPED'" class="label label-info"
-                                          th:text="${st.courses.activity.name} + ' | '+ ${st.courses.name}">Final Stopped Activity</span>
+                                          th:text="${st.course.activity.name} + ' | '+ ${st.course.name}">Final Stopped Activity</span>
                                 </div>
                             </div>
 
@@ -233,9 +233,9 @@
                                                 th:text="'Update Track (' + ${stTrack.id} + ')'">Update
                                             Track</h3>
                                         <i><span th:text="'Course Name: ' +
-                                            ${stTrack.courses.name}"/><br/>
+                                            ${stTrack.course.name}"/><br/>
                                             <span th:text="'Activity Name: ' +
-                                            ${stTrack.courses.activity.name}"/></i>
+                                            ${stTrack.course.activity.name}"/></i>
                                     </div>
                                     <div class="box-body">
                                         <form id="frmUpdateTracks" class="form-horizontal" action="#"

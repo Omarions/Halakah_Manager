@@ -145,10 +145,11 @@
                                 </div>
                                 <!-- / .teachers-dropdown-list -->
 
-                                <!-- input for days -->
+                                <!-- Dropdown list for days -->
                                 <div class="form-group"
                                      th:classappend="${#fields.hasErrors('days')}? 'has-error'">
-                                    <label for="select-days" class="col-sm-2 control-label">Days</label>
+                                    <label for="select-days"
+                                           class="col-sm-2 control-label">Days</label>
 
                                     <div class="col-sm-10">
                                         <select id="select-days"
@@ -158,15 +159,13 @@
                                             <option value="" text="Select days" selected>Select
                                                 days
                                             </option>
-                                            <option th:value="السبت" th:text="السبت">السبت</option>
-                                            <option th:value="الأحد" th:text="الأحد">الأحد</option>
-                                            <option th:value="الأثنين" th:text="الأثنين">الاثنين</option>
-                                            <option th:value="الثلاثاء" th:text="الثلاثاء">الثلاثاء</option>
-                                            <option th:value="الأربعاء" th:text="الأربعاء">الأربعاء</option>
-                                            <option th:value="الخميس" th:text="الخميس">الخميس</option>
-                                            <option th:value="الجمعة" th:text="الجمعة">الجمعة</option>
+                                            <option th:each="day : ${weekDays}"
+                                                    th:value="${day.toString()}"
+                                                    th:text="${day.toString()}">Day
+                                            </option>
                                         </select>
-                                        <span th:if="${#fields.hasErrors('days')}" th:errors="*{days}"
+                                        <span th:if="${#fields.hasErrors('days')}"
+                                              th:errors="*{days}"
                                               th:class="help-block">Days Errors</span>
                                     </div>
                                 </div>
@@ -333,6 +332,23 @@
                                     </div>
                                 </div>
                                 <!-- /.end-date-picker -->
+
+                                <!-- input for capacity -->
+                                <div th:class="form-group"
+                                     th:classappend="${#fields.hasErrors('capacity')}? 'has-error'">
+                                    <label for="inputCapacity"
+                                           class="col-sm-2 control-label">Capacity</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputCapacity"
+                                               placeholder="Name"
+                                               th:field="*{capacity}"/>
+                                        <span th:if="${#fields.hasErrors('capacity')}"
+                                              th:errors="*{capacity}"
+                                              th:class="help-block">Capacity Errors</span>
+                                    </div>
+                                </div>
+                                <!-- /.input-for-capacity -->
 
                                 <!-- Input for Comments -->
                                 <div class="form-group">

@@ -4,6 +4,7 @@ import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.model.StudentTrack;
 import com.omarionapps.halaka.service.StudentTrackService;
+import com.omarionapps.halaka.utils.LocationTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,11 +42,15 @@ public class StudentTrackController {
 		Optional<StudentTrack> optStudentTrack = studentTrackService.findById(trackId);
 		StudentTrack           studentTrack    = optStudentTrack.get();
 
-		String imagePath = MvcUriComponentsBuilder
-				.fromMethodName(PhotoController.class, "getFile", studentTrack.getStudent().getPhoto()).build().toString();
+		String photoUrl = MvcUriComponentsBuilder
+				.fromMethodName(PhotoController.class, "getFile", studentTrack.getStudent().getPhoto(), LocationTag.STUDENTS_STORE_LOC)
+				.build()
+				.toString();
 
+		studentTrack.getStudent().setPhotoUrl(photoUrl);
+
+		modelAndView.addObject("student", studentTrack.getStudent());
 		modelAndView.addObject("statusEnums", StudentStatus.values());
-		modelAndView.addObject("imagePath", imagePath);
 		modelAndView.addObject("stTrack", studentTrack);
 
 		return modelAndView;

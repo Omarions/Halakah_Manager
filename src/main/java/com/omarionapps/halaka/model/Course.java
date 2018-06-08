@@ -3,6 +3,7 @@ package com.omarionapps.halaka.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.sql.Date;
@@ -28,35 +29,55 @@ public class Course implements Serializable {
     private Set<CourseTrack> courseTracks = new HashSet<>();
     @OneToMany(mappedBy = "course")
     private Set<StudentTrack> studentTracks = new HashSet<>();
-	@NotEmpty(message = "It could not be empty!")
-    private String  name;
-	@NotEmpty(message = "It could not be empty!")
-    private String  days;
-	@Column(name = "start_time", nullable = false)
-    private Time    startTime;
-	@Column(name = "end_time", nullable = false)
-    private Time    endTime;
-	@Column(name = "start_date", nullable = true)
-	private Date    startDate;
-	@Column(name = "end_date", nullable = true)
-	private Date    endDate;
-	@Column(name = "capacity")
-	private int     capacity;
-	@Column(name = "comments", nullable = true)
-    private String  comments;
-	@Column(name = "archived", columnDefinition = "TINYINT")
-    private boolean archived;
-	@Column(name = "archived_date", nullable = true)
-    private Date    archivedDate;
-	@Transient
-    private boolean full;
-	@Transient
-    private int     freePlaces;
+    @NotEmpty(message = "It could not be empty!")
+    private String     name;
+    @NotEmpty(message = "It could not be empty!")
+    private String     days;
+    @Column(name = "start_time", nullable = false)
+    private Time       startTime;
+    @Column(name = "end_time", nullable = false)
+    private Time       endTime;
+    @Column(name = "start_date", nullable = true)
+	private Date       startDate;
+    @Column(name = "end_date", nullable = true)
+	private Date       endDate;
+    @Column(name = "capacity")
+    @Min(value = 0)
+	private int        capacity;
+    @Column(name = "comments", nullable = true)
+    private String     comments;
+    @Column(name = "archived", columnDefinition = "TINYINT")
+    private boolean    archived;
+    @Column(name = "archived_date", nullable = true)
+    private Date       archivedDate;
+    @Transient
+    private boolean    full;
+    @Transient
+    private int        freePlaces;
+    @Transient
+    private WeekDays[] courseDays;
+	
 
     public Course(){}
 
     public Course(String name){
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public WeekDays[] getCourseDays() {
+        return courseDays;
+    }
+
+    public void setCourseDays(WeekDays[] courseDays) {
+        this.courseDays = courseDays;
     }
 
     public String getDays() {
@@ -162,20 +183,12 @@ public class Course implements Serializable {
     }
 
     public boolean isFull() {
-        long currentStudy = getStudentTracks()
+        long occupied = getStudentTracks()
                 .stream()
-                .filter((st) -> st.getStatus().equalsIgnoreCase(StudentStatus.STUDYING.toString())
-                        && st.getCourse().getId() == this.getId())
+                .filter(st -> st.getStatus().equals(StudentStatus.STUDYING.toString()) ||
+                        st.getStatus().equals(StudentStatus.TEMP_STOP.toString()))
                 .count();
-        return (currentStudy == getCapacity());
-    }
-
-	public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        return (occupied == getCapacity());
     }
 
     public int getCapacity() {
@@ -187,9 +200,13 @@ public class Course implements Serializable {
     }
 
 	public long getFreePlaces() {
-		long currentStudy = this.getStudentTracks().stream().filter((st) -> st.getStatus().equals(StudentStatus.STUDYING.toString())).count();
-		long tempStopped  = this.getStudentTracks().stream().filter((st) -> st.getStatus().equals(StudentStatus.TEMP_STOP.toString())).count();
-		return (getCapacity() - (currentStudy + tempStopped));
+        long occupied = getStudentTracks()
+                .stream()
+                .filter(st -> st.getStatus().equals(StudentStatus.STUDYING.toString()) ||
+                        st.getStatus().equals(StudentStatus.TEMP_STOP.toString()))
+                .count();
+
+        return (capacity - occupied);
 	}
 
     @JsonIgnore

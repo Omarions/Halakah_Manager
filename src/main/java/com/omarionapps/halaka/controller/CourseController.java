@@ -1,9 +1,6 @@
 package com.omarionapps.halaka.controller;
 
-import com.omarionapps.halaka.model.Activity;
-import com.omarionapps.halaka.model.Course;
-import com.omarionapps.halaka.model.Student;
-import com.omarionapps.halaka.model.StudentStatus;
+import com.omarionapps.halaka.model.*;
 import com.omarionapps.halaka.service.ActivityService;
 import com.omarionapps.halaka.service.CountryService;
 import com.omarionapps.halaka.service.CourseService;
@@ -23,10 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -68,7 +62,7 @@ public class CourseController {
 	 * @return the page of appropriate request based on request param that sent
 	 */
 	@GetMapping("/admin/courses/course/{courseId}")
-	public ModelAndView getCourseProfileView(@PathVariable(value = "courseId") Integer courseId) {
+	public ModelAndView getProfileView(@PathVariable(value = "courseId") Integer courseId) {
 		ModelAndView                   modelAndView      = new ModelAndView("admin/course-profile");
 		Course                         course            = courseService.findById(courseId).get();
 		Set<Student>                   students          = courseService.getStudentsByCourse(course);
@@ -81,12 +75,24 @@ public class CourseController {
 		long                           totalTempStopped  = courseService.totalStudentsByStatus(course, StudentStatus.TEMP_STOP);
 		long                           totalFinalStopped = courseService.totalStudentsByStatus(course, StudentStatus.FINAL_STOP);
 
+		StringTokenizer tokenizer    = new StringTokenizer(course.getDays(), ",");
+		int             length       = tokenizer.countTokens();
+		WeekDays[]      m_courseDays = new WeekDays[length];
+		for (int i = 0; i < length; i++) {
+			m_courseDays[i] = WeekDays.valueOf(tokenizer.nextToken());
+		}
+		course.setCourseDays(m_courseDays);
+		
 		modelAndView.addObject("course", course);
 		modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(students));
 		modelAndView.addObject("countryStudents", countryStudents);
+		modelAndView.addObject("students", courseService.getStudentsByCourse(course));
 		modelAndView.addObject("studyingStudents", courseService.getStudentsByStatus(course, StudentStatus.STUDYING));
 		modelAndView.addObject("waitingStudents", courseService.getStudentsByStatus(course, StudentStatus.WAITING));
-		modelAndView.addObject("actTeachers", activityService.getTeachersByActivity(course.getActivity().getId()));
+		modelAndView.addObject("certifiedStudents", courseService.getStudentsByStatus(course, StudentStatus.CERTIFIED));
+		modelAndView.addObject("tempStoppedStudents", courseService.getStudentsByStatus(course, StudentStatus.TEMP_STOP));
+		modelAndView.addObject("finalStoppedStudents", courseService.getStudentsByStatus(course, StudentStatus.FINAL_STOP));
+		modelAndView.addObject("firedStudents", courseService.getStudentsByStatus(course, StudentStatus.FIRED));
 		modelAndView.addObject("totalStudents", totalStudents);
 		modelAndView.addObject("totalStudying", totalStudying);
 		modelAndView.addObject("totalWaiting", totalWaiting);
@@ -96,7 +102,7 @@ public class CourseController {
 		modelAndView.addObject("totalFinalStopped", totalFinalStopped);
 		modelAndView.addObject("teachers", teacherService.findAllByOrderByName());
 		modelAndView.addObject("activities", activityService.findAllByArchived(false));
-		
+		modelAndView.addObject("weekDays", WeekDays.values());
 
 		return modelAndView;
 	}
@@ -112,8 +118,9 @@ public class CourseController {
 		ModelAndView model = new ModelAndView("admin/register-course");
 
 		model.addObject("course", new Course());
-		model.addObject("activities", activityService.findAllOrderByName());
-		model.addObject("teachers", teacherService.findAllByOrderByName());
+		model.addObject("activities", activityService.findAllByArchived(false));
+		model.addObject("teachers", teacherService.findAllByArchive(false));
+		model.addObject("weekDays", WeekDays.values());
 		return model;
 	}
 
@@ -203,7 +210,7 @@ public class CourseController {
 	@PostMapping("/admin/courses/course/{courseId}")
 	public String updateCourse(@PathVariable(value = "courseId") Integer courseId, Course course, BindingResult
 			bindingResult, Model model) {
-		ModelAndView modelAndView = new ModelAndView("admin/course-profile");
+
 		if (bindingResult.hasErrors()) {
 
 			List<FieldError> fErrors = bindingResult.getFieldErrors();
@@ -214,6 +221,7 @@ public class CourseController {
 			}
 			bindingResult = bResult;
 
+			model.addAttribute("weekDays", WeekDays.values());
 			model.addAttribute("teachers", teacherService.findAllByArchive(false));
 			model.addAttribute("bindingResult", bindingResult);
 
@@ -221,16 +229,20 @@ public class CourseController {
 
 		} else {
 			Course updatedCourse = courseService.findById(courseId).get();
+			String days = Stream.of(course.getCourseDays()).map(weekDays -> weekDays.toString()).collect(Collectors.joining
+					(","));
+			System.out.println("Days: " + days);
 			updatedCourse.setName(course.getName());
 			updatedCourse.setTeacher(course.getTeacher());
-			updatedCourse.setDays(course.getDays());
+			updatedCourse.setDays(days);
 			updatedCourse.setStartTime(course.getStartTime());
 			updatedCourse.setEndTime(course.getEndTime());
 			updatedCourse.setStartDate(course.getStartDate());
 			updatedCourse.setEndDate(course.getEndDate());
+			updatedCourse.setCapacity(course.getCapacity());
 
 			Course returnedCourse = courseService.save(updatedCourse);
-
+			model.addAttribute("weekDays", WeekDays.values());
 			model.addAttribute("teachers", teacherService.findAllByArchive(false));
 			return "redirect:/admin/courses/course/" + returnedCourse.getId();
 		}

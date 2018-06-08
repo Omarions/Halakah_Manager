@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by Omar on 09-Apr-17.
@@ -58,9 +59,17 @@ public class StudentController {
 	 */
 	@GetMapping("/admin/students")
 	public ModelAndView getStudentsListView() {
-		ModelAndView model = new ModelAndView("admin/student-list");
+		ModelAndView model    = new ModelAndView("admin/student-list");
+		Set<Student> students = studentService.findAllByArchive(false);
+		students.stream().forEach(student -> {
+			String photoUrl = MvcUriComponentsBuilder
+					.fromMethodName(PhotoController.class, "getFile", student.getPhoto(), LocationTag.STUDENTS_STORE_LOC).build()
+					.toString();
 
-		model.addObject("students", studentService.getAll());
+			student.setPhotoUrl(photoUrl);
+		});
+
+		model.addObject("students", students);
 
 		return model;
 	}
@@ -74,7 +83,6 @@ public class StudentController {
 	@GetMapping("/admin/students/student/{id}")
 	public ModelAndView getStudentProfile(@PathVariable(value = "id") Integer id) {
 		ModelAndView modelAndView;
-		String       imagePath = "";
 
 		Optional<Student> optStudent = studentService.findById(id);
 		Student           student    = optStudent.get();
@@ -107,12 +115,11 @@ public class StudentController {
 			regStudent.setPhoto(student.getPhoto());
 			regStudent.setStudentTracks(student.getStudentTracks());
 
-			imagePath = MvcUriComponentsBuilder
+			String photoUrl = MvcUriComponentsBuilder
 					.fromMethodName(PhotoController.class, "getFile", student.getPhoto(), LocationTag.STUDENTS_STORE_LOC).build()
 					.toString();
 
-
-			modelAndView.addObject("imagePath", imagePath);
+			regStudent.setPhotoUrl(photoUrl);
 			prepareTracksTable(modelAndView, regStudent);
 
 			return modelAndView;
