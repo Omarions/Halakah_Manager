@@ -193,6 +193,9 @@ public class CourseController {
 			return "admin/register-course";
 
 		} else {
+			String days = Stream.of(course.getCourseDays()).map(weekDays -> weekDays.toString()).collect(Collectors.joining
+					(","));
+			course.setDays(days);
 			Course returnedCourse = courseService.save(course);
 			return "redirect:/admin/courses/course/" + returnedCourse.getId();
 		}
@@ -231,7 +234,7 @@ public class CourseController {
 			Course updatedCourse = courseService.findById(courseId).get();
 			String days = Stream.of(course.getCourseDays()).map(weekDays -> weekDays.toString()).collect(Collectors.joining
 					(","));
-			System.out.println("Days: " + days);
+
 			updatedCourse.setName(course.getName());
 			updatedCourse.setTeacher(course.getTeacher());
 			updatedCourse.setDays(days);
