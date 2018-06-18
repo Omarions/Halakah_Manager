@@ -11,25 +11,40 @@ import java.util.Set;
  */
 @Entity
 public class Event implements Serializable {
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
-    private Date eventDate;
-    private String status;
-    private String comments;
+    private int    id;
+	private String name;
+	private String introducer;
+	private String description;
+	private String guests;
+	private Date   eventDate;
+	private String status;
+	private String comments;
     @OneToMany(mappedBy = "event")
     private Set<Certificate> certificates = new HashSet<>();
 
     public Event() {
     }
 
-    public Event(String name, Date eventDate, String status, String comments) {
-        this.name = name;
-        this.eventDate = eventDate;
-        this.status = status;
-        this.comments = comments;
-    }
+	public Event(String name, String introducer, String description, String guests, Date eventDate, String status, String comments, Set<Certificate> certificates) {
+		this.name = name;
+		this.introducer = introducer;
+		this.description = description;
+		this.guests = guests;
+		this.eventDate = eventDate;
+		this.status = status;
+		this.comments = comments;
+		this.certificates = certificates;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
     public String getName() {
         return name;
@@ -38,6 +53,30 @@ public class Event implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+	public String getIntroducer() {
+		return introducer;
+	}
+
+	public void setIntroducer(String introducer) {
+		this.introducer = introducer;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getGuests() {
+		return guests;
+	}
+
+	public void setGuests(String guests) {
+		this.guests = guests;
+	}
 
     public Date getEventDate() {
         return eventDate;
@@ -85,13 +124,5 @@ public class Event implements Serializable {
 
         return getId() == event.getId();
 
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

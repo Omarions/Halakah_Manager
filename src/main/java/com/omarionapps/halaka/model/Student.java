@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Omar on 09-Apr-17.
@@ -196,11 +197,11 @@ public class Student {
     }
 
     public List<Certificate> getCertificates() {
-        certificates.clear();
-        this.getStudentTracks().stream()
-                .filter((st) -> st.getStudent() == this && st.getStatus().equalsIgnoreCase(StudentStatus.CERTIFIED.name()))
-                .forEach((st) -> certificates.add(st.getCertificate()));
-        return certificates;
+	    return this.getStudentTracks().stream()
+			    .filter((st) -> st.getStudent().equals(this) && st.getStatus().equalsIgnoreCase(StudentStatus.CERTIFIED.toString()))
+			    .filter(studentTracks -> studentTracks.getCertificate() != null)
+			    .map(studentTracks -> studentTracks.getCertificate()).collect(Collectors.toList());
+        
     }
 
     public List<StudentTrack> getStudentTracks() {

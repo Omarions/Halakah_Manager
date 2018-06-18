@@ -36,16 +36,20 @@ public class StudentService {
 		return studentRepository.findAllByOrderByCountry();
 	}
 
-	public int getCountWaitingStudentsByCourse(int studentId, int courseId) {
-		return -1;
+	public long getTotalStudents() {
+		totalStudents = 0;
+		Iterable<Student> students = this.findAll();
+		students.forEach(student -> {
+			totalStudents++;
+		});
+		return totalStudents;
 	}
-
+	
 	public long getCountByStatus(StudentStatus status, boolean isArchived) {
 		countByStatus = 0;
-		Iterable<Student> students = this.getAll();
+		Iterable<Student> students = this.findAll();
 
 		students.forEach((student) -> {
-			System.out.println("Student: " + student);
 			for (StudentTrack st : student.getStudentTracks()) {
 				if (st.getStatus().equalsIgnoreCase(status.name()) && student.isArchived() == isArchived)
 					countByStatus++;
@@ -54,8 +58,17 @@ public class StudentService {
 		return countByStatus;
 	}
 
-	public Iterable<Student> getAll() {
-		return studentRepository.findAll();
+	public long getCountByStatus(StudentStatus status) {
+		countByStatus = 0;
+		Iterable<Student> students = this.findAll();
+
+		students.forEach((student) -> {
+			for (StudentTrack st : student.getStudentTracks()) {
+				if (st.getStatus().equalsIgnoreCase(status.name()))
+					countByStatus++;
+			}
+		});
+		return countByStatus;
 	}
 
 	public Student registerStudent(RegisteringStudent regStudent) {
@@ -85,17 +98,11 @@ public class StudentService {
 	public Student save(Student student) {
 
 		Student returnedStudent = studentRepository.save(student);
-		System.out.println("Returned Student: " + returnedStudent);
 		for (StudentTrack st : student.getStudentTracks()) {
 			if (st != null) {
 				st.setStudent(returnedStudent);
-				System.out.println("There is new track");
-				System.out.println("New Track: " + st);
 				studentTrackService.save(st);
-			} else {
-				System.out.println("No Student Track");
 			}
-
 		}
 		return returnedStudent;
 	}

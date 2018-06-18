@@ -39,10 +39,11 @@ public class StudentController {
 	private HouseService        houseService;
 	private StorageService      storageService;
 	private StudentTrackService studentTracksService;
+	private EventService        eventService;
 
 	@Autowired
 	public StudentController(StudentService studentService, ActivityService activityService, CourseService courseService,
-	                         HouseService houseService, CountryService countryService, StorageService storageService, StudentTrackService studentTrackService) {
+	                         HouseService houseService, CountryService countryService, StorageService storageService, StudentTrackService studentTrackService, EventService eventService) {
 		this.studentService = studentService;
 		this.activityService = activityService;
 		this.courseService = courseService;
@@ -50,6 +51,7 @@ public class StudentController {
 		this.countryService = countryService;
 		this.storageService = storageService;
 		this.studentTracksService = studentTrackService;
+		this.eventService = eventService;
 	}
 
 	/**
@@ -92,7 +94,6 @@ public class StudentController {
 			return modelAndView;
 		} else {
 			modelAndView = new ModelAndView("admin/student-profile");
-			//prepareModel(modelAndView, student);
 			List<Wish> wishes = new ArrayList<>();
 			//create the student and the registering student objects
 			RegisteringStudent regStudent = new RegisteringStudent();
@@ -118,6 +119,16 @@ public class StudentController {
 			String photoUrl = MvcUriComponentsBuilder
 					.fromMethodName(PhotoController.class, "getFile", student.getPhoto(), LocationTag.STUDENTS_STORE_LOC).build()
 					.toString();
+
+			regStudent.getCertificates().
+					stream()
+					.filter(certificate -> (null != certificate))
+					.forEach(certificate -> {
+						String certPhotoUrl = MvcUriComponentsBuilder
+								.fromMethodName(PhotoController.class, "getFile", certificate.getPhoto(), LocationTag.CERT_STORE_LOC).build()
+								.toString();
+						certificate.setImageUrl(certPhotoUrl);
+					});
 
 			regStudent.setPhotoUrl(photoUrl);
 			prepareTracksTable(modelAndView, regStudent);
@@ -147,7 +158,7 @@ public class StudentController {
 
 		//get the list of activities and houses from the DB
 		Iterable<Activity> itrActivities = activityService.findAllOrderByName();
-		Iterable<House>    itrHouses     = houseService.findAllOrderById();
+		Iterable<House>    itrHouses     = houseService.findAllByOrderById();
 		//fill activities and houses lists with data from DB
 		itrActivities.forEach((activity -> activities.add(activity)));
 		itrHouses.forEach((house) -> houses.add(house));
@@ -162,6 +173,8 @@ public class StudentController {
 		model.addObject("trackStatuses", StudentStatus.values());
 		//send the countries to the view.
 		model.addObject("countries", countryService.findAllByOrderByArabicNameAsc());
+		model.addObject("certificate", new Certificate());
+		model.addObject("events", eventService.getAllOrderByEventDate());
 	}
 
 	/**
@@ -173,10 +186,7 @@ public class StudentController {
 	public ModelAndView getRegisterStudentView() {
 		//set the model view.
 		ModelAndView model = new ModelAndView("admin/register-student");
-		//prepareModel(model, null);
-		//student.setStudentTracks(tracks);
 		RegisteringStudent regStudent = new RegisteringStudent();
-
 		prepareTracksTable(model, regStudent);
 
 		return model;
@@ -301,8 +311,6 @@ public class StudentController {
 
 			}
 
-			System.out.println("Image: " + image.getOriginalFilename());
-			System.out.println("Student: " + regStudent);
 			if (image.getOriginalFilename().isEmpty()) {
 				System.out.println("Image: avatar5.png");
 				regStudent.setPhoto("avatar5.png");

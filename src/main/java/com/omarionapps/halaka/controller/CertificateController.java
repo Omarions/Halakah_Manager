@@ -1,14 +1,27 @@
 package com.omarionapps.halaka.controller;
 
 import com.omarionapps.halaka.model.Certificate;
+import com.omarionapps.halaka.model.StudentStatus;
+import com.omarionapps.halaka.model.StudentTrack;
 import com.omarionapps.halaka.service.CertificateService;
+import com.omarionapps.halaka.service.StorageService;
+import com.omarionapps.halaka.service.StudentTrackService;
+import com.omarionapps.halaka.utils.LocationTag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,37 +31,84 @@ import java.util.Optional;
 public class CertificateController {
 
 	@Autowired
-	CertificateService certificateService;
+	CertificateService  certificateService;
+	@Autowired
+	StudentTrackService studentTrackService;
+	@Autowired
+	StorageService      storageService;
+
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping("/admin/certificates")
 	public ModelAndView getCertificates() {
-		ModelAndView modelAndView = new ModelAndView("admin/certificate-list");
-		modelAndView.addObject("certificates", certificateService.findAll());
-		return modelAndView;
-	}
+		List<Certificate> certs        = new ArrayList<>();
+		ModelAndView      modelAndView = new ModelAndView("admin/certificate-list");
+		certificateService.findAll().spliterator().forEachRemaining(certificate -> certs.add(certificate));
+		certs.stream()
+				.forEach(certificate -> {
+					String certPhotoUrl = MvcUriComponentsBuilder
+							.fromMethodName(PhotoController.class, "getFile", certificate.getPhoto(), LocationTag.CERT_STORE_LOC).build().toString();
+					certificate.setImageUrl(certPhotoUrl);
+				});
 
-	@GetMapping("/admin/certificates/certificate")
-	public ModelAndView addCertificates() {
-		return new ModelAndView("admin/register-certificate");
+		modelAndView.addObject("certificates", certs);
+
+		return modelAndView;
 	}
 
 	/**
 	 * Send the certificate to delete
 	 *
-	 * @param id            the certificate ID to be archived
+	 * @param certId        the certificate ID to be archived
 	 * @param redirectAttrs the message to be send with the link to be directed to after archiving success.
 	 * @return the link to be directed to after success.
 	 */
-	@GetMapping("/admin/certificates/certificate/delete")
-	public String deleteCertificate(@RequestParam(value = "id") int id, RedirectAttributes redirectAttrs) {
-		Optional<Certificate> cert = certificateService.findById(id);
+	@GetMapping("/admin/certificates/certificate/{certId}/delete")
+	public String deleteCertificate(@PathVariable(value = "certId") int certId, RedirectAttributes redirectAttrs) {
+		Optional<Certificate> cert         = certificateService.findById(certId);
+		int                   studentId    = cert.get().getStudentTrack().getStudent().getId();
+		StudentTrack          studentTrack = cert.get().getStudentTrack();
+
+
 		if (null != cert) {
-			certificateService.delete(id);
-			redirectAttrs.addFlashAttribute("message", "Certificate with ID( " + id + " ) has been deleted successfully");
+			certificateService.delete(certId);
+			studentTrack.setStatus(StudentStatus.STUDYING.toString());
+			studentTrackService.save(studentTrack);
+			redirectAttrs.addFlashAttribute("msgCertDeleteSuccess", "Certificate with ID( " + certId + " ) has been deleted successfully");
 		} else {
-			redirectAttrs.addFlashAttribute("message", "An error happens while deleting the certificate with ID( " +
-					id + " )");
+			redirectAttrs.addFlashAttribute("msgCertDeleteError", "An error happens while deleting the certificate with ID( " +
+					certId + " )");
 		}
-		return "redirect:/admin/certificates";
+
+		return "redirect:/admin/students/student/" + studentId;
 	}
+
+	@PostMapping("admin/certificates/certificate")
+	public String addCertificate(Certificate certificate, @RequestParam("imageFile") MultipartFile image) {
+		Certificate m_certificate = new Certificate();
+
+		if (image.getOriginalFilename().isEmpty()) {
+			m_certificate.setPhoto("certificate_default.jpg");
+		} else {
+			try {
+				storageService.store(image, LocationTag.CERT_STORE_LOC);
+				m_certificate.setPhoto(image.getOriginalFilename());
+			} catch (Exception e) {
+				log.error("Fails to Store the image!");
+				log.error(e.toString());
+			}
+		}
+		m_certificate.setName(certificate.getName());
+		m_certificate.setEvent(certificate.getEvent());
+		m_certificate.setStudentTrack(certificate.getStudentTrack());
+		m_certificate.setComments(certificate.getComments());
+
+		Certificate  newCert      = certificateService.save(m_certificate);
+		StudentTrack updatedTrack = newCert.getStudentTrack();
+		updatedTrack.setStatus(StudentStatus.CERTIFIED.toString());
+		studentTrackService.save(updatedTrack);
+
+		return "redirect:/admin/students/student/" + newCert.getStudentTrack().getStudent().getId();
+	}
+
 }

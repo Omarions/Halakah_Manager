@@ -11,28 +11,31 @@ import javax.servlet.ServletContext;
  */
 @Component
 public class ApplicationAttributes {
-    @Autowired
-    private ServletContext servletContext;
-    @Autowired
-    private ActivityService activityService;
-    @Autowired
-    private TeacherService teacherService;
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private CourseService courseService;
-    @Autowired
+	@Autowired
+    private ServletContext     servletContext;
+	@Autowired
+    private ActivityService    activityService;
+	@Autowired
+    private TeacherService     teacherService;
+	@Autowired
+    private StudentService     studentService;
+	@Autowired
+    private CourseService      courseService;
+	@Autowired
     private CertificateService certificateService;
+	@Autowired
+	private EventService       eventService;
 
     private long archivedActivitiesCount;
     private long archivedCoursesCount;
     private long archivedTeachersCount;
     private long archivedStudentsCount;
 
-    private long activeActivitiesCount;
-    private long activeCoursesCount;
-    private long activeTeachersCount;
-    private long activeStudentsCount;
+	private long activeActivitiesCount;
+	private long activeCoursesCount;
+	private long activeTeachersCount;
+	private long activeStudentsCount;
+	private long eventsCount;
 
     private long certificatesCount;
 
@@ -88,6 +91,12 @@ public class ApplicationAttributes {
         servletContext.setAttribute("activeStudentsCount", activeStudentsCount);
     }
 
+	@Autowired
+	public void setEventsCount() {
+		eventsCount = eventService.getCount();
+		servletContext.setAttribute("eventsCount", eventsCount);
+	}
+    
     @Autowired
     public void setCertificatesCount() {
         certificatesCount = certificateService.getCount();
@@ -112,5 +121,5 @@ public class ApplicationAttributes {
         certifiedStudentsCount =  studentService.getCountByStatus(StudentStatus.CERTIFIED, false);
         servletContext.setAttribute("certifiedStudentsCount", certifiedStudentsCount);
     }
-*/
+    */
 }

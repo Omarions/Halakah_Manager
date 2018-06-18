@@ -338,11 +338,11 @@
                                             <div class="col-sm-6">
                                                 <h3 class="box-title">Teachers List</h3>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <!--<div class="col-sm-6">
                                                 <button type="button" class="btn btn-default pull-right"><i
                                                         class="fa fa-plus"></i> Add Teacher
                                                 </button>
-                                            </div>
+                                            </div>-->
                                         </div>
 
                                     </div>
@@ -1946,15 +1946,15 @@
                                         </div>
                                         <!-- /.box-header -->
                                         <div class="box-body">
-                                            <div id="certified-students-dt_wrapper"
+                                            <div id="certified_students_dt_wrapper"
                                                  class="dataTables_wrapper form-inline dt-bootstrap">
                                                 <div class="row" th:remove="all">
                                                     <div class="col-sm-6">
                                                         <div class="dataTables_length"
-                                                             id="certified-students-dt_length">
+                                                             id="certified_students_dt_length">
                                                             <label>Show
-                                                                <select name="certified-students-dt_length"
-                                                                        aria-controls="certified-students-dt"
+                                                                <select name="certified_students_dt_length"
+                                                                        aria-controls="certified_students_dt"
                                                                         class="form-control input-sm">
                                                                     <option value="10">10</option>
                                                                     <option value="25">25</option>
@@ -1965,7 +1965,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <div id="certified-students-dt_filter"
+                                                        <div id="certified_students_dt_filter"
                                                              class="dataTables_filter">
                                                             <label>Search:<input type="search"
                                                                                  class="form-control input-sm"
@@ -1976,118 +1976,97 @@
                                                 </div>
                                                 <div class="row" th:remove="all-but-first">
                                                     <div class="col-sm-12">
-                                                        <table id="certified-students-dt"
+                                                        <table id="certified_students_dt"
                                                                class="table table-bordered table-striped dataTable dt-responsive"
                                                                role="grid" style="width:100%;"
                                                                aria-describedby="studentsDT_info">
                                                             <thead>
                                                             <tr role="row">
                                                                 <th class="sorting_asc" tabindex="0"
-                                                                    aria-controls="studentsDT" rowspan="1"
+                                                                    aria-controls="certified_students_dt" rowspan="1"
                                                                     colspan="1" aria-sort="ascending"
                                                                     aria-label="ID: activate to sort column descending"
                                                                     style="width: 130.4px;">ID
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Name: activate to sort column ascending"
                                                                     style="width: 266.4px;">Name
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
-                                                                    aria-label="Identity ID: activate to sort column ascending"
-                                                                    style="width: 160.4px;">Identity ID
+                                                                    aria-label="Name: activate to sort column ascending"
+                                                                    style="width: 266.4px;">Certificates
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Birth Date: activate to sort column ascending"
                                                                     style="width: 160.2px;">Birth Date
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="Birth Location: activate to sort column ascending"
-                                                                    style="width: 135.2px;">Birth Location
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Country: activate to sort column ascending"
                                                                     style="width: 266.2px;">Country
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="CSS grade: activate to sort column ascending"
-                                                                    style="width: 160.2px;">Home Address
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Egypt Address: activate to sort column ascending"
                                                                     style="width: 266.2px;">Egypt Address
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Tel: activate to sort column ascending"
                                                                     style="width: 266.2px;">Tel
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Email: activate to sort column ascending"
                                                                     style="width: 266.2px;">Email
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Facebook: activate to sort column ascending"
                                                                     style="width: 266.2px;">Facebook
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Education: activate to sort column ascending"
                                                                     style="width: 266.2px;">Education
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Job: activate to sort column ascending"
                                                                     style="width: 266.2px;">Job
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
-                                                                    rowspan="1"
-                                                                    colspan="1"
-                                                                    aria-label="House: activate to sort column ascending"
-                                                                    style="width: 266.2px;">House
-                                                                </th>
-                                                                <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="Comments: activate to sort column ascending"
                                                                     style="width: 266.2px;">Comments
                                                                 </th>
                                                                 <th class="sorting" tabindex="0"
-                                                                    aria-controls="studentsDT"
+                                                                    aria-controls="certified_students_dt"
                                                                     rowspan="1"
                                                                     colspan="1"
                                                                     aria-label="CSS grade: activate to sort column ascending"
@@ -2101,22 +2080,23 @@
                                                                 <td class="sorting_1" th:text="${student.id}">Student ID
                                                                 </td>
                                                                 <td><a href="#"
-                                                                       th:href="@{/admin/students/student(id=${student.id})}"><span
+                                                                       th:href="@{'/admin/students/student/' + ${student.id}}"><span
                                                                         th:text="${student.name}">Student Name</span></a>
                                                                 </td>
-                                                                <td th:text="${student.identityId}">Student Identity
-                                                                    ID
+                                                                <td>
+                                                                    <ul class="dtt" th:remove="all-but-first">
+                                                                        <li class="primary"
+                                                                            th:each="cert : ${student.certificates}"><span
+                                                                                th:text="(${cert != null}) ? ${cert.id} + ' | ' + ${cert.name} : ''">Certificate Name</span></a>
+                                                                        </li>
+                                                                        <li>Certificate Name</li>
+                                                                        <li>certificate Name</li>
+                                                                    </ul>
                                                                 </td>
                                                                 <td th:text="${student.birthDate}">Student Birth Date
                                                                 </td>
-                                                                <td th:text="${student.birthLocation}">Student Birth
-                                                                    Location
-                                                                </td>
                                                                 <td th:text="${student.country.arabicName}">Student
                                                                     Country
-                                                                </td>
-                                                                <td th:text="${student.homeAddress}">Student Home
-                                                                    Address
                                                                 </td>
                                                                 <td th:text="${student.egyptAddress}">Student Egypt
                                                                     Address
@@ -2127,16 +2107,13 @@
                                                                 <td th:text="${student.education}">Student Education
                                                                 </td>
                                                                 <td th:text="${student.job}">Student job</td>
-                                                                <td th:text="${student.house}? ${student.house.name} : 'N/A'">
-                                                                    Student House
-                                                                </td>
                                                                 <td th:text="${student.comments}">Student comments</td>
                                                                 <td>
                                                                     <ul class="dtt">
                                                                         <li>
                                                                             <div class="tools">
                                                                                 <a href="#"
-                                                                                   th:href="@{/admin/students/student(id=${student.id})}"><i
+                                                                                   th:href="@{'/admin/students/student/' + ${student.id}}"><i
                                                                                         class="fa fa-edit fa-3x"></i></a>
                                                                                 <a href="#"
                                                                                    th:href="@{/admin/students/student(id=${student.id})}"><i
@@ -2221,18 +2198,14 @@
                                                             <tr>
                                                                 <th rowspan="1" colspan="1">ID</th>
                                                                 <th rowspan="1" colspan="1">Name</th>
-                                                                <th rowspan="1" colspan="1">Identity ID</th>
                                                                 <th rowspan="1" colspan="1">Birth Date</th>
-                                                                <th rowspan="1" colspan="1">Birth Location</th>
                                                                 <th rowspan="1" colspan="1">Country</th>
-                                                                <th rowspan="1" colspan="1">Home Address</th>
                                                                 <th rowspan="1" colspan="1">Egypt Address</th>
                                                                 <th rowspan="1" colspan="1">Tel</th>
                                                                 <th rowspan="1" colspan="1">Email</th>
                                                                 <th rowspan="1" colspan="1">Facebook</th>
                                                                 <th rowspan="1" colspan="1">Education</th>
                                                                 <th rowspan="1" colspan="1">Job</th>
-                                                                <th rowspan="1" colspan="1">House</th>
                                                                 <th rowspan="1" colspan="1">Comments</th>
                                                                 <th rowspan="1" colspan="1">Tools</th>
                                                             </tr>
@@ -2242,48 +2215,48 @@
                                                 </div>
                                                 <div class="row" th:remove="all">
                                                     <div class="col-sm-5">
-                                                        <div class="dataTables_info" id="certified-students-dt_info"
+                                                        <div class="dataTables_info" id="certified_students_dt_info"
                                                              role="status" aria-live="polite">Showing
                                                             1 to 10 of 57 entries
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-7">
                                                         <div class="dataTables_paginate paging_simple_numbers"
-                                                             id="certified-students-dt_paginate">
+                                                             id="certified_students_dt_paginate">
                                                             <ul class="pagination">
                                                                 <li class="paginate_button previous disabled"
-                                                                    id="certified-students-dt_previous"><a href="#"
-                                                                                                           aria-controls="certified-students-dt"
+                                                                    id="certified_students_dt_previous"><a href="#"
+                                                                                                           aria-controls="certified_students_dt"
                                                                                                            data-dt-idx="0"
                                                                                                            tabindex="0">Previous</a>
                                                                 </li>
                                                                 <li class="paginate_button active"><a href="#"
-                                                                                                      aria-controls="certified-students-dt"
+                                                                                                      aria-controls="certified_students_dt"
                                                                                                       data-dt-idx="1"
                                                                                                       tabindex="0">1</a>
                                                                 </li>
                                                                 <li class="paginate_button "><a href="#"
-                                                                                                aria-controls="certified-students-dt"
+                                                                                                aria-controls="certified_students_dt"
                                                                                                 data-dt-idx="2"
                                                                                                 tabindex="0">2</a></li>
                                                                 <li class="paginate_button "><a href="#"
-                                                                                                aria-controls="certified-students-dt"
+                                                                                                aria-controls="certified_students_dt"
                                                                                                 data-dt-idx="3"
                                                                                                 tabindex="0">3</a></li>
                                                                 <li class="paginate_button "><a href="#"
-                                                                                                aria-controls="certified-students-dt"
+                                                                                                aria-controls="certified_students_dt"
                                                                                                 data-dt-idx="4"
                                                                                                 tabindex="0">4</a></li>
                                                                 <li class="paginate_button "><a href="#"
-                                                                                                aria-controls="certified-students-dt"
+                                                                                                aria-controls="certified_students_dt"
                                                                                                 data-dt-idx="5"
                                                                                                 tabindex="0">5</a></li>
                                                                 <li class="paginate_button "><a href="#"
-                                                                                                aria-controls="certified-students-dt"
+                                                                                                aria-controls="certified_students_dt"
                                                                                                 data-dt-idx="6"
                                                                                                 tabindex="0">6</a></li>
                                                                 <li class="paginate_button next"
-                                                                    id="certified-students-dt_next"><a href="#"
+                                                                    id="certified_students_dt_next"><a href="#"
                                                                                                        aria-controls="studying-students-dt"
                                                                                                        data-dt-idx="7"
                                                                                                        tabindex="0">Next</a>
@@ -2342,7 +2315,7 @@
                                                     <div class="col-sm-12">
                                                         <table id="temp-stopped-students-dt"
                                                                class="table table-bordered table-striped dataTable dt-responsive"
-                                                               role="grid" style="widows: 100%;"
+                                                               role="grid" style="width: 100%;"
                                                                aria-describedby="studentsDT_info">
                                                             <thead>
                                                             <tr role="row">
@@ -3701,7 +3674,7 @@
         $("#studying-students-dt").DataTable({
             responsive: true
         });
-        $("#certified-students-dt").DataTable({
+        $("#certified_students_dt").DataTable({
             responsive: true
         });
         $("#final-stopped-students-dt").DataTable({

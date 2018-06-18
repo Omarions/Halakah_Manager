@@ -1,9 +1,9 @@
-function previewPhoto(input) {
+function previewPhoto(input, imgElement) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            $('#img-photo').attr('src', e.target.result);
+            imgElement.attr('src', e.target.result);
         };
 
         reader.readAsDataURL(input.files[0]);
@@ -15,5 +15,15 @@ $('#img-photo').click(function () {
 });
 
 $("#input-photo").change(function () {
-    previewPhoto(this);
+    var img_photo = $("#img-photo");
+    previewPhoto(this, img_photo);
+});
+
+$('#img-cert-photo').click(function () {
+    $('#input-cert-photo').click();
+});
+
+$("#input-cert-photo").change(function () {
+    var img_cert_photo = $("#img-cert-photo");
+    previewPhoto(this, img_cert_photo);
 });

@@ -51,6 +51,14 @@ public class Activity implements Serializable {
 		this.comments = comments;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -137,14 +145,6 @@ public class Activity implements Serializable {
 	@Override
 	public int hashCode() {
 		return getId();
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	@Override

@@ -96,7 +96,6 @@ public class StorageService {
 	private Resource loadPhoto(Path file) {
 		try {
 			Resource resource = new UrlResource(file.toUri());
-			System.out.println("Resource:" + resource.toString());
 			if (resource.exists() || resource.isReadable()) {
 				return resource;
 			} else {

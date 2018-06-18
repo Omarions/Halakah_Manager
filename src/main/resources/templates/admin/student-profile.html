@@ -18,9 +18,6 @@
     <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
           th:href="@{~/lib/plugins/select2/select2.min.css}"/>
     <!-- iCheck -->
-    <link rel="stylesheet" href="../../lib/plugins/iCheck/flat/blue.css"
-          th:href="@{~/lib/plugins/iCheck/flat/blue.css}"/>
-    <!-- iCheck -->
     <link rel="stylesheet" href="../lib/plugins/iCheck/square/blue.css"
           th:href="@{~/lib/plugins/iCheck/square/blue.css}"/>
     <!-- bootstrap datepicker -->
@@ -646,7 +643,6 @@
                                                                            name="startDate"
                                                                            th:field="${regStudent.wishes[__${stat.index}__].track.startDate}"/>
                                                                 </div>
-
                                                             </td>
                                                             <td>
                                                                 <input type="text"
@@ -699,24 +695,50 @@
                                                 <h3 class="box-title">Student's Certificates List</h3>
                                             </div>
                                             <div class="col-sm-6">
-                                                <button type="button" class="btn btn-default pull-right"><i
+                                                <button type="button" id="btn-new-certificate"
+                                                        class="btn btn-default pull-right"><i
                                                         class="fa fa-plus"></i> Add
                                                     Certificate
                                                 </button>
                                             </div>
                                         </div>
+                                        <!-- Error message -->
+                                        <div th:if="${msgCertDeleteSuccess}" class="row">
+                                            <div class="col-sm-12">
+                                                <div class="alert alert-success alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert"
+                                                            aria-hidden="true">×
+                                                    </button>
+                                                    <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                                                    <span th:text="${msgCertDeleteSuccess}">Operation success message</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div th:if="${msgCertDeleteError}" class="row">
+                                            <div class="col-sm-12">
+                                                <div class="alert alert-danger alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert"
+                                                            aria-hidden="true">×
+                                                    </button>
+                                                    <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                                                    <span th:text="${msgCertDeleteError}">Error Message</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End of Error message -->
 
                                     </div>
                                     <!-- /.box-header -->
+                                    <!-- certificates-list -->
                                     <div class="box-body">
-                                        <div id="certificatesDT_wrapper"
-                                             class="dataTables_wrapper form-inline dt-bootstrap">
+                                        <div id="certificates_dt_wrapper"
+                                             class="dataTables_wrapper form-inline dt-bootstrap dt-responsive">
                                             <div class="row" th:remove="all">
                                                 <div class="col-sm-6">
-                                                    <div class="dataTables_length" id="certificatesDT_length">
+                                                    <div class="dataTables_length" id="certificates_dt_length">
                                                         <label>Show
-                                                            <select name="certificatesDT_length"
-                                                                    aria-controls="certificatesDT"
+                                                            <select name="certificate_dt_length"
+                                                                    aria-controls="certificates_dt"
                                                                     class="form-control input-sm">
                                                                 <option value="10">10</option>
                                                                 <option value="25">25</option>
@@ -727,71 +749,71 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <div id="certificatesDT_filter" class="dataTables_filter">
+                                                    <div id="certificates_dt_filter" class="dataTables_filter">
                                                         <label>Search:<input type="search" class="form-control input-sm"
                                                                              placeholder="Student Name"
-                                                                             aria-controls="certificatesDT"></label>
+                                                                             aria-controls="certificates_dt"></label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row" th:remove="all-but-first">
                                                 <div class="col-sm-12">
-                                                    <table id="certificatesDT"
-                                                           class="table table-bordered table-striped dataTable"
-                                                           role="grid"
-                                                           aria-describedby="certificatesDT_info">
+                                                    <table id="certificates_dt"
+                                                           class="table table-bordered table-striped dataTable dt-responsive"
+                                                           role="grid" style="width: 100%"
+                                                           aria-describedby="certificates_dt_info">
                                                         <thead>
                                                         <tr role="row">
                                                             <th class="sorting_asc" tabindex="0"
-                                                                aria-controls="certificatesDT" rowspan="1"
+                                                                aria-controls="certificates_dt" rowspan="1"
                                                                 colspan="1" aria-sort="ascending"
                                                                 aria-label="ID: activate to sort column descending"
                                                                 style="width: 130.4px;">ID
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="certificatesDT"
+                                                                aria-controls="certificates_dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Name: activate to sort column ascending"
                                                                 style="width: 266.4px;">Name
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="certificatesDT"
+                                                                aria-controls="certificates_dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Activity: activate to sort column ascending"
                                                                 style="width: 160.4px;">Activity
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="certificatesDT"
+                                                                aria-controls="certificates_dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Teacher Name: activate to sort column ascending"
                                                                 style="width: 160.2px;">Teacher Name
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="certificatesDT"
+                                                                aria-controls="certificates_dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Release Date: activate to sort column ascending"
                                                                 style="width: 135.2px;">Release Date
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="certificatesDT"
+                                                                aria-controls="certificates_dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Certificate Photo: activate to sort column ascending"
                                                                 style="width: 266.2px;">Certificate Photo
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="certificatesDT"
+                                                                aria-controls="certificates_dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="Comments: activate to sort column ascending"
                                                                 style="width: 266.2px;">Comments
                                                             </th>
                                                             <th class="sorting" tabindex="0"
-                                                                aria-controls="certificatesDT"
+                                                                aria-controls="certificates_dt"
                                                                 rowspan="1"
                                                                 colspan="1"
                                                                 aria-label="CSS grade: activate to sort column ascending"
@@ -804,6 +826,7 @@
                                                         <tr rol="row"
                                                             th:each="cert : ${regStudent.certificates}"
                                                             th:class="${certStat.odd}? 'odd' : 'even'">
+
                                                             <td class="sorting_1" th:text="${cert.id}">Certificate
                                                                 ID
                                                             </td>
@@ -817,8 +840,8 @@
                                                                     th:text="${cert.studentTrack.course.teacher.name}">Teacher Name</span></a>
                                                             </td>
                                                             <td th:text="${cert.event.eventDate}">Release Date</td>
-                                                            <td><img src="#"
-                                                                     th:src="@{'/lib/dist/img/credit/' + ${cert.image}}"
+                                                            <td><img class="img-circle" src="#"
+                                                                     th:src="@{${cert.imageUrl}}"
                                                                      alt="Certificate Photo"/></td>
                                                             <td th:text="${cert.comments}">Certificate comments</td>
                                                             <td>
@@ -826,11 +849,13 @@
                                                                     <li>
                                                                         <div class="tools">
                                                                             <a href="#"
-                                                                               th:href="@{/admin/students/student(id=${regStudent.id})}"><i
-                                                                                    class="fa fa-edit fa-3x"></i></a>
+                                                                               th:href="@{'/admin/certificates/certificate/' + ${cert.id}}"><i
+                                                                                    class="fa fa-edit fa-3x"></i>Edit
+                                                                            </a>
                                                                             <a href="#"
-                                                                               th:href="@{/admin/students/student(id=${regStudent.id})}"><i
-                                                                                    class="fa fa-trash-o fa-3x"></i></a>
+                                                                               th:href="@{'/admin/certificates/certificate/' + ${cert.id} + '/delete'}"><i
+                                                                                    class="fa fa-trash-o fa-3x"></i>Delete
+                                                                            </a>
                                                                         </div>
                                                                     </li>
                                                                 </ul>
@@ -924,51 +949,52 @@
                                             </div>
                                             <div class="row" th:remove="all">
                                                 <div class="col-sm-5">
-                                                    <div class="dataTables_info" id="certificatesDT_info" role="status"
+                                                    <div class="dataTables_info" id="certificates_dt_info" role="status"
                                                          aria-live="polite">Showing
                                                         1 to 10 of 57 entries
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-7">
                                                     <div class="dataTables_paginate paging_simple_numbers"
-                                                         id="certificatesDT_paginate">
+                                                         id="certificates_dt_paginate">
                                                         <ul class="pagination">
                                                             <li class="paginate_button previous disabled"
-                                                                id="certificatesDT_previous"><a href="#"
-                                                                                                aria-controls="certificatesDT"
-                                                                                                data-dt-idx="0"
-                                                                                                tabindex="0">Previous</a>
+                                                                id="certificates_dt_previous"><a href="#"
+                                                                                                 aria-controls="certificates_dt"
+                                                                                                 data-dt-idx="0"
+                                                                                                 tabindex="0">Previous</a>
                                                             </li>
                                                             <li class="paginate_button active"><a href="#"
-                                                                                                  aria-controls="certificatesDT"
+                                                                                                  aria-controls="certificates_dt"
                                                                                                   data-dt-idx="1"
                                                                                                   tabindex="0">1</a>
                                                             </li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="certificatesDT"
+                                                                                            aria-controls="certificates_dt"
                                                                                             data-dt-idx="2"
                                                                                             tabindex="0">2</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="certificatesDT"
+                                                                                            aria-controls="certificates_dt"
                                                                                             data-dt-idx="3"
                                                                                             tabindex="0">3</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="certificatesDT"
+                                                                                            aria-controls="certificates_dt"
                                                                                             data-dt-idx="4"
                                                                                             tabindex="0">4</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="certificatesDT"
+                                                                                            aria-controls="certificates_dt"
                                                                                             data-dt-idx="5"
                                                                                             tabindex="0">5</a></li>
                                                             <li class="paginate_button "><a href="#"
-                                                                                            aria-controls="certificatesDT"
+                                                                                            aria-controls="certificates_dt"
                                                                                             data-dt-idx="6"
                                                                                             tabindex="0">6</a></li>
-                                                            <li class="paginate_button next" id="certificatesDT_next"><a
-                                                                    href="#"
-                                                                    aria-controls="certificatesDT"
-                                                                    data-dt-idx="7"
-                                                                    tabindex="0">Next</a>
+                                                            <li class="paginate_button next" id="certificates_dt_next">
+                                                                <a
+                                                                        href="#"
+                                                                        aria-controls="certificates_dt"
+                                                                        data-dt-idx="7"
+                                                                        tabindex="0">Next</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -978,6 +1004,142 @@
                                     </div>
                                     <!-- /.box-body -->
                                 </div>
+
+                                <!-- box for adding new certificate table -->
+                                <div id="new-certificate" class="hidden box box-info">
+                                    <div class="box-header">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <h3 class="box-title">Add Certificate</h3>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="box-body" width="80%">
+                                        <!-- form start -->
+                                        <form id="frmAddCertificate" class="form-horizontal" action="#"
+                                              th:action="@{/admin/certificates/certificate}"
+                                              method="post" enctype="multipart/form-data" th:object="${certificate}">
+                                            <!-- certificate-ID -->
+                                            <div class="form-group">
+                                                <input type="text" hidden="hidden" th:value="*{id}">
+                                            </div>
+                                            <!-- /.certificate-id -->
+
+                                            <!-- input for photo -->
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-6 col-sm-6">
+
+                                                    <img src="../lib/dist/img/certificate/certificate.jpg"
+                                                         th:src="@{'/lib/dist/img/certificate/certificate.jpg'}"
+                                                         id="img-cert-photo" name="imageFile" class="img-circle"
+                                                         alt="Certificate Image"
+                                                         style="width: 160px; height: 160px" th:field="*{imageFile}"/>
+
+                                                    <input type="file" name="imageFile" id="input-cert-photo"
+                                                           class="hidden"
+                                                           th:field="*{imageFile}"/>
+                                                </div>
+                                            </div>
+                                            <!-- /.input-for-photo -->
+
+                                            <!-- input for name -->
+                                            <div th:class="form-group"
+                                                 th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+                                                <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="inputName"
+                                                           placeholder="Name"
+                                                           th:field="*{name}"/>
+                                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                                          th:class="help-block">Name Errors</span>
+                                                </div>
+                                            </div>
+                                            <!-- /.input-for-name -->
+
+                                            <!-- Dropdown list of Tracks -->
+                                            <div class="form-group"
+                                                 th:classappend="${#fields.hasErrors('studentTrack')}? 'has-error'">
+                                                <label for="select-track" class="col-sm-2 control-label">Track</label>
+
+                                                <div class="col-sm-10">
+                                                    <select id="select-track"
+                                                            class="form-control select2 select2-hidden-accessible"
+                                                            style="width: 100%;"
+                                                            tabindex="-1" aria-hidden="true"
+                                                            th:field="*{studentTrack}">
+                                                        <option value="" text="Select Track" selected>Select
+                                                            Track
+                                                        </option>
+                                                        <option th:each="track : ${regStudent.studentTracks}"
+                                                                th:value="${track.id}"
+                                                                th:text="${track.course.name} + ' | ' + ${track.course.activity.name}">
+                                                            Track
+                                                            name
+                                                        </option>
+                                                    </select>
+                                                    <span th:if="${#fields.hasErrors('event')}" th:errors="*{event}"
+                                                          th:class="help-block">Event Error</span>
+                                                </div>
+                                            </div>
+                                            <!-- / .tracks-dropdown-list -->
+
+                                            <!-- Dropdown list of events -->
+                                            <div class="form-group"
+                                                 th:classappend="${#fields.hasErrors('event')}? 'has-error'">
+                                                <label for="select-event" class="col-sm-2 control-label">Event</label>
+
+                                                <div class="col-sm-10">
+                                                    <select id="select-event"
+                                                            class="form-control select2 select2-hidden-accessible"
+                                                            style="width: 100%;"
+                                                            tabindex="-1" aria-hidden="true"
+                                                            th:field="*{event}">
+                                                        <option value="" text="Select Teacher" selected>Select
+                                                            Event
+                                                        </option>
+                                                        <option th:each="event : ${events}"
+                                                                th:value="${event.id}"
+                                                                th:text="${event.name}">Event Name
+                                                        </option>
+                                                    </select>
+                                                    <span th:if="${#fields.hasErrors('event')}" th:errors="*{event}"
+                                                          th:class="help-block">Event Error</span>
+                                                </div>
+                                            </div>
+                                            <!-- / .events-dropdown-list -->
+
+                                            <!-- Input for Comments -->
+                                            <div class="form-group">
+                                                <label for="inputComments"
+                                                       class="col-sm-2 control-label">Comment</label>
+
+                                                <div class="col-sm-10">
+                                        <textarea type="text" class="form-control" id="inputComments"
+                                                  placeholder="Set comments for the activity if needed"
+                                                  th:field="*{comments}">Extra info</textarea>
+                                                </div>
+                                            </div>
+                                            <!-- /.input-for-comments -->
+
+                                            <button type="submit" id="btn-save-certificate"
+                                                    class="btn btn-info pull-right">
+                                                Save
+                                            </button>
+                                            <button type="button" id="btn-cancel-certificate"
+                                                    class="btn btn-cancel pull-right">
+                                                Cancel
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="box-footer">
+
+                                    </div>
+
+                                </div>
+                                <!-- /.box for adding new tracks table -->
+
                             </div>
                             <!-- /.certificates-tab-pane -->
 
@@ -1098,11 +1260,13 @@
                                         <label class="col-sm-2 control-label">Country</label>
 
                                         <div class="col-sm-10">
-                                            <select class="form-control select2 select2-hidden-accessible"
+                                            <select id="select-country"
+                                                    class="form-control select2 select2-hidden-accessible"
                                                     style="width: 100%;"
                                                     tabindex="-1" aria-hidden="true" th:field="*{country}">
                                                 <option value="" selected="selected">Select Country</option>
-                                                <option th:each="country : ${countries}" th:value="${country.id}"
+                                                <option th:each="country : ${countries}"
+                                                        th:value="${country.id}"
                                                         th:text="${country.englishName}">Country Name
                                                 </option>
                                             </select>
@@ -1488,9 +1652,11 @@
             $('#new-tracks').addClass('hidden');
         });
 
-        //Initialize Select2 Elements
-        $(".select2").select2({
-            placeholder: "Country"
+        $('#btn-new-certificate').click(function () {
+            $('#new-certificate').removeClass('hidden');
+        });
+        $('#btn-cancel-certificate').click(function () {
+            $('#new-certificate').addClass('hidden');
         });
 
         $('#birthDatePicker').datepicker({
@@ -1504,11 +1670,18 @@
             responsive: true,
             "scrollX": true
         });
-        $("#certificatesDT").DataTable({
-            responsive: true,
-            "scrollX": true
+        $("#certificates_dt").DataTable({
+            responsive: true
         });
 
+        //Initialize Select2 Elements
+        $("#select-track").select2({
+            placeholder: "Select Track"
+        });
+        //Initialize Select2 Elements
+        $("#select-event").select2({
+            placeholder: "Select Event"
+        });
         //Initialize Select2 Elements
         $("#select-activity").select2({
             placeholder: "Select An Activity"

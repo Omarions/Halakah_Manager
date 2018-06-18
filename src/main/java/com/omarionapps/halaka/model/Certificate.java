@@ -1,5 +1,7 @@
 package com.omarionapps.halaka.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -9,21 +11,25 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 public class Certificate {
-    @Id
+	@Id
     @GeneratedValue
-    private int id;
-    @NotNull
+    private int           id;
+	@NotNull
     @NotEmpty
-    private String name;
-    @OneToOne
+    private String        name;
+	@OneToOne
     @JoinColumn(name = "student_track_id")
-    private StudentTrack studentTrack;
-    @ManyToOne
+    private StudentTrack  studentTrack;
+	@ManyToOne
     @JoinColumn(name = "event_id", referencedColumnName = "id")
-    private Event event;
-    @NotNull
-    private String image;
-    private String comments;
+    private Event         event;
+	@NotNull
+	private String        photo;
+	private String        comments;
+	@Transient
+	private MultipartFile imageFile;
+	@Transient
+	private String        imageUrl;
 
     public Certificate() {
     }
@@ -33,7 +39,7 @@ public class Certificate {
 
         this.name = name;
         this.event = event;
-        this.image = image;
+	    this.photo = image;
         this.comments = comments;
     }
 
@@ -53,12 +59,12 @@ public class Certificate {
         this.studentTrack = studentTrack;
     }
 
-    public String getImage() {
-        return image;
+	public String getPhoto() {
+		return photo;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+	public void setPhoto(String photo) {
+		this.photo = photo;
     }
 
     public String getComments() {
@@ -76,6 +82,22 @@ public class Certificate {
     public void setEvent(Event event) {
         this.event = event;
     }
+
+	public MultipartFile getImageFile() {
+		return imageFile;
+	}
+
+	public void setImage(MultipartFile imageFile) {
+		this.imageFile = imageFile;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
     @Override
     public int hashCode() {
@@ -99,7 +121,7 @@ public class Certificate {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", event='" + event.getName() + '\'' +
-                ", image='" + image + '\'' +
+		        ", photo='" + photo + '\'' +
                 ", comments='" + comments + '\'' +
                 '}';
     }

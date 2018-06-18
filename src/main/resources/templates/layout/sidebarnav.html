@@ -49,6 +49,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="sidebar-menu">
                 <li class="header">HEADER</li>
                 <!-- Optionally, you can add icons to the links -->
+
+                <!-- activity menu-tree -->
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-list"></i><span>Activities</span>
@@ -64,6 +66,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
+
+                <!-- course menu-tree -->
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-university" aria-hidden="true"></i> <span>Courses</span>
@@ -80,6 +84,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
+
+                <!-- certificate menu-tree -->
                 <li class="treeview">
                     <a href="#"><i class="fa fa-certificate"
                                    aria-hidden="true"></i>
@@ -96,11 +102,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                                             aria-hidden="true"></i>
                             <span>list</span></a>
                         </li>
-                        <li><a href="#" th:href="@{/admin/certificates/certificate}"><i class="fa fa-transgender"
-                                                                                        aria-hidden="true"></i>
-                            <span>New</span></a></li>
                     </ul>
                 </li>
+
+                <!-- student menu-tree -->
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Students</span>
@@ -124,6 +129,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
+
+                <!-- teacher menu-tree -->
                 <li class="treeview">
                     <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span>Teachers</span>
 <span class="pull-right-container">
@@ -139,8 +146,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
+
+                <!-- event menu-tree -->
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span>Events</span>
+                        <span class="pull-right-container">
+    <i class="fa fa-angle-left pull-right"></i>
+                                <span class="label label-primary pull-right"
+                                      th:text="${application.eventsCount}">4</span>
+                            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#" th:href="@{/admin/events}"><i class="fa fa-list-ul"></i> List</a></li>
+                        <li><a href="#" th:href="@{/admin/events/event}"><i class="fa fa-plus-square"></i> New</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
+                    </ul>
+                </li>
+
+                <!-- countries menu-tree -->
                 <li><a href="#" th:href="@{/admin/countries}"><i class="fa  fa-flag" aria-hidden="true"></i>
                     <span>Countries</span></a></li>
+
+                <!-- archive menu-tree -->
                 <li class="treeview">
                     <a href="#"><i class="fa fa-archive" aria-hidden="true"></i> <span>Archive</span>
                     <span class="pull-right-container">

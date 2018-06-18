@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:javascript="http://www.w3.org/1999/xhtml"
-      xmlns="http://www.w3.org/1999/xhtml">
-
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:javascript="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -16,29 +15,25 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
     <!-- DataTables -->
-    <link rel="stylesheet" href="../lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css"
-          th:href="@{/lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css}"/>
-    <link rel="stylesheet" href="../lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css"
-          th:href="@{/lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css}"/>
+    <link rel="stylesheet" href="../../lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css"
+          th:href="@{~/lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css}"/>
+    <link rel="stylesheet" href="../../lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css"
+          th:href="@{~/lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css}"/>
+
     <!-- Theme style -->
-    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
-    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css" th:href="@{/lib/dist/css/AdminLTE.css}"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
+    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css" th:href="@{~/lib/dist/css/AdminLTE.css}"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"
-          th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
-    <link rel="stylesheet" href="../lib/dist/css/certificates-custom.css"
-          th:href="@{/lib/dist/css/certificates-custom.css}"/>
-
+          th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
-
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <!-- include header section from the layout file -->
@@ -57,7 +52,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="active">Certificates</li>
+                <li class="active">Events</li>
             </ol>
         </section>
 
@@ -65,21 +60,37 @@
         <section class="content">
 
             <div class="box">
-                <!-- box header -->
                 <div class="box-header">
 
                     <div class="col-sm-6">
-                        <h3 class="box-title">Halaka Certificates List</h3>
+                        <h3 class="box-title">Halaka Events List</h3>
+                    </div>
+
+                    <!-- add new activity button -->
+                    <div class="col-sm-6">
+                        <form action="#" th:action="@{/admin/events/event}" method="get">
+                            <button type="submit" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add
+                                Event
+                            </button>
+                        </form>
                     </div>
 
                     <!-- Error message -->
-                    <div th:if="${message}">
-                        <div><br/></div>
+                    <div th:if="${messageSuccess}" class="row">
                         <div class="col-sm-12">
                             <div class="alert alert-success alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                 <h4><i class="icon fa fa-check"></i> Alert!</h4>
-                                <span th:text="${message}">Success alert preview. This alert is dismissable.</span>
+                                <span th:text="${messageSuccess}">Operation success message</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${messageError}" class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                                <span th:text="${messageError}">Error Message</span>
                             </div>
                         </div>
                     </div>
@@ -87,15 +98,13 @@
 
                 </div>
                 <!-- /.box-header -->
-
-                <!-- box body -->
                 <div class="box-body">
-                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <div id="event-list-dt_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row" th:remove="all">
                             <div class="col-sm-6">
-                                <div class="dataTables_length" id="example1_length">
+                                <div class="dataTables_length" id="event-list-dt_length">
                                     <label>Show
-                                        <select name="example1_length" aria-controls="example1"
+                                        <select name="event-list-dt_length" aria-controls="event-list-dt"
                                                 class="form-control input-sm">
                                             <option value="10">10</option>
                                             <option value="25">25</option>
@@ -106,51 +115,62 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div id="example1_filter" class="dataTables_filter">
+                                <div id="event-list-dt_filter" class="dataTables_filter">
                                     <label>Search:<input type="search" class="form-control input-sm"
-                                                         placeholder="Teacher Name" aria-controls="example1"></label>
+                                                         placeholder="Teacher Name"
+                                                         aria-controls="event-list-dt"></label>
                                 </div>
                             </div>
                         </div>
                         <div class="row" th:remove="all-but-first">
                             <div class="col-sm-12">
-                                <table id="example1" class="table table-bordered table-striped dataTable dt-responsive"
+                                <table id="event-list-dt"
+                                       class="table table-bordered table-striped dataTable dt-responsive"
                                        role="grid" style="width: 100%;"
-                                       aria-describedby="example1_info">
+                                       aria-describedby="event-list-dt_info">
 
                                     <!-- Header of the table -->
                                     <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
+                                        <th class="sorting_asc" tabindex="0" aria-controls="event-list-dt"
+                                            rowspan="1"
                                             colspan="1" aria-sort="ascending"
                                             aria-label="ID: activate to sort column descending"
                                             style="width: 130.4px;">ID
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="event-list-dt" rowspan="1"
                                             colspan="1" aria-label="Name: activate to sort column ascending"
                                             style="width: 266.4px;">Name
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Activity: activate to sort column ascending"
-                                            style="width: 237.4px;">Activity
+                                        <th class="sorting" tabindex="0" aria-controls="event-list-dt" rowspan="1"
+                                            colspan="1" aria-label="Total Courses: activate to sort column ascending"
+                                            style="width: 237.4px;">Introducer
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Student: activate to sort column ascending"
-                                            style="width: 186.4px;">Student
+                                        <th class="sorting" tabindex="0" aria-controls="event-list-dt" rowspan="1"
+                                            colspan="1" aria-label="Total Teachers: activate to sort column ascending"
+                                            style="width: 186.4px;">Description
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Teacher: activate to sort column ascending"
-                                            style="width: 135.2px;">Teacher
+                                        <th class="sorting" tabindex="0" aria-controls="event-list-dt" rowspan="1"
+                                            colspan="1" aria-label="Total Students: activate to sort column ascending"
+                                            style="width: 135.2px;">Guests
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Date: activate to sort column ascending"
-                                            style="width: 266.2px;">Date
+                                        <th class="sorting" tabindex="0" aria-controls="event-list-dt" rowspan="1"
+                                            colspan="1" aria-label="Total Students: activate to sort column ascending"
+                                            style="width: 135.2px;">Date
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Photo: activate to sort column ascending"
-                                            style="width: 135.2px;">Photo
+                                        <th class="sorting" tabindex="0" aria-controls="event-list-dt" rowspan="1"
+                                            colspan="1" aria-label="Total Students: activate to sort column ascending"
+                                            style="width: 135.2px;">Status
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                        <th class="sorting" tabindex="0" aria-controls="event-list-dt" rowspan="1"
+                                            colspan="1" aria-label="Total Students: activate to sort column ascending"
+                                            style="width: 135.2px;">Total Certificates
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="event-list-dt" rowspan="1"
+                                            colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                            style="width: 266.2px;">Comments
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="event-list-dt" rowspan="1"
                                             colspan="1" aria-label="CSS grade: activate to sort column ascending"
                                             style="width: 266.2px;">Tools
                                         </th>
@@ -160,36 +180,42 @@
 
                                     <!-- Body of the table -->
                                     <tbody th:remove="all-but-first">
-                                    <tr rol="row" th:each="cert : ${certificates}"
-                                        th:class="${certStat.odd}? 'odd' : 'even'">
-                                        <td class="sorting_1" th:text="${cert.id}">ID</td>
-                                        <td th:text="${cert.name}">Name</td>
+                                    <tr rol="row" th:each="event : ${events}"
+                                        th:class="${eventStat.odd}? 'odd' : 'even'">
+                                        <td class="sorting_1" th:text="${event.id}">Event ID</td>
                                         <td><a href="#"
-                                               th:href="@{'/admin/activities/activity/' + ${cert.studentTrack.course.activity.id}}">
-                                            <span th:text="${cert.studentTrack.course.activity.name}">Activity
-                                                Name</span> </a></td>
-                                        <td><a href="#"
-                                               th:href="@{/admin/students/student(id=${cert.studentTrack.student.id})}"><span
-                                                th:text="${cert.studentTrack.student.name}">Student Name</span></a></td>
-                                        <td><a href="#"
-                                               th:href="@{'/admin/teachers/teacher/' + ${cert.studentTrack.course.teacher.id}}"><span
-                                                th:text="${cert.studentTrack.course.teacher.name}">Teacher
-                                            Name</span></a></td>
-                                        <td><a href="#"
-                                               th:href="@{'/admin/events/event/' + ${cert.event.id}}"><span
-                                                th:text="${cert.event.eventDate}">Event Date</span></a></td>
-                                        <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
-                                                 th:src="@{${cert.imageUrl}}"
-                                                 alt="certificate image"></td>
+                                               th:href="@{'/admin/events/event/' + ${event.id}}">
+                                            <span class="text-center"
+                                                  th:text="${event.name}">Event Name
+                                            </span></a></td>
+                                        <td th:text="${event.introducer}">Introducer</td>
+                                        <td th:text="${event.description}">Description</td>
+                                        <td th:text="${event.guests}">Guests</td>
+                                        <td th:text="${event.eventDate}">Event Date</td>
+                                        <td>
+                                            <div th:switch="${event.status}">
+                                                 <span th:case="${eventStatuses[0].toString()}"
+                                                       class="label label-primary "
+                                                       th:text="${event.status}">Planned Event</span>
+                                                <span th:case="${eventStatuses[1].toString()}"
+                                                      class="label label-warning"
+                                                      th:text="${event.status}">Event is in progress</span>
+                                                <span th:case="${eventStatuses[2].toString()}"
+                                                      class="label label-success"
+                                                      th:text="${event.status}">Event is done</span>
+                                            </div>
+                                        </td>
+                                        <td th:text="${event.certificates.size()}">8</td>
+                                        <td th:text="${event.comments}">Comments</td>
                                         <td>
                                             <ul class="dtt">
                                                 <li>
                                                     <div class="tools">
                                                         <a href="#"
-                                                           th:href="@{/admin/certificates/certificate(id=${cert.id})}"><i
+                                                           th:href="@{'/admin/events/event/' + ${event.id} + '#settings'}"><i
                                                                 class="fa fa-edit fa-3x"></i></a>
                                                         <a href="#"
-                                                           th:href="@{/admin/certificates/certificate/delete(id=${cert.id})}"><i
+                                                           th:href="@{'/admin/events/event/' + ${event.id} + '/delete'}"><i
                                                                 class="fa fa-trash-o fa-3x"></i></a>
                                                     </div>
                                                 </li>
@@ -274,11 +300,13 @@
                                     <tr>
                                         <th rowspan="1" colspan="1">ID</th>
                                         <th rowspan="1" colspan="1">Name</th>
-                                        <th rowspan="1" colspan="1">Activity</th>
-                                        <th rowspan="1" colspan="1">Student</th>
-                                        <th rowspan="1" colspan="1">Teacher</th>
-                                        <th rowspan="1" colspan="1">Event Date</th>
-                                        <th rowspan="1" colspan="1">Photo</th>
+                                        <th rowspan="1" colspan="1">Introducer</th>
+                                        <th rowspan="1" colspan="1">Description</th>
+                                        <th rowspan="1" colspan="1">Guests</th>
+                                        <th rowspan="1" colspan="1">Date</th>
+                                        <th rowspan="1" colspan="1">Status</th>
+                                        <th rowspan="1" colspan="1">Total Certificates</th>
+                                        <th rowspan="1" colspan="1">Comments</th>
                                         <th rowspan="1" colspan="1">Tools</th>
                                     </tr>
                                     </tfoot>
@@ -290,34 +318,36 @@
 
                         <div class="row" th:remove="all">
                             <div class="col-sm-5">
-                                <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing
+                                <div class="dataTables_info" id="event-list-dt_info" role="status"
+                                     aria-live="polite">Showing
                                     1 to 10 of 57 entries
                                 </div>
                             </div>
                             <div class="col-sm-7">
-                                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                <div class="dataTables_paginate paging_simple_numbers" id="event-list-dt_paginate">
                                     <ul class="pagination">
-                                        <li class="paginate_button previous disabled" id="example1_previous"><a href="#"
-                                                                                                                aria-controls="example1"
-                                                                                                                data-dt-idx="0"
-                                                                                                                tabindex="0">Previous</a>
+                                        <li class="paginate_button previous disabled" id="event-list-dt_previous"><a
+                                                href="#"
+                                                aria-controls="event-list-dt"
+                                                data-dt-idx="0"
+                                                tabindex="0">Previous</a>
                                         </li>
-                                        <li class="paginate_button active"><a href="#" aria-controls="example1"
+                                        <li class="paginate_button active"><a href="#" aria-controls="event-list-dt"
                                                                               data-dt-idx="1" tabindex="0">1</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                        <li class="paginate_button "><a href="#" aria-controls="event-list-dt"
                                                                         data-dt-idx="2" tabindex="0">2</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                        <li class="paginate_button "><a href="#" aria-controls="event-list-dt"
                                                                         data-dt-idx="3" tabindex="0">3</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                        <li class="paginate_button "><a href="#" aria-controls="event-list-dt"
                                                                         data-dt-idx="4" tabindex="0">4</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                        <li class="paginate_button "><a href="#" aria-controls="event-list-dt"
                                                                         data-dt-idx="5" tabindex="0">5</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
+                                        <li class="paginate_button "><a href="#" aria-controls="event-list-dt"
                                                                         data-dt-idx="6" tabindex="0">6</a></li>
-                                        <li class="paginate_button next" id="example1_next"><a href="#"
-                                                                                               aria-controls="example1"
-                                                                                               data-dt-idx="7"
-                                                                                               tabindex="0">Next</a>
+                                        <li class="paginate_button next" id="event-list-dt_next"><a href="#"
+                                                                                                    aria-controls="event-list-dt"
+                                                                                                    data-dt-idx="7"
+                                                                                                    tabindex="0">Next</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -332,10 +362,9 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
     <!-- include footer section from the layout file -->
-    <div th:include="layout/footer :: footer"></div>
-
+    <div th:include="layout/footer :: footer">
+    </div>
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -526,50 +555,36 @@
         </div>
     </aside>
     <!-- /.control-sidebar -->
-
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
+<!-- to send data from db to the map in javascript code -->
 <!-- jQuery 2.2.3 -->
-<script src="../lib/plugins/jQuery/jquery-2.2.3.min.js" th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
+        th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- DataTables -->
-<script src="../lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js"
-        th:src="@{/lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js}"></script>
-<script src="../lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"
-        th:src="@{/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
+<script src="../../lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js"
+        th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js}"></script>
+<script src="../../lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"
+        th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
 <!-- Responsive extension for DataTables -->
-<script src="../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
-        th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
-<script src="../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
-        th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
+<script src="../../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
+        th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
+<script src="../../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
+        th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
+
 
 <script>
     $(function () {
-        $("#example1").DataTable({
+        $("#event-list-dt").DataTable({
             responsive: true
         });
-
-        // images click event
-        $('.box-body').click(function (e) {
-            if (e.target.className === 'cert-img') {
-                var $newDiv = $('<div>');
-                $newDiv.addClass('full-cert-img');
-                $newDiv.html('<i id="close-img" class="fa fa-times" aria-hidden="true"></i><img src="' + e.target.src + '">');
-                $('body').append($newDiv);
-                $('#close-img').click(function () {
-                    $newDiv.fadeOut(400, function () {
-                        $(this).remove();
-                    });
-                });
-            }
-        });
     });
+
 </script>
 </body>
-
 </html>

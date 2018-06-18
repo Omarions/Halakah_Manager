@@ -97,7 +97,7 @@ public class ActivityService {
 	 * @return count of activities
 	 */
 	public long getCount() {
-		return this.findAllOrderByName().stream().count();
+		return this.findAllOrderByName().size();
 	}
 
 	/**

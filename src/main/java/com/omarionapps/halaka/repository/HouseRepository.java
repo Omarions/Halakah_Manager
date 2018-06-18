@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface HouseRepository extends CrudRepository<House, Integer>{
 
 	House findHouseByName(String name);
+
+	Iterable<House> findAllByOrderById();
 }

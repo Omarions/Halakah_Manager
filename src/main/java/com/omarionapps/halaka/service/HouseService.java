@@ -26,16 +26,9 @@ public class HouseService {
 		return houseRepository.findById(id);
     }
 
-    public Iterable<House> findAllOrderById(){
-        return houseRepository.findAll();
-    }
-
-	public House findByName(String name) {
-		return houseRepository.findHouseByName(name);
-	}
     public Map<String, Integer> getHousingOccupyingMap(){
-        Iterable<House> list = this.findAllOrderById();
-        Map<String, Integer> map = new HashMap<>();
+        Iterable<House>      list = this.findAllByOrderById();
+        Map<String, Integer> map  = new HashMap<>();
 
         list.forEach((house) -> {
             if(house != null)
@@ -45,9 +38,17 @@ public class HouseService {
         return map;
     }
 
+    public House findByName(String name) {
+        return houseRepository.findHouseByName(name);
+    }
+
+    public Iterable<House> findAllByOrderById() {
+        return houseRepository.findAllByOrderById();
+    }
+
     public Map<String, Integer> getHousingCapacityMap(){
-        Map<String, Integer> map = new HashMap<>();
-        Iterable<House> list = this.findAllOrderById();
+        Map<String, Integer> map  = new HashMap<>();
+        Iterable<House>      list = this.findAllByOrderById();
         list.forEach((house) -> {
             map.put(house.getName(), house.getCapacity());
         });
@@ -57,8 +58,8 @@ public class HouseService {
 
 
     public int getTotalOccupied(){
-        int count = 0;
-        Iterable<House> list = this.findAllOrderById();
+        int             count    = 0;
+        Iterable<House> list     = this.findAllByOrderById();
         Iterator<House> iterator = list.iterator();
         while(iterator.hasNext()){
             count += iterator.next().getStudents().size();
@@ -68,8 +69,8 @@ public class HouseService {
     }
 
     public int getTotalFree(){
-        int count = 0;
-        Iterable<House> list = this.findAllOrderById();
+        int             count    = 0;
+        Iterable<House> list     = this.findAllByOrderById();
         Iterator<House> iterator = list.iterator();
         while(iterator.hasNext()){
             House house = iterator.next();
@@ -80,8 +81,8 @@ public class HouseService {
     }
 
     public int getTotalCapacity(){
-        int count = 0;
-        Iterable<House> list = this.findAllOrderById();
+        int             count    = 0;
+        Iterable<House> list     = this.findAllByOrderById();
         Iterator<House> iterator = list.iterator();
         while(iterator.hasNext()){
             count += iterator.next().getCapacity();

@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Map;
@@ -55,25 +54,6 @@ public class ActivityController {
 		return model;
 	}
 
-	@PostMapping("amdin/activities/activity")
-	public String addNewActivity(@Valid Activity activity, @RequestParam("image") MultipartFile image) {
-		if (image.getOriginalFilename().isEmpty()) {
-			System.out.println("Image: avatar5.png");
-			activity.setLogo("avatar5.png");
-		} else {
-			try {
-				storageService.store(image, LocationTag.ACTIVITY_STORE_LOC);
-				activity.setLogo(image.getOriginalFilename());
-			} catch (Exception e) {
-				log.error("Fails to Store the image!");
-				log.error(e.toString());
-			}
-		}
-		Activity savedActivity = activityService.save(activity);
-
-		return "redirect:/admin/activities/activity/" + savedActivity.getId();
-	}
-
 	@GetMapping("/admin/activities/activity/{activityId}")
 	public ModelAndView getProfileView(@PathVariable(value = "activityId") Integer activityId) {
 		ModelAndView       modelAndView     = new ModelAndView("admin/activity-profile");
@@ -102,6 +82,8 @@ public class ActivityController {
 			Set<Student> finalStoppedStudents = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FINAL_STOP);
 			Set<Student> firedStudents        = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FIRED);
 
+			certifiedStudents.stream().flatMap(student -> student.getStudentTracks().stream()).map((studentTrack) -> studentTrack.getCertificate()).forEach((certificate -> System.out.println("Cert: " + certificate)));
+			
 			modelAndView.addObject("activity", activity);
 			modelAndView.addObject("students", activityStudents);
 			modelAndView.addObject("countryStudents", countryStudents);
