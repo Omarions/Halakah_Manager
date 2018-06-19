@@ -204,7 +204,7 @@ public class ActivityService {
 				});
 			}
 		}
-		System.out.println("Country Status counts: " + result);
+		//System.out.println("Country Status counts: " + result);
 		return result;
 	}
 
@@ -228,30 +228,30 @@ public class ActivityService {
 		for (String key : countryStudents.keySet()) {
 			Map<String, Long> map = new HashMap<>();
 			Set<Student>      set = countryStudents.get(key);
-			System.out.println("Key: " + key + ", Value Size: " + set.size());
+			//	System.out.println("Key: " + key + ", Value Size: " + set.size());
 			set.stream().forEach((student) -> {
 
-				System.out.println("Code: " + key + ", Student ID: " + student.getId());
+				//	System.out.println("Code: " + key + ", Student ID: " + student.getId());
 				for (StudentStatus status : StudentStatus.values()) {
 					totalByStatus = (null == map.get(status.toString())) ? 0 : map.get(status.toString());
 					map.put(status.toString(), totalByStatus);
-					System.out.println("Initial Status: " + status + ", count:" + totalByStatus);
+					//	System.out.println("Initial Status: " + status + ", count:" + totalByStatus);
 					student.getStudentTracks()
 							.stream()
 							.filter((st) -> st.getStatus().equalsIgnoreCase(status.toString())
 									&& st.getCourse().getActivity().getId() == activity.getId())
 							.forEach((track) -> {
 								map.put(status.toString(), ++totalByStatus);
-								System.out.println("Existed Status: " + status + ", count:" + totalByStatus);
+								//System.out.println("Existed Status: " + status + ", count:" + totalByStatus);
 							});
 				}
 
 			});
 
-			System.out.println("SET_MAP: " + map);
+			//System.out.println("SET_MAP: " + map);
 			result.put(key, map);
 		}
-		System.out.println("Result: " + result);
+		//System.out.println("Result: " + result);
 		return result;
 	}
 
@@ -298,7 +298,7 @@ public class ActivityService {
 				result.put(key, tMap);
 			});
 		}
-		System.out.println("Activity Courses: " + result);
+		//System.out.println("Activity Courses: " + result);
 		return result;
 	}
 

@@ -34,7 +34,7 @@ public class HouseService {
             if(house != null)
                 map.put(house.getName(), house.getStudents().size());
         });
-        System.out.println(map);
+	    //System.out.println(map);
         return map;
     }
 
@@ -52,7 +52,7 @@ public class HouseService {
         list.forEach((house) -> {
             map.put(house.getName(), house.getCapacity());
         });
-        System.out.println(map);
+	    //System.out.println(map);
         return map;
     }
 
@@ -64,7 +64,7 @@ public class HouseService {
         while(iterator.hasNext()){
             count += iterator.next().getStudents().size();
         }
-        System.out.println("Total Busy Setas: " + count);
+	    //System.out.println("Total Busy Setas: " + count);
         return count;
     }
 
@@ -76,7 +76,7 @@ public class HouseService {
             House house = iterator.next();
             count += (house.getCapacity() - house.getStudents().size());
         }
-        System.out.println("Total Free Seats: " + count);
+	    //System.out.println("Total Free Seats: " + count);
         return count;
     }
 

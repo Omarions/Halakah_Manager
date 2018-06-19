@@ -69,7 +69,7 @@ public class StudentTrackController {
 		StudentTrack updatedTrack = studentTrackService.save(track);
 		Student      student      = updatedTrack.getStudent();
 
-		System.out.println("Updated Track ID : " + updatedTrack.getId());
+		//System.out.println("Updated Track ID : " + updatedTrack.getId());
 
 		return "redirect:/admin/students/student/" + student.getId();
 	}

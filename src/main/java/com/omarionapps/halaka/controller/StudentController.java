@@ -248,7 +248,7 @@ public class StudentController {
 		student.setHouse(regStudent.getHouse());
 
 		if (null == image) {
-			System.out.println("file is null");
+			//System.out.println("file is null");
 			student.setPhoto(student.getPhoto());
 		} else {
 			try {
@@ -283,19 +283,19 @@ public class StudentController {
 			Student returnedStudent = null;
 
 			if (regStudent.getWishes() != null) {
-				System.out.println("Not Null Wish...");
+				//	System.out.println("Not Null Wish...");
 				regStudent.getWishes().stream()
 						.filter((wish) -> wish.isSelected())
 						.forEach((wish) -> {
 
 							if (wish.getActivityId() == 7) {
-								System.out.println("Choose housing...");
+								//	System.out.println("Choose housing...");
 								regStudent.setHouse(wish.getHouse());
 							} else {
 								StudentTrack track = new StudentTrack();
 								//track.setStudent(regStudent);
 								track.setCourse(wish.getTrack().getCourse());
-								System.out.println("Selected Course for track: " + track.getCourse().getId());
+								//System.out.println("Selected Course for track: " + track.getCourse().getId());
 								track.setCertificate(wish.getTrack().getCertificate());
 								track.setRegisterDate(wish.getTrack().getRegisterDate());
 								track.setStartDate(wish.getTrack().getStartDate());
@@ -312,7 +312,7 @@ public class StudentController {
 			}
 
 			if (image.getOriginalFilename().isEmpty()) {
-				System.out.println("Image: avatar5.png");
+				//	System.out.println("Image: avatar5.png");
 				regStudent.setPhoto("avatar5.png");
 			} else {
 				try {
@@ -356,19 +356,19 @@ public class StudentController {
 	private List<StudentTrack> assignTracks(List<Wish> wishes) {
 		List<StudentTrack> tracks = new ArrayList<>();
 		if (wishes != null) {
-			System.out.println("Not Null Wish...");
+			//System.out.println("Not Null Wish...");
 			wishes.stream()
 					.filter((wish) -> wish.isSelected())
 					.forEach((wish) -> {
 
 						if (wish.getActivityId() == 7) {
-							System.out.println("Choose housing...");
+							//	System.out.println("Choose housing...");
 							//regStudent.setHouse(wish.getHouse());
 						} else {
 							StudentTrack track = new StudentTrack();
 							//track.setStudent(regStudent);
 							track.setCourse(wish.getTrack().getCourse());
-							System.out.println("Selected Course for track: " + track.getCourse().getId());
+							//	System.out.println("Selected Course for track: " + track.getCourse().getId());
 							track.setCertificate(wish.getTrack().getCertificate());
 							track.setRegisterDate(wish.getTrack().getRegisterDate());
 							track.setStartDate(wish.getTrack().getStartDate());

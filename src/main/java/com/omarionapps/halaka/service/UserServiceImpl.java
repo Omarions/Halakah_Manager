@@ -38,10 +38,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         //user.setStatus(true);
         user.setId(user.getId());
-        System.out.println("User:" + user.toString());
+	    //System.out.println("User:" + user.toString());
 
         Role userRole = roleRepository.findByRole("ADMIN");
-        System.out.println("Role: " + userRole.toString());
+	    //System.out.println("Role: " + userRole.toString());
         userRole.setId(userRole.getId());
         userRole.setRole(userRole.getRole());
 

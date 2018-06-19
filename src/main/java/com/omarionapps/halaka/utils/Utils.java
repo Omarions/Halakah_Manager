@@ -6,7 +6,7 @@ public class Utils {
 		try {
 			id = Integer.parseInt(String.valueOf(name));
 		} catch (NumberFormatException e) {
-			System.out.println(e.toString());
+			//System.out.println(e.toString());
 		}
 		return id;
 	}

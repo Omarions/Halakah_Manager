@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping(value = "/admin/user/updateStatus")
     public String updateStatus(@RequestParam(value = "email") String email, @RequestParam(value = "userStatus") String userStatus) {
-        System.out.println("UserEmail: " + email + ", new Status: " + userStatus);
+	    //System.out.println("UserEmail: " + email + ", new Status: " + userStatus);
         User user = userService.findUserByEmail(email);
         user.setName(user.getName());
         user.setRoles(user.getRoles());

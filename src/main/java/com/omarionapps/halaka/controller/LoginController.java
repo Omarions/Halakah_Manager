@@ -28,13 +28,13 @@ public class LoginController {
             if (auth != null) {
                 //new SecurityContextLogoutHandler().logout(request, response, auth);
                 Object principal = auth.getPrincipal();
-                System.out.println("Principal: " + principal);
+	            //System.out.println("Principal: " + principal);
                 String userEmail = null;
                 if (principal instanceof UserDetails) {
 
                     userEmail = ((UserDetails) principal).getUsername();
                     modelAndView.addObject("userEmail", userEmail);
-                    System.out.println(principal);
+	                //System.out.println(principal);
 
                 }
 

@@ -91,7 +91,7 @@ public class StudentService {
 		student.setArchived(false);
 		student.setArchivedDate(null);
 		student.setStudentTracks(regStudent.getStudentTracks());
-		System.out.println("Student after cast: " + student);
+		//System.out.println("Student after cast: " + student);
 		return save(student);
 	}
 

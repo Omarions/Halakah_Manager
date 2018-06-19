@@ -134,7 +134,7 @@ public class TeacherController {
 			updateTeacher.setComments(teacher.getComments());
 
 			if (null == image) {
-				System.out.println("file is null");
+				//	System.out.println("file is null");
 				updateTeacher.setPhoto(updateTeacher.getPhoto());
 			} else {
 				try {

@@ -4,7 +4,10 @@ import com.omarionapps.halaka.model.Activity;
 import com.omarionapps.halaka.model.Course;
 import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.model.StudentStatus;
-import com.omarionapps.halaka.service.*;
+import com.omarionapps.halaka.service.ActivityService;
+import com.omarionapps.halaka.service.CountryService;
+import com.omarionapps.halaka.service.CourseService;
+import com.omarionapps.halaka.service.StorageService;
 import com.omarionapps.halaka.utils.LocationTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,16 +34,14 @@ import java.util.Set;
 public class ActivityController {
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	private ActivityService activityService;
-	private TeacherService  teacherService;
 	private CountryService  countryService;
 	private CourseService   courseService;
 	private StorageService  storageService;
 
 	@Autowired
-	public ActivityController(ActivityService activityService, TeacherService teacherService,
+	public ActivityController(ActivityService activityService,
 	                          CountryService countryService, CourseService courseService, StorageService storageService) {
 		this.activityService = activityService;
-		this.teacherService = teacherService;
 		this.countryService = countryService;
 		this.courseService = courseService;
 		this.storageService = storageService;
@@ -58,7 +59,7 @@ public class ActivityController {
 	public ModelAndView getProfileView(@PathVariable(value = "activityId") Integer activityId) {
 		ModelAndView       modelAndView     = new ModelAndView("admin/activity-profile");
 		Optional<Activity> optActivity      = activityService.findById(activityId);
-		Activity           activity         = (optActivity.isPresent()) ? optActivity.get() : null;
+		Activity           activity         = optActivity.get();
 		Set<Student>       activityStudents = activityService.getStudentsByActivity(activity);
 
 		activity.setTeacher(activityService.getTeachersByActivity(activity));
@@ -82,8 +83,10 @@ public class ActivityController {
 			Set<Student> finalStoppedStudents = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FINAL_STOP);
 			Set<Student> firedStudents        = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FIRED);
 
-			certifiedStudents.stream().flatMap(student -> student.getStudentTracks().stream()).map((studentTrack) -> studentTrack.getCertificate()).forEach((certificate -> System.out.println("Cert: " + certificate)));
-			
+			//certifiedStudents.stream().flatMap(student -> student.getStudentTracks().stream()).map((studentTrack) ->
+			//studentTrack.getCertificate()).forEach((certificate -> System.out.println("Cert: " +
+			//	certificate)));
+
 			modelAndView.addObject("activity", activity);
 			modelAndView.addObject("students", activityStudents);
 			modelAndView.addObject("countryStudents", countryStudents);
@@ -118,36 +121,39 @@ public class ActivityController {
 
 	@PostMapping("/admin/activities/activity/{activityId}")
 	public String updateActivity(Activity activity, @PathVariable(value = "activityId") Integer activityId, @RequestParam("logoFile") MultipartFile logoFile) {
-		Optional<Activity> optActivity = activityService.findById(activity.getId());
-		Activity           newActivity = optActivity.get();
-		newActivity.setName(activity.getName());
-		newActivity.setComments(activity.getComments());
-		newActivity.setCourses(activity.getCourses());
-		newActivity.setArchived(activity.isArchived());
+		Optional<Activity> optActivity = activityService.findById(activityId);
+		if (optActivity.isPresent()) {
+			Activity newActivity = optActivity.get();
+			newActivity.setName(activity.getName());
+			newActivity.setComments(activity.getComments());
+			newActivity.setCourses(activity.getCourses());
+			newActivity.setArchived(activity.isArchived());
 
-		if (null == logoFile) {
-			System.out.println("file is null");
-			newActivity.setLogo(activity.getLogo());
-		} else {
-			try {
-				storageService.store(logoFile, LocationTag.ACTIVITY_STORE_LOC);
-				storageService.deletePhotoByName(activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC);
-				newActivity.setLogo(logoFile.getOriginalFilename());
-			} catch (Exception e) {
-				log.error("Fails to Store the image!");
-				log.error(e.toString());
+			if (null == logoFile) {
+				//	System.out.println("file is null");
+				newActivity.setLogo(activity.getLogo());
+			} else {
+				try {
+					storageService.store(logoFile, LocationTag.ACTIVITY_STORE_LOC);
+					storageService.deletePhotoByName(activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC);
+					newActivity.setLogo(logoFile.getOriginalFilename());
+				} catch (Exception e) {
+					log.error("Fails to Store the image!");
+					log.error(e.toString());
+				}
 			}
-		}
-		Activity returnedActivity = activityService.save(newActivity);
+			Activity returnedActivity = activityService.save(newActivity);
 
-		return "redirect:/admin/activities/activity/" + returnedActivity.getId();
+			return "redirect:/admin/activities/activity/" + returnedActivity.getId();
+		}
+		return "redirect:/admin/activities/activity/" + activityId;
 	}
 
 	@PostMapping("/admin/activities/activity")
 	public String addActivity(Activity activity, @RequestParam("logoFile") MultipartFile logoFile) {
 
 		if (null == logoFile) {
-			System.out.println("file is null");
+			//System.out.println("file is null");
 			activity.setLogo("");
 		} else {
 			try {

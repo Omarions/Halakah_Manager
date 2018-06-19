@@ -26,7 +26,7 @@ public class RestAPIContrller {
 	    Activity                         activity    = optActivity.get();
 	    Iterable<Course>                 courses     = activity.getCourses();
         ResponseEntity<Iterable<Course>> re          = new ResponseEntity(courses, HttpStatus.OK);
-        System.out.println("JS: " + re.toString());
+	    //System.out.println("JS: " + re.toString());
         return re;
     }
 }

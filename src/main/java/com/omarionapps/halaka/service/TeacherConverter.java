@@ -21,8 +21,8 @@ public class TeacherConverter implements Formatter<Teacher> {
                 int id = Integer.valueOf(s);
 	            return teacherService.findOneById(id).get();
             }catch (Exception e){
-                System.out.println("Exception occurred in Teacher Converter");
-                System.out.println(e.toString());
+	            //System.out.println("Exception occurred in Teacher Converter");
+	            //System.out.println(e.toString());
             }
         }
 
