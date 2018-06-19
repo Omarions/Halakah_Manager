@@ -1,9 +1,11 @@
 package com.omarionapps.halaka.controller;
 
 import com.omarionapps.halaka.model.Certificate;
+import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.model.StudentTrack;
 import com.omarionapps.halaka.service.CertificateService;
+import com.omarionapps.halaka.service.EventService;
 import com.omarionapps.halaka.service.StorageService;
 import com.omarionapps.halaka.service.StudentTrackService;
 import com.omarionapps.halaka.utils.LocationTag;
@@ -35,6 +37,8 @@ public class CertificateController {
 	@Autowired
 	StudentTrackService studentTrackService;
 	@Autowired
+	EventService        eventService;
+	@Autowired
 	StorageService      storageService;
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -55,6 +59,45 @@ public class CertificateController {
 
 		return modelAndView;
 	}
+
+	/**
+	 * Send the certificate to delete
+	 *
+	 * @param certId        the certificate ID to be archived
+	 * @param redirectAttrs the message to be send with the link to be directed to after archiving success.
+	 * @return the link to be directed to after success.
+	 */
+	@GetMapping("/admin/certificates/certificate/{certId}")
+	public ModelAndView getCertificateProfileView(@PathVariable(value = "certId") int certId, RedirectAttributes
+			redirectAttrs) {
+		ModelAndView          modelAndView = new ModelAndView("admin/certificate-profile");
+		Optional<Certificate> cert         = certificateService.findById(certId);
+		Certificate           certificate  = cert.get();
+		Student               student      = certificate.getStudentTrack().getStudent();
+		String photoUrl = MvcUriComponentsBuilder.
+				fromMethodName(PhotoController.class,
+						"getFile",
+						student.getPhoto(),
+						LocationTag.STUDENTS_STORE_LOC)
+				.build()
+				.toString();
+
+		student.setPhotoUrl(photoUrl);
+
+		if (null != cert) {
+			redirectAttrs.addFlashAttribute("msgCertDeleteSuccess", "Certificate with ID( " + certId + " ) has been deleted successfully");
+		} else {
+			redirectAttrs.addFlashAttribute("msgCertDeleteError", "An error happens while deleting the certificate with ID( " +
+					certId + " )");
+		}
+
+		modelAndView.addObject("certificate", certificate);
+		modelAndView.addObject("regStudent", cert.get().getStudentTrack().getStudent());
+		modelAndView.addObject("events", eventService.getAllOrderByEventDate());
+
+		return modelAndView;
+	}
+
 
 	/**
 	 * Send the certificate to delete
@@ -110,5 +153,32 @@ public class CertificateController {
 
 		return "redirect:/admin/students/student/" + newCert.getStudentTrack().getStudent().getId();
 	}
+
+	@PostMapping("admin/certificates/certificate/{certId}")
+	public String updateCertificate(Certificate certificate, @PathVariable(value = "certId") Integer certId, @RequestParam("imageFile") MultipartFile image) {
+		Certificate m_certificate = certificateService.findById(certId).get();
+
+		if (image.getOriginalFilename().isEmpty()) {
+			m_certificate.setPhoto("certificate_default.jpg");
+		} else {
+			try {
+				storageService.store(image, LocationTag.CERT_STORE_LOC);
+				storageService.deletePhotoByName(m_certificate.getPhoto(), LocationTag.CERT_STORE_LOC);
+				m_certificate.setPhoto(image.getOriginalFilename());
+			} catch (Exception e) {
+				log.error("Fails to Store the image!");
+				log.error(e.toString());
+			}
+		}
+		m_certificate.setName(certificate.getName());
+		m_certificate.setEvent(certificate.getEvent());
+		m_certificate.setStudentTrack(certificate.getStudentTrack());
+		m_certificate.setComments(certificate.getComments());
+
+		Certificate updatedCert = certificateService.save(m_certificate);
+
+		return "redirect:/admin/students/student/" + updatedCert.getStudentTrack().getStudent().getId();
+	}
+
 
 }
