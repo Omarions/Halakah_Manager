@@ -5,10 +5,7 @@ import com.omarionapps.halaka.repository.HouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Omar on 15-Apr-17.
@@ -42,7 +39,7 @@ public class HouseService {
         return houseRepository.findHouseByName(name);
     }
 
-    public Iterable<House> findAllByOrderById() {
+	public List<House> findAllByOrderById() {
         return houseRepository.findAllByOrderById();
     }
 

@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -49,8 +51,17 @@ public class ActivityController {
 
 	@GetMapping("/admin/activities")
 	public ModelAndView getAll() {
-		ModelAndView model = new ModelAndView("admin/activity-list");
-		model.addObject("activities", activityService.findAllByArchived(false));
+		ModelAndView   model      = new ModelAndView("admin/activity-list");
+		List<Activity> activities = activityService.findAllByArchived(false);
+		activities.stream().forEach(activity -> {
+			String logoUrl = MvcUriComponentsBuilder
+					.fromMethodName(PhotoController.class, "getFile", activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC)
+					.build()
+					.toString();
+
+			activity.setLogoUrl(logoUrl);
+		});
+		model.addObject("activities", activities);
 		model.addObject("students", activityService.getTotalStudents());
 		return model;
 	}
@@ -83,9 +94,12 @@ public class ActivityController {
 			Set<Student> finalStoppedStudents = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FINAL_STOP);
 			Set<Student> firedStudents        = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FIRED);
 
-			//certifiedStudents.stream().flatMap(student -> student.getStudentTracks().stream()).map((studentTrack) ->
-			//studentTrack.getCertificate()).forEach((certificate -> System.out.println("Cert: " +
-			//	certificate)));
+			String logoUrl = MvcUriComponentsBuilder
+					.fromMethodName(PhotoController.class, "getFile", activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC)
+					.build()
+					.toString();
+
+			activity.setLogoUrl(logoUrl);
 
 			modelAndView.addObject("activity", activity);
 			modelAndView.addObject("students", activityStudents);

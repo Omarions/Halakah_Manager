@@ -138,7 +138,8 @@ public class CourseController {
 		List<Activity>     activities  = Stream.of(activity).collect(Collectors.toList());
 		model.addObject("course", new Course());
 		model.addObject("activities", activities);
-		model.addObject("teachers", teacherService.findAllByOrderByName());
+		model.addObject("teachers", teacherService.findAllByArchive(false));
+		model.addObject("weekDays", WeekDays.values());
 		return model;
 	}
 

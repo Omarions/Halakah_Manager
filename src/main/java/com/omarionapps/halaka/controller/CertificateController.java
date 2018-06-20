@@ -64,12 +64,10 @@ public class CertificateController {
 	 * Send the certificate to delete
 	 *
 	 * @param certId        the certificate ID to be archived
-	 * @param redirectAttrs the message to be send with the link to be directed to after archiving success.
 	 * @return the link to be directed to after success.
 	 */
 	@GetMapping("/admin/certificates/certificate/{certId}")
-	public ModelAndView getCertificateProfileView(@PathVariable(value = "certId") int certId, RedirectAttributes
-			redirectAttrs) {
+	public ModelAndView getCertificateProfileView(@PathVariable(value = "certId") int certId) {
 		ModelAndView          modelAndView = new ModelAndView("admin/certificate-profile");
 		Optional<Certificate> cert         = certificateService.findById(certId);
 		Certificate           certificate  = cert.get();
@@ -85,9 +83,10 @@ public class CertificateController {
 		student.setPhotoUrl(photoUrl);
 
 		if (null != cert) {
-			redirectAttrs.addFlashAttribute("msgCertDeleteSuccess", "Certificate with ID( " + certId + " ) has been deleted successfully");
+			modelAndView.addObject("msgCertDeleteSuccess", "Certificate with ID( " + certId + " ) has been deleted " +
+					"successfully");
 		} else {
-			redirectAttrs.addFlashAttribute("msgCertDeleteError", "An error happens while deleting the certificate with ID( " +
+			modelAndView.addObject("msgCertDeleteError", "An error happens while deleting the certificate with ID( " +
 					certId + " )");
 		}
 

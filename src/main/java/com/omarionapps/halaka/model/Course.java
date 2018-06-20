@@ -206,7 +206,7 @@ public class Course implements Serializable {
                         st.getStatus().equals(StudentStatus.TEMP_STOP.toString()))
                 .count();
 
-        return (capacity - occupied);
+		return (getCapacity() - occupied);
 	}
 
     @JsonIgnore

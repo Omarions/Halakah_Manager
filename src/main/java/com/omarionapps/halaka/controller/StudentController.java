@@ -157,18 +157,15 @@ public class StudentController {
 		regStudent.setWishes(wishes);
 
 		//get the list of activities and houses from the DB
-		Iterable<Activity> itrActivities = activityService.findAllOrderByName();
-		Iterable<House>    itrHouses     = houseService.findAllByOrderById();
-		//fill activities and houses lists with data from DB
-		itrActivities.forEach((activity -> activities.add(activity)));
-		itrHouses.forEach((house) -> houses.add(house));
+		activities = activityService.findAllByArchived(false);
+		houses = houseService.findAllByOrderById();
 
 
 		model.addObject("regStudent", regStudent);
 		//send the list of activities to the view.
-		model.addObject("activities", itrActivities);
+		model.addObject("activities", activities);
 		//send the houses list to the view.
-		model.addObject("houses", itrHouses);
+		model.addObject("houses", houses);
 		//send the status values to the view
 		model.addObject("trackStatuses", StudentStatus.values());
 		//send the countries to the view.

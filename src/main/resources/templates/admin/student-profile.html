@@ -551,15 +551,62 @@
                                                        role="grid" style="width: 100%;"
                                                        aria-describedby="add-student-tracks-dt_info">
                                                     <thead>
-                                                    <tr>
-                                                        <th>Select</th>
-                                                        <th>Activity</th>
-                                                        <th>Course</th>
-                                                        <th>Track Status</th>
-                                                        <th>Register Date</th>
-                                                        <th>Start Date</th>
-                                                        <th>Evaluation</th>
-                                                        <th>Comments</th>
+                                                    <tr role="row">
+                                                        <th class="sorting_asc" tabindex="0"
+                                                            aria-controls="add-student-tracks-dt" rowspan="1"
+                                                            colspan="1" aria-sort="ascending"
+                                                            aria-label="Select: activate to sort column descending"
+                                                            style="width: 130.4px;">Select
+                                                        </th>
+                                                        <th class="sorting" tabindex="0"
+                                                            aria-controls="add-student-tracks-dt"
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                            aria-label="Activity: activate to sort column ascending"
+                                                            style="width: 266.4px;">Activity
+                                                        </th>
+                                                        <th class="sorting" tabindex="0"
+                                                            aria-controls="add-student-tracks-dt"
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                            aria-label="Course: activate to sort column ascending"
+                                                            style="width: 266.4px;">Course
+                                                        </th>
+                                                        <th class="sorting" tabindex="0"
+                                                            aria-controls="add-student-tracks-dt"
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                            aria-label="Track Status: activate to sort column ascending"
+                                                            style="width: 135.2px;">Track Status
+                                                        </th>
+                                                        <th class="sorting" tabindex="0"
+                                                            aria-controls="add-student-tracks-dt"
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                            aria-label="Register Date: activate to sort column ascending"
+                                                            style="width: 135.2px;">Register Date
+                                                        </th>
+                                                        <th class="sorting" tabindex="0"
+                                                            aria-controls="add-student-tracks-dt"
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                            aria-label="Start Date: activate to sort column ascending"
+                                                            style="width: 135.2px;">Start Date
+                                                        </th>
+                                                        <th class="sorting" tabindex="0"
+                                                            aria-controls="add-student-tracks-dt"
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                            aria-label="Evaluation: activate to sort column ascending"
+                                                            style="width: 135.2px;">Evaluation
+                                                        </th>
+                                                        <th class="sorting" tabindex="0"
+                                                            aria-controls="student-tracks-dt"
+                                                            rowspan="1"
+                                                            colspan="1"
+                                                            aria-label="Comment: activate to sort column ascending"
+                                                            style="width: 266.2px;">Comments
+                                                        </th>
                                                     </tr>
                                                     </thead>
                                                     <tbody id="tracks-data">
@@ -584,8 +631,12 @@
                                                             </select>
 
                                                         </td>
+
+
+                                                        <!-- courses drop-down -->
                                                         <td>
-                                                            <select id="select-courses"
+                                                            <!-- house drop-down -->
+                                                            <select id="select-houses"
                                                                     class="select2 form-control table-selects"
                                                                     th:field="${regStudent.wishes[__${stat.index}__].house}"
                                                                     th:if="(${activities[__${stat.index}__].id}) == 7">
@@ -595,6 +646,8 @@
                                                                     Select Course
                                                                 </option>
                                                             </select>
+
+                                                            <!-- courses drop-down -->
                                                             <select id="select-courses"
                                                                     class="select2 form-control table-selects"
                                                                     th:field="${regStudent.wishes[__${stat.index}__].track.course}"
@@ -607,6 +660,8 @@
                                                                 </option>
                                                             </select>
                                                         </td>
+
+                                                        <!-- track status drop-down -->
                                                         <td>
                                                             <select id="select-status"
                                                                     class="select2 form-control table-selects"
@@ -620,6 +675,8 @@
 
                                                             </select>
                                                         </td>
+
+                                                        <!-- register date date-picker -->
                                                         <td>
                                                             <div class="input-group date form-control">
                                                                 <div class="input-group-addon">
@@ -633,8 +690,10 @@
                                                                        th:field="${regStudent.wishes[__${stat.index}__].track.registerDate}"/>
                                                             </div>
                                                         </td>
+
+                                                        <!-- start date date-picker -->
                                                         <td>
-                                                            <div class="input-group date">
+                                                            <div class="input-group date form-control ">
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
@@ -646,6 +705,8 @@
                                                                        th:field="${regStudent.wishes[__${stat.index}__].track.startDate}"/>
                                                             </div>
                                                         </td>
+
+                                                        <!-- evaluation input -->
                                                         <td>
                                                             <input type="text"
                                                                    id="input-evaluation"
@@ -654,6 +715,8 @@
                                                                    name="evaluation"
                                                                    th:field="${regStudent.wishes[__${stat.index}__].track.evaluation}"/>
                                                         </td>
+
+                                                        <!-- comment input -->
                                                         <td>
                                                                 <textarea type="text" class="form-control"
                                                                           id="track-comments"
@@ -663,6 +726,18 @@
                                                     </tr>
 
                                                     </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <th rowspan="1" colspan="1">Select</th>
+                                                        <th rowspan="1" colspan="1">Activity</th>
+                                                        <th rowspan="1" colspan="1">Course</th>
+                                                        <th rowspan="1" colspan="1">Track Status</th>
+                                                        <th rowspan="1" colspan="1">Register Date</th>
+                                                        <th rowspan="1" colspan="1">Start Date</th>
+                                                        <th rowspan="1" colspan="1">Evaluation</th>
+                                                        <th rowspan="1" colspan="1">Comments</th>
+                                                    </tr>
+                                                    </tfoot>
                                                 </table>
                                                 <!-- /.table-of-created-tracks -->
                                             </div>
@@ -775,6 +850,13 @@
                                                                 aria-controls="certificates_dt"
                                                                 rowspan="1"
                                                                 colspan="1"
+                                                                aria-label="Certificate Photo: activate to sort column ascending"
+                                                                style="width: 266.2px;">Photo
+                                                            </th>
+                                                            <th class="sorting" tabindex="0"
+                                                                aria-controls="certificates_dt"
+                                                                rowspan="1"
+                                                                colspan="1"
                                                                 aria-label="Name: activate to sort column ascending"
                                                                 style="width: 266.4px;">Name
                                                             </th>
@@ -803,13 +885,6 @@
                                                                 aria-controls="certificates_dt"
                                                                 rowspan="1"
                                                                 colspan="1"
-                                                                aria-label="Certificate Photo: activate to sort column ascending"
-                                                                style="width: 266.2px;">Certificate Photo
-                                                            </th>
-                                                            <th class="sorting" tabindex="0"
-                                                                aria-controls="certificates_dt"
-                                                                rowspan="1"
-                                                                colspan="1"
                                                                 aria-label="Comments: activate to sort column ascending"
                                                                 style="width: 266.2px;">Comments
                                                             </th>
@@ -831,6 +906,9 @@
                                                             <td class="sorting_1" th:text="${cert.id}">Certificate
                                                                 ID
                                                             </td>
+                                                            <td><img class="img-circle" src="#" style="width: 50%;"
+                                                                     th:src="@{${cert.imageUrl}}"
+                                                                     alt="Certificate Photo"/></td>
                                                             <td th:text="${cert.name}">Certificate's name</td>
                                                             <td><a href="#"
                                                                    th:href="@{'/admin/activities/activity/' + ${cert.studentTrack.course.activity.id}}"><span
@@ -841,9 +919,7 @@
                                                                     th:text="${cert.studentTrack.course.teacher.name}">Teacher Name</span></a>
                                                             </td>
                                                             <td th:text="${cert.event.eventDate}">Release Date</td>
-                                                            <td><img class="img-circle" src="#"
-                                                                     th:src="@{${cert.imageUrl}}"
-                                                                     alt="Certificate Photo"/></td>
+
                                                             <td th:text="${cert.comments}">Certificate comments</td>
                                                             <td>
                                                                 <ul class="dtt">
@@ -936,11 +1012,11 @@
                                                         <tfoot>
                                                         <tr>
                                                             <th rowspan="1" colspan="1">ID</th>
+                                                            <th rowspan="1" colspan="1">Photo</th>
                                                             <th rowspan="1" colspan="1">Name</th>
                                                             <th rowspan="1" colspan="1">Activity Name</th>
                                                             <th rowspan="1" colspan="1">Teacher Name</th>
                                                             <th rowspan="1" colspan="1">Release Date</th>
-                                                            <th rowspan="1" colspan="1">Certificate Photo</th>
                                                             <th rowspan="1" colspan="1">Comments</th>
                                                             <th rowspan="1" colspan="1">Tools</th>
                                                         </tr>
@@ -1640,7 +1716,6 @@
 <!-- AdminLTE App -->
 <script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
 
-<script src="../../lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
 <script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
 
 <script>
@@ -1698,8 +1773,7 @@
             responsive: true
         });
         $("#add-student-tracks-dt").DataTable({
-            responsive: true,
-            "scrollX": true
+            responsive: true
         });
         $("#certificates_dt").DataTable({
             responsive: true

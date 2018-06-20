@@ -1,10 +1,7 @@
 package com.omarionapps.halaka.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.omarionapps.halaka.controller.PhotoController;
-import com.omarionapps.halaka.utils.LocationTag;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -128,10 +125,11 @@ public class Activity implements Serializable {
 	}
 
 	public String getLogoUrl() {
-		String url = MvcUriComponentsBuilder
-				.fromMethodName(PhotoController.class, "getFile", this.getLogo(), LocationTag.ACTIVITY_STORE_LOC).build().toString();
-		logoUrl = url;
 		return logoUrl;
+	}
+
+	public void setLogoUrl(String logoUrl) {
+		this.logoUrl = logoUrl;
 	}
 
 	public String getLogo() {
