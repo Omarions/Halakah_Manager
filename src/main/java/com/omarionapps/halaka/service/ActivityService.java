@@ -22,12 +22,14 @@ public class ActivityService {
 	private ActivityRepository activityRepository;
 	private CourseService      courseService;
 	private CountryService     countryService;
+	private CertificateService certificateService;
 
 	@Autowired
-	public ActivityService(ActivityRepository activityRepository, CourseService courseService, CountryService countryService) {
+	public ActivityService(ActivityRepository activityRepository, CourseService courseService, CountryService countryService, CertificateService certificateService) {
 		this.activityRepository = activityRepository;
 		this.courseService = courseService;
 		this.countryService = countryService;
+		this.certificateService = certificateService;
 	}
 
 	public List<Activity> findAllByArchived(boolean isArchived) {
@@ -41,44 +43,24 @@ public class ActivityService {
 	}
 
 	/**
-	 * Get map of activity id and each total students per that activity
-	 * e.g map< activityID, number_of_student_of_that_activity>
+	 * Get count of activities
 	 *
-	 * @return map of each activity and the count of student of that activity
+	 * @return count of activities
 	 */
-	public Map<Integer, Long> getTotalStudents() {
-		Map<Integer, Long> map = this.findAllOrderByName().stream().collect(Collectors.toMap(
-				act -> act.getId(),
-				act -> this.getTotalStudentsByActivity(act.getId())));
-		return map;
+	public long getCount() {
+		return this.findAllByOrderByName().size();
 	}
 
-	public List<Activity> findAllOrderByName() {
+	public List<Activity> findAllByOrderByName() {
 		List<Activity> activities = activityRepository.findAllByOrderByName();
 
 		activities
-				.forEach(activity -> activity.setTeacher(this.getTeachersByActivity(activity)));
+				.forEach(activity -> activity.setTeacher(this.findTeachersByActivity(activity)));
 
 		return activities;
 	}
 
-	/**
-	 * Get total number of students in an activity
-	 *
-	 * @param activityId the activity Id to get its number of students
-	 * @return get the count of students of an activity
-	 */
-	public long getTotalStudentsByActivity(int activityId) {
-		Optional<Activity> activity = this.findById(activityId);
-		totalStudents = 0;
-		activity.get().getCourses().stream().forEach((course) -> {
-			totalStudents += courseService.totalStudentsByCourse(course);
-		});
-
-		return totalStudents;
-	}
-
-	public Set<Teacher> getTeachersByActivity(Activity activity) {
+	public Set<Teacher> findTeachersByActivity(Activity activity) {
 		Set<Teacher> teachers = courseService.findAllByOrderByName()
 				.stream()
 				.filter(course -> course.getActivity().equals(activity))
@@ -87,17 +69,37 @@ public class ActivityService {
 		return teachers;
 	}
 
-	public Optional<Activity> findById(int id) {
-		return activityRepository.findById(id);
+	/**
+	 * Get map of activity id and each total students per that activity
+	 * e.g map< activityID, number_of_student_of_that_activity>
+	 *
+	 * @return map of each activity and the count of student of that activity
+	 */
+	public Map<Integer, Long> getActivitiesTotalStudentsMap() {
+		return this.findAllByOrderByName().stream().collect(Collectors.toMap(
+				act -> act.getId(),
+				act -> this.getTotalStudentsByActivity(act)));
 	}
 
 	/**
-	 * Get count of activities
+	 * Get map of activity id and each total students per that activity
+	 * e.g map< activityID, number_of_student_of_that_activity>
 	 *
-	 * @return count of activities
+	 * @return map of each activity and the count of student of that activity
 	 */
-	public long getCount() {
-		return this.findAllOrderByName().size();
+	public Map<Integer, Integer> getActivitiesTotalCertsMap() {
+		return this.findAllByOrderByName()
+		           .stream()
+		           .collect(Collectors.toMap(
+				           act -> act.getId(),
+				           act -> this.findCertificatesByActivity(act).size()));
+	}
+
+	private List<Certificate> findCertificatesByActivity(Activity activity) {
+		return certificateService.findAllByOrderById()
+		                         .stream()
+		                         .filter(certificate -> certificate.getStudentTrack().getCourse().getActivity().equals(activity))
+		                         .collect(Collectors.toList());
 	}
 
 	/**
@@ -107,7 +109,7 @@ public class ActivityService {
 	 */
 	public long getCountByArchived(boolean isArchived) {
 
-		return this.findAllOrderByName().stream()
+		return this.findAllByOrderByName().stream()
 				.filter(activity -> (activity.isArchived() == isArchived))
 				.count();
 	}
@@ -116,39 +118,126 @@ public class ActivityService {
 
 		return activity.getCourses().stream()
 				.mapToLong(course -> course.getStudentTracks().size())
-				.sum();
+				       .sum();
 	}
 
-	public long getTotalStudentsByStatus(Activity activity, StudentStatus status) {
+	public long getTotalStudentsByActivityByStatus(Activity activity, StudentStatus status) {
 
 		return activity.getCourses().stream()
 				.flatMap(course -> course.getStudentTracks().stream())
 				.filter(track -> track.getStatus().equals(status.toString()))
-				.count();
-				
+				       .count();
+
 	}
 
-	public Set<Teacher> getTeachersByActivity(int activityId) {
+	public Set<Teacher> findTeachersByActivity_Id(int activityId) {
 		Optional<Activity> optActivity = this.findById(activityId);
 		Activity           activity    = optActivity.orElseThrow(() -> new ActivityException("Activity with ID (" + activityId + ") not found"));
-		return getTeachersByActivity(activity);
+		return findTeachersByActivity(activity);
+	}
+
+	public Optional<Activity> findById(int id) {
+		return activityRepository.findById(id);
+	}
+
+	public Map<String, Integer> getStudentsCountByCountry(Activity activity) {
+		Set<Student> students = this.findStudentsByActivity(activity);
+		return countryService.getCountryCodeStudentsCountMapFromStudetns(students);
+	}
+
+	public Set<Student> findStudentsByActivity(Activity activity) {
+
+		return activity.getCourses()
+		               .stream()
+		               .flatMap(course -> course.getStudentTracks().stream())
+		               .map(StudentTrack::getStudent)
+		               .collect(Collectors.toSet());
+
+	}
+
+	public Map<Integer, Map<String, Set<Student>>> getCourseCountryCandidatesMapByActivity(Activity activity) {
+		Map<Integer, Map<String, Set<Student>>> map = new HashMap<>();
+
+		map = courseService.findAllByArchive(false).stream()
+		                   .filter(course -> course.getActivity().equals(activity))
+		                   .collect(Collectors.toMap(
+				                   course -> course.getId(),
+				                   course -> courseService.getCourseCandidatesMapByCourse(course)
+		                   ));
+		return map;
+	}
+
+	public Map<Country, Set<Student>> getCountryStudentsMapByActivity(Activity activity) {
+		Set<Student> activityStudents = activity.getCourses().stream()
+		                                        .flatMap(course -> course.getStudentTracks().stream())
+		                                        .map(track -> track.getStudent())
+		                                        .collect(Collectors.toSet());
+
+		Set<Country> countries = countryService.getCountriesHasStudents();
+
+		Map<Country, Set<Student>> map = countries.stream()
+		                                          .sorted(Comparator.comparing(country -> country.getStudents().size()))
+
+		                                          .collect(Collectors.toMap(country -> country, country -> country.getStudents()));
+
+		System.out.println("Map: " + map);
+
+		return map;
+	}
+
+	public Map<Integer, Set<Country>> getCourseCountriesMapByActivity(Activity activity) {
+		Map<Integer, Set<Country>> map = activity.getCourses().stream()
+		                                         .collect(Collectors.toMap(
+				                                         course -> course.getId(),
+				                                         course -> getCountriesSet(course)
+		                                         ));
+		for (Integer k : map.keySet()) {
+			System.out.println("courseID: " + k);
+			for (Country country : map.get(k)) {
+				System.out.println("Country: " + country.getEnglishName());
+				for (Student student : country.getStudents()) {
+					System.out.println("Student: " + student.getId());
+				}
+			}
+		}
+		return map;
+	}
+
+	private Set<Country> getCountriesSet(Course course) {
+		Set<Country> countriesHaveWaitingStudents = countryService.getCountriesHasWaitingStudents();
+		Set<Country> countrySet = courseService
+				                          .getCountriesByCourse(course, countriesHaveWaitingStudents);
+		countriesHaveWaitingStudents.forEach(country -> {
+			System.out.println("countriesHaveWaitingStudents - Country: " + country.getEnglishName());
+			country.getStudents().forEach(student -> System.out.println("countriesHaveWaitingStudents - Student: " +
+					                                                            student.getId()));
+		});
+
+		countrySet.forEach(country -> {
+			System.out.println("getCountriesSet - Country: " + country.getEnglishName());
+			country.getStudents().forEach(student -> System.out.println("getCountriesSet - Student: " + student.getId
+					                                                                                                    ()));
+		});
+		return countrySet;
 	}
 
 	public Set<Student> getStudentsByActivityByStatus(int activityId, StudentStatus status) {
 		Set<Student> studentsByStatus = new HashSet<>();
-		Set<Student> activityStudents = this.getStudentsByActivity(activityId);
+		Set<Student> activityStudents = this.findStudentsByActivity_Id(activityId);
 		activityStudents
 				.stream()
 				.forEach((student) ->
 						student.getStudentTracks()
-								.stream()
-								.filter((st) -> st.getStatus().equalsIgnoreCase(status.toString()) && st.getCourse().getActivity().getId() == activityId)
+						       .stream()
+						       .filter((st) -> st.getStatus()
+						                         .equalsIgnoreCase(status.toString()) &&
+								                       st.getCourse().getActivity().getId() == activityId)
 								.forEach(track -> studentsByStatus.add(track.getStudent())));
 
 		return studentsByStatus;
 	}
 
-	public Set<Student> getStudentsByActivity(int activityId) {
+	public Set<Student> findStudentsByActivity_Id(int activityId) {
 		Optional<Activity> activity = this.findById(activityId);
 		Set<Student>       students = new HashSet<>();
 		activity.get().getCourses().forEach((course) -> {
@@ -158,20 +247,13 @@ public class ActivityService {
 		return students;
 	}
 
-	public Map<String, Integer> getStudentsCountByCountry(Activity activity) {
-		Set<Student> students = this.getStudentsByActivity(activity);
-		return countryService.getCountryCodeStudentsCountMapFromStudetns(students);
-	}
-
 	public Set<Student> getStudentsByActivityByStatus(Activity activity, StudentStatus status) {
-		Set<Student> students = new HashSet<>();
-		students = this.getStudentsByActivity(activity)
+		return this.findStudentsByActivity(activity)
 				.stream()
 				.flatMap((student -> student.getStudentTracks().stream()))
 				.filter((st) -> st.getStatus().equals(status.toString()) && st.getCourse().getActivity().equals(activity))
 				.map(st -> st.getStudent())
 				.collect(Collectors.toSet());
-		return students;
 	}
 
 	public Map<String, Set<Map<String, Integer>>> getStudentsCountByCountryAndStatus(Activity activity) {
@@ -208,20 +290,10 @@ public class ActivityService {
 		return result;
 	}
 
-	public Set<Student> getStudentsByActivity(Activity activity) {
-
-		return activity.getCourses()
-				.stream()
-				.flatMap(course -> course.getStudentTracks().stream())
-				.map(StudentTrack::getStudent)
-				.collect(Collectors.toSet());
-
-	}
-
 	public Map<String, Map<String, Long>> getCountryCodeStudentsStatusCountMap(Activity activity) {
 		totalByStatus = 0;
 		Map<String, Map<String, Long>> result          = new HashMap<>();
-		Set<Student>                   students        = this.getStudentsByActivity(activity);
+		Set<Student>                   students        = this.findStudentsByActivity(activity);
 		Map<String, Set<Student>>      countryStudents = countryService.getCountryCodeStudentsMap(students);
 
 		Set<Map<String, Long>> setMap = new HashSet<>();
@@ -276,8 +348,8 @@ public class ActivityService {
 
 	public Map<Integer, Set<Teacher>> getActivityTeachers() {
 		Map<Integer, Set<Teacher>> map = new HashMap<>();
-		this.findAllOrderByName().forEach((activity) -> {
-			map.put(activity.getId(), this.getTeachersByActivity(activity));
+		this.findAllByOrderByName().forEach((activity) -> {
+			map.put(activity.getId(), this.findTeachersByActivity(activity));
 		});
 
 		return map;
@@ -305,7 +377,7 @@ public class ActivityService {
 	public Map<Integer, Set<Course>> getActivityCourses() {
 		Map<Integer, Set<Course>> map = new HashMap<>();
 
-		this.findAllOrderByName().forEach((activity) -> {
+		this.findAllByOrderByName().forEach((activity) -> {
 			Set<Course> courses = activity.getCourses();
 			map.put(activity.getId(), courses);
 		});

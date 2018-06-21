@@ -3,11 +3,13 @@ package com.omarionapps.halaka.service;
 import com.omarionapps.halaka.model.Country;
 import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.model.StudentGender;
+import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Omar on 08-May-17.
@@ -31,6 +33,17 @@ public class CountryService {
                 map.put(country.getCode(), country.getStudents().size());
         });
 	    //System.out.println("CountryCode Map" + map);
+        return map;
+    }
+
+    public Map<String, Set<Student>> getAllCountryCodeStudentsMap() {
+        Iterable<Country>         list = this.getAll();
+        Map<String, Set<Student>> map  = new HashMap<>();
+
+        list.forEach((country) -> {
+            if (country.getStudents().size() > 0)
+                map.put(country.getCode(), country.getStudents());
+        });
         return map;
     }
 
@@ -74,8 +87,19 @@ public class CountryService {
         return map;
     }
 
-    public Iterable<Country> findAllByOrderByEnglishNameAsc() {
-        return countryRepository.findAllByOrderByEnglishNameAsc();
+    public Set<Country> getCountriesHasWaitingStudents() {
+        Set<Country> countries = getCountriesHasStudents().stream()
+                                                          .flatMap(country -> country.getStudents().stream())
+                                                          .flatMap(student -> student.getStudentTracks().stream())
+                                                          .filter(st -> st.getStatus().equals(StudentStatus.WAITING.toString()))
+                                                          .map(st -> st.getStudent())
+                                                          .map(student -> student.getCountry())
+                                                          .sorted(Comparator.comparing(country -> country.getStudents().size()))
+                                                          .collect(Collectors.toSet());
+
+        System.out.println("Count of countries that have waiting students= " + countries.size());
+        countries.forEach(country -> System.out.println(country.getEnglishName()));
+        return countries;
     }
 
     public Map<String, Integer> getCountryStudentsCountMapByGender(StudentGender gender) {
@@ -92,13 +116,18 @@ public class CountryService {
     }
 
     public Set<Country> getCountriesHasStudents() {
-        Set<Country> countries = new HashSet<>();
-        getAll().forEach((country) -> {
-            if (country.getStudents().size() > 0)
-                countries.add(country);
-        });
+        Set<Country> countries = findAllByOrderByEnglishNameAsc()
+                                         .stream()
+                                         .filter(country -> country.getStudents().size() > 0)
+                                         .collect(Collectors.toSet());
 
+        //System.out.println("Countries have students: " + countries);
+        System.out.println("Count of countries that have students= " + countries.size());
         return countries;
+    }
+
+    public List<Country> findAllByOrderByEnglishNameAsc() {
+        return countryRepository.findAllByOrderByEnglishNameAsc();
     }
 
     public Map<String, Map<String, Integer>> getCountryStudentsCountByGenderMap() {

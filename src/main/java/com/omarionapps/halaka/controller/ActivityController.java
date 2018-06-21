@@ -62,7 +62,8 @@ public class ActivityController {
 			activity.setLogoUrl(logoUrl);
 		});
 		model.addObject("activities", activities);
-		model.addObject("students", activityService.getTotalStudents());
+		model.addObject("students", activityService.getActivitiesTotalStudentsMap());
+		model.addObject("certificates", activityService.getActivitiesTotalCertsMap());
 		return model;
 	}
 
@@ -71,20 +72,18 @@ public class ActivityController {
 		ModelAndView       modelAndView     = new ModelAndView("admin/activity-profile");
 		Optional<Activity> optActivity      = activityService.findById(activityId);
 		Activity           activity         = optActivity.get();
-		Set<Student>       activityStudents = activityService.getStudentsByActivity(activity);
+		Set<Student>       activityStudents = activityService.findStudentsByActivity(activity);
 
-		activity.setTeacher(activityService.getTeachersByActivity(activity));
-
-		modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(activityStudents));
+		activity.setTeacher(activityService.findTeachersByActivity(activity));
 
 		if (activityId != 7) {
 			long                           totalStudents     = activityService.getTotalStudentsByActivity(activity);
-			long                           totalStudying     = activityService.getTotalStudentsByStatus(activity, StudentStatus.STUDYING);
-			long                           totalWaiting      = activityService.getTotalStudentsByStatus(activity, StudentStatus.WAITING);
-			long                           totalCertified    = activityService.getTotalStudentsByStatus(activity, StudentStatus.CERTIFIED);
-			long                           totalFired        = activityService.getTotalStudentsByStatus(activity, StudentStatus.FIRED);
-			long                           totalTempStopped  = activityService.getTotalStudentsByStatus(activity, StudentStatus.TEMP_STOP);
-			long                           totalFinalStopped = activityService.getTotalStudentsByStatus(activity, StudentStatus.FINAL_STOP);
+			long                           totalStudying     = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.STUDYING);
+			long                           totalWaiting      = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.WAITING);
+			long                           totalCertified    = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.CERTIFIED);
+			long                           totalFired        = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.FIRED);
+			long                           totalTempStopped  = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.TEMP_STOP);
+			long                           totalFinalStopped = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.FINAL_STOP);
 			Map<String, Map<String, Long>> countryStudents   = activityService.getCountryCodeStudentsStatusCountMap(activity);
 
 			Set<Student> waitStudents         = activityService.getStudentsByActivityByStatus(activity, StudentStatus.WAITING);
@@ -101,9 +100,14 @@ public class ActivityController {
 
 			activity.setLogoUrl(logoUrl);
 
+			System.out.println("courseCandidates: " + activityService.getCourseCountriesMapByActivity(activity));
+
 			modelAndView.addObject("activity", activity);
-			modelAndView.addObject("students", activityStudents);
+			modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(activityStudents));
+			modelAndView.addObject("courseCandidates", activityService.getCourseCountriesMapByActivity(activity));
 			modelAndView.addObject("countryStudents", countryStudents);
+			modelAndView.addObject("coursesTimeline", courseService.getActivityCoursesByDayMap(activity));
+			modelAndView.addObject("students", activityStudents);
 			modelAndView.addObject("waitingStudents", waitStudents);
 			modelAndView.addObject("studyingStudents", studyStudents);
 			modelAndView.addObject("certifiedStudents", certifiedStudents);

@@ -188,7 +188,8 @@ public class Course implements Serializable {
                 .filter(st -> st.getStatus().equals(StudentStatus.STUDYING.toString()) ||
                         st.getStatus().equals(StudentStatus.TEMP_STOP.toString()))
                 .count();
-        return (occupied == getCapacity());
+        System.out.println("Course (" + this.id + ") has occupied seats = " + occupied);
+        return (occupied == capacity);
     }
 
     public int getCapacity() {
@@ -239,7 +240,7 @@ public class Course implements Serializable {
     public String toString() {
         return "{" +
                 "id:" + id +
-                ", activityName:'" + activity.getName() + "'\'" +
+                       ", activity:(" + activity.getId() + "|" + activity.getName() + ")" +
                 ", teacherName:'" + teacher.getName() + "'\'" +
                 ", name:'" + name + "\'" +
                 ", days:'" + days + "\'" +

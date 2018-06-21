@@ -50,7 +50,7 @@ public class ArchiveController {
 		    activity.setLogoUrl(activityLogoUrl);
 	    });
 	    modelAndView.addObject("activities", activities);
-        modelAndView.addObject("students", activityService.getTotalStudents());
+	    modelAndView.addObject("students", activityService.getActivitiesTotalStudentsMap());
         modelAndView.addObject("isArchived", true);
         return modelAndView;
     }

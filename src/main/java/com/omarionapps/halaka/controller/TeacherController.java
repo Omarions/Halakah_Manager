@@ -79,7 +79,7 @@ public class TeacherController {
 
 		teacher.setPhotoUrl(photoUrl);
 		modelAndView.addObject("teacher", teacher);
-		modelAndView.addObject("activities", activityService.findAllOrderByName());
+		modelAndView.addObject("activities", activityService.findAllByOrderByName());
 		return modelAndView;
 
 	}
@@ -88,7 +88,7 @@ public class TeacherController {
 	public ModelAndView addTeacher() {
 		ModelAndView modelAndView = new ModelAndView("admin/register-teacher");
 		modelAndView.addObject("teacher", new Teacher());
-		modelAndView.addObject("activities", activityService.findAllOrderByName());
+		modelAndView.addObject("activities", activityService.findAllByOrderByName());
 		modelAndView.addObject("courses", activityService.getActivityCoursesMap());
 		return modelAndView;
 	}

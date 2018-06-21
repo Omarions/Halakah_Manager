@@ -8,8 +8,8 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
-          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
     <!-- Ionicons -->
@@ -137,31 +137,36 @@
                                             rowspan="1"
                                             colspan="1" aria-sort="ascending"
                                             aria-label="ID: activate to sort column descending"
-                                            style="width: 130.4px;">ID
+                                            style="width: 130px;">ID
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="activity-list-dt" rowspan="1"
                                             colspan="1" aria-label="Name: activate to sort column ascending"
-                                            style="width: 266.4px;">Name
+                                            style="width: 266px;">Name
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="activity-list-dt" rowspan="1"
                                             colspan="1" aria-label="Total Courses: activate to sort column ascending"
-                                            style="width: 237.4px;">Total Courses
+                                            style="width: 237px;">Total Courses
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="activity-list-dt" rowspan="1"
                                             colspan="1" aria-label="Total Teachers: activate to sort column ascending"
-                                            style="width: 186.4px;">Total Teachers
+                                            style="width: 186px;">Total Teachers
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="activity-list-dt" rowspan="1"
                                             colspan="1" aria-label="Total Students: activate to sort column ascending"
-                                            style="width: 135.2px;">Total Students
+                                            style="width: 135px;">Total Students
+                                        </th>
+	                                    <th class="sorting" tabindex="0" aria-controls="activity-list-dt" rowspan="1"
+	                                        colspan="1"
+	                                        aria-label="Total Certificates: activate to sort column ascending"
+	                                        style="width: 135px;">Total Certificates
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="activity-list-dt" rowspan="1"
                                             colspan="1" aria-label="CSS grade: activate to sort column ascending"
-                                            style="width: 266.2px;">Comments
+                                            style="width: 266px;">Comments
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="activity-list-dt" rowspan="1"
                                             colspan="1" aria-label="CSS grade: activate to sort column ascending"
-                                            style="width: 266.2px;">Tools
+                                            style="width: 266px;">Tools
                                         </th>
                                     </tr>
                                     </thead>
@@ -184,6 +189,7 @@
                                         <td th:text="${activity.courses.size()}">Total Courses</td>
                                         <td th:text="${activity.teacher.size()}">Total Teachers</td>
                                         <td th:text="${students[activity.id]}">Total Students</td>
+	                                    <td th:text="${certificates[activity.id]}">Total Certificates</td>
                                         <td th:text="${activity.comments}">Activity Comments</td>
                                         <td>
                                             <ul class="dtt">
@@ -281,6 +287,7 @@
                                         <th rowspan="1" colspan="1">Total Courses</th>
                                         <th rowspan="1" colspan="1">Total Teachers</th>
                                         <th rowspan="1" colspan="1">Total Students</th>
+	                                    <th rowspan="1" colspan="1">Total Certificates</th>
                                         <th rowspan="1" colspan="1">Comments</th>
                                         <th rowspan="1" colspan="1">Tools</th>
                                     </tr>
@@ -466,7 +473,7 @@
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
                             Report panel usage
-                            <input type="checkbox" class="pull-right" checked="true"/>
+	                        <input type="checkbox" class="pull-right" checked="checked"/>
                         </label>
 
                         <p>
@@ -478,7 +485,7 @@
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
                             Allow mail redirect
-                            <input type="checkbox" class="pull-right" checked="true"/>
+	                        <input type="checkbox" class="pull-right" checked="checked"/>
                         </label>
 
                         <p>
@@ -490,7 +497,7 @@
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
                             Expose author name in posts
-                            <input type="checkbox" class="pull-right" checked="true"/>
+	                        <input type="checkbox" class="pull-right" checked="checked"/>
                         </label>
 
                         <p>
@@ -504,7 +511,7 @@
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
                             Show me as online
-                            <input type="checkbox" class="pull-right" checked="true"/>
+	                        <input type="checkbox" class="pull-right" checked="checked"/>
                         </label>
                     </div>
                     <!-- /.form-group -->

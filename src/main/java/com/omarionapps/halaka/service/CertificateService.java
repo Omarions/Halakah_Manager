@@ -5,6 +5,7 @@ import com.omarionapps.halaka.repository.CertificateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,7 +41,12 @@ public class CertificateService {
         return certificateRepository.findAll();
     }
 
-
+	/**
+	 * Get All certificates
+	 */
+	public List<Certificate> findAllByOrderById() {
+		return certificateRepository.findAllByOrderById();
+	}
 	/**
 	 * Save new or update certificate
 	 */
