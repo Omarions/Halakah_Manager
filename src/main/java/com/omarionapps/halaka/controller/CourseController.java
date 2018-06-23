@@ -87,12 +87,12 @@ public class CourseController {
 		modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(students));
 		modelAndView.addObject("countryStudents", countryStudents);
 		modelAndView.addObject("students", courseService.getStudentsByCourse(course));
-		modelAndView.addObject("studyingStudents", courseService.getStudentsByStatus(course, StudentStatus.STUDYING));
-		modelAndView.addObject("waitingStudents", courseService.getStudentsByStatus(course, StudentStatus.WAITING));
-		modelAndView.addObject("certifiedStudents", courseService.getStudentsByStatus(course, StudentStatus.CERTIFIED));
-		modelAndView.addObject("tempStoppedStudents", courseService.getStudentsByStatus(course, StudentStatus.TEMP_STOP));
-		modelAndView.addObject("finalStoppedStudents", courseService.getStudentsByStatus(course, StudentStatus.FINAL_STOP));
-		modelAndView.addObject("firedStudents", courseService.getStudentsByStatus(course, StudentStatus.FIRED));
+		modelAndView.addObject("studyingStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.STUDYING));
+		modelAndView.addObject("waitingStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.WAITING));
+		modelAndView.addObject("certifiedStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.CERTIFIED));
+		modelAndView.addObject("tempStoppedStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.TEMP_STOP));
+		modelAndView.addObject("finalStoppedStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.FINAL_STOP));
+		modelAndView.addObject("firedStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.FIRED));
 		modelAndView.addObject("totalStudents", totalStudents);
 		modelAndView.addObject("totalStudying", totalStudying);
 		modelAndView.addObject("totalWaiting", totalWaiting);

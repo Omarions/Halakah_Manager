@@ -97,10 +97,10 @@ public class CourseService {
 	 * @param courseId the id of course you look for
 	 * @return a set of students with specified status for a specified course
 	 */
-	public Set<Student> getStudentsByStatus(int courseId, StudentStatus status) {
+	public Set<Student> getStudentsByStatusByCourse(int courseId, StudentStatus status) {
 		Optional<Course> course = this.findById(courseId);
 
-		return getStudentsByStatus(course.get(), status);
+		return getStudentsByStatusByCourse(course.get(), status);
 	}
 
 	/**
@@ -109,42 +109,8 @@ public class CourseService {
 	 * @param course the course you look for
 	 * @return a set of students with specified status for a specified course
 	 */
-	public Set<Student> getStudentsByStatus(Course course, StudentStatus status) {
+	public Set<Student> getStudentsByStatusByCourse(Course course, StudentStatus status) {
 		return course.getStudentTracks().stream().filter(st -> st.getStatus().equals(status.toString())).map(st -> st.getStudent()).collect(Collectors.toSet());
-	}
-
-	public Set<Country> getCountriesByCourse(Course course, Set<Country> countries) {
-		Set<Country> countriesSet = countries.stream()
-		                                     .flatMap(country -> country.getStudents().stream())
-		                                     .flatMap(student -> student.getStudentTracks().stream())
-		                                     .filter(st -> st.getCourse().equals(course))
-		                                     .map(StudentTrack::getStudent)
-		                                     .map(Student::getCountry)
-		                                     .collect(Collectors.toSet());
-
-		System.out.println("Count of countries per course( " + course.getId() + " ) = " + countriesSet.size());
-		countriesSet.forEach(country -> System.out.println("course ID: " + course.getId() + ", country: " + country.getEnglishName()));
-		return countriesSet;
-	}
-
-	public Map<Integer, Map<String, Set<Student>>> getCandidatesMap() {
-		Map<Integer, Map<String, Set<Student>>> map = new HashMap<>();
-		map = findAllByArchive(false).stream()
-		                             .collect(Collectors.toMap(
-				                             course -> course.getId(),
-				                             course -> getCourseCandidatesMapByCourse(course)
-		                             ));
-		return map;
-	}
-
-	public Map<String, Set<Student>> getCourseCandidatesMapByCourse(Course course) {
-		Set<Student>              courseWaitingStudents = getStudentsByStatus(course, StudentStatus.WAITING);
-		Map<String, Set<Student>> countryMap            = countryService.getCountryCodeStudentsMap(courseWaitingStudents);
-		countryMap.keySet().stream().sorted(Comparator.comparing(key -> countryMap.get(key).size()));
-
-		System.out.println("Sorted Country Map: " + countryMap);
-
-		return countryMap;
 	}
 
 	public Map<String, Map<String, Long>> getCountryCodeStudentsStatusCountMap(Course course) {

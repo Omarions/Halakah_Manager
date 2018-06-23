@@ -1,9 +1,6 @@
 package com.omarionapps.halaka.controller;
 
-import com.omarionapps.halaka.model.Activity;
-import com.omarionapps.halaka.model.Course;
-import com.omarionapps.halaka.model.Student;
-import com.omarionapps.halaka.model.StudentStatus;
+import com.omarionapps.halaka.model.*;
 import com.omarionapps.halaka.service.ActivityService;
 import com.omarionapps.halaka.service.CountryService;
 import com.omarionapps.halaka.service.CourseService;
@@ -55,15 +52,15 @@ public class ActivityController {
 		List<Activity> activities = activityService.findAllByArchived(false);
 		activities.stream().forEach(activity -> {
 			String logoUrl = MvcUriComponentsBuilder
-					.fromMethodName(PhotoController.class, "getFile", activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC)
-					.build()
-					.toString();
+					                 .fromMethodName(PhotoController.class, "getFile", activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC)
+					                 .build()
+					                 .toString();
 
 			activity.setLogoUrl(logoUrl);
 		});
 		model.addObject("activities", activities);
-		model.addObject("students", activityService.getActivitiesTotalStudentsMap());
-		model.addObject("certificates", activityService.getActivitiesTotalCertsMap());
+		model.addObject("studentsCount", activityService.mapStudentsCountWithActivityId());
+		model.addObject("certificates", activityService.mapCertsCountWithActivityId());
 		return model;
 	}
 
@@ -86,27 +83,42 @@ public class ActivityController {
 			long                           totalFinalStopped = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.FINAL_STOP);
 			Map<String, Map<String, Long>> countryStudents   = activityService.getCountryCodeStudentsStatusCountMap(activity);
 
-			Set<Student> waitStudents         = activityService.getStudentsByActivityByStatus(activity, StudentStatus.WAITING);
-			Set<Student> studyStudents        = activityService.getStudentsByActivityByStatus(activity, StudentStatus.STUDYING);
-			Set<Student> certifiedStudents    = activityService.getStudentsByActivityByStatus(activity, StudentStatus.CERTIFIED);
-			Set<Student> tempStoppedStudents  = activityService.getStudentsByActivityByStatus(activity, StudentStatus.TEMP_STOP);
-			Set<Student> finalStoppedStudents = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FINAL_STOP);
-			Set<Student> firedStudents        = activityService.getStudentsByActivityByStatus(activity, StudentStatus.FIRED);
+			Set<Student> waitStudents         = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.WAITING);
+			Set<Student> studyStudents        = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.STUDYING);
+			Set<Student> certifiedStudents    = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.CERTIFIED);
+			Set<Student> tempStoppedStudents  = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.TEMP_STOP);
+			Set<Student> finalStoppedStudents = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.FINAL_STOP);
+			Set<Student> firedStudents        = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.FIRED);
 
 			String logoUrl = MvcUriComponentsBuilder
-					.fromMethodName(PhotoController.class, "getFile", activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC)
-					.build()
-					.toString();
+					                 .fromMethodName(PhotoController.class, "getFile", activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC)
+					                 .build()
+					                 .toString();
 
 			activity.setLogoUrl(logoUrl);
 
-			System.out.println("courseCandidates: " + activityService.getCourseCountriesMapByActivity(activity));
+			Map<Integer, Map<Country, Set<StudentTrack>>> candidates = activityService
+					                                                           .mapCandidatesWithCourse_IdByActivity
+							                                                            (activity);
+			candidates.entrySet().stream().forEach(courseMapEntry -> {
+				courseMapEntry.getValue().entrySet().stream().forEach(countryMapEntry -> {
+					countryMapEntry.getValue().forEach(track -> {
+						String photoUrl = MvcUriComponentsBuilder
+								                  .fromMethodName(PhotoController.class, "getFile", track.getStudent().getPhoto(),
+										                  LocationTag.STUDENTS_STORE_LOC)
+								                  .build()
+								                  .toString();
+
+						track.getStudent().setPhotoUrl(photoUrl);
+					});
+				});
+			});
 
 			modelAndView.addObject("activity", activity);
 			modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(activityStudents));
-			modelAndView.addObject("courseCandidates", activityService.getCourseCountriesMapByActivity(activity));
 			modelAndView.addObject("countryStudents", countryStudents);
 			modelAndView.addObject("coursesTimeline", courseService.getActivityCoursesByDayMap(activity));
+			modelAndView.addObject("candidates", candidates);
 			modelAndView.addObject("students", activityStudents);
 			modelAndView.addObject("waitingStudents", waitStudents);
 			modelAndView.addObject("studyingStudents", studyStudents);
@@ -189,7 +201,7 @@ public class ActivityController {
 	/**
 	 * Send the activity to archive
 	 *
-	 * @param activityId            the activity ID to be archived
+	 * @param activityId    the activity ID to be archived
 	 * @param redirectAttrs the message to be send with the link to be directed to after archiving success.
 	 * @return the link to be directed to after success.
 	 */
@@ -208,11 +220,11 @@ public class ActivityController {
 				courseService.save(course);
 			});
 			redirectAttrs.addFlashAttribute("messageSuccess", "Activity with ID( " + activityId + " ) was archived " +
-					"successfully");
+					                                                  "successfully");
 		} else {
 			redirectAttrs.addFlashAttribute("messageError", "An error happens while archiving the activity with ID(" +
-					" " +
-					activityId + " )");
+					                                                " " +
+					                                                activityId + " )");
 		}
 
 		return "redirect:/admin/activities";

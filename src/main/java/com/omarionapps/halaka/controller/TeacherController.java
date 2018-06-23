@@ -89,7 +89,7 @@ public class TeacherController {
 		ModelAndView modelAndView = new ModelAndView("admin/register-teacher");
 		modelAndView.addObject("teacher", new Teacher());
 		modelAndView.addObject("activities", activityService.findAllByOrderByName());
-		modelAndView.addObject("courses", activityService.getActivityCoursesMap());
+		modelAndView.addObject("courses", activityService.mapCourseDetailsWithActivityId());
 		return modelAndView;
 	}
 
