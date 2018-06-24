@@ -12,9 +12,11 @@
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
           th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
+	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
     <!-- DataTables -->
     <link rel="stylesheet" href="../lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css"
           th:href="@{/lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css}"/>
@@ -22,11 +24,11 @@
           th:href="@{/lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css}"/>
     <!-- Theme style -->
     <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
-    <link rel="stylesheet" href="../lib/dist/css/AdminLTE.css" th:href="@{/lib/dist/css/AdminLTE.css}"/>
+	<link rel="stylesheet" href="../lib/dist/css/common-styles.css" th:href="@{/lib/dist/css/common-styles.css}"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"
-          th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
+	<link rel="stylesheet" href="../lib/dist/css/skins/skin-blue.min.css}"
+	      th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
     <link rel="stylesheet" href="../lib/dist/css/certificates-custom.css"
           th:href="@{/lib/dist/css/certificates-custom.css}"/>
 
@@ -64,12 +66,12 @@
         <!-- Main content -->
         <section class="content">
 
-            <div class="box">
+	        <div class="box box-primary">
                 <!-- box header -->
                 <div class="box-header">
 
                     <div class="col-sm-6">
-                        <h3 class="box-title">Halaka Certificates List</h3>
+	                    <h3 class="box-title">Certificates List</h3>
                     </div>
 
                     <!-- Error message -->
@@ -90,13 +92,13 @@
 
                 <!-- box body -->
                 <div class="box-body">
-                    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+	                <div id="certificates_dt_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row" th:remove="all">
                             <div class="col-sm-6">
-                                <div class="dataTables_length" id="example1_length">
+	                            <div class="dataTables_length" id="certificates_dt_length">
                                     <label>Show
-                                        <select name="example1_length" aria-controls="example1"
-                                                class="form-control input-sm">
+	                                    <select name="certificates_dt_length" aria-controls="certificates_dt"
+	                                            class="form-control input-sm">
                                             <option value="10">10</option>
                                             <option value="25">25</option>
                                             <option value="50">50</option>
@@ -106,53 +108,55 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div id="example1_filter" class="dataTables_filter">
+	                            <div id="certificates_dt_filter" class="dataTables_filter">
                                     <label>Search:<input type="search" class="form-control input-sm"
-                                                         placeholder="Teacher Name" aria-controls="example1"></label>
+                                                         placeholder="Teacher Name"
+                                                         aria-controls="certificates_dt"></label>
                                 </div>
                             </div>
                         </div>
                         <div class="row" th:remove="all-but-first">
                             <div class="col-sm-12">
-                                <table id="example1" class="table table-bordered table-striped dataTable dt-responsive"
-                                       role="grid" style="width: 100%;"
-                                       aria-describedby="example1_info">
+	                            <table id="certificates_dt"
+	                                   class="table table-bordered table-striped dataTable dt-responsive"
+	                                   role="grid" style="width: 100%;"
+	                                   aria-describedby="certificates_dt_info">
 
                                     <!-- Header of the table -->
                                     <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-sort="ascending"
-                                            aria-label="ID: activate to sort column descending"
-                                            style="width: 130.4px;">ID
+	                                    <th class="sorting_asc" tabindex="0" aria-controls="certificates_dt" rowspan="1"
+	                                        colspan="1" aria-sort="ascending"
+	                                        aria-label="ID: activate to sort column descending"
+	                                        style="width: 130.4px;">ID
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Name: activate to sort column ascending"
-                                            style="width: 266.4px;">Name
+	                                    <th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
+	                                        colspan="1" aria-label="Name: activate to sort column ascending"
+	                                        style="width: 266.4px;">Name
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Activity: activate to sort column ascending"
-                                            style="width: 237.4px;">Activity
+	                                    <th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
+	                                        colspan="1" aria-label="Activity: activate to sort column ascending"
+	                                        style="width: 237.4px;">Activity
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Student: activate to sort column ascending"
-                                            style="width: 186.4px;">Student
+	                                    <th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
+	                                        colspan="1" aria-label="Student: activate to sort column ascending"
+	                                        style="width: 186.4px;">Student
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Teacher: activate to sort column ascending"
-                                            style="width: 135.2px;">Teacher
+	                                    <th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
+	                                        colspan="1" aria-label="Teacher: activate to sort column ascending"
+	                                        style="width: 135.2px;">Teacher
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Date: activate to sort column ascending"
-                                            style="width: 266.2px;">Date
+	                                    <th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
+	                                        colspan="1" aria-label="Date: activate to sort column ascending"
+	                                        style="width: 266.2px;">Date
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="Photo: activate to sort column ascending"
-                                            style="width: 135.2px;">Photo
+	                                    <th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
+	                                        colspan="1" aria-label="Photo: activate to sort column ascending"
+	                                        style="width: 135.2px;">Photo
                                         </th>
-                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                            colspan="1" aria-label="CSS grade: activate to sort column ascending"
-                                            style="width: 266.2px;">Tools
+	                                    <th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
+	                                        colspan="1" aria-label="CSS grade: activate to sort column ascending"
+	                                        style="width: 266.2px;">Tools
                                         </th>
                                     </tr>
                                     </thead>
@@ -178,9 +182,9 @@
                                         <td><a href="#"
                                                th:href="@{'/admin/events/event/' + ${cert.event.id}}"><span
                                                 th:text="${cert.event.eventDate}">Event Date</span></a></td>
-                                        <td><img class="cert-img" src="../lib/dist/img/certificate/photo1.png"
-                                                 th:src="@{${cert.imageUrl}}"
-                                                 alt="certificate image"></td>
+	                                    <td><img class="cert-img" src="../../lib/dist/img/certificate/photo1.png"
+	                                             th:src="@{${cert.imageUrl}}"
+	                                             alt="certificate image"></td>
                                         <td>
                                             <ul class="dtt">
                                                 <li>
@@ -287,37 +291,38 @@
                                 </table>
                             </div>
                         </div>
-
                         <div class="row" th:remove="all">
                             <div class="col-sm-5">
-                                <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing
-                                    1 to 10 of 57 entries
+	                            <div class="dataTables_info" id="certificates_dt_info" role="status" aria-live="polite">
+		                            Showing
+		                            1 to 10 of 57 entries
                                 </div>
                             </div>
                             <div class="col-sm-7">
-                                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+	                            <div class="dataTables_paginate paging_simple_numbers" id="certificates_dt_paginate">
                                     <ul class="pagination">
-                                        <li class="paginate_button previous disabled" id="example1_previous"><a href="#"
-                                                                                                                aria-controls="example1"
-                                                                                                                data-dt-idx="0"
-                                                                                                                tabindex="0">Previous</a>
+	                                    <li class="paginate_button previous disabled" id="certificates_dt_previous"><a
+			                                    href="#"
+			                                    aria-controls="certificates_dt"
+			                                    data-dt-idx="0"
+			                                    tabindex="0">Previous</a>
                                         </li>
-                                        <li class="paginate_button active"><a href="#" aria-controls="example1"
-                                                                              data-dt-idx="1" tabindex="0">1</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
-                                                                        data-dt-idx="2" tabindex="0">2</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
-                                                                        data-dt-idx="3" tabindex="0">3</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
-                                                                        data-dt-idx="4" tabindex="0">4</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
-                                                                        data-dt-idx="5" tabindex="0">5</a></li>
-                                        <li class="paginate_button "><a href="#" aria-controls="example1"
-                                                                        data-dt-idx="6" tabindex="0">6</a></li>
-                                        <li class="paginate_button next" id="example1_next"><a href="#"
-                                                                                               aria-controls="example1"
-                                                                                               data-dt-idx="7"
-                                                                                               tabindex="0">Next</a>
+	                                    <li class="paginate_button active"><a href="#" aria-controls="certificates_dt"
+	                                                                          data-dt-idx="1" tabindex="0">1</a></li>
+	                                    <li class="paginate_button "><a href="#" aria-controls="certificates_dt"
+	                                                                    data-dt-idx="2" tabindex="0">2</a></li>
+	                                    <li class="paginate_button "><a href="#" aria-controls="certificates_dt"
+	                                                                    data-dt-idx="3" tabindex="0">3</a></li>
+	                                    <li class="paginate_button "><a href="#" aria-controls="certificates_dt"
+	                                                                    data-dt-idx="4" tabindex="0">4</a></li>
+	                                    <li class="paginate_button "><a href="#" aria-controls="certificates_dt"
+	                                                                    data-dt-idx="5" tabindex="0">5</a></li>
+	                                    <li class="paginate_button "><a href="#" aria-controls="certificates_dt"
+	                                                                    data-dt-idx="6" tabindex="0">6</a></li>
+	                                    <li class="paginate_button next" id="certificates_dt_next"><a href="#"
+	                                                                                                  aria-controls="certificates_dt"
+	                                                                                                  data-dt-idx="7"
+	                                                                                                  tabindex="0">Next</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -462,7 +467,7 @@
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
                             Report panel usage
-                            <input type="checkbox" class="pull-right" checked="true"/>
+	                        <input type="checkbox" class="pull-right" checked="checked"/>
                         </label>
 
                         <p>
@@ -474,7 +479,7 @@
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
                             Allow mail redirect
-                            <input type="checkbox" class="pull-right" checked="true"/>
+	                        <input type="checkbox" class="pull-right" checked="checked"/>
                         </label>
 
                         <p>
@@ -486,7 +491,7 @@
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
                             Expose author name in posts
-                            <input type="checkbox" class="pull-right" checked="true"/>
+	                        <input type="checkbox" class="pull-right" checked="checked"/>
                         </label>
 
                         <p>
@@ -500,7 +505,7 @@
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
                             Show me as online
-                            <input type="checkbox" class="pull-right" checked="true"/>
+	                        <input type="checkbox" class="pull-right" checked="checked"/>
                         </label>
                     </div>
                     <!-- /.form-group -->
@@ -548,9 +553,15 @@
 <script src="../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
         th:src="@{/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
 
+<!-- Slimscroll -->
+<script src="../../lib/plugins/slimScroll/jquery.slimscroll.min.js"
+        th:src="@{~/lib/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+<!-- FastClick -->
+<script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
+
 <script>
     $(function () {
-        $("#example1").DataTable({
+        $("#certificates_dt").DataTable({
             responsive: true
         });
 

@@ -23,6 +23,7 @@ public class Teacher implements Serializable {
 	@NotEmpty(message = "Please, add a name...")
 	@Column(name = "name", nullable = false)
 	private String  name;
+	private String  gender;
 	private String  photo;
 	@NotEmpty(message = "Please, add an email...")
 	@Email(message = "Please, add correct email...")
@@ -31,6 +32,8 @@ public class Teacher implements Serializable {
 	private String  tel;
 	private String  education;
 	private String  job;
+	private String  address;
+	private String  resume;
 	private Date    hireDate;
 	private Date    archivedDate;
 	@Column(name = "archived", columnDefinition = "TINYINT")
@@ -56,35 +59,28 @@ public class Teacher implements Serializable {
 		this.name = name;
 	}
 
-	@JsonIgnore
-	public Set<Activity> getActivities() {
-		return this.getCourses().stream().map(m_course -> m_course.getActivity()).collect(Collectors.toSet());
+	public int getId() {
+		return id;
 	}
 
-	public Set<Course> getCourses() {
-		return courses;
+	public void setId(int id) {
+		this.id = id;
 	}
-
-	public void setCourses(Set<Course> courses) {
-		this.courses = courses;
-	}
-
-	@JsonIgnore
-	public Set<TeacherTrack> getTeacherTracks() {
-		return teacherTracks;
-	}
-
-	@JsonIgnore
-	public void setTeacherTracks(Set<TeacherTrack> teacherTracks) {
-		this.teacherTracks = teacherTracks;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public String getPhoto() {
@@ -121,6 +117,22 @@ public class Teacher implements Serializable {
 
 	public String getJob() {
 		return job;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getResume() {
+		return resume;
+	}
+
+	public void setResume(String resume) {
+		this.resume = resume;
 	}
 
 	public void setJob(String job) {
@@ -175,17 +187,32 @@ public class Teacher implements Serializable {
 		this.photoUrl = photoUrl;
 	}
 
+	@JsonIgnore
+	public Set<Activity> getActivities() {
+		return this.getCourses().stream().map(m_course -> m_course.getActivity()).collect(Collectors.toSet());
+	}
+
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
+	}
+
+	@JsonIgnore
+	public Set<TeacherTrack> getTeacherTracks() {
+		return teacherTracks;
+	}
+
+	@JsonIgnore
+	public void setTeacherTracks(Set<TeacherTrack> teacherTracks) {
+		this.teacherTracks = teacherTracks;
+	}
+
 	@Override
 	public int hashCode() {
 		return getId();
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	@Override
@@ -203,13 +230,18 @@ public class Teacher implements Serializable {
 	public String toString() {
 		String strCourses = courses.stream().map(m_course -> m_course.getName()).collect(Collectors.joining(","));
 		return "Teacher{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", email='" + email + '\'' +
-				", tel='" + tel + '\'' +
-				", education='" + education + '\'' +
-				", comments='" + comments + '\'' +
-				", Courses=[" + strCourses + "]}";
+				       "id=" + id +
+				       ", name='" + name + '\'' +
+				       ", photo='" + photo + '\'' +
+				       ", email='" + email + '\'' +
+				       ", tel='" + tel + '\'' +
+				       ", address='" + address + '\'' +
+				       ", education='" + education + '\'' +
+				       ", job='" + job + '\'' +
+				       ", hire date='" + hireDate + '\'' +
+				       ", resume='" + resume + '\'' +
+				       ", comments='" + comments + '\'' +
+				       ", Courses=[" + strCourses + "]}";
 	}
 
 

@@ -1,0 +1,89 @@
+/* Data Table tools column */
+.dtt {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: auto;
+}
+
+.dtt > li {
+    border-radius: 2px;
+    padding: 10px;
+    border-left: 2px solid #e6e7e8;
+    color: #444;
+}
+
+.dtt > li:last-of-type {
+    margin-bottom: 0;
+}
+
+.dtt > li > input[type='checkbox'] {
+    margin: 0 10px 0 5px;
+}
+
+.dtt > li .text {
+    display: inline-block;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.dtt > li .label {
+    margin-left: 10px;
+    font-size: 9px;
+}
+
+.dtt > li .tools {
+    display: none;
+    float: default;
+    color: #dd4b39;
+}
+
+.dtt > li .tools > .fa,
+.dtt > li .tools > .glyphicon,
+.dtt > li .tools > .ion {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.dtt > li:hover .tools {
+    display: inline-block;
+}
+
+.dtt > li.done {
+    color: #999;
+}
+
+.dtt > li.done .text {
+    text-decoration: line-through;
+    font-weight: 500;
+}
+
+.dtt > li.done .label {
+    background: #d2d6de !important;
+}
+
+.dtt .danger {
+    border-left-color: #dd4b39;
+}
+
+.dtt .warning {
+    border-left-color: #f39c12;
+}
+
+.dtt .info {
+    border-left-color: #00c0ef;
+}
+
+.dtt .success {
+    border-left-color: #00a65a;
+}
+
+.dtt .primary {
+    border-left-color: #3c8dbc;
+}
+
+.dtt .handle {
+    display: inline-block;
+    cursor: move;
+    margin: 0 5px;
+}

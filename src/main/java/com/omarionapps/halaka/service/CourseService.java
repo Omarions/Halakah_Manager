@@ -17,7 +17,6 @@ public class CourseService {
 	private CourseRepository courseRepository;
 	private CountryService   countryService;
 	private long             totalByCourse;
-	private int              totalCourses;
 
 	@Autowired
 	public CourseService(CourseRepository courseRepository, CountryService countryService) {
@@ -97,10 +96,10 @@ public class CourseService {
 	 * @param courseId the id of course you look for
 	 * @return a set of students with specified status for a specified course
 	 */
-	public Set<Student> getStudentsByStatusByCourse(int courseId, StudentStatus status) {
+	public Set<Student> findStudentsByCourse_IdAndStatus(int courseId, StudentStatus status) {
 		Optional<Course> course = this.findById(courseId);
 
-		return getStudentsByStatusByCourse(course.get(), status);
+		return findStudentsByCourseAndStatus(course.get(), status);
 	}
 
 	/**
@@ -109,7 +108,7 @@ public class CourseService {
 	 * @param course the course you look for
 	 * @return a set of students with specified status for a specified course
 	 */
-	public Set<Student> getStudentsByStatusByCourse(Course course, StudentStatus status) {
+	public Set<Student> findStudentsByCourseAndStatus(Course course, StudentStatus status) {
 		return course.getStudentTracks().stream().filter(st -> st.getStatus().equals(status.toString())).map(st -> st.getStudent()).collect(Collectors.toSet());
 	}
 

@@ -5,6 +5,7 @@ import com.omarionapps.halaka.service.ActivityService;
 import com.omarionapps.halaka.service.CountryService;
 import com.omarionapps.halaka.service.CourseService;
 import com.omarionapps.halaka.service.TeacherService;
+import com.omarionapps.halaka.utils.LocationTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -82,17 +84,33 @@ public class CourseController {
 			m_courseDays[i] = WeekDays.valueOf(tokenizer.nextToken());
 		}
 		course.setCourseDays(m_courseDays);
-		
+
+		Map<Country, Set<StudentTrack>> candidates = activityService.mapCandidatesWithCourse_IdByActivity(course.getActivity()).get(courseId);
+
+		//load photo url for candidates
+		candidates.entrySet().stream().forEach(countryMapEntry -> {
+			countryMapEntry.getValue().forEach(track -> {
+				String photoUrl = MvcUriComponentsBuilder
+						                  .fromMethodName(PhotoController.class, "getFile", track.getStudent().getPhoto(),
+								                  LocationTag.STUDENTS_STORE_LOC)
+						                  .build()
+						                  .toString();
+
+				track.getStudent().setPhotoUrl(photoUrl);
+			});
+		});
+
 		modelAndView.addObject("course", course);
 		modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(students));
+		modelAndView.addObject("candidates", candidates);
 		modelAndView.addObject("countryStudents", countryStudents);
 		modelAndView.addObject("students", courseService.getStudentsByCourse(course));
-		modelAndView.addObject("studyingStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.STUDYING));
-		modelAndView.addObject("waitingStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.WAITING));
-		modelAndView.addObject("certifiedStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.CERTIFIED));
-		modelAndView.addObject("tempStoppedStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.TEMP_STOP));
-		modelAndView.addObject("finalStoppedStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.FINAL_STOP));
-		modelAndView.addObject("firedStudents", courseService.getStudentsByStatusByCourse(course, StudentStatus.FIRED));
+		modelAndView.addObject("studyingStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.STUDYING));
+		modelAndView.addObject("waitingStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.WAITING));
+		modelAndView.addObject("certifiedStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.CERTIFIED));
+		modelAndView.addObject("tempStoppedStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.TEMP_STOP));
+		modelAndView.addObject("finalStoppedStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.FINAL_STOP));
+		modelAndView.addObject("firedStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.FIRED));
 		modelAndView.addObject("totalStudents", totalStudents);
 		modelAndView.addObject("totalStudying", totalStudying);
 		modelAndView.addObject("totalWaiting", totalWaiting);
@@ -158,11 +176,11 @@ public class CourseController {
 		Course archivedCourse = courseService.save(course);
 		if (null != archivedCourse) {
 			redirectAttrs.addFlashAttribute("messageSuccess", "Course with ID( " + courseId + " ) was archived " +
-					"successfully");
+					                                                  "successfully");
 		} else {
 			redirectAttrs.addFlashAttribute("messageError", "An error happens while archiving the course with ID( " +
-					courseId +
-					"" + " )");
+					                                                courseId +
+					                                                "" + " )");
 		}
 
 		return "redirect:/admin/courses";
@@ -195,7 +213,7 @@ public class CourseController {
 
 		} else {
 			String days = Stream.of(course.getCourseDays()).map(weekDays -> weekDays.toString()).collect(Collectors.joining
-					(","));
+					                                                                                                        (","));
 			course.setDays(days);
 			Course returnedCourse = courseService.save(course);
 			return "redirect:/admin/courses/course/" + returnedCourse.getId();
@@ -213,7 +231,7 @@ public class CourseController {
 	 */
 	@PostMapping("/admin/courses/course/{courseId}")
 	public String updateCourse(@PathVariable(value = "courseId") Integer courseId, Course course, BindingResult
-			bindingResult, Model model) {
+			                                                                                              bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
 
@@ -234,7 +252,7 @@ public class CourseController {
 		} else {
 			Course updatedCourse = courseService.findById(courseId).get();
 			String days = Stream.of(course.getCourseDays()).map(weekDays -> weekDays.toString()).collect(Collectors.joining
-					(","));
+					                                                                                                        (","));
 
 			updatedCourse.setName(course.getName());
 			updatedCourse.setTeacher(course.getTeacher());

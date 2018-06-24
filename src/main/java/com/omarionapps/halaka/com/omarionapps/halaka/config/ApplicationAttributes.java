@@ -39,7 +39,7 @@ public class ApplicationAttributes {
 
     private long certificatesCount;
 
-    private long waitStudentsCount;
+	private long waitStudentsCount;
     private long studyStudentsCount;
     private long certifiedStudentsCount;
 
@@ -102,6 +102,7 @@ public class ApplicationAttributes {
         certificatesCount = certificateService.getCount();
         servletContext.setAttribute("certificatesCount", certificatesCount);
     }
+
 
     /*
     @Autowired

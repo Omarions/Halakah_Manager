@@ -11,10 +11,11 @@
         <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
               th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
         <!-- Font Awesome -->
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+	          th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
         <!-- Ionicons -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
+	          th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
         <!-- Select2 -->
         <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
               th:href="@{~/lib/plugins/select2/select2.min.css}"/>
@@ -37,8 +38,8 @@
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <!-- use skin-blue -->
-        <link rel="stylesheet" href="../../lib/dist/css/skins/_all-skins.min.css"
-              th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
+	    <link rel="stylesheet" href="../../lib/dist/css/skins/skin-blue.min.css"
+	          th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -78,7 +79,7 @@
                         <div class="col-md-12">
 
                             <!-- box info -->
-                            <div class="box box-info">
+	                        <div class="box box-primary">
                                 <!-- box header -->
                                 <div class="box-header with-border">
                                     <h3 class="box-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
@@ -343,14 +344,54 @@
                                                        aria-describedby="table-tracks_info">
                                                     <thead>
                                                         <tr>
-                                                            <th>Select</th>
-                                                            <th>Activity</th>
-                                                            <th>Course</th>
-                                                            <th>Track Status</th>
-                                                            <th>Register Date</th>
-                                                            <th>Start Date</th>
-                                                            <th>Evaluation</th>
-                                                            <th>Comments</th>
+	                                                        <th class="sorting_asc" tabindex="0"
+	                                                            aria-controls="courses-list-dt" rowspan="1"
+	                                                            colspan="1" aria-sort="ascending"
+	                                                            aria-label="Select: activate to sort column descending"
+	                                                            style="width: 20px;">Select
+	                                                        </th>
+	                                                        <th class="sorting_asc" tabindex="0"
+	                                                            aria-controls="courses-list-dt" rowspan="1"
+	                                                            colspan="1" aria-sort="ascending"
+	                                                            aria-label="Activity: activate to sort column descending"
+	                                                            style="width: 150px;">Activity
+	                                                        </th>
+	                                                        <th class="sorting_asc" tabindex="0"
+	                                                            aria-controls="courses-list-dt" rowspan="1"
+	                                                            colspan="1" aria-sort="ascending"
+	                                                            aria-label="Course: activate to sort column descending"
+	                                                            style="width: 130px;">Course
+	                                                        </th>
+	                                                        <th class="sorting_asc" tabindex="0"
+	                                                            aria-controls="courses-list-dt" rowspan="1"
+	                                                            colspan="1" aria-sort="ascending"
+	                                                            aria-label="Track Status: activate to sort column descending"
+	                                                            style="width: 150px;">Track Status
+	                                                        </th>
+	                                                        <th class="sorting_asc" tabindex="0"
+	                                                            aria-controls="courses-list-dt" rowspan="1"
+	                                                            colspan="1" aria-sort="ascending"
+	                                                            aria-label="Register Date: activate to sort column descending"
+	                                                            style="width: 200px;">Register Date
+	                                                        </th>
+	                                                        <th class="sorting_asc" tabindex="0"
+	                                                            aria-controls="courses-list-dt" rowspan="1"
+	                                                            colspan="1" aria-sort="ascending"
+	                                                            aria-label="Start Date: activate to sort column descending"
+	                                                            style="width: 200px;">Start Date
+	                                                        </th>
+	                                                        <th class="sorting_asc" tabindex="0"
+	                                                            aria-controls="courses-list-dt" rowspan="1"
+	                                                            colspan="1" aria-sort="ascending"
+	                                                            aria-label="Evaluation: activate to sort column descending"
+	                                                        >Evaluation
+	                                                        </th>
+	                                                        <th class="sorting_asc" tabindex="0"
+	                                                            aria-controls="courses-list-dt" rowspan="1"
+	                                                            colspan="1" aria-sort="ascending"
+	                                                            aria-label="Comments: activate to sort column descending"
+	                                                            style="width: 300px;">Comments
+	                                                        </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="tracks-data">
@@ -410,7 +451,7 @@
                                                                 </select>
                                                             </td>
                                                             <td>
-                                                                <div class="input-group date form-control">
+	                                                            <div class="input-group date">
                                                                     <div class="input-group-addon">
                                                                         <i class="fa fa-calendar"></i>
                                                                     </div>
@@ -430,7 +471,7 @@
                                                                     <input type="text"
                                                                            class="form-control pull-right date-picker"
                                                                            id="start-datepicker"
-                                                                           th:value="${#dates.format(#dates.createToday(), 'yyyy-mm-dd')}"
+                                                                           th:value="null"
                                                                            name="startDate"
                                                                            th:field="*{wishes[__${stat.index}__].track.startDate}"/>
                                                                 </div>

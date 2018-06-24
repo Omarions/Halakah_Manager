@@ -5693,7 +5693,7 @@ table.text-center th {
     background: #f39c12 !important;
     background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #f39c12), color-stop(1, #f7bc60)) !important;
     background: -ms-linear-gradient(bottom, #f39c12, #f7bc60) !important;
-    background: -moz-linear-gradient(center bottom, #f39c12 0%, #f7bc60 100%) !important;
+    background-image: -moz-linear-gradient(center bottom, #f39c12 0%, #f7bc60 100%) !important;
     background: -o-linear-gradient(#f7bc60, #f39c12) !important;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7bc60', endColorstr='#f39c12', GradientType=0) !important;
     color: #fff;

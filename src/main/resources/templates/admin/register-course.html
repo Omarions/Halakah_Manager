@@ -11,16 +11,17 @@
     <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
           th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
     <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
+	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
     <!-- Theme style -->
     <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../lib/dist/css/skins/_all-skins.min.css"
-          th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
+	<link rel="stylesheet" href="../../lib/dist/css/skins/skin-blue.min.css"
+	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
           th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
@@ -136,11 +137,13 @@
                                                 Teacher
                                             </option>
                                             <option th:each="teacher : ${teachers}"
-                                                    th:value="${teacher.id}" th:text="${teacher.name}">activity name
+                                                    th:value="${teacher.id}"
+                                                    th:text="${teacher.name}">teacher name
                                             </option>
                                         </select>
-                                        <span th:if="${#fields.hasErrors('teacher')}" th:errors="*{teacher}"
-                                              th:class="help-block">Teacher Error</span>
+	                                    <span th:if="${#fields.hasErrors('teacher')}"
+	                                          th:errors="*{teacher}"
+	                                          th:class="help-block">Teacher Error</span>
                                     </div>
                                 </div>
                                 <!-- / .teachers-dropdown-list -->
@@ -148,25 +151,25 @@
                                 <!-- Dropdown list for days -->
                                 <div class="form-group"
                                      th:classappend="${#fields.hasErrors('days')}? 'has-error'">
-                                    <label for="select-days"
-                                           class="col-sm-2 control-label">Days</label>
+	                                <label for="select-teacher" class="col-sm-2 control-label">Days</label>
 
                                     <div class="col-sm-10">
                                         <select id="select-days"
                                                 class="form-control select2 select2-hidden-accessible"
-                                                multiple="" style="width: 100%;" tabindex="-1"
-                                                aria-hidden="true" th:field="*{days}">
-                                            <option value="" text="Select days" selected>Select
-                                                days
+                                                multiple data-placeholder="Select Days" style="width: 100%;"
+                                                tabindex="-1" aria-hidden="true"
+                                                th:field="*{days}">
+	                                        <option value="" text="Select Teacher" selected>Select
+	                                                                                        Days
                                             </option>
                                             <option th:each="day : ${weekDays}"
                                                     th:value="${day.toString()}"
-                                                    th:text="${day.toString()}">Day
+                                                    th:text="${day.toString()}">Days
                                             </option>
                                         </select>
                                         <span th:if="${#fields.hasErrors('days')}"
                                               th:errors="*{days}"
-                                              th:class="help-block">Days Errors</span>
+                                              th:class="help-block">Days Error</span>
                                     </div>
                                 </div>
                                 <!-- /.input-for-days -->
@@ -341,7 +344,8 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputCapacity"
-                                               placeholder="Name"
+                                               placeholder="Capacity"
+                                               value="10"
                                                th:field="*{capacity}"/>
                                         <span th:if="${#fields.hasErrors('capacity')}"
                                               th:errors="*{capacity}"
@@ -355,9 +359,13 @@
                                     <label for="inputComments" class="col-sm-2 control-label">Comment</label>
 
                                     <div class="col-sm-10">
-                                        <textarea type="text" class="form-control" id="inputComments"
-                                                  placeholder="Set comments for the activity if needed"
-                                                  th:field="*{comments}">Extra info</textarea>
+	                                    <div class="box">
+		                                    <div class="box-body">
+											<textarea type="textarea" class="form-control" id="inputComments"
+											          placeholder="Set comments for the activity if needed"
+											          th:field="*{comments}">Extra info</textarea>
+		                                    </div>
+	                                    </div>
                                     </div>
                                 </div>
                                 <!-- /.input-for-comments -->
@@ -598,9 +606,17 @@
 <!-- bootstrap datepicker -->
 <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
         th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
+        th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
+
 <script>
 
     $(function () {
+        //bootstrap WYSIHTML5 - text editor
+        $("#inputComments").wysihtml5();
+
+        //Initialize Select2 Elements
         $("#select-days").select2({
             placeholder: "Select days"
         });
