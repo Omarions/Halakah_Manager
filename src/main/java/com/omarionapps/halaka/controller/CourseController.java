@@ -87,18 +87,25 @@ public class CourseController {
 
 		Map<Country, Set<StudentTrack>> candidates = activityService.mapCandidatesWithCourse_IdByActivity(course.getActivity()).get(courseId);
 
-		//load photo url for candidates
-		candidates.entrySet().stream().forEach(countryMapEntry -> {
-			countryMapEntry.getValue().forEach(track -> {
-				String photoUrl = MvcUriComponentsBuilder
-						                  .fromMethodName(PhotoController.class, "getFile", track.getStudent().getPhoto(),
-								                  LocationTag.STUDENTS_STORE_LOC)
-						                  .build()
-						                  .toString();
+		if (null != candidates) {
+			//load photo url for candidates
+			candidates.entrySet().stream().forEach(countryMapEntry -> {
+				if (null != countryMapEntry) {
+					countryMapEntry.getValue().forEach(track -> {
+						if (track != null) {
+							String photoUrl = MvcUriComponentsBuilder
+									                  .fromMethodName(PhotoController.class, "getFile", track.getStudent().getPhoto(),
+											                  LocationTag.STUDENTS_STORE_LOC)
+									                  .build()
+									                  .toString();
 
-				track.getStudent().setPhotoUrl(photoUrl);
+							track.getStudent().setPhotoUrl(photoUrl);
+						}
+					});
+				}
 			});
-		});
+
+		}
 
 		modelAndView.addObject("course", course);
 		modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(students));
@@ -262,6 +269,7 @@ public class CourseController {
 			updatedCourse.setStartDate(course.getStartDate());
 			updatedCourse.setEndDate(course.getEndDate());
 			updatedCourse.setCapacity(course.getCapacity());
+			updatedCourse.setComments(course.getComments());
 
 			Course returnedCourse = courseService.save(updatedCourse);
 			model.addAttribute("weekDays", WeekDays.values());

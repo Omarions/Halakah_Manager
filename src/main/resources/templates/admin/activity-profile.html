@@ -25,10 +25,13 @@
 	      th:href="@{~/lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css}"/>
 	<link rel="stylesheet" href="../../lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css"
 	      th:href="@{~/lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css}"/>
+	<!-- bootstrap wysihtml5 - text editor -->
+	<link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
 	<!-- Theme style -->
 	<link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
-	<!-- Theme style -->
-	<link rel="stylesheet" href="../../lib/dist/css/AdminLTE.css" th:href="@{~/lib/dist/css/AdminLTE.css}"/>
+	<!-- Common styles -->
+	<link rel="stylesheet" href="../../lib/dist/css/common-styles.css" th:href="@{~/lib/dist/css/common-styles.css}"/>
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 	<link rel="stylesheet" href="../../lib/dist/css/skins/skin-blue.min.css"
@@ -1942,6 +1945,13 @@
 																	    aria-controls="studentsDT"
 																	    rowspan="1"
 																	    colspan="1"
+																	    aria-label="Start Date: activate to sort column ascending"
+																	    style="width: 266.2px;">Start Date
+																	</th>
+																	<th class="sorting" tabindex="0"
+																	    aria-controls="studentsDT"
+																	    rowspan="1"
+																	    colspan="1"
 																	    aria-label="Comments: activate to sort column ascending"
 																	    style="width: 266.2px;">Comments
 																	</th>
@@ -1977,10 +1987,24 @@
 																				<div>
 																					<a href="#"
 																					   th:href="@{'/admin/courses/course/' + ${course.id}}">
-																						<h3 th:class="not (${course.isFull()}? 'label label-success' : 'label label-danger')"
-																						    th:text="${course.name} + ' | Free Seats: ' + ${course.freePlaces}">
-																							Course</h3>
+																						<span th:class="not (${course.isFull()}? 'label label-success' : 'label label-danger')"
+																						      th:text="${course.name} + ' | Free Seats: ' + ${course.freePlaces}">
+																							Course</span>
 																					</a>
+																				</div>
+																			</li>
+																			<li>Certificate2 Name</li>
+																			<li>Certificate3 Name</li>
+																		</ul>
+																	</td>
+																	<td>
+																		<ul class="dtt" th:remove="all-but-first"
+																		    th:each="track, trackStat : ${student.studentTracks}">
+																			<li class="primary"
+																			    th:with="course=${track.course}"
+																			    th:if="${track.status.equals('STUDYING')} AND ${track.course.activity.id} == ${activity.id}">
+																				<div><span th:text="${track.startDate}">
+																							2018-10-20</span>
 																				</div>
 																			</li>
 																			<li>Certificate2 Name</li>
@@ -2019,48 +2043,6 @@
 																	<td>1.9</td>
 																	<td>A</td>
 																</tr>
-																<tr role="row" class="odd">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Camino 1.0</td>
-																	<td>OSX.2+</td>
-																	<td>1.8</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="even">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Camino 1.5</td>
-																	<td>OSX.3+</td>
-																	<td>1.8</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="odd">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Netscape 7.2</td>
-																	<td>Win 95+ / Mac OS 8.6-9.2</td>
-																	<td>1.7</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="even">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Netscape Browser 8</td>
-																	<td>Win 98SE+</td>
-																	<td>1.7</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="odd">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Netscape Navigator 9</td>
-																	<td>Win 98+ / OSX.2+</td>
-																	<td>1.8</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="even">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Mozilla 1.0</td>
-																	<td>Win 95+ / OSX.1+</td>
-																	<td>1</td>
-																	<td>A</td>
-																</tr>
 															</tbody>
 															<tfoot>
 																<tr>
@@ -2071,6 +2053,7 @@
 																	<th rowspan="1" colspan="1">Tel</th>
 																	<th rowspan="1" colspan="1">Education</th>
 																	<th rowspan="1" colspan="1">Course</th>
+																	<th rowspan="1" colspan="1">Start Date</th>
 																	<th rowspan="1" colspan="1">Comments</th>
 																</tr>
 															</tfoot>
@@ -2240,6 +2223,12 @@
 																	    aria-label="Course: activate to sort column descending"
 																	    style="width: 130.4px;">Course
 																	</th>
+																	<th class="sorting_asc" tabindex="0"
+																	    aria-controls="waiting_students_dt" rowspan="1"
+																	    colspan="1" aria-sort="ascending"
+																	    aria-label="Register Date: activate to sort column descending"
+																	    style="width: 130.4px;">Register Date
+																	</th>
 																	<th class="sorting" tabindex="0"
 																	    aria-controls="waiting_students_dt"
 																	    rowspan="1"
@@ -2279,16 +2268,30 @@
 																				<div>
 																					<a href="#"
 																					   th:href="@{'/admin/courses/course/' + ${course.id}}">
-																						<h3 th:class="not (${course.isFull()}? 'label label-success' : 'label label-danger')"
-																						    th:text="${course.name} + ' | Free Seats: ' + ${course.freePlaces}">
-																							Course</h3>
+																						<span th:class="not (${course.isFull()}? 'label label-success' : 'label label-danger')"
+																						      th:text="${course.name} + ' | Free Seats: ' + ${course.freePlaces}">
+																							Course</span>
 																					</a>
 																				</div>
 																			</li>
 																			<li>Certificate2 Name</li>
 																			<li>Certificate3 Name</li>
 																		</ul>
-
+																	</td>
+																	<td>
+																		<ul class="dtt" th:remove="all-but-first"
+																		    th:each="track, trackStat : ${student.studentTracks}">
+																			<li class="primary"
+																			    th:with="course=${track.course}"
+																			    th:if="${track.status.equals('WAITING')} AND ${track.course.activity.id} == ${activity.id}">
+																				<div><span
+																						th:text="${track.registerDate}">
+																							2018-10-20</span>
+																				</div>
+																			</li>
+																			<li>Certificate2 Name</li>
+																			<li>Certificate3 Name</li>
+																		</ul>
 																	</td>
 																	<td th:text="${student.comments}">Student
 																	                                  comments
@@ -2374,6 +2377,7 @@
 																	<th rowspan="1" colspan="1">Tel</th>
 																	<th rowspan="1" colspan="1">Education</th>
 																	<th rowspan="1" colspan="1">Course</th>
+																	<th rowspan="1" colspan="1">Register Date</th>
 																	<th rowspan="1" colspan="1">Comments</th>
 																</tr>
 															</tfoot>
@@ -2883,9 +2887,9 @@
 																				<div>
 																					<a href="#"
 																					   th:href="@{'/admin/courses/course/' + ${course.id}}">
-																						<h3 th:class="not (${course.isFull()}? 'label label-success' : 'label label-danger')"
-																						    th:text="${course.name} + ' | Free Seats: ' + ${course.freePlaces}">
-																							Course</h3>
+																						<span th:class="not (${course.isFull()}? 'label label-success' : 'label label-danger')"
+																						      th:text="${course.name} + ' | Free Seats: ' + ${course.freePlaces}">
+																							Course</span>
 																					</a>
 																				</div>
 																			</li>
@@ -3063,15 +3067,15 @@
 										</div>
 										<!-- /.box-header -->
 										<div class="box-body">
-											<div id="final-stopped-students-dt_wrapper"
+											<div id="final_stopped_students_dt_wrapper"
 											     class="dataTables_wrapper form-inline dt-bootstrap">
 												<div class="row" th:remove="all">
 													<div class="col-sm-6">
 														<div class="dataTables_length"
-														     id="final-stopped-students-dt_length">
+														     id="final_stopped_students_dt_length">
 															<label>Show
-																<select name="final-stopped-students-dt_length"
-																        aria-controls="final-stopped-students-dt"
+																<select name="final_stopped_students_dt_length"
+																        aria-controls="final_stopped_students_dt"
 																        class="form-control input-sm">
 																	<option value="10">10</option>
 																	<option value="25">25</option>
@@ -3082,12 +3086,12 @@
 														</div>
 													</div>
 													<div class="col-sm-6">
-														<div id="final-stopped-students-dt_filter"
+														<div id="final_stopped_students_dt_filter"
 														     class="dataTables_filter">
 															<label>Search:<input type="search"
 															                     class="form-control input-sm"
 															                     placeholder="Student Name"
-															                     aria-controls="studentsDT"></label>
+															                     aria-controls="final_stopped_students_dt"></label>
 														</div>
 													</div>
 												</div>
@@ -3100,65 +3104,66 @@
 															<thead>
 																<tr role="row">
 																	<th class="sorting_asc" tabindex="0"
-																	    aria-controls="studentsDT" rowspan="1"
+																	    aria-controls="final_stopped_students_dt"
+																	    rowspan="1"
 																	    colspan="1" aria-sort="ascending"
 																	    aria-label="ID: activate to sort column descending"
 																	    style="width: 130.4px;">ID
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="studentsDT"
+																	    aria-controls="final_stopped_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Name: activate to sort column ascending"
 																	    style="width: 266.4px;">Name
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="studentsDT"
+																	    aria-controls="final_stopped_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Birth Date: activate to sort column ascending"
 																	    style="width: 160.2px;">Birth Date
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="studentsDT"
+																	    aria-controls="final_stopped_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Country: activate to sort column ascending"
 																	    style="width: 266.2px;">Country
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="studentsDT"
+																	    aria-controls="final_stopped_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Tel: activate to sort column ascending"
 																	    style="width: 266.2px;">Tel
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="studentsDT"
+																	    aria-controls="final_stopped_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Email: activate to sort column ascending"
 																	    style="width: 266.2px;">Email
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="studentsDT"
+																	    aria-controls="final_stopped_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
-																	    aria-label="Education: activate to sort column ascending"
-																	    style="width: 266.2px;">Education
+																	    aria-label="Course: activate to sort column ascending"
+																	    style="width: 266.2px;">Course
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="studentsDT"
+																	    aria-controls="final_stopped_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Comments: activate to sort column ascending"
 																	    style="width: 266.2px;">Comments
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="studentsDT"
+																	    aria-controls="final_stopped_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
-																	    aria-label="CSS grade: activate to sort column ascending"
+																	    aria-label="Tools: activate to sort column ascending"
 																	    style="width: 266.2px;">Tools
 																	</th>
 																</tr>
@@ -3184,8 +3189,24 @@
 																	<td th:text="${student.tel}">Student Tel</td>
 																	<td th:text="${student.email}">Student Email
 																	</td>
-																	<td th:text="${student.education}">Student
-																	                                   Education
+																	<td>
+																		<ul class="dtt" th:remove="all-but-first"
+																		    th:each="track, trackStat : ${student.studentTracks}">
+																			<li class="primary"
+																			    th:with="course=${track.course}"
+																			    th:if="${track.status.equals('FINAL_STOP')} AND ${track.course.activity.id} == ${activity.id}">
+																				<div>
+																					<a href="#"
+																					   th:href="@{'/admin/courses/course/' + ${course.id}}">
+																						<span th:class="not (${course.isFull()}? 'label label-success' : 'label label-danger')"
+																						      th:text="${course.name} + ' | Free Seats: ' + ${course.freePlaces}">
+																							Course</span>
+																					</a>
+																				</div>
+																			</li>
+																			<li>Course Name</li>
+																			<li>Course Name</li>
+																		</ul>
 																	</td>
 																	<td th:text="${student.comments}">Student
 																	                                  comments
@@ -3284,7 +3305,7 @@
 																	<th rowspan="1" colspan="1">Country</th>
 																	<th rowspan="1" colspan="1">Tel</th>
 																	<th rowspan="1" colspan="1">Email</th>
-																	<th rowspan="1" colspan="1">Education</th>
+																	<th rowspan="1" colspan="1">Course</th>
 																	<th rowspan="1" colspan="1">Comments</th>
 																	<th rowspan="1" colspan="1">Tools</th>
 																</tr>
@@ -3455,8 +3476,8 @@
 																	    aria-controls="fired_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
-																	    aria-label="Education: activate to sort column ascending"
-																	    style="width: 266.2px;">Education
+																	    aria-label="Course: activate to sort column ascending"
+																	    style="width: 266.2px;">Course
 																	</th>
 																	<th class="sorting" tabindex="0"
 																	    aria-controls="fired_students_dt"
@@ -3487,8 +3508,24 @@
 																	<td th:text="${student.tel}">Student Tel</td>
 																	<td th:text="${student.email}">Student Email
 																	</td>
-																	<td th:text="${student.education}">Student
-																	                                   Education
+																	<td>
+																		<ul class="dtt" th:remove="all-but-first"
+																		    th:each="track, trackStat : ${student.studentTracks}">
+																			<li class="primary"
+																			    th:with="course=${track.course}"
+																			    th:if="${track.status.equals('FIRED')} AND ${track.course.activity.id} == ${activity.id}">
+																				<div>
+																					<a href="#"
+																					   th:href="@{'/admin/courses/course/' + ${course.id}}">
+																						<span th:class="not (${course.isFull()}? 'label label-success' : 'label label-danger')"
+																						      th:text="${course.name} + ' | Free Seats: ' + ${course.freePlaces}">
+																							Course</span>
+																					</a>
+																				</div>
+																			</li>
+																			<li>Course Name</li>
+																			<li>Course Name</li>
+																		</ul>
 																	</td>
 																	<td th:text="${student.comments}">Student
 																	                                  comments
@@ -3587,7 +3624,7 @@
 																	<th rowspan="1" colspan="1">Country</th>
 																	<th rowspan="1" colspan="1">Tel</th>
 																	<th rowspan="1" colspan="1">Email</th>
-																	<th rowspan="1" colspan="1">Education</th>
+																	<th rowspan="1" colspan="1">Course</th>
 																	<th rowspan="1" colspan="1">Comments</th>
 																</tr>
 															</tfoot>
@@ -3689,6 +3726,7 @@
 									</div>
 									<!-- /.input-for-photo -->
 
+									<!-- input for name -->
 									<div class="form-group">
 										<label for="inputName" class="col-sm-2 control-label">Name</label>
 
@@ -3697,15 +3735,22 @@
 											       th:field="*{name}"/>
 										</div>
 									</div>
+									<!-- /.input-for-name -->
 
+									<!-- input for comments -->
 									<div class="form-group">
-										<label for="inputComments" class="col-sm-2 control-label">Comments</label>
-
+										<label for="inputComments" class="col-sm-2 control-label">Comment</label>
 										<div class="col-sm-10">
-                                            <textarea class="form-control" id="inputComments" placeholder="Comments"
-                                                      th:field="*{comments}"></textarea>
+											<div class="box">
+												<div class="box-body">
+											<textarea type="textarea" class="form-control" id="inputComments"
+											          placeholder="Set comments for the activity if needed"
+											          th:field="*{comments}">Extra info</textarea>
+												</div>
+											</div>
 										</div>
 									</div>
+									<!-- /.input-for-comments -->
 
 									<div class="form-group">
 										<div class="col-sm-offset-2 col-sm-10">
@@ -3969,6 +4014,10 @@
         th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
 <script src="../../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
         th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
+        th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
+
 <!-- AdminLTE App -->
 <script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
 <script src="../dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
@@ -4009,6 +4058,9 @@
             students_tables_box.find(".box").hide();
             students_tables_box.find("#fired-students-div").show();
         });
+        //bootstrap WYSIHTML5 - text editor
+        $("#inputComments").wysihtml5();
+        
         $("#teachers-dt").DataTable({
             responsive: true
         });

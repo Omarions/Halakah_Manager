@@ -532,13 +532,6 @@
 																	    aria-controls="all-students-dt"
 																	    rowspan="1"
 																	    colspan="1"
-																	    aria-label="Education: activate to sort column ascending"
-																	    style="width: 266.2px;">Education
-																	</th>
-																	<th class="sorting" tabindex="0"
-																	    aria-controls="all-students-dt"
-																	    rowspan="1"
-																	    colspan="1"
 																	    aria-label="Comments: activate to sort column ascending"
 																	    style="width: 266.2px;">Comments
 																	</th>
@@ -546,7 +539,7 @@
 																	    aria-controls="all-students-dt"
 																	    rowspan="1"
 																	    colspan="1"
-																	    aria-label="CSS grade: activate to sort column ascending"
+																	    aria-label="Tools: activate to sort column ascending"
 																	    style="width: 266.2px;">Tools
 																	</th>
 																</tr>
@@ -570,9 +563,6 @@
 																	</td>
 																	<td th:text="${student.tel}">Student Tel</td>
 																	<td th:text="${student.email}">Student Email
-																	</td>
-																	<td th:text="${student.education}">Student
-																	                                   Education
 																	</td>
 																	<td th:text="${student.comments}">Student
 																	                                  comments
@@ -620,58 +610,15 @@
 																	<td>1.9</td>
 																	<td>A</td>
 																</tr>
-																<tr role="row" class="odd">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Camino 1.0</td>
-																	<td>OSX.2+</td>
-																	<td>1.8</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="even">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Camino 1.5</td>
-																	<td>OSX.3+</td>
-																	<td>1.8</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="odd">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Netscape 7.2</td>
-																	<td>Win 95+ / Mac OS 8.6-9.2</td>
-																	<td>1.7</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="even">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Netscape Browser 8</td>
-																	<td>Win 98SE+</td>
-																	<td>1.7</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="odd">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Netscape Navigator 9</td>
-																	<td>Win 98+ / OSX.2+</td>
-																	<td>1.8</td>
-																	<td>A</td>
-																</tr>
-																<tr role="row" class="even">
-																	<td class="sorting_1">Gecko</td>
-																	<td>Mozilla 1.0</td>
-																	<td>Win 95+ / OSX.1+</td>
-																	<td>1</td>
-																	<td>A</td>
-																</tr>
 															</tbody>
 															<tfoot>
-																<tr>
+																<tr role="row">
 																	<th rowspan="1" colspan="1">ID</th>
 																	<th rowspan="1" colspan="1">Name</th>
 																	<th rowspan="1" colspan="1">Birth Date</th>
 																	<th rowspan="1" colspan="1">Country</th>
 																	<th rowspan="1" colspan="1">Tel</th>
 																	<th rowspan="1" colspan="1">Email</th>
-																	<th rowspan="1" colspan="1">Education</th>
 																	<th rowspan="1" colspan="1">Comments</th>
 																	<th rowspan="1" colspan="1">Tools</th>
 																</tr>
@@ -872,7 +819,7 @@
 																		Student ID
 																	</td>
 																	<td><a href="#"
-																	       th:href="@{/admin/students/student(id=${student.id})}"><span
+																	       th:href="@{'/admin/students/student/' + ${student.id}}"><span
 																			th:text="${student.name}">Student Name</span></a>
 																	</td>
 																	<td th:text="${student.birthDate}">Student Birth
@@ -1686,13 +1633,6 @@
 																	    aria-controls="temp_stopped_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
-																	    aria-label="Education: activate to sort column ascending"
-																	    style="width: 266.2px;">Education
-																	</th>
-																	<th class="sorting" tabindex="0"
-																	    aria-controls="temp_stopped_students_dt"
-																	    rowspan="1"
-																	    colspan="1"
 																	    aria-label="Comments: activate to sort column ascending"
 																	    style="width: 266.2px;">Comments
 																	</th>
@@ -1706,7 +1646,7 @@
 																		Student ID
 																	</td>
 																	<td><a href="#"
-																	       th:href="@{/admin/students/student(id=${student.id})}"><span
+																	       th:href="@{'/admin/students/student/' + ${student.id}}"><span
 																			th:text="${student.name}">Student Name</span></a>
 																	</td>
 																	<td th:text="${student.birthDate}">Student Birth
@@ -1722,11 +1662,9 @@
 																	<td th:text="${student.facebook}">Student
 																	                                  Facebook
 																	</td>
-																	<td th:text="${student.education}">Student
-																	                                   Education
-																	</td>
-																	<td th:text="${student.comments}">Student
-																	                                  comments
+																	<td id="td_temp_student_comments"
+																	    th:text="${student.comments}">
+																		Comments
 																	</td>
 																</tr>
 																<tr role="row" class="odd">
@@ -1759,16 +1697,63 @@
 																</tr>
 															</tbody>
 															<tfoot>
-																<tr>
-																	<th rowspan="1" colspan="1">ID</th>
-																	<th rowspan="1" colspan="1">Name</th>
-																	<th rowspan="1" colspan="1">Birth Date</th>
-																	<th rowspan="1" colspan="1">Country</th>
-																	<th rowspan="1" colspan="1">Tel</th>
-																	<th rowspan="1" colspan="1">Email</th>
-																	<th rowspan="1" colspan="1">Facebook</th>
-																	<th rowspan="1" colspan="1">Education</th>
-																	<th rowspan="1" colspan="1">Comments</th>
+																<tr role="row">
+																	<th class="sorting_asc" tabindex="0"
+																	    aria-controls="temp_stopped_students_dt"
+																	    rowspan="1"
+																	    colspan="1" aria-sort="ascending"
+																	    aria-label="ID: activate to sort column descending"
+																	    style="width: 130.4px;">ID
+																	</th>
+																	<th class="sorting" tabindex="0"
+																	    aria-controls="temp_stopped_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Name: activate to sort column ascending"
+																	    style="width: 266.4px;">Name
+																	</th>
+																	<th class="sorting" tabindex="0"
+																	    aria-controls="temp_stopped_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Birth Date: activate to sort column ascending"
+																	    style="width: 160.2px;">Birth Date
+																	</th>
+																	<th class="sorting" tabindex="0"
+																	    aria-controls="temp_stopped_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Country: activate to sort column ascending"
+																	    style="width: 266.2px;">Country
+																	</th>
+																	<th class="sorting" tabindex="0"
+																	    aria-controls="temp_stopped_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Tel: activate to sort column ascending"
+																	    style="width: 266.2px;">Tel
+																	</th>
+																	<th class="sorting" tabindex="0"
+																	    aria-controls="temp_stopped_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Email: activate to sort column ascending"
+																	    style="width: 266.2px;">Email
+																	</th>
+																	<th class="sorting" tabindex="0"
+																	    aria-controls="temp_stopped_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Facebook: activate to sort column ascending"
+																	    style="width: 266.2px;">Facebook
+																	</th>
+																	<th class="sorting" tabindex="0"
+																	    aria-controls="temp_stopped_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Comments: activate to sort column ascending"
+																	    style="width: 266.2px;">Comments
+																	</th>
 																</tr>
 															</tfoot>
 														</table>
@@ -1961,7 +1946,7 @@
 																		Student ID
 																	</td>
 																	<td><a href="#"
-																	       th:href="@{/admin/students/student(id=${student.id})}"><span
+																	       th:href="@{'/admin/students/student/' + ${student.id}}"><span
 																			th:text="${student.name}">Student Name</span></a>
 																	</td>
 																	<td th:text="${student.birthDate}">Student Birth
@@ -2341,113 +2326,116 @@
 									<!-- /.box-header -->
 									<div class="box-body" style="">
 										<!-- box of countries and its candidates students -->
-										<div th:each="cand, candStat : ${candidates.entrySet()}">
-											<div class="box box-primary direct-chat direct-chat-primary">
-												<div class="box-header with-border">
-													<h3 class="box-title"
-													    th:text="${cand.key.englishName}">
-														China
-													</h3>
+										<div th:if="${candidates}">
+											<div th:each="cand, candStat : ${candidates.entrySet()}">
+												<div class="box box-primary direct-chat direct-chat-primary">
+													<div class="box-header with-border">
+														<h3 class="box-title"
+														    th:text="${cand.key.englishName}">
+															China
+														</h3>
 
-													<div class="box-tools pull-right">
+														<div class="box-tools pull-right">
 																			<span data-toggle="tooltip"
 																			      class="badge bg-light-blue"
 																			      title="3 New Messages"
 																			      th:title="${cand.value.size()} + ' students'"
 																			      th:text="${cand.value.size()}">3
 																			</span>
-														<button type="button" class="btn btn-box-tool"
-														        data-widget="collapse"><i
-																class="fa fa-minus"></i>
-														</button>
-														<button type="button"
-														        class="btn btn-box-tool"
-														        data-toggle="tooltip"
-														        title="Contacts"
-														        data-widget="chat-pane-toggle">
-															<i class="fa fa-comments"></i></button>
-														<button type="button"
-														        class="btn btn-box-tool"
-														        data-widget="remove">
-															<i class="fa fa-times"></i></button>
-													</div>
-												</div>
-												<!-- /.box-header -->
-												<div class="box-body">
-													<!-- Conversations are loaded here -->
-													<div class="direct-chat-messages">
-														<!-- Message. Default to the left -->
-														<div class="direct-chat-msg"
-														     th:each="track, trackStat : ${cand.value}">
-															<div class="direct-chat-info clearfix">
-																<a href="#"
-																   th:href="@{'/admin/students/student/' + ${track.student.id}}"><span
-																		class="direct-chat-name pull-left"
-																		th:text="${track.student.name}">Alexander Pierce</span></a>
-
-																<span
-																		class="direct-chat-timestamp pull-right"
-																		th:text="${track.registerDate}">23 Jan 2:00 pm</span>
-															</div>
-															<!-- /.direct-chat-info -->
-															<img class="direct-chat-img"
-															     src="../dist/img/user1-128x128.jpg"
-															     alt="Message User Image"
-															     th:src="@{${track.student.photoUrl}}">
-															<!-- /.direct-chat-img -->
-															<div class="direct-chat-text"
-															     th:text="'Call me on (' + ${track.student.tel} + '), or send email to (' + ${track.student.email} + ')'">
-																Is this template really for free?
-																That's
-																unbelievable!
-															</div>
-															<!-- /.direct-chat-text -->
+															<button type="button" class="btn btn-box-tool"
+															        data-widget="collapse"><i
+																	class="fa fa-minus"></i>
+															</button>
+															<button type="button"
+															        class="btn btn-box-tool"
+															        data-toggle="tooltip"
+															        title="Contacts"
+															        data-widget="chat-pane-toggle">
+																<i class="fa fa-comments"></i></button>
+															<button type="button"
+															        class="btn btn-box-tool"
+															        data-widget="remove">
+																<i class="fa fa-times"></i></button>
 														</div>
-														<!-- /.direct-chat-msg -->
 													</div>
-													<!--/.direct-chat-messages-->
+													<!-- /.box-header -->
+													<div class="box-body">
+														<!-- Conversations are loaded here -->
+														<div class="direct-chat-messages">
+															<!-- Message. Default to the left -->
+															<div class="direct-chat-msg"
+															     th:each="track, trackStat : ${cand.value}">
+																<div class="direct-chat-info clearfix">
+																	<a href="#"
+																	   th:href="@{'/admin/students/student/' + ${track.student.id}}"><span
+																			class="direct-chat-name pull-left"
+																			th:text="${track.student.name}">Alexander Pierce</span></a>
 
-													<!-- Contacts are loaded here -->
-													<div class="direct-chat-contacts">
-														<ul class="contacts-list">
-															<li>
-																<a href="#">
-																	<img class="contacts-list-img"
-																	     src="../dist/img/user1-128x128.jpg"
-																	     alt="User Image">
+																	<span
+																			class="direct-chat-timestamp pull-right"
+																			th:text="${track.registerDate}">23 Jan 2:00 pm</span>
+																</div>
+																<!-- /.direct-chat-info -->
+																<img class="direct-chat-img"
+																     src="../dist/img/user1-128x128.jpg"
+																     alt="Message User Image"
+																     th:src="@{${track.student.photoUrl}}">
+																<!-- /.direct-chat-img -->
+																<div class="direct-chat-text"
+																     th:text="'Call me on (' + ${track.student.tel} + '), or send email to (' + ${track.student.email} + ')'">
+																	Is this template really for free?
+																	That's
+																	unbelievable!
+																</div>
+																<!-- /.direct-chat-text -->
+															</div>
+															<!-- /.direct-chat-msg -->
+														</div>
+														<!--/.direct-chat-messages-->
 
-																	<div class="contacts-list-info">
+														<!-- Contacts are loaded here -->
+														<div class="direct-chat-contacts">
+															<ul class="contacts-list">
+																<li>
+																	<a href="#">
+																		<img class="contacts-list-img"
+																		     src="../dist/img/user1-128x128.jpg"
+																		     alt="User Image">
+
+																		<div class="contacts-list-info">
                             <span class="contacts-list-name">
                               Count Dracula
                               <small class="contacts-list-date pull-right">2/28/2015</small>
                             </span>
-																		<span class="contacts-list-msg">How have you been? I was...</span>
-																	</div>
-																	<!-- /.contacts-list-info -->
-																</a>
-															</li>
-															<!-- End Contact Item -->
-														</ul>
-														<!-- /.contatcts-list -->
-													</div>
-													<!-- /.direct-chat-pane -->
-												</div>
-												<!-- /.box-body -->
-												<div class="box-footer">
-													<!--<form action="#" method="post">
-														<div class="input-group">
-															<input type="text" name="message"
-																   placeholder="Type Message ..."
-																   class="form-control">
-															<span class="input-group-btn">
-		<button type="submit" class="btn btn-primary btn-flat">Send</button>
-		</span>
+																			<span class="contacts-list-msg">How have you been? I was...</span>
+																		</div>
+																		<!-- /.contacts-list-info -->
+																	</a>
+																</li>
+																<!-- End Contact Item -->
+															</ul>
+															<!-- /.contatcts-list -->
 														</div>
-													</form>-->
+														<!-- /.direct-chat-pane -->
+													</div>
+													<!-- /.box-body -->
+													<div class="box-footer">
+														<!--<form action="#" method="post">
+															<div class="input-group">
+																<input type="text" name="message"
+																	   placeholder="Type Message ..."
+																	   class="form-control">
+																<span class="input-group-btn">
+			<button type="submit" class="btn btn-primary btn-flat">Send</button>
+			</span>
+															</div>
+														</form>-->
+													</div>
+													<!-- /.box-footer-->
 												</div>
-												<!-- /.box-footer-->
 											</div>
 										</div>
+
 									</div>
 								</div>
 							</div>
@@ -2974,6 +2962,8 @@
     //the data come server to draw Bar Chart
     var countryStudents = [[${countryStudents}]];
 
+    var tempStudents = [[${tempStoppedStudents}]];
+
 </script>
 <!-- jQuery 2.2.3 -->
 <script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
@@ -3023,11 +3013,16 @@
         th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
 <!-- AdminLTE App -->
 <script src="../../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
-<script src="../dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
 
 <script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
 <script>
     $(function () {
+        console.log(tempStudents);
+        for (var stIndex in tempStudents) {
+            console.log("item: " + tempStudents[stIndex]['comments']);
+            $("#td_temp_student_comments").html(tempStudents[stIndex]['comments']);
+        }
+
         var students_tables_box = $("#tables-box");
         students_tables_box.find(".box").hide();
         $("#all-students-div").show();
@@ -3092,7 +3087,8 @@
 
 
         $("#all-students-dt").DataTable({
-            responsive: true
+            responsive: true,
+            scrollX: true
         });
         $("#waiting_students_dt").DataTable({
             responsive: true

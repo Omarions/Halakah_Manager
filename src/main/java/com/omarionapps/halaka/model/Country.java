@@ -1,5 +1,7 @@
 package com.omarionapps.halaka.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,9 +61,10 @@ public class Country implements Serializable, Comparable<Country> {
         this.code = code;
     }
 
-    public Set<Student> getStudents() {
-        return students;
-    }
+	@JsonIgnore
+	public Set<Student> getStudents() {
+		return students;
+	}
 
     public void setStudents(Set<Student> students) {
         this.students = students;

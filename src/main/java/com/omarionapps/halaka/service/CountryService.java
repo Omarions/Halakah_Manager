@@ -32,7 +32,7 @@ public class CountryService {
 			if (country.getStudents().size() > 0)
 				map.put(country.getCode(), country.getStudents().size());
 		});
-		System.out.println("CountryCode Map: " + map);
+		//System.out.println("CountryCode Map: " + map);
 		return map;
 	}
 
@@ -53,7 +53,7 @@ public class CountryService {
 
 	public Map<String, Integer> getCountryCodeStudentsCountMapFromStudetns(Set<Student> students) {
 		Map<String, Integer> map = new HashMap<>();
-		students.stream().forEach((student -> {
+		students.forEach((student -> {
 			String code = student.getCountry().getCode();
 			if (map.containsKey(code)) {
 				int count = map.get(code);
@@ -68,7 +68,7 @@ public class CountryService {
 
 	public Map<Country, Integer> getCountryStudentsCountMapFromStudetns(Set<Student> students) {
 		Map<Country, Integer> map = new HashMap<>();
-		students.stream().forEach((student -> {
+		students.forEach((student -> {
 			Country country = student.getCountry();
 			if (map.containsKey(country)) {
 				int count = map.get(country);
@@ -84,7 +84,7 @@ public class CountryService {
 	public Map<Country, Set<Student>> groupStudentsByCountry(Set<Student> students) {
 		Map<Country, Set<Student>> map = new HashMap<>();
 
-		students.stream().forEach((student -> {
+		students.forEach((student -> {
 			Country country = student.getCountry();
 			if (map.containsKey(country)) {
 				Set<Student> existSet = map.get(country);
@@ -104,7 +104,7 @@ public class CountryService {
 	public Map<Country, Set<StudentTrack>> groupTracksByCountry(Set<StudentTrack> tracks) {
 		Map<Country, Set<StudentTrack>> map = new HashMap<>();
 
-		tracks.stream().forEach((track -> {
+		tracks.forEach((track -> {
 			Country country = track.getStudent().getCountry();
 			if (map.containsKey(country)) {
 				Set<StudentTrack> existSet = map.get(country);
@@ -128,7 +128,7 @@ public class CountryService {
 	 */
 	public Map<String, Set<Student>> getCountryCodeStudentsMap(Set<Student> students) {
 		Map<String, Set<Student>> map = new HashMap<>();
-		students.stream().forEach((student) -> {
+		students.forEach((student) -> {
 			String code = student.getCountry().getCode();
 			if (map.containsKey(code)) {
 
@@ -200,5 +200,4 @@ public class CountryService {
 	public Optional<Country> findById(int id) {
 		return countryRepository.findById(id);
 	}
-
 }

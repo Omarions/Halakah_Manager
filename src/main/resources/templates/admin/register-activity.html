@@ -15,15 +15,16 @@
 	<!-- Ionicons -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
+	<!-- bootstrap wysihtml5 - text editor -->
+	<link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
+
 	<!-- Theme style -->
-	<link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css"/>
+	<link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		 folder instead of downloading all of them to reduce the load. -->
 	<link rel="stylesheet" href="../../lib/dist/css/skins/skin-blue.min.css"
 	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
-	<!-- bootstrap wysihtml5 - text editor -->
-	<link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
-	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -334,16 +335,21 @@
 <!-- Bootstrap 3.3.6 -->
 <script src="../../lib/bootstrap/js/bootstrap.min.js"
         th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
-<!-- AdminLTE App -->
-<script src="../../lib/dist/js/app.min.js"
-        th:src="@{~/lib/dist/js/app.min.js}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../lib/dist/js/demo.js"></script>
+<!-- Slimscroll -->
+<script src="../../lib/plugins/slimScroll/jquery.slimscroll.min.js"
+        th:src="@{~/lib/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+<!-- FastClick -->
+<script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
+
 <!-- Bootstrap WYSIHTML5 -->
 <script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
         th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
-
+<!-- AdminLTE App -->
+<script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
+<script src="../dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
+
 <script>
     $(function () {
         //bootstrap WYSIHTML5 - text editor

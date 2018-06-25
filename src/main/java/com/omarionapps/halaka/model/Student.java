@@ -1,5 +1,7 @@
 package com.omarionapps.halaka.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -100,9 +102,10 @@ public class Student {
         this.photo = photo;
     }
 
-    public Country getCountry() {
-        return country;
-    }
+	@JsonIgnore
+	public Country getCountry() {
+		return country;
+	}
 
     public void setCountry(Country country) {
         this.country = country;

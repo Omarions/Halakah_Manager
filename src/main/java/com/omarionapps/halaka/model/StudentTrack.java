@@ -1,5 +1,7 @@
 package com.omarionapps.halaka.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -39,25 +41,28 @@ public class StudentTrack implements Serializable {
 		ActivityName = activityName;
 	}
 
-    public Student getStudent() {
-        return student;
-    }
+	@JsonIgnore
+	public Student getStudent() {
+		return student;
+	}
 
     public void setStudent(Student student) {
         this.student = student;
     }
 
-    public Course getCourse() {
-        return course;
-    }
+	@JsonIgnore
+	public Course getCourse() {
+		return course;
+	}
 
     public void setCourse(Course course) {
         this.course = course;
     }
 
-    public Certificate getCertificate() {
-        return certificate;
-    }
+	@JsonIgnore
+	public Certificate getCertificate() {
+		return certificate;
+	}
 
     public void setCertificate(Certificate certificate) {
         this.certificate = certificate;
