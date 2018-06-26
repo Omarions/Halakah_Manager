@@ -102,7 +102,6 @@ public class Student {
         this.photo = photo;
     }
 
-	@JsonIgnore
 	public Country getCountry() {
 		return country;
 	}
@@ -215,11 +214,12 @@ public class Student {
         this.studentTracks = studentTracks;
     }
 
+    @JsonIgnore
     public List<Course> getCourses() {
         courses.clear();
         this.getStudentTracks().stream()
-                .filter((st) -> st.getStudent() == this)
-                .forEach((st) -> courses.add(st.getCourse()));
+            .filter((st) -> st.getStudent() == this)
+            .forEach((st) -> courses.add(st.getCourse()));
         return courses;
     }
 
@@ -239,6 +239,7 @@ public class Student {
         this.birthLocation = birthLocation;
     }
 
+    @JsonIgnore
     public House getHouse() {
         return house;
     }

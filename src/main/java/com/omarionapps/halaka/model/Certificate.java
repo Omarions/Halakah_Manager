@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -75,9 +76,10 @@ public class Certificate {
         this.comments = comments;
     }
 
-    public Event getEvent() {
-        return event;
-    }
+	@JsonIgnore
+	public Event getEvent() {
+		return event;
+	}
 
     public void setEvent(Event event) {
         this.event = event;

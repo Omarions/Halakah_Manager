@@ -104,7 +104,6 @@ public class CourseController {
 					});
 				}
 			});
-
 		}
 
 		modelAndView.addObject("course", course);
@@ -112,12 +111,12 @@ public class CourseController {
 		modelAndView.addObject("candidates", candidates);
 		modelAndView.addObject("countryStudents", countryStudents);
 		modelAndView.addObject("students", courseService.getStudentsByCourse(course));
-		modelAndView.addObject("studyingStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.STUDYING));
+		/*modelAndView.addObject("studyingStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.STUDYING));
 		modelAndView.addObject("waitingStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.WAITING));
 		modelAndView.addObject("certifiedStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.CERTIFIED));
 		modelAndView.addObject("tempStoppedStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.TEMP_STOP));
 		modelAndView.addObject("finalStoppedStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.FINAL_STOP));
-		modelAndView.addObject("firedStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.FIRED));
+		modelAndView.addObject("firedStudents", courseService.findStudentsByCourseAndStatus(course, StudentStatus.FIRED));*/
 		modelAndView.addObject("totalStudents", totalStudents);
 		modelAndView.addObject("totalStudying", totalStudying);
 		modelAndView.addObject("totalWaiting", totalWaiting);

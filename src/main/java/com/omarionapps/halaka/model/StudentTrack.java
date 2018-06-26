@@ -50,7 +50,6 @@ public class StudentTrack implements Serializable {
         this.student = student;
     }
 
-	@JsonIgnore
 	public Course getCourse() {
 		return course;
 	}

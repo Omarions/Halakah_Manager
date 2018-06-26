@@ -451,15 +451,15 @@
 										</div>
 										<!-- /.box-header -->
 										<div class="box-body">
-											<div id="all-students-dt_wrapper"
+											<div id="all_students_dt_wrapper"
 											     class="dataTables_wrapper form-inline dt-bootstrap">
 												<div class="row" th:remove="all">
 													<div class="col-sm-6">
 														<div class="dataTables_length"
-														     id="all-students-dt_length">
+														     id="all_students_dt_length">
 															<label>Show
-																<select name="all-students-dt_length"
-																        aria-controls="all-students-dt"
+																<select name="all_students_dt_length"
+																        aria-controls="all_students_dt"
 																        class="form-control input-sm">
 																	<option value="10">10</option>
 																	<option value="25">25</option>
@@ -470,117 +470,93 @@
 														</div>
 													</div>
 													<div class="col-sm-6">
-														<div id="all-students-dt_filter"
+														<div id="all_students_dt_filter"
 														     class="dataTables_filter">
 															<label>Search:<input type="search"
 															                     class="form-control input-sm"
 															                     placeholder="Student Name"
-															                     aria-controls="all-students-dt"></label>
+															                     aria-controls="all_students_dt"></label>
 														</div>
 													</div>
 												</div>
-												<div class="row" th:remove="all-but-first">
-													<div class="col-sm-12">
-														<table id="all-students-dt"
+												<div class="row">
+													<div id="students-table-div" class="col-sm-12">
+														<table id="all_students_dt"
 														       class="table table-bordered table-striped dataTable dt-responsive"
 														       role="grid" style="width: 100%;"
-														       aria-describedby="all-students-dt_info">
+														       aria-describedby="all_students_dt_info">
 															<thead>
 																<tr role="row">
 																	<th class="sorting_asc" tabindex="0"
-																	    aria-controls="all-students-dt" rowspan="1"
+																	    aria-controls="all_students_dt" rowspan="1"
 																	    colspan="1" aria-sort="ascending"
 																	    aria-label="ID: activate to sort column descending"
 																	    style="width: 130.4px;">ID
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="all-students-dt"
+																	    aria-controls="all_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Name: activate to sort column ascending"
 																	    style="width: 266.4px;">Name
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="all-students-dt"
+																	    aria-controls="all_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Birth Date: activate to sort column ascending"
 																	    style="width: 160.2px;">Birth Date
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="all-students-dt"
+																	    aria-controls="all_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Country: activate to sort column ascending"
 																	    style="width: 266.2px;">Country
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="all-students-dt"
+																	    aria-controls="all_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Tel: activate to sort column ascending"
 																	    style="width: 266.2px;">Tel
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="all-students-dt"
+																	    aria-controls="all_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Email: activate to sort column ascending"
 																	    style="width: 266.2px;">Email
 																	</th>
 																	<th class="sorting" tabindex="0"
-																	    aria-controls="all-students-dt"
+																	    aria-controls="all_students_dt"
 																	    rowspan="1"
 																	    colspan="1"
 																	    aria-label="Comments: activate to sort column ascending"
 																	    style="width: 266.2px;">Comments
 																	</th>
-																	<th class="sorting" tabindex="0"
-																	    aria-controls="all-students-dt"
-																	    rowspan="1"
-																	    colspan="1"
-																	    aria-label="Tools: activate to sort column ascending"
-																	    style="width: 266.2px;">Tools
-																	</th>
 																</tr>
 															</thead>
-															<tbody th:remove="all-but-first">
-																<tr rol="row" th:each="student : ${students}"
-																    th:class="${studentStat.odd}? 'odd' : 'even'">
-																	<td class="sorting_1" th:text="${student.id}">
+															<tbody id="#students_table_body">
+																<tr rol="row">
+																	<td class="sorting_1">
 																		Student ID
 																	</td>
-																	<td><a href="#"
-																	       th:href="@{'/admin/students/student/' + ${student.id}}"><span
-																			th:text="${student.name}">Student Name</span></a>
+																	<td> Student Name
 																	</td>
-																	<td th:text="${student.birthDate}">Student Birth
-																	                                   Date
+																	<td>Student Birth Date
 																	</td>
-																	<td th:text="${student.country.arabicName}">
+																	<td>
 																		Student
 																		Country
 																	</td>
-																	<td th:text="${student.tel}">Student Tel</td>
-																	<td th:text="${student.email}">Student Email
+																	<td>Student Tel</td>
+																	<td>Student Email
 																	</td>
-																	<td th:text="${student.comments}">Student
-																	                                  comments
+																	<td>Student
+																	    comments
 																	</td>
-																	<td>
-																		<ul class="dtt">
-																			<li>
-																				<div class="tools">
-																					<a href="#"
-																					   th:href="@{/admin/students/student(id=${student.id})}"><i
-																							class="fa fa-edit fa-3x"></i></a>
-																					<a href="#"
-																					   th:href="@{/admin/students/student(id=${student.id})}"><i
-																							class="fa fa-trash-o fa-3x"></i></a>
-																				</div>
-																			</li>
-																		</ul>
-																	</td>
+
 																</tr>
 																<tr role="row" class="odd">
 																	<td class="sorting_1">Gecko</td>
@@ -620,7 +596,6 @@
 																	<th rowspan="1" colspan="1">Tel</th>
 																	<th rowspan="1" colspan="1">Email</th>
 																	<th rowspan="1" colspan="1">Comments</th>
-																	<th rowspan="1" colspan="1">Tools</th>
 																</tr>
 															</tfoot>
 														</table>
@@ -628,7 +603,7 @@
 												</div>
 												<div class="row" th:remove="all">
 													<div class="col-sm-5">
-														<div class="dataTables_info" id="all-students-dt_info"
+														<div class="dataTables_info" id="all_students_dt_info"
 														     role="status"
 														     aria-live="polite">Showing
 														                        1 to 10 of 57 entries
@@ -636,49 +611,49 @@
 													</div>
 													<div class="col-sm-7">
 														<div class="dataTables_paginate paging_simple_numbers"
-														     id="all-students-dt_paginate">
+														     id="all_students_dt_paginate">
 															<ul class="pagination">
 																<li class="paginate_button previous disabled"
-																    id="all-students-dt_previous"><a href="#"
-																                                     aria-controls="all-students-dt"
+																    id="all_students_dt_previous"><a href="#"
+																                                     aria-controls="all_students_dt"
 																                                     data-dt-idx="0"
 																                                     tabindex="0">Previous</a>
 																</li>
 																<li class="paginate_button active"><a href="#"
-																                                      aria-controls="all-students-dt"
+																                                      aria-controls="all_students_dt"
 																                                      data-dt-idx="1"
 																                                      tabindex="0">1</a>
 																</li>
 																<li class="paginate_button "><a href="#"
-																                                aria-controls="all-students-dt"
+																                                aria-controls="all_students_dt"
 																                                data-dt-idx="2"
 																                                tabindex="0">2</a>
 																</li>
 																<li class="paginate_button "><a href="#"
-																                                aria-controls="all-students-dt"
+																                                aria-controls="all_students_dt"
 																                                data-dt-idx="3"
 																                                tabindex="0">3</a>
 																</li>
 																<li class="paginate_button "><a href="#"
-																                                aria-controls="all-students-dt"
+																                                aria-controls="all_students_dt"
 																                                data-dt-idx="4"
 																                                tabindex="0">4</a>
 																</li>
 																<li class="paginate_button "><a href="#"
-																                                aria-controls="all-students-dt"
+																                                aria-controls="all_students_dt"
 																                                data-dt-idx="5"
 																                                tabindex="0">5</a>
 																</li>
 																<li class="paginate_button "><a href="#"
-																                                aria-controls="all-students-dt"
+																                                aria-controls="all_students_dt"
 																                                data-dt-idx="6"
 																                                tabindex="0">6</a>
 																</li>
 																<li class="paginate_button next"
-																    id="all-students-dt_next">
+																    id="all_students_dt_next">
 																	<a
 																			href="#"
-																			aria-controls="all-students-dt"
+																			aria-controls="all_students_dt"
 																			data-dt-idx="7"
 																			tabindex="0">Next</a>
 																</li>
@@ -691,7 +666,7 @@
 										<!-- /.box-body -->
 									</div>
 
-									<!-- Studying Students Box -->
+									<!-- Studying Students Box --
 									<div id="studying-students-div" class="box"
 									     th:if="${studyingStudents}">
 										<div class="box-header">
@@ -702,7 +677,7 @@
 											</div>
 
 										</div>
-										<!-- /.box-header -->
+										&lt;!&ndash; /.box-header &ndash;&gt;
 										<div class="box-body">
 											<div id="studying_students_dt_wrapper"
 											     class="dataTables_wrapper form-inline dt-bootstrap">
@@ -1006,10 +981,10 @@
 												</div>
 											</div>
 										</div>
-										<!-- /.box-body -->
-									</div>
+										&lt;!&ndash; /.box-body &ndash;&gt;
+									</div>-->
 
-									<!-- Waiting Students Box -->
+									<!--	&lt;!&ndash; Waiting Students Box &ndash;&gt;
 									<div id="waiting-students-div" class="box"
 									     th:if="${waitingStudents}">
 										<div class="box-header">
@@ -1020,7 +995,7 @@
 											</div>
 
 										</div>
-										<!-- /.box-header -->
+										&lt;!&ndash; /.box-header &ndash;&gt;
 										<div class="box-body">
 											<div id="waiting_students_dt_wrapper"
 											     class="dataTables_wrapper form-inline dt-bootstrap">
@@ -1266,10 +1241,11 @@
 												</div>
 											</div>
 										</div>
-										<!-- /.box-body -->
+										&lt;!&ndash; /.box-body &ndash;&gt;
 									</div>
+-->
 
-									<!-- Certified Students Box -->
+									<!--&lt;!&ndash; Certified Students Box &ndash;&gt;
 									<div id="certified-students-div" class="box"
 									     th:if="${certifiedStudents}">
 										<div class="box-header">
@@ -1280,7 +1256,7 @@
 											</div>
 
 										</div>
-										<!-- /.box-header -->
+										&lt;!&ndash; /.box-header &ndash;&gt;
 										<div class="box-body">
 											<div id="certified_students_dt_wrapper"
 											     class="dataTables_wrapper form-inline dt-bootstrap">
@@ -1528,10 +1504,11 @@
 												</div>
 											</div>
 										</div>
-										<!-- /.box-body -->
-									</div>
+										&lt;!&ndash; /.box-body &ndash;&gt;
+									</div>-->
 
-									<!-- Temp Stopped Students Box -->
+									<!--
+									&lt;!&ndash; Temp Stopped Students Box &ndash;&gt;
 									<div id="temp-stopped-students-div" class="box"
 									     th:if="${tempStoppedStudents}">
 										<div class="box-header">
@@ -1542,7 +1519,7 @@
 											</div>
 
 										</div>
-										<!-- /.box-header -->
+										&lt;!&ndash; /.box-header &ndash;&gt;
 										<div class="box-body">
 											<div id="temp_stopped_students_dt_wrapper"
 											     class="dataTables_wrapper form-inline dt-bootstrap">
@@ -1663,8 +1640,8 @@
 																	                                  Facebook
 																	</td>
 																	<td id="td_temp_student_comments"
-																	    th:text="${student.comments}">
-																		Comments
+																	     th:text="${student.comments}">
+																			Comments
 																	</td>
 																</tr>
 																<tr role="row" class="odd">
@@ -1821,10 +1798,11 @@
 												</div>
 											</div>
 										</div>
-										<!-- /.box-body -->
+										&lt;!&ndash; /.box-body &ndash;&gt;
 									</div>
+-->
 
-									<!-- Finally Stopped Students Box -->
+									<!--&lt;!&ndash; Finally Stopped Students Box &ndash;&gt;
 									<div id="final-stopped-students-div" class="box"
 									     th:if="${finalStoppedStudents}">
 										<div class="box-header">
@@ -1835,7 +1813,7 @@
 											</div>
 
 										</div>
-										<!-- /.box-header -->
+										&lt;!&ndash; /.box-header &ndash;&gt;
 										<div class="box-body">
 											<div id="final_stopped_students_dt_wrapper"
 											     class="dataTables_wrapper form-inline dt-bootstrap">
@@ -2062,10 +2040,10 @@
 												</div>
 											</div>
 										</div>
-										<!-- /.box-body -->
-									</div>
+										&lt;!&ndash; /.box-body &ndash;&gt;
+									</div>-->
 
-									<!-- Fired Students Box -->
+									<!--&lt;!&ndash; Fired Students Box &ndash;&gt;
 									<div id="fired-students-div" class="box" th:if="${firedStudents}">
 										<div class="box-header">
 											<div class="row">
@@ -2075,7 +2053,7 @@
 											</div>
 
 										</div>
-										<!-- /.box-header -->
+										&lt;!&ndash; /.box-header &ndash;&gt;
 										<div class="box-body">
 											<div id="fired_students_dt_wrapper"
 											     class="dataTables_wrapper form-inline dt-bootstrap">
@@ -2303,8 +2281,8 @@
 												</div>
 											</div>
 										</div>
-										<!-- /.box-body -->
-									</div>
+										&lt;!&ndash; /.box-body &ndash;&gt;
+									</div>-->
 								</div>
 
 							</div>
@@ -2962,8 +2940,9 @@
     //the data come server to draw Bar Chart
     var countryStudents = [[${countryStudents}]];
 
-    var tempStudents = [[${tempStoppedStudents}]];
-
+    var allStudents = [[${students}]];
+    var courseId = [[${course.id}]];
+    
 </script>
 <!-- jQuery 2.2.3 -->
 <script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
@@ -3013,47 +2992,53 @@
         th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
 <!-- AdminLTE App -->
 <script src="../../lib/dist/js/app.min.js" th:src="@{/lib/dist/js/app.min.js}"></script>
-
+<script src="../../lib/dist/js/pages/course.js" th:src="@{~/lib/dist/js/pages/course.js}"></script>
 <script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
 <script>
     $(function () {
-        console.log(tempStudents);
-        for (var stIndex in tempStudents) {
-            console.log("item: " + tempStudents[stIndex]['comments']);
-            $("#td_temp_student_comments").html(tempStudents[stIndex]['comments']);
-        }
 
+        //$("#btn-study-status").click(populateStudentsTable("STUDYING"));
         var students_tables_box = $("#tables-box");
         students_tables_box.find(".box").hide();
-        $("#all-students-div").show();
+        $("#all-students-div").show(function () {
+            $("#btn-all-students").click();
+        });
 
         $("#btn-all-students").click(function () {
-            students_tables_box.find(".box").hide();
-            students_tables_box.find("#all-students-div").show();
+            pupolateStudentsTable(allStudents, "ALL");
+            /*students_tables_box.find(".box").hide();
+            students_tables_box.find("#all-students-div").show();*/
         });
+
         $("#btn-study-status").click(function () {
-            students_tables_box.find(".box").hide();
-            students_tables_box.find("#studying-students-div").show();
+            populateStudentsTableByStatus(allStudents, "STUDYING");
+            /*students_tables_box.find(".box").hide();
+            students_tables_box.find("#all-students-div").show();*/
         });
+
         $("#btn-waiting-status").click(function () {
-            students_tables_box.find(".box").hide();
-            students_tables_box.find("#waiting-students-div").show();
+            populateStudentsTableByStatus(allStudents, "WAITING");
         });
+
         $("#btn-certified-status").click(function () {
-            students_tables_box.find(".box").hide();
-            students_tables_box.find("#certified-students-div").show();
+            populateStudentsTableByStatus(allStudents, "CERTIFIED");
+            /*students_tables_box.find(".box").hide();
+            students_tables_box.find("#certified-students-div").show();*/
         });
         $("#btn-temp-stopped-status").click(function () {
-            students_tables_box.find(".box").hide();
-            students_tables_box.find("#temp-stopped-students-div").show();
+            populateStudentsTableByStatus(allStudents, "TEMP_STOP");
+            /*students_tables_box.find(".box").hide();
+            students_tables_box.find("#temp-stopped-students-div").show();*/
         });
         $("#btn-final-stopped-status").click(function () {
-            students_tables_box.find(".box").hide();
-            students_tables_box.find("#final-stopped-students-div").show();
+            populateStudentsTableByStatus(allStudents, "FINAL_STOP");
+            /*students_tables_box.find(".box").hide();
+            students_tables_box.find("#final-stopped-students-div").show();*/
         });
         $("#btn-fired-status").click(function () {
-            students_tables_box.find(".box").hide();
-            students_tables_box.find("#fired-students-div").show();
+            populateStudentsTableByStatus(allStudents, "FIRED");
+            /*students_tables_box.find(".box").hide();
+            students_tables_box.find("#fired-students-div").show();*/
         });
 
         //bootstrap WYSIHTML5 - text editor
@@ -3086,10 +3071,6 @@
         });
 
 
-        $("#all-students-dt").DataTable({
-            responsive: true,
-            scrollX: true
-        });
         $("#waiting_students_dt").DataTable({
             responsive: true
         });
