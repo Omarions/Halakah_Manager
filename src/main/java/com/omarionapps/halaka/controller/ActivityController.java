@@ -120,12 +120,12 @@ public class ActivityController {
 			modelAndView.addObject("coursesTimeline", courseService.getActivityCoursesByDayMap(activity));
 			modelAndView.addObject("candidates", candidates);
 			modelAndView.addObject("students", activityStudents);
-			modelAndView.addObject("waitingStudents", waitStudents);
+			/*modelAndView.addObject("waitingStudents", waitStudents);
 			modelAndView.addObject("studyingStudents", studyStudents);
 			modelAndView.addObject("certifiedStudents", certifiedStudents);
 			modelAndView.addObject("tempStoppedStudents", tempStoppedStudents);
 			modelAndView.addObject("finalStoppedStudents", finalStoppedStudents);
-			modelAndView.addObject("firedStudents", firedStudents);
+			modelAndView.addObject("firedStudents", firedStudents);*/
 			modelAndView.addObject("totalStudents", totalStudents);
 			modelAndView.addObject("totalStudying", totalStudying);
 			modelAndView.addObject("totalWaiting", totalWaiting);

@@ -146,12 +146,10 @@ public class Course implements Serializable {
         this.teacher = teachers;
     }
 
-    @JsonIgnore
     public Activity getActivity() {
         return activity;
     }
 
-    @JsonIgnore
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
