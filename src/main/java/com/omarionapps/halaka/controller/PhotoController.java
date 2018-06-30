@@ -38,9 +38,9 @@ public class PhotoController {
 	public ResponseEntity<Resource> getFile(@PathVariable String filename, LocationTag locTag) {
 		Resource file = null;
 
-		if (filename == null) {
+	/*	if (filename == null) {
 			file = storageService.loadFile(filename, LocationTag.ACTIVITY_STORE_LOC);
-		}
+		}*/
 
 		switch (locTag) {
 			case ACTIVITY_STORE_LOC:

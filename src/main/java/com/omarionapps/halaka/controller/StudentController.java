@@ -227,6 +227,11 @@ public class StudentController {
 			image, @PathVariable Integer studentId, BindingResult bindingResult) {
 		List<StudentTrack> tracks  = new ArrayList<>();
 		Student            student = studentService.findById(studentId).get();
+
+		if (bindingResult.hasErrors()) {
+			System.out.println("Fields has errors!");
+			return "redirect:/admin/students/student/" + studentId;
+		}
 		student.setName(regStudent.getName());
 		student.setGender(regStudent.getGender());
 		student.setIdentityId(regStudent.getIdentityId());

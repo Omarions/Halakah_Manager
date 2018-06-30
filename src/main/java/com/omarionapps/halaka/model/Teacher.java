@@ -48,7 +48,6 @@ public class Teacher implements Serializable {
 	@Transient
 	private String        photoUrl;
 	@Transient
-	@JsonIgnore
 	private Set<Activity> activities = new HashSet<>();
 
 	public Teacher() {

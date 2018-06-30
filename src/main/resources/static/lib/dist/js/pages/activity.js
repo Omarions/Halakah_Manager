@@ -58,8 +58,8 @@ function populateStudentsTableByStatus(students, status) {
  */
 function pupolateStudentsTable(students, status) {
     $("#students-table-div").empty();
-    var table = $("#students-table-div").html(tableTag);
-    $("table").append(head);
+    $("#students-table-div").html(tableTag);
+    $("#all_students_dt").append(head);
     var bodyTag = "<tbody>";
 
     if (students.length > 0) {
@@ -87,7 +87,6 @@ function pupolateStudentsTable(students, status) {
                 case "FINAL_STOP":
                 case "FIRED":
                     bodyTag += "<td>" + getCourse(students[aI]["studentTracks"]) + "</td>";
-                    bodyTag += "<td>" + getRegisterDate(students[aI]["studentTracks"]) + "</td>";
                     bodyTag += "<td>" + getStartDate(students[aI]["studentTracks"]) + "</td>";
                     break;
             }
@@ -123,42 +122,44 @@ function pupolateStudentsTable(students, status) {
     }
 
     bodyTag += "</body>";
-    $("table").append(bodyTag);
+    $("#all_students_dt").append(bodyTag);
 
-    $("table").append(footer);
+    $("#all_students_dt").append(footer);
 
     //remove columns based on the status
     switch (status) {
         case "ALL":
-            $("table th[id=hd-course]").remove();
-            $("table th[id=ft-course]").remove();
-            $("table th[id=hd-register-date]").remove();
-            $("table th[id=ft-register-date]").remove();
-            $("table th[id=hd-start-date]").remove();
-            $("table th[id=ft-start-date]").remove();
-            $("table th[id=hd-certificates]").remove();
-            $("table th[id=ft-certificates]").remove();
+            $("#all_students_dt th[id=hd-course]").remove();
+            $("#all_students_dt th[id=ft-course]").remove();
+            $("#all_students_dt th[id=hd-register-date]").remove();
+            $("#all_students_dt th[id=ft-register-date]").remove();
+            $("#all_students_dt th[id=hd-start-date]").remove();
+            $("#all_students_dt th[id=ft-start-date]").remove();
+            $("#all_students_dt th[id=hd-certificates]").remove();
+            $("#all_students_dt th[id=ft-certificates]").remove();
             break;
         case "WAITING":
-            $("table th[id=hd-start-date]").remove();
-            $("table th[id=ft-start-date]").remove();
-            $("table th[id=hd-certificates]").remove();
-            $("table th[id=ft-certificates]").remove();
+            $("#all_students_dt th[id=hd-start-date]").remove();
+            $("#all_students_dt th[id=ft-start-date]").remove();
+            $("#all_students_dt th[id=hd-certificates]").remove();
+            $("#all_students_dt th[id=ft-certificates]").remove();
             break;
         case "CERTIFIED":
-            $("table th[id=hd-course]").remove();
-            $("table th[id=ft-course]").remove();
-            $("table th[id=hd-register-date]").remove();
-            $("table th[id=ft-register-date]").remove();
-            $("table th[id=hd-start-date]").remove();
-            $("table th[id=ft-start-date]").remove();
+            $("#all_students_dt th[id=hd-course]").remove();
+            $("#all_students_dt th[id=ft-course]").remove();
+            $("#all_students_dt th[id=hd-register-date]").remove();
+            $("#all_students_dt th[id=ft-register-date]").remove();
+            $("#all_students_dt th[id=hd-start-date]").remove();
+            $("#all_students_dt th[id=ft-start-date]").remove();
             break;
         case "STUDYING":
         case "TEMP_STOP":
         case "FINAL_STOP":
         case "FIRED":
-            $("table th[id=hd-certificates]").remove();
-            $("table th[id=ft-certificates]").remove();
+            $("#all_students_dt th[id=hd-register-date]").remove();
+            $("#all_students_dt th[id=ft-register-date]").remove();
+            $("#all_students_dt th[id=hd-certificates]").remove();
+            $("#all_students_dt th[id=ft-certificates]").remove();
             break;
     }
 

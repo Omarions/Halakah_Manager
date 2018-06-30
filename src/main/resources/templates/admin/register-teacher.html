@@ -81,7 +81,7 @@
 						<!-- form start -->
 						<form id="frmRegisteredCourse" class="form-horizontal" action="#"
 						      th:action="@{/admin/teachers/teacher}"
-						      th:object="${teacher}" method="post">
+						      th:object="${teacher}" method="post" enctype="multipart/form-data">
 
 							<div class="box-body">
 								<input type="hidden" th:field="*{id}"/>
@@ -117,7 +117,7 @@
 								<!-- /.input-for-name -->
 
 								<!-- input for gender -->
-								<div class="form-group">
+								<div class="form-group" th:classappend="${#fields.hasErrors('gender')}? 'has-error'">
 									<label class="col-sm-2 control-label">Gender</label>
 
 									<div class="col-sm-10">
@@ -139,7 +139,7 @@
 								<!-- /.input-for-gender -->
 
 								<!-- input for tel -->
-								<div class="form-group">
+								<div class="form-group" th:classappend="${#fields.hasErrors('tel')}? 'has-error'">
 									<label for="inputTel" class="col-sm-2 control-label">Tel</label>
 
 									<div class="col-sm-10">
@@ -153,7 +153,7 @@
 								<!-- /.input-for-tel -->
 
 								<!-- input for email -->
-								<div class="form-group">
+								<div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
 									<label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
 									<div class="col-sm-10">
@@ -178,7 +178,7 @@
 										      th:class="help-block">Address Errors</span>
 									</div>
 								</div>
-								<!-- /.input-for-education -->
+								<!-- /.input-for-address -->
 
 								<!-- input for education -->
 								<div class="form-group">
@@ -485,6 +485,11 @@
         th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<!-- Slimscroll -->
+<script src="../../lib/plugins/slimScroll/jquery.slimscroll.min.js"
+        th:src="@{~/lib/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+<!-- FastClick -->
+<script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
 <!-- Select2 -->
 <script src="../../lib/plugins/select2/select2.full.min.js"
         th:src="@{/lib/plugins/select2/select2.full.min.js}"></script>
@@ -492,7 +497,7 @@
 <script src="../../lib/plugins/iCheck/icheck.min.js" th:src="@{~/lib/plugins/iCheck/icheck.min.js}"></script>
 <!-- bootstrap datepicker -->
 <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
-        th:src="@{/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+        th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
         th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>

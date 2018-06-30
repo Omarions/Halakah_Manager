@@ -1,10 +1,9 @@
 /**
  * Created by Omar on 30-May-17.
  */
-
 /**
  * Populate Courses Dropdown List based on selection of Activity Dropdown List
- */
+
 function populateCoursesDropdownList() {
     //the value of the selection which is the activity ID.
     var selectedActivityIds = $("#selectActivities").val();
@@ -19,7 +18,7 @@ function populateCoursesDropdownList() {
      * Map<ActivityID, Map<CourseID, TextToBeDisplayed 'might be course name'>> -> Map<1, Map<2 , "courseName : activityName">>
      * the teacher with his ID and name only, so we can avoid StackOverFlow error, that occurred when we send the Set
      * with the original class of Teacher with its dependencies of other classes.
-     * */
+     * 
     for (var a in courses) {
         console.log("a: " + a);
         //console.log(selectedActivityId);
@@ -47,3 +46,4 @@ function populateCoursesDropdownList() {
         }
     }
 }
+ */

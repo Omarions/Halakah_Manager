@@ -704,13 +704,6 @@
 																				</button>
 																				<button type="button"
 																				        class="btn btn-box-tool"
-																				        data-toggle="tooltip"
-																				        title="Contacts"
-																				        data-widget="chat-pane-toggle">
-																					<i class="fa fa-comments"></i>
-																				</button>
-																				<button type="button"
-																				        class="btn btn-box-tool"
 																				        data-widget="remove">
 																					<i class="fa fa-times"></i></button>
 																			</div>
@@ -761,10 +754,10 @@
 																							     alt="User Image">
 
 																							<div class="contacts-list-info">
-                            <span class="contacts-list-name">
-                              Count Dracula
-                              <small class="contacts-list-date pull-right">2/28/2015</small>
-                            </span>
+																	                            <span class="contacts-list-name">
+																	                              Count Dracula
+																	                              <small class="contacts-list-date pull-right">2/28/2015</small>
+																	                            </span>
 																								<span class="contacts-list-msg">How have you been? I was...</span>
 																							</div>
 																							<!-- /.contacts-list-info -->
@@ -1649,6 +1642,37 @@
 																	    aria-label="Email: activate to sort column ascending"
 																	    style="width: 266.2px;">Email
 																	</th>
+																	<th id="hd-course" class="sorting" tabindex="0"
+																	    aria-controls="all_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Course: activate to sort column ascending"
+																	    style="width: 266.2px;">Course
+																	</th>
+																	<th id="hd-register-date" class="sorting"
+																	    tabindex="0"
+																	    aria-controls="all_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Register Date: activate to sort column ascending"
+																	    style="width: 266.2px;">Register Date
+																	</th>
+																	<th id="hd-start-date" class="sorting"
+																	    tabindex="0"
+																	    aria-controls="all_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Start Date: activate to sort column ascending"
+																	    style="width: 266.2px;">Start Date
+																	</th>
+																	<th id="hd-certificates" class="sorting"
+																	    tabindex="0"
+																	    aria-controls="all_students_dt"
+																	    rowspan="1"
+																	    colspan="1"
+																	    aria-label="Certificates: activate to sort column ascending"
+																	    style="width: 266.2px;">Certificates
+																	</th>
 																	<th class="sorting" tabindex="0"
 																	    aria-controls="all_students_dt"
 																	    rowspan="1"
@@ -1716,6 +1740,17 @@
 																	<th rowspan="1" colspan="1">Country</th>
 																	<th rowspan="1" colspan="1">Tel</th>
 																	<th rowspan="1" colspan="1">Email</th>
+																	<th id="ft-course" rowspan="1" colspan="1">Course
+																	</th>
+																	<th id="ft-register-date" rowspan="1"
+																	    colspan="1">Register Date
+																	</th>
+																	<th id="ft-start-date" rowspan="1"
+																	    colspan="1">Start Date
+																	</th>
+																	<th id="ft-certificates" rowspan="1" colspan="1">
+																		Certificates
+																	</th>
 																	<th rowspan="1" colspan="1">Comments</th>
 																</tr>
 															</tfoot>
@@ -2069,7 +2104,7 @@
 										</div>
 										 /.box-body
 									</div>
-									 /.studying-students-box -->
+									/.studying-students-box -->
 
 									<!-- Waiting Students Box
 									<div id="waiting-students-div" class="box"
@@ -3967,9 +4002,9 @@
 
 <!-- AdminLTE App -->
 <script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
-<script src="../dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../lib/dist/js/pages/activity.js" th:src="@{~/lib/dist/js/pages/activity.js}"></script>
+<script src="../../lib/dist/js/pages/profile.js" th:src="@{~/lib/dist/js/pages/profile.js}"></script>
 <script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
 
 <script>
@@ -4019,7 +4054,7 @@
 
         //bootstrap WYSIHTML5 - text editor
         $("#inputComments").wysihtml5();
-        
+
         $("#teachers-dt").DataTable({
             responsive: true
         });
