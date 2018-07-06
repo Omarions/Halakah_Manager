@@ -1,4 +1,4 @@
-package com.omarionapps.halaka.model;
+package com.omarionapps.halaka.utils;
 
 public enum WeekDays {
 	السبت("السبت"), الأحد("الأحد"), الأثنين("الأثنين"), الثلاثاء("الثلاثاء"), الأربعاء("الأربعاء"),

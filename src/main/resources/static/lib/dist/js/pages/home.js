@@ -10,6 +10,106 @@
  */
 $(function () {
     "use strict";
+    var user_status;
+    //assign update status of the user to the click event of the button_online
+    $('#button_online').click(function (e) {
+        user_status = 'online';
+        updateStatus(userEmail, user_status);
+    });
+    //assign update status of the user to the click event of the button_offline
+    $('#button_offline').click(function (event) {
+        user_status = 'offline';
+        updateStatus(userEmail, user_status);
+    });
+
+    function updateStatus(uEmail, newStatus) {
+        $.ajax({
+            url: "/admin/user/updateStatus",
+            type: "GET",
+            data: {
+                email: uEmail,
+                userStatus: newStatus
+            },
+            dataType: "html",
+            success: function (data) {
+                location.reload();
+            }
+        });
+    }
+
+    var areaChartData = {
+        labels: countriesLabels,
+        datasets: [
+            {
+                label: "Males",
+                fillColor: "rgba(210, 214, 222, 1)",
+                strokeColor: "rgba(210, 214, 222, 1)",
+                pointColor: "rgba(210, 214, 222, 1)",
+                pointStrokeColor: "#c1c7d1",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: malesValues
+            },
+            {
+                label: "Females",
+                fillColor: "rgba(60,141,188,0.9)",
+                strokeColor: "rgba(60,141,188,0.8)",
+                pointColor: "#3b8bba",
+                pointStrokeColor: "rgba(60,141,188,1)",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(60,141,188,1)",
+                data: femalesValues
+            }
+        ]
+    };
+
+    //-------------
+    //- BAR CHART -
+    //-------------
+    var barChartCanvas = $("#barChart").get(0).getContext("2d");
+    var barChart = new Chart(barChartCanvas);
+    var barChartData = areaChartData;
+    barChartData.datasets[1].fillColor = "#00a65a";
+    barChartData.datasets[1].strokeColor = "#00a65a";
+    barChartData.datasets[1].pointColor = "#00a65a";
+    var barChartOptions = {
+        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+        scaleBeginAtZero: true,
+        //Boolean - Whether grid lines are shown across the chart
+        scaleShowGridLines: true,
+        //String - Colour of the grid lines
+        scaleGridLineColor: "rgba(0,0,0,.05)",
+        //Number - Width of the grid lines
+        scaleGridLineWidth: 1,
+        //Boolean - Whether to show horizontal lines (except X axis)
+        scaleShowHorizontalLines: true,
+        //Boolean - Whether to show vertical lines (except Y axis)
+        scaleShowVerticalLines: true,
+        //Boolean - If there is a stroke on each bar
+        barShowStroke: true,
+        //Number - Pixel width of the bar stroke
+        barStrokeWidth: 2,
+        //Number - Spacing between each of the X value sets
+        barValueSpacing: 5,
+        //Number - Spacing between data sets within X values
+        barDatasetSpacing: 1,
+        //String - A legend template
+        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\">" +
+        "<% for (var i=0; i<datasets.length; i++){%>" +
+        "<li>" +
+        "<span style=\"background-color:<%=datasets[i].fillColor%>\"></span>" +
+        "<%if(datasets[i].label){%><%=datasets[i].label%><%}%>" +
+        "</li>" +
+        "<%}%>" +
+        "</ul>",
+        //Boolean - whether to make the chart responsive
+        responsive: true,
+        maintainAspectRatio: true
+    };
+
+    barChartOptions.datasetFill = false;
+    barChart.Bar(barChartData, barChartOptions);
+
 
     //jvectormap data
     //defined in index.html with thymleaf script
@@ -56,77 +156,77 @@ $(function () {
 
     /* Morris.js Charts */
     // Sales chart
-    var area = new Morris.Area({
-        element: 'revenue-chart',
-        resize: true,
-        data: [
-            {y: '2011 Q1', item1: 2666, item2: 2666},
-            {y: '2011 Q2', item1: 2778, item2: 2294},
-            {y: '2011 Q3', item1: 4912, item2: 1969},
-            {y: '2011 Q4', item1: 3767, item2: 3597},
-            {y: '2012 Q1', item1: 6810, item2: 1914},
-            {y: '2012 Q2', item1: 5670, item2: 4293},
-            {y: '2012 Q3', item1: 4820, item2: 3795},
-            {y: '2012 Q4', item1: 15073, item2: 5967},
-            {y: '2013 Q1', item1: 10687, item2: 4460},
-            {y: '2013 Q2', item1: 8432, item2: 5713}
-        ],
-        xkey: 'y',
-        ykeys: ['item1', 'item2'],
-        labels: ['Item 1', 'Item 2'],
-        lineColors: ['#a0d0e0', '#3c8dbc'],
-        hideHover: 'auto'
-    });
-    var line = new Morris.Line({
-        element: 'line-chart',
-        resize: true,
-        data: [
-            {y: '2011 Q1', item1: 2666},
-            {y: '2011 Q2', item1: 2778},
-            {y: '2011 Q3', item1: 4912},
-            {y: '2011 Q4', item1: 3767},
-            {y: '2012 Q1', item1: 6810},
-            {y: '2012 Q2', item1: 5670},
-            {y: '2012 Q3', item1: 4820},
-            {y: '2012 Q4', item1: 15073},
-            {y: '2013 Q1', item1: 10687},
-            {y: '2013 Q2', item1: 8432}
-        ],
-        xkey: 'y',
-        ykeys: ['item1'],
-        labels: ['Item 1'],
-        lineColors: ['#efefef'],
-        lineWidth: 2,
-        hideHover: 'auto',
-        gridTextColor: "#fff",
-        gridStrokeWidth: 0.4,
-        pointSize: 4,
-        pointStrokeColors: ["#efefef"],
-        gridLineColor: "#efefef",
-        gridTextFamily: "Open Sans",
-        gridTextSize: 10
-    });
-
+    /* var area = new Morris.Area({
+         element: 'revenue-chart',
+         resize: true,
+         data: [
+             {y: '2011 Q1', item1: 2666, item2: 2666},
+             {y: '2011 Q2', item1: 2778, item2: 2294},
+             {y: '2011 Q3', item1: 4912, item2: 1969},
+             {y: '2011 Q4', item1: 3767, item2: 3597},
+             {y: '2012 Q1', item1: 6810, item2: 1914},
+             {y: '2012 Q2', item1: 5670, item2: 4293},
+             {y: '2012 Q3', item1: 4820, item2: 3795},
+             {y: '2012 Q4', item1: 15073, item2: 5967},
+             {y: '2013 Q1', item1: 10687, item2: 4460},
+             {y: '2013 Q2', item1: 8432, item2: 5713}
+         ],
+         xkey: 'y',
+         ykeys: ['item1', 'item2'],
+         labels: ['Item 1', 'Item 2'],
+         lineColors: ['#a0d0e0', '#3c8dbc'],
+         hideHover: 'auto'
+     });
+     var line = new Morris.Line({
+         element: 'line-chart',
+         resize: true,
+         data: [
+             {y: '2011 Q1', item1: 2666},
+             {y: '2011 Q2', item1: 2778},
+             {y: '2011 Q3', item1: 4912},
+             {y: '2011 Q4', item1: 3767},
+             {y: '2012 Q1', item1: 6810},
+             {y: '2012 Q2', item1: 5670},
+             {y: '2012 Q3', item1: 4820},
+             {y: '2012 Q4', item1: 15073},
+             {y: '2013 Q1', item1: 10687},
+             {y: '2013 Q2', item1: 8432}
+         ],
+         xkey: 'y',
+         ykeys: ['item1'],
+         labels: ['Item 1'],
+         lineColors: ['#efefef'],
+         lineWidth: 2,
+         hideHover: 'auto',
+         gridTextColor: "#fff",
+         gridStrokeWidth: 0.4,
+         pointSize: 4,
+         pointStrokeColors: ["#efefef"],
+         gridLineColor: "#efefef",
+         gridTextFamily: "Open Sans",
+         gridTextSize: 10
+     });
+ */
     //Donut Chart
-    var donut = new Morris.Donut({
-        element: 'sales-chart',
-        resize: true,
-        colors: ["#3c8dbc", "#f56954", "#00a65a"],
-        data: [
-            {label: "Download Sales", value: 12},
-            {label: "In-Store Sales", value: 30},
-            {label: "Mail-Order Sales", value: 20}
-        ],
-        hideHover: 'auto'
-    });
+    /*  var donut = new Morris.Donut({
+          element: 'sales-chart',
+          resize: true,
+          colors: ["#3c8dbc", "#f56954", "#00a65a"],
+          data: [
+              {label: "Download Sales", value: 12},
+              {label: "In-Store Sales", value: 30},
+              {label: "Mail-Order Sales", value: 20}
+          ],
+          hideHover: 'auto'
+      });*/
 
 
     //-------------
     //- PIE CHART -
     //-------------
     // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-    var pieChart = new Chart(pieChartCanvas);
+    // var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+    //var pieChart = new Chart(pieChartCanvas);
     //defined at index.html in script tag so we can use thymeleaf objects
     /*var PieData = [
       {
@@ -167,7 +267,7 @@ $(function () {
       }
     ];
     */
-    var pieOptions = {
+    /*var pieOptions = {
         //Boolean - Whether we should show a stroke on each segment
         segmentShowStroke: true,
         //String - The colour of each segment stroke
@@ -192,10 +292,10 @@ $(function () {
         legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
         //String - A tooltip template
         tooltipTemplate: "<%=value %> <%=label%> student"
-    };
+    };*/
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
-    pieChart.Doughnut(PieData, pieOptions);
+    //pieChart.Doughnut(PieData, pieOptions);
     //-----------------
     //- END PIE CHART -
     //-----------------
@@ -208,14 +308,14 @@ $(function () {
     });
 
     /* The todo list plugin */
-    $(".todo-list").todolist({
-        onCheck: function (ele) {
-            window.console.log("The element has been checked");
-            return ele;
-        },
-        onUncheck: function (ele) {
-            window.console.log("The element has been unchecked");
-            return ele;
-        }
-    });
+    /* $(".todo-list").todolist({
+         onCheck: function (ele) {
+             window.console.log("The element has been checked");
+             return ele;
+         },
+         onUncheck: function (ele) {
+             window.console.log("The element has been unchecked");
+             return ele;
+         }
+     });*/
 });

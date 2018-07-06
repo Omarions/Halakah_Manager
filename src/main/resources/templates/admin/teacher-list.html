@@ -7,29 +7,34 @@
 	<title>Halaka Manager | Dashboard</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-	<!-- Bootstrap 3.3.6 -->
+
+	<!-- Bootstrap 3.3.7 -->
 	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
-	      th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
+	<!-- google fonts -->
+	<link rel="stylesheet"
+	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+	<link rel="stylesheet" href="../lib/plugins/font-awesome/css/font-awesome.min.css"
 	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
+	<link rel="stylesheet" href="../lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
-	<!-- DataTables -->
-	<link rel="stylesheet" href="../../lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css"
-	      th:href="@{~/lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css}"/>
-	<link rel="stylesheet" href="../../lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css"
-	      th:href="@{~/lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css}"/>
 	<!-- Theme style -->
-	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
-	<!-- common styles -->
-	<link rel="stylesheet" href="../lib/dist/css/common-styles.css" th:href="@{/lib/dist/css/common-styles.css}"/>
+	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"
+	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		 folder instead of downloading all of them to reduce the load. -->
-	<!-- use skin-blue -->
 	<link rel="stylesheet" href="../lib/dist/css/skins/skin-blue.min.css"
-	      th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
+	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
+	<!-- DataTables -->
+	<link rel="stylesheet" href="../../lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css"
+	      th:href="@{~/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css}"/>
+	<link rel="stylesheet" href="../../lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"
+	      th:href="@{~/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css}"/>
+	<!-- DataTables tools column -->
+	<link rel="stylesheet" href="../../lib/dist/css/common-styles.css"
+	      th:href="@{~/lib/dist/css/common-styles.css}"/>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -66,17 +71,17 @@
 		<section class="content">
 			<div class="box box-primary">
 				<div class="box-header">
-					<div class="row">
-						<div class="col-sm-10">
-							<h3 class="box-title">Teachers List</h3>
-						</div>
-						<div class="col-sm-2">
-							<a class="btn btn-block btn-primary pull-right"
-							   href="#"
-							   th:href="@{/admin/teachers/teacher}"><i
-									class="fa fa-plus"> Add Teacher</i></a>
-						</div>
+
+					<div class="col-sm-10">
+						<h3 class="box-title">Teachers List</h3>
 					</div>
+					<div class="col-sm-2">
+						<a class="btn btn-block btn-primary pull-right"
+						   href="#"
+						   th:href="@{/admin/teachers/teacher}"><i
+								class="fa fa-plus"> Add Teacher</i></a>
+					</div>
+
 					<br/>
 					<div th:if="${messageSuccess}" class="row">
 						<div class="col-sm-12">
@@ -99,218 +104,148 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<div id="teachers_dt_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-						<div class="row" th:remove="all">
-							<div class="col-sm-6">
-								<div class="dataTables_length" id="teachers_dt_length">
-									<label>Show
-										<select name="teachers_dt_length" aria-controls="teachers_dt"
-										        class="form-control input-sm">
-											<option value="10">10</option>
-											<option value="25">25</option>
-											<option value="50">50</option>
-											<option value="100">100</option>
-										</select>
-									       entries</label>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div id="teachers_dt_filter" class="dataTables_filter">
-									<label>Search:<input type="search" class="form-control input-sm"
-									                     placeholder="Teacher Name"
-									                     aria-controls="teachers_dt"></label>
-								</div>
-							</div>
-						</div>
-						<div class="row" th:remove="all-but-first">
-							<div class="col-sm-12">
-								<table id="teachers_dt"
-								       class="table table-bordered table-striped dataTable"
-								       role="grid"
-								       aria-describedby="teachers_dt_info">
-									<thead>
-										<tr role="row">
-											<th class="sorting_asc" tabindex="0"
-											    aria-controls="teachers_dt"
-											    rowspan="1"
-											    colspan="1" aria-sort="ascending"
-											    aria-label="ID: activate to sort column descending"
-											    style="width: 130.4px;">ID
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="teachers_dt"
-											    rowspan="1"
-											    colspan="1" aria-label="Name: activate to sort column ascending"
-											    style="width: 266.4px;">Name
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="teachers_dt"
-											    rowspan="1"
-											    colspan="1"
-											    aria-label="Activities: activate to sort column ascending"
-											    style="width: 237.4px;">Activities
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="teachers_dt"
-											    rowspan="1"
-											    colspan="1"
-											    aria-label="Total Courses: activate to sort column ascending"
-											    style="width: 237.4px;">Total Courses
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="teachers_dt"
-											    rowspan="1"
-											    colspan="1"
-											    aria-label="Email: activate to sort column ascending"
-											    style="width: 186.4px;">Email
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="teachers_dt"
-											    rowspan="1"
-											    colspan="1" aria-label="Tel: activate to sort column ascending"
-											    style="width: 135.2px;">Tel
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="teachers_dt"
-											    rowspan="1"
-											    colspan="1"
-											    aria-label="Education: activate to sort column ascending"
-											    style="width: 135.2px;">Education
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="teachers_dt"
-											    rowspan="1"
-											    colspan="1"
-											    aria-label="Comments: activate to sort column ascending"
-											    style="width: 266.2px;">Comments
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="teachers_dt"
-											    rowspan="1"
-											    colspan="1"
-											    aria-label="Tools: activate to sort column ascending"
-											    style="width: 266.2px;">Tools
-											</th>
-										</tr>
-									</thead>
-									<tbody th:remove="all-but-first">
-										<tr rol="row" th:each="teacher : ${teachers}"
-										    th:class="${teacherStat.odd}? 'odd' : 'even'">
-											<td class="sorting_1" th:text="${teacher.id}">Teacher ID</td>
-											<td>
-												<a href="#"
-												   th:href="@{'/admin/teachers/teacher/' + ${teacher.id}}">
-													<img class="profile-user-img img-responsive img-circle"
-													     src="../../lib/dist/img/user4-128x128.jpg"
-													     th:src="@{${teacher.photoUrl}}"
-													     alt="User profile picture"/>
+					<div class="col-sm-12">
+						<table id="teachers_dt"
+						       class="table table-bordered table-striped dataTable dt-responsive nowrap"
+						       role="grid" style="width: 100%"
+						       aria-describedby="teachers_dt_info">
+							<thead>
+								<tr role="row">
+									<th class="sorting_asc" tabindex="0"
+									    aria-controls="teachers_dt"
+									    rowspan="1"
+									    colspan="1" aria-sort="ascending"
+									    aria-label="ID: activate to sort column descending"
+									    style="width: 130.4px;">ID
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="teachers_dt"
+									    rowspan="1"
+									    colspan="1" aria-label="Name: activate to sort column ascending"
+									    style="width: 266.4px;">Name
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="teachers_dt"
+									    rowspan="1"
+									    colspan="1"
+									    aria-label="Activities: activate to sort column ascending"
+									    style="width: 237.4px;">Activities
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="teachers_dt"
+									    rowspan="1"
+									    colspan="1"
+									    aria-label="Total Courses: activate to sort column ascending"
+									    style="width: 237.4px;">Total Courses
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="teachers_dt"
+									    rowspan="1"
+									    colspan="1"
+									    aria-label="Email: activate to sort column ascending"
+									    style="width: 186.4px;">Email
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="teachers_dt"
+									    rowspan="1"
+									    colspan="1" aria-label="Tel: activate to sort column ascending"
+									    style="width: 135.2px;">Tel
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="teachers_dt"
+									    rowspan="1"
+									    colspan="1"
+									    aria-label="Education: activate to sort column ascending"
+									    style="width: 135.2px;">Education
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="teachers_dt"
+									    rowspan="1"
+									    colspan="1"
+									    aria-label="Comments: activate to sort column ascending"
+									    style="width: 266.2px;">Comments
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="teachers_dt"
+									    rowspan="1"
+									    colspan="1"
+									    aria-label="Tools: activate to sort column ascending"
+									    style="width: 266.2px;">Tools
+									</th>
+								</tr>
+							</thead>
+							<tbody th:remove="all-but-first">
+								<tr rol="row" th:each="teacher : ${teachers}"
+								    th:class="${teacherStat.odd}? 'odd' : 'even'">
+									<td class="sorting_1" th:text="${teacher.id}">Teacher ID</td>
+									<td>
+										<a href="#"
+										   th:href="@{'/admin/teachers/teacher/' + ${teacher.id}}">
+											<img class="profile-user-img img-responsive img-circle"
+											     src="../../lib/dist/img/user4-128x128.jpg"
+											     th:src="@{${teacher.photoUrl}}"
+											     alt="User profile picture"/>
 
-													<h3 class="profile-username text-center"
-													    th:text="${teacher.name}">Nina
-													                              Mcintire</h3>
-												</a>
-											</td>
-											<td>
-												<ul class="dtt" th:remove="all-but-first">
-													<li class="primary"
-													    th:each="activity : ${teacher.activities}">
-														<a href="#"
-														   th:href="@{'/admin/activities/activity/' + ${activity.id}}"><span
-																th:text="${activity.name}">Activity Name</span></a>
-													</li>
-													<li>Activity2 Name</li>
-													<li>Activity3 Name</li>
-												</ul>
-											</td>
-											<td th:text="${teacher.courses.size()}">Total Courses</td>
-											<td th:text="${teacher.email}">Teacher Email</td>
-											<td th:text="${teacher.tel}">Teacher Tel</td>
-											<td th:text="${teacher.education}">Teacher Education</td>
-											<td th:text="${teacher.comments}">Teacher Comments</td>
-											<td>
-												<ul class="dtt">
-													<li>
-														<div class="tools">
-															<a href="#"
-															   th:href="@{'/admin/teachers/teacher/' + ${teacher.id}}"><i
-																	class="fa fa-edit fa-3x"></i></a>
-															<a href="#"
-															   th:href="@{'/admin/teachers/teacher/' + ${teacher.id} + '/archive'}"><i
-																	class="fa fa-trash-o fa-3x"></i></a>
-														</div>
-													</li>
-												</ul>
-											</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">Gecko</td>
-											<td>Firefox 1.0</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td>1.7</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">Gecko</td>
-											<td>Firefox 1.5</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td>1.8</td>
-											<td>A</td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr>
-											<th rowspan="1" colspan="1">ID</th>
-											<th rowspan="1" colspan="1">Name</th>
-											<th rowspan="1" colspan="1">Activities/th>
-											<th rowspan="1" colspan="1">Total Courses</th>
-											<th rowspan="1" colspan="1">Email</th>
-											<th rowspan="1" colspan="1">Tel</th>
-											<th rowspan="1" colspan="1">Education</th>
-											<th rowspan="1" colspan="1">Comments</th>
-											<th rowspan="1" colspan="1">Tools</th>
-										</tr>
-									</tfoot>
-								</table>
-							</div>
-						</div>
-						<div class="row" th:remove="all">
-							<div class="col-sm-5">
-								<div class="dataTables_info" id="teachers_dt_info" role="status"
-								     aria-live="polite">Showing
-								                        1 to 10 of 57 entries
-								</div>
-							</div>
-							<div class="col-sm-7">
-								<div class="dataTables_paginate paging_simple_numbers"
-								     id="teachers_dt_paginate">
-									<ul class="pagination">
-										<li class="paginate_button previous disabled"
-										    id="teachers_dt_previous"><a
-												href="#"
-												aria-controls="teachers_dt"
-												data-dt-idx="0"
-												tabindex="0">Previous</a>
-										</li>
-										<li class="paginate_button active"><a href="#"
-										                                      aria-controls="teachers_dt"
-										                                      data-dt-idx="1" tabindex="0">1</a>
-										</li>
-										<li class="paginate_button "><a href="#"
-										                                aria-controls="teachers_dt"
-										                                data-dt-idx="2" tabindex="0">2</a></li>
-										<li class="paginate_button "><a href="#"
-										                                aria-controls="teachers_dt"
-										                                data-dt-idx="3" tabindex="0">3</a></li>
-										<li class="paginate_button "><a href="#"
-										                                aria-controls="teachers_dt"
-										                                data-dt-idx="4" tabindex="0">4</a></li>
-										<li class="paginate_button "><a href="#"
-										                                aria-controls="teachers_dt"
-										                                data-dt-idx="5" tabindex="0">5</a></li>
-										<li class="paginate_button "><a href="#"
-										                                aria-controls="teachers_dt"
-										                                data-dt-idx="6" tabindex="0">6</a></li>
-										<li class="paginate_button next" id="teachers_dt_next"><a href="#"
-										                                                          aria-controls="teachers_dt"
-										                                                          data-dt-idx="7"
-										                                                          tabindex="0">Next</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
+											<h3 class="profile-username text-center"
+											    th:text="${teacher.name}">Nina
+											                              Mcintire</h3>
+										</a>
+									</td>
+									<td>
+										<ul class="dtt" th:remove="all-but-first">
+											<li class="primary"
+											    th:each="activity : ${teacher.activities}">
+												<a href="#"
+												   th:href="@{'/admin/activities/activity/' + ${activity.id}}"><span
+														th:text="${activity.name}">Activity Name</span></a>
+											</li>
+											<li>Activity2 Name</li>
+											<li>Activity3 Name</li>
+										</ul>
+									</td>
+									<td th:text="${teacher.courses.size()}">Total Courses</td>
+									<td th:text="${teacher.email}">Teacher Email</td>
+									<td th:text="${teacher.tel}">Teacher Tel</td>
+									<td th:text="${teacher.education}">Teacher Education</td>
+									<td th:id="'tdComments_' + ${teacher.id}" th:text="${teacher.comments}">Teacher
+									                                                                        Comments
+									</td>
+									<td>
+										<ul class="dtt">
+											<li>
+												<div class="tools">
+													<a href="#"
+													   th:href="@{'/admin/teachers/teacher/' + ${teacher.id}}"><i
+															class="fa fa-edit fa-3x"></i></a>
+													<a href="#"
+													   th:href="@{'/admin/teachers/teacher/' + ${teacher.id} + '/archive'}"><i
+															class="fa fa-trash-o fa-3x"></i></a>
+												</div>
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="sorting_1">Gecko</td>
+									<td>Firefox 1.0</td>
+									<td>Win 98+ / OSX.2+</td>
+									<td>1.7</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="sorting_1">Gecko</td>
+									<td>Firefox 1.5</td>
+									<td>Win 98+ / OSX.2+</td>
+									<td>1.8</td>
+									<td>A</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th rowspan="1" colspan="1">ID</th>
+									<th rowspan="1" colspan="1">Name</th>
+									<th rowspan="1" colspan="1">Activities/th>
+									<th rowspan="1" colspan="1">Total Courses</th>
+									<th rowspan="1" colspan="1">Email</th>
+									<th rowspan="1" colspan="1">Tel</th>
+									<th rowspan="1" colspan="1">Education</th>
+									<th rowspan="1" colspan="1">Comments</th>
+									<th rowspan="1" colspan="1">Tools</th>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
 				</div>
 				<!-- /.box-body -->
@@ -449,7 +384,7 @@
 					<div class="form-group">
 						<label class="control-sidebar-subheading">
 							Report panel usage
-							<input type="checkbox" class="pull-right" checked="true"/>
+							<input type="checkbox" class="pull-right" checked="checked"/>
 						</label>
 
 						<p>
@@ -461,7 +396,7 @@
 					<div class="form-group">
 						<label class="control-sidebar-subheading">
 							Allow mail redirect
-							<input type="checkbox" class="pull-right" checked="true"/>
+							<input type="checkbox" class="pull-right" checked="checked"/>
 						</label>
 
 						<p>
@@ -473,7 +408,7 @@
 					<div class="form-group">
 						<label class="control-sidebar-subheading">
 							Expose author name in posts
-							<input type="checkbox" class="pull-right" checked="true"/>
+							<input type="checkbox" class="pull-right" checked="checked"/>
 						</label>
 
 						<p>
@@ -487,7 +422,7 @@
 					<div class="form-group">
 						<label class="control-sidebar-subheading">
 							Show me as online
-							<input type="checkbox" class="pull-right" checked="true"/>
+							<input type="checkbox" class="pull-right" checked="checked"/>
 						</label>
 					</div>
 					<!-- /.form-group -->
@@ -519,35 +454,36 @@
 	<div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<!-- to send data from db to the map in javascript code -->
-<!-- jQuery 2.2.3 -->
-<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-        th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
-<!-- DataTables -->
-<script src="../../lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js"
-        th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js}"></script>
-<script src="../../lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"
-        th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
-<!-- Responsive extension for DataTables -->
-<script src="../../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
-        th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
-<script src="../../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
-        th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
+<!-- to send data from db to javascript code -->
+<script th:inline="javascript">
+    var teachers = [[${teachers}]];
+</script>
+<!-- jQuery 3.3.1 -->
+<script src="../../static/lib/plugins/jquery/dist/jquery.min.js"
+        th:src="@{~/lib/plugins/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
 
+<!-- DataTables -->
+<script src="../../static/lib/plugins/datatables/DataTables-1.10.18/js/juery.dataTables.min.js"
+        th:src="@{~/lib/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js}"></script>
+<script src="../../lib/plugins/datatables/DataTables-1.10.18/js/dataTables.bootstrap.min.js"
+        th:src="@{~/lib/plugins/datatables/DataTables-1.10.18/js/dataTables.bootstrap.min.js}"></script>
+<!-- Responsive extension for DataTables -->
+<script src="../../lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"
+        th:src="@{~/lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js}"></script>
 
 <!-- FastClick -->
-<script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
+<script src="../../lib/plugins/fastclick/lib/fastclick.js"
+        th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
 <!-- AdminLTE App -->
-<script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
+<script src="../../lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
+<!-- Utils to format comments cells -->
+<script src="../../static/lib/dist/js/utils.js" th:src="@{~/lib/dist/js/utils.js}"></script>
 <script>
     $(function () {
-        $("#teachers_dt").DataTable({
-            responsive: true
-        });
+        formatCommentsCell(teachers, "#teachers_dt");
     });
-
 </script>
 </body>
 </html>

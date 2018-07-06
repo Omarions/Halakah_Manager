@@ -1,6 +1,7 @@
 package com.omarionapps.halaka.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.omarionapps.halaka.utils.StudentStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;

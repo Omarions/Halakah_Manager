@@ -15,7 +15,6 @@ import java.util.Optional;
 public class CertificateService {
     @Autowired
     private CertificateRepository certificateRepository;
-    private long count;
 
     /**
      * look for a certificate with its id
@@ -47,6 +46,8 @@ public class CertificateService {
 	public List<Certificate> findAllByOrderById() {
 		return certificateRepository.findAllByOrderById();
 	}
+
+
 	/**
 	 * Save new or update certificate
 	 */
@@ -56,5 +57,10 @@ public class CertificateService {
 
 	public void delete(int certId) {
 		certificateRepository.deleteById(certId);
+	}
+
+	public double getIncrementRate() {
+
+		return 0.0;
 	}
 }

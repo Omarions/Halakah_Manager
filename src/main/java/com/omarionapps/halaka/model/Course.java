@@ -1,6 +1,9 @@
 package com.omarionapps.halaka.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.omarionapps.halaka.utils.StudentStatus;
+import com.omarionapps.halaka.utils.WeekDays;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -34,8 +37,10 @@ public class Course implements Serializable {
     @NotEmpty(message = "It could not be empty!")
     private String     days;
     @Column(name = "start_time", nullable = false)
+    @DateTimeFormat(pattern = "HH:mm")
     private Time       startTime;
     @Column(name = "end_time", nullable = false)
+    @DateTimeFormat(pattern = "HH:mm")
     private Time       endTime;
     @Column(name = "start_date", nullable = true)
 	private Date       startDate;

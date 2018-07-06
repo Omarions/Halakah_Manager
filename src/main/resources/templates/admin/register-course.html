@@ -5,42 +5,50 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Halaka Manager | Dashboard</title>
-    <!-- Tell the browser to be responsive to screen width -->
+	<!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
           th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
-    <!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+	<!-- google fonts -->
+	<link rel="stylesheet"
+	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="../lib/plugins/font-awesome/css/font-awesome.min.css"
 	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
-    <!-- Ionicons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="../lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-	<link rel="stylesheet" href="../../lib/dist/css/skins/skin-blue.min.css"
+	<!-- Theme style -->
+	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"
+	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+		 folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="../lib/dist/css/skins/skin-blue.min.css"
 	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
-    <!-- bootstrap wysihtml5 - text editor -->
+	<!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
           th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
-    <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
-          th:href="@{~/lib/plugins/datepicker/datepicker3.css}">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
-          th:href="@{~/lib/plugins/select2/select2.min.css}"/>
-    <!-- Bootstrap Time picker -->
+	<!-- bootstrap wysihtml5 - text editor -->
+	<link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
+	<!-- bootstrap datepicker -->
+	<link rel="stylesheet" href="../../lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
+	      th:href="@{~/lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
+	<!-- Select2 -->
+	<link rel="stylesheet" href="../../lib/plugins/select2/css/select2.min.css"
+	      th:href="@{~/lib/plugins/select2/css/select2.min.css}"/>
+	<!-- Bootstrap Time picker -->
     <link rel="stylesheet" href="../../lib/plugins/timepicker/bootstrap-timepicker.min.css"
           th:href="@{~/lib/plugins/timepicker/bootstrap-timepicker.min.css}"/>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	<![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -591,21 +599,26 @@
     var teachers = [[${teachers}]];
 </script>
 -->
-<!-- jQuery 2.2.3 -->
-<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-        th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
+
+<!-- jQuery 3.3.1 -->
+<script src="../lib/plugins/jquery/dist/jquery.min.js"
+        th:src="@{~/lib/plugins/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../lib/bootstrap/js/bootstrap.min.js"
+        th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script src="../../lib/plugins/fastclick/lib/fastclick.js"
+        th:src="@{~/lib/plugins/fastclick/lib/fastclick.js}"></script>
 <!-- Select2 -->
-<script src="../../lib/plugins/select2/select2.full.min.js"
-        th:src="@{~/lib/plugins/select2/select2.full.min.js}"></script>
+<script src="../../lib/plugins/select2/js/select2.full.min.js"
+        th:src="@{~/lib/plugins/select2/js/select2.full.min.js}"></script>
 
 <!-- Time Picker -->
 <script src="../../lib/plugins/timepicker/bootstrap-timepicker.min.js"
         th:src="@{~/lib/plugins/timepicker/bootstrap-timepicker.min.js}"></script>
 <!-- bootstrap datepicker -->
-<script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
-        th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+<script src="../../lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"
+        th:src="@{~/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
         th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>

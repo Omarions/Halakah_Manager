@@ -125,4 +125,19 @@ public class Event implements Serializable {
         return getId() == event.getId();
 
     }
+
+	@Override
+	public String toString() {
+		return "Event{" +
+				       "id=" + id +
+				       ", name='" + name + '\'' +
+				       ", introducer='" + introducer + '\'' +
+				       ", description='" + description + '\'' +
+				       ", guests='" + guests + '\'' +
+				       ", eventDate=" + eventDate +
+				       ", status='" + status + '\'' +
+				       ", comments='" + comments + '\'' +
+				       ", certificates=" + certificates.size() +
+				       '}';
+	}
 }

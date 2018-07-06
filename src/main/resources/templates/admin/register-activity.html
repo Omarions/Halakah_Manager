@@ -7,25 +7,29 @@
 	<title>Halaka Manager | Dashboard</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-	<!-- Bootstrap 3.3.6 -->
-	<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
+	<!-- google fonts -->
+	<link rel="stylesheet"
+	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+	<link rel="stylesheet" href="../lib/plugins/font-awesome/css/font-awesome.min.css"
 	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
+	<link rel="stylesheet" href="../lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
+	<!-- Theme style -->
+	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"
+	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+		 folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="../lib/dist/css/skins/skin-blue.min.css"
+	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 	<!-- bootstrap wysihtml5 - text editor -->
 	<link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
 	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
-
-	<!-- Theme style -->
-	<link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
-	<!-- AdminLTE Skins. Choose a skin from the css/skins
-		 folder instead of downloading all of them to reduce the load. -->
-	<link rel="stylesheet" href="../../lib/dist/css/skins/skin-blue.min.css"
-	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
-
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -329,23 +333,20 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-        th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../../lib/bootstrap/js/bootstrap.min.js"
+<!-- jQuery 3.3.1 -->
+<script src="../lib/plugins/jquery/dist/jquery.min.js"
+        th:src="@{~/lib/plugins/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../lib/bootstrap/js/bootstrap.min.js"
         th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
-<!-- Slimscroll -->
-<script src="../../lib/plugins/slimScroll/jquery.slimscroll.min.js"
-        th:src="@{~/lib/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
 <!-- FastClick -->
-<script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
+<script src="../../lib/plugins/fastclick/lib/fastclick.js"
+        th:src="@{~/lib/plugins/fastclick/lib/fastclick.js}"></script>
 
 <!-- Bootstrap WYSIHTML5 -->
 <script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
         th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
 <!-- AdminLTE App -->
-<script src="../../lib/dist/js/app.min.js" th:src="@{~/lib/dist/js/app.min.js}"></script>
 <script src="../../lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>

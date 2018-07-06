@@ -6,6 +6,8 @@ import com.omarionapps.halaka.service.CountryService;
 import com.omarionapps.halaka.service.CourseService;
 import com.omarionapps.halaka.service.TeacherService;
 import com.omarionapps.halaka.utils.LocationTag;
+import com.omarionapps.halaka.utils.StudentStatus;
+import com.omarionapps.halaka.utils.WeekDays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
