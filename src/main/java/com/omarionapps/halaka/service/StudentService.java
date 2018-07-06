@@ -2,9 +2,9 @@ package com.omarionapps.halaka.service;
 
 import com.omarionapps.halaka.model.RegisteringStudent;
 import com.omarionapps.halaka.model.Student;
-import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.model.StudentTrack;
 import com.omarionapps.halaka.repository.StudentRepository;
+import com.omarionapps.halaka.utils.StudentStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,16 +59,13 @@ public class StudentService {
 	}
 
 	public long getCountByStatus(StudentStatus status) {
-		countByStatus = 0;
-		Iterable<Student> students = this.findAll();
-
-		students.forEach((student) -> {
-			for (StudentTrack st : student.getStudentTracks()) {
-				if (st.getStatus().equalsIgnoreCase(status.name()))
-					countByStatus++;
-			}
-		});
-		return countByStatus;
+		System.out.println("Distinct Students: ");
+		studentTrackService.findAllByStatus(status).stream().map(track -> track.getStudent()).distinct().forEach
+				                                                                                                 (System.out::println);
+		System.out.println("Distinct Students count: ");
+		System.out.println(studentTrackService.findAllByStatus(status).stream().map(track -> track.getStudent()).distinct().count());
+		return studentTrackService.findAllByStatus(status).stream().map(track -> track.getStudent()).distinct()
+		                          .count();
 	}
 
 	public Student registerStudent(RegisteringStudent regStudent) {
@@ -153,4 +150,6 @@ public class StudentService {
 	private Iterable<Student> findAll() {
 		return studentRepository.findAll();
 	}
+
+
 }

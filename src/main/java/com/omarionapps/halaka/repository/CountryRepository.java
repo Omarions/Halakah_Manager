@@ -13,5 +13,5 @@ import java.util.List;
 public interface CountryRepository extends CrudRepository<Country, Integer> {
     List<Country> findAllByOrderByEnglishNameAsc();
 
-    Iterable<Country> findAllByOrderByArabicNameAsc();
+	List<Country> findAllByOrderByArabicNameAsc();
 }

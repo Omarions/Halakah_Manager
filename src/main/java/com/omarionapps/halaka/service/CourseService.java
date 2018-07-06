@@ -1,7 +1,11 @@
 package com.omarionapps.halaka.service;
 
-import com.omarionapps.halaka.model.*;
+import com.omarionapps.halaka.model.Activity;
+import com.omarionapps.halaka.model.Course;
+import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.repository.CourseRepository;
+import com.omarionapps.halaka.utils.StudentStatus;
+import com.omarionapps.halaka.utils.WeekDays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

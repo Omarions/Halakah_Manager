@@ -2,13 +2,13 @@ package com.omarionapps.halaka.controller;
 
 import com.omarionapps.halaka.model.Certificate;
 import com.omarionapps.halaka.model.Student;
-import com.omarionapps.halaka.model.StudentStatus;
 import com.omarionapps.halaka.model.StudentTrack;
 import com.omarionapps.halaka.service.CertificateService;
 import com.omarionapps.halaka.service.EventService;
 import com.omarionapps.halaka.service.StorageService;
 import com.omarionapps.halaka.service.StudentTrackService;
 import com.omarionapps.halaka.utils.LocationTag;
+import com.omarionapps.halaka.utils.StudentStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

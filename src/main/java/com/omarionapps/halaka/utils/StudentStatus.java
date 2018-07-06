@@ -1,4 +1,4 @@
-package com.omarionapps.halaka.model;
+package com.omarionapps.halaka.utils;
 
 /**
  * Created by Omar on 15-Apr-17.
