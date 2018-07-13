@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.service;
 
+import com.omarionapps.halaka.model.Activity;
 import com.omarionapps.halaka.model.RegisteringStudent;
 import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.model.StudentTrack;
@@ -44,7 +45,12 @@ public class StudentService {
 		});
 		return totalStudents;
 	}
-	
+
+	public double getStatusPercentage(StudentStatus status){
+		return (Double.valueOf(getCountByStatus(status)) /
+				        Double.valueOf(getTotalStudents())) * 100;
+	}
+
 	public long getCountByStatus(StudentStatus status, boolean isArchived) {
 		countByStatus = 0;
 		Iterable<Student> students = this.findAll();
@@ -59,12 +65,26 @@ public class StudentService {
 	}
 
 	public long getCountByStatus(StudentStatus status) {
-		System.out.println("Distinct Students: ");
+	/*	System.out.println("Distinct Students: ");
 		studentTrackService.findAllByStatus(status).stream().map(track -> track.getStudent()).distinct().forEach
 				                                                                                                 (System.out::println);
 		System.out.println("Distinct Students count: ");
-		System.out.println(studentTrackService.findAllByStatus(status).stream().map(track -> track.getStudent()).distinct().count());
+		System.out.println(studentTrackService.findAllByStatus(status).stream().map(track -> track.getStudent()).distinct().count());*/
 		return studentTrackService.findAllByStatus(status).stream().map(track -> track.getStudent()).distinct()
+		                          .count();
+	}
+
+	public long getCountByStatusAndActivity(StudentStatus status, Activity activity) {
+	/*	System.out.println("Distinct Students: ");
+		studentTrackService.findAllByStatus(status).stream().map(track -> track.getStudent()).distinct().forEach
+				                                                                                                 (System.out::println);
+		System.out.println("Distinct Students count: ");
+		System.out.println(studentTrackService.findAllByStatus(status).stream().map(track -> track.getStudent()).distinct().count());*/
+		return studentTrackService.findAllByStatus(status)
+		                          .stream()
+		                          .filter(track -> track.getCourse().getActivity().equals(activity))
+		                          .map(track -> track.getStudent())
+		                          .distinct()
 		                          .count();
 	}
 

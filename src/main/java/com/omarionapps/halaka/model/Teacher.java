@@ -35,6 +35,8 @@ public class Teacher implements Serializable {
 	private String  address;
 	private String  resume;
 	private Date    hireDate;
+	@Column(name = "certified_student", columnDefinition = "TINYINT")
+	private boolean certifiedStudent;
 	private Date    archivedDate;
 	@Column(name = "archived", columnDefinition = "TINYINT")
 	private boolean archived;
@@ -144,6 +146,14 @@ public class Teacher implements Serializable {
 
 	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
+	}
+
+	public boolean isCertifiedStudent() {
+		return certifiedStudent;
+	}
+
+	public void setCertifiedStudent(boolean certifiedStudent) {
+		this.certifiedStudent = certifiedStudent;
 	}
 
 	public Date getArchivedDate() {

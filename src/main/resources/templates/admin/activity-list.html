@@ -173,14 +173,14 @@
 									<td><a href="#"
 									       th:href="@{'/admin/activities/activity/' + ${activity.id}}"><img
 											class="profile-user-img img-responsive img-circle"
-											src="../../lib/dist/img/activity/activity_logo.png"
+											src="../../static/lib/dist/img/activity/activity_logo.png"
 											th:src="@{${activity.logoUrl}}"
 											alt="activity logo"/>
 										<h3 class="profile-username text-center"
 										    th:text="${activity.name}">Nina
 										                               Mcintire</h3></a></td>
 									<td th:text="${activity.courses.size()}">Total Courses</td>
-									<td th:text="${activity.teacher.size()}">Total Teachers</td>
+									<td th:text="${activity.teachers.size()}">Total Teachers</td>
 									<td th:text="${studentsCount[activity.id]}">Total Students</td>
 									<td th:text="${certificates[activity.id]}">Total Certificates</td>
 									<td th:id="'tdComments_' + ${activity.id}" th:text="${activity.comments}">Activity
@@ -194,7 +194,7 @@
 													   th:href="@{'/admin/activities/activity/' + ${activity.id} + '#settings'}"><i
 															class="fa fa-edit fa-3x"></i></a>
 													<a href="#"
-													   th:href="@{/admin/activities/activity/delete(id=${activity.id})}"><i
+													   th:href="@{'/admin/activities/activity/' + ${activity.id} + '/archive' }"><i
 															class="fa fa-trash-o fa-3x"></i></a>
 												</div>
 											</li>

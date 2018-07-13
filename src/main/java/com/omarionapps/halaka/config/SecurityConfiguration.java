@@ -1,4 +1,4 @@
-package com.omarionapps.halaka.com.omarionapps.halaka.config;
+package com.omarionapps.halaka.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) {
 		web
 				.ignoring()
-				.antMatchers("/resource/**", "/static/**", "/lib/**", "/plugins/**", "/css/**", "/js/**", "/img/**", "/admin/students/images/**");
+				.antMatchers("/resource/**", "/static/**", "/lib/**", "/plugins/**", "/css/**", "/js/**", "/img/**");
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.accessDeniedPage("/access-denied")
 				.and()
 				.rememberMe()
-				.alwaysRemember(true);
+				.alwaysRemember(false);
 	}
 
 	

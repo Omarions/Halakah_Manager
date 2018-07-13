@@ -1,4 +1,4 @@
-package com.omarionapps.halaka.com.omarionapps.halaka.config;
+package com.omarionapps.halaka.config;
 
 import com.omarionapps.halaka.service.TeacherConverter;
 import org.springframework.beans.factory.annotation.Autowired;

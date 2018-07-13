@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -30,21 +29,22 @@
     <a href="/"><b>Admin</b>LTE</a>
   </div>
   <!-- User name -->
-  <div class="lockscreen-name">John Doe</div>
+  <div class="lockscreen-name"><span th:text="${#httpSession.getAttribute('user')?.name}">John Doe</span></div>
 
   <!-- START LOCK SCREEN ITEM -->
   <div class="lockscreen-item">
     <!-- lockscreen image -->
     <div class="lockscreen-image">
-      <img src="../lib/dist/img/user1-128x128.jpg" alt="User Image"/>
+      <img src="../lib/dist/img/user1-128x128.jpg" th:src="@{#httpSession.getAttribute('user')?.photo}"
+           alt="User Image"/>
     </div>
     <!-- /.lockscreen-image -->
 
     <!-- lockscreen credentials (contains the form) -->
-    <form class="lockscreen-credentials">
+    <form class="lockscreen-credentials" th:action="@{/login}" method="post">
       <div class="input-group">
-
-        <input type="password" class="form-control" placeholder="password"/>
+        <input type="hidden" name="email" th:value= "${userEmail}"/>
+        <input type="password" class="form-control" name="password" placeholder="password"/>
 
         <div class="input-group-btn">
           <button type="button" class="btn" href="/"><i class="fa fa-arrow-right text-muted"></i></button>
@@ -59,7 +59,7 @@
     Enter your password to retrieve your session
   </div>
   <div class="text-center">
-    <a href="login.html">Or sign in as a different user</a>
+    <a href="#" th:href="@{/}">Or sign in as a different user</a>
   </div>
 
   <div class="lockscreen-footer text-center">

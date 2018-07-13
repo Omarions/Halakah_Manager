@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.service;
 
+import com.omarionapps.halaka.model.Activity;
 import com.omarionapps.halaka.model.Event;
 import com.omarionapps.halaka.repository.EventRepository;
 import com.omarionapps.halaka.utils.Utils;
@@ -53,13 +54,39 @@ public class EventService {
 		double totalCerts = getAllOrderByEventDate()
 				                    .stream()
 				                    .map(event -> event.getCertificates())
+				                    .filter(certificates -> certificates.size() > 0)
 				                    .mapToDouble(cert -> cert.size())
 				                    .sum();
 		double filterCertsCount = findAllByEventDateBetween(start, end)
 				                          .stream()
 				                          .map(event -> event.getCertificates())
+				                          .filter(certificates -> certificates.size() > 0)
 				                          .mapToDouble(cert -> cert.size())
 				                          .sum();
+		double rate = (filterCertsCount / totalCerts) * 100;
+		return rate;
+	}
+
+	public double getCertIncrementRate(int year, Activity activity) {
+		LocalDate start = LocalDate.of(year, 1, 1);
+		LocalDate end   = LocalDate.of(year, 12, 31);
+
+
+		double totalCerts = getAllOrderByEventDate()
+				                    .stream()
+				                    .filter(event -> event.getCertificates().size() > 0)
+				                    .flatMap(event -> event.getCertificates().stream())
+				                    .filter(certificate -> certificate.getStudentTrack().getCourse().getActivity()
+				                                                      .equals(activity))
+				                    .count();
+		double filterCertsCount = findAllByEventDateBetween(start, end)
+				                          .stream()
+				                          .filter(event -> event.getCertificates().size() > 0)
+				                          .flatMap(event -> event.getCertificates().stream())
+				                          .filter(certificate -> certificate.getStudentTrack().getCourse().getActivity()
+				                                                            .equals(activity))
+				                          .count();
+		
 		double rate = (filterCertsCount / totalCerts) * 100;
 		return rate;
 	}

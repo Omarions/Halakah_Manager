@@ -50,16 +50,8 @@ public class ActivityService {
 		           .count();
 	}
 
-	/**
-	 * Get map of activity id and each total students per that activity
-	 * e.g map< activityID, total_students_of_that_activity>
-	 *
-	 * @return map of each activity and the count of student of that activity
-	 */
-	public Map<Integer, Long> mapStudentsCountWithActivityId() {
-		return this.findAllByOrderByName().stream().collect(Collectors.toMap(
-				Activity::getId,
-				act -> getTotalStudentsByActivity(act)));
+	public long getTotalStudentsByActivity(Activity activity) {
+		return findStudentsByActivity(activity).size();
 	}
 
 	public long getTotalStudentsByActivityByStatus(Activity activity, StudentStatus status) {
@@ -67,6 +59,8 @@ public class ActivityService {
 		return activity.getCourses().stream()
 		               .flatMap(course -> course.getStudentTracks().stream())
 		               .filter(track -> track.getStatus().equals(status.toString()))
+		               .map(track -> track.getStudent())
+		               .distinct()
 		               .count();
 
 	}
@@ -89,16 +83,73 @@ public class ActivityService {
 		List<Activity> activities = activityRepository.findAllByOrderByName();
 
 		activities
-				.forEach(activity -> activity.setTeacher(this.findTeachersByActivity(activity)));
+				.forEach(activity -> activity.setTeachers(this.findTeachersByActivity(activity)));
 
 		return activities;
 	}
 
-	public long getTotalStudentsByActivity(Activity activity) {
+	public List<Certificate> findCertificatesByActivity(Activity activity) {
+		return certificateService.findAllByOrderById()
+		                         .stream()
+		                         .filter(certificate -> certificate.getStudentTrack().getCourse().getActivity().equals(activity))
+		                         .collect(Collectors.toList());
+	}
 
-		return activity.getCourses().stream()
-		               .mapToLong(course -> course.getStudentTracks().size())
-		               .sum();
+	public Set<Student> findStudentsByActivityAndStatus(Activity activity, StudentStatus status) {
+		return this.findStudentsByActivity(activity)
+		           .stream()
+		           .flatMap((student -> student.getStudentTracks().stream()))
+		           .filter((st) -> st.getStatus().equals(status.toString()) && st.getCourse().getActivity().equals(activity))
+		           .map(StudentTrack::getStudent)
+		           .distinct()
+		           .collect(Collectors.toSet());
+	}
+
+	public Set<Student> findStudentsByActivity(Activity activity) {
+
+		return activity.getCourses()
+		               .stream()
+		               .flatMap(course -> course.getStudentTracks().stream())
+		               .map(StudentTrack::getStudent)
+		               .distinct()
+		               .collect(Collectors.toSet());
+
+	}
+
+	public Set<StudentTrack> findTracksByActivity(Activity activity) {
+		return this.findStudentsByActivity(activity)
+		           .stream()
+		           .flatMap((student -> student.getStudentTracks().stream()))
+		           .filter((st) -> st.getCourse().getActivity().equals(activity))
+		           .collect(Collectors.toSet());
+	}
+
+	public Set<StudentTrack> findTracksByActivityAndStatus(Activity activity, StudentStatus status) {
+		return this.findStudentsByActivity(activity)
+		           .stream()
+		           .flatMap((student -> student.getStudentTracks().stream()))
+		           .filter((st) -> st.getStatus().equals(status.toString()) && st.getCourse().getActivity().equals(activity))
+		           .collect(Collectors.toSet());
+	}
+
+	public Set<Teacher> findTeachersByActivity(Activity activity) {
+		return courseService.findAllByOrderByName()
+		                    .stream()
+		                    .filter(course -> course.getActivity().equals(activity))
+		                    .map(Course::getTeacher)
+		                    .collect(Collectors.toSet());
+	}
+
+	/**
+	 * Get map of activity id and each total students per that activity
+	 * e.g map< activityID, total_students_of_that_activity>
+	 *
+	 * @return map of each activity and the count of student of that activity
+	 */
+	public Map<Integer, Long> mapStudentsCountWithActivityId() {
+		return this.findAllByOrderByName().stream().collect(Collectors.toMap(
+				Activity::getId,
+				act -> getTotalStudentsByActivity(act)));
 	}
 
 	/**
@@ -113,13 +164,6 @@ public class ActivityService {
 		           .collect(Collectors.toMap(
 				           Activity::getId,
 				           act -> this.findCertificatesByActivity(act).size()));
-	}
-
-	public List<Certificate> findCertificatesByActivity(Activity activity) {
-		return certificateService.findAllByOrderById()
-		                         .stream()
-		                         .filter(certificate -> certificate.getStudentTrack().getCourse().getActivity().equals(activity))
-		                         .collect(Collectors.toList());
 	}
 
 	public Map<Country, Integer> mapStudentsCountWithCountryByActivity(Activity activity) {
@@ -138,15 +182,6 @@ public class ActivityService {
 		return res;
 	}
 
-	public Set<Student> findStudentsByActivity(Activity activity) {
-
-		return activity.getCourses()
-		               .stream()
-		               .flatMap(course -> course.getStudentTracks().stream())
-		               .map(StudentTrack::getStudent)
-		               .collect(Collectors.toSet());
-
-	}
 
 	public Map<Country, Set<Student>> mapStudentsWithCountryByActivity(Activity activity) {
 		Set<Student> students = findStudentsByActivityAndStatus(activity, StudentStatus.WAITING);
@@ -162,15 +197,6 @@ public class ActivityService {
 			}
 		}*/
 		return res;
-	}
-
-	public Set<Student> findStudentsByActivityAndStatus(Activity activity, StudentStatus status) {
-		return this.findStudentsByActivity(activity)
-		           .stream()
-		           .flatMap((student -> student.getStudentTracks().stream()))
-		           .filter((st) -> st.getStatus().equals(status.toString()) && st.getCourse().getActivity().equals(activity))
-		           .map(StudentTrack::getStudent)
-		           .collect(Collectors.toSet());
 	}
 
 	/**
@@ -224,23 +250,25 @@ public class ActivityService {
 		return res;
 	}
 
-	public Set<StudentTrack> findTracksByActivity(Activity activity) {
-		return this.findStudentsByActivity(activity)
-		           .stream()
-		           .flatMap((student -> student.getStudentTracks().stream()))
-		           .filter((st) -> st.getCourse().getActivity().equals(activity))
-		           .collect(Collectors.toSet());
-	}
-
+	/**
+	 * Group a map of country and set of tracks with course ID
+	 * e.g. <courseID, Map<Country, Set<Tracks>>
+	 *
+	 * @param activity to search for
+	 * @return a map with key is the course ID and the value is a map with country as key and set of tracks as value.
+	 */
 	public Map<Integer, Map<Country, Set<StudentTrack>>> mapCandidatesWithCourse_IdByActivity(Activity activity) {
 		Map<Integer, Map<Country, Set<StudentTrack>>> candidates        = new HashMap<>();
 		Map<Country, Set<StudentTrack>>               candidateMapValue = new HashMap<>();
 		findCandidatesByActivity(activity)
 				.entrySet()
+				.stream()
+				.filter(countrySetEntry -> countrySetEntry.getValue().size() > 0)
 				.forEach(entry -> {
 					entry.getValue().forEach(val -> {
 						candidateMapValue.put(entry.getKey(), entry.getValue());
 						candidates.put(val.getCourse().getId(), candidateMapValue);
+
 					});
 				});
 
@@ -298,14 +326,6 @@ public class ActivityService {
 		Map<Country, Set<StudentTrack>> res = countryService.groupTracksByCountry(tracks);
 
 		return res;
-	}
-
-	public Set<StudentTrack> findTracksByActivityAndStatus(Activity activity, StudentStatus status) {
-		return this.findStudentsByActivity(activity)
-		           .stream()
-		           .flatMap((student -> student.getStudentTracks().stream()))
-		           .filter((st) -> st.getStatus().equals(status.toString()) && st.getCourse().getActivity().equals(activity))
-		           .collect(Collectors.toSet());
 	}
 
 	/**
@@ -386,14 +406,6 @@ public class ActivityService {
 				                             act -> findTeachersByActivity(act))
 		                             );
 
-	}
-
-	public Set<Teacher> findTeachersByActivity(Activity activity) {
-		return courseService.findAllByOrderByName()
-		                    .stream()
-		                    .filter(course -> course.getActivity().equals(activity))
-		                    .map(Course::getTeacher)
-		                    .collect(Collectors.toSet());
 	}
 
 	/**

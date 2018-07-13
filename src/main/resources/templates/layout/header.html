@@ -3,8 +3,7 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<html xmlns:th="http://www.thymeleaf.org"
->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
 <body>
@@ -172,7 +171,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
                 <div class="pull-right">
 
-                  <a href="/logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="/logout" th:href="@{/login(logout='true')}" class="btn btn-default btn-flat">Sign out</a>
 
                 </div>
               </li>

@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.service;
 
+import com.omarionapps.halaka.model.Activity;
 import com.omarionapps.halaka.model.Country;
 import com.omarionapps.halaka.model.Student;
 import com.omarionapps.halaka.model.StudentTrack;
@@ -31,8 +32,25 @@ public class CountryService {
 		return countryRepository.findById(id);
 	}
 
+	public Iterable<Country> getAll() {
+		return countryRepository.findAll();
+	}
+	
 	public List<Country> findAllByOrderByArabicNameAsc() {
 		return countryRepository.findAllByOrderByArabicNameAsc();
+	}
+
+	public List<Country> findAllByOrderByEnglishNameAsc() {
+		return countryRepository.findAllByOrderByEnglishNameAsc();
+	}
+
+	public Set<Country> getCountriesHasStudents() {
+		Set<Country> countries = findAllByOrderByEnglishNameAsc()
+				                         .stream()
+				                         .filter(country -> country.getStudents().size() > 0)
+				                         .sorted()
+				                         .collect(Collectors.toSet());
+		return countries;
 	}
 
 	public Map<String, Set<Student>> groupStudentsByCountryCode() {
@@ -44,10 +62,6 @@ public class CountryService {
 				map.put(country.getCode(), country.getStudents());
 		});
 		return map;
-	}
-
-	public Iterable<Country> getAll() {
-		return countryRepository.findAll();
 	}
 
 	public Map<String, Set<Student>> getCountryCodeStudentsMap(Set<Student> students) {
@@ -106,19 +120,6 @@ public class CountryService {
 
 		}));
 		return map;
-	}
-
-	public Set<Country> getCountriesHasStudents() {
-		Set<Country> countries = findAllByOrderByEnglishNameAsc()
-				                         .stream()
-				                         .filter(country -> country.getStudents().size() > 0)
-				                         .sorted()
-				                         .collect(Collectors.toSet());
-		return countries;
-	}
-
-	public List<Country> findAllByOrderByEnglishNameAsc() {
-		return countryRepository.findAllByOrderByEnglishNameAsc();
 	}
 
 	public Map<String, Map<String, Integer>> getCountryStudentsCountByGenderMap() {
@@ -205,19 +206,56 @@ public class CountryService {
 		LocalDate start = LocalDate.now().minusDays(days);
 		LocalDate end   = LocalDate.now();
 
-		System.out.println("Start LocalDate: " + start.toString());
-		System.out.println("End LocalDate: " + end);
+		//System.out.println("Start LocalDate: " + start.toString());
+		//System.out.println("End LocalDate: " + end);
 
 		Set<StudentTrack> allTracks      = studentTrackService.findAllByOrderByRegisterDate();
 		Set<StudentTrack> filteredTracks = studentTrackService.findAllByRegisterDateBetween(start, end);
-		System.out.println("Filtered Tracks: " + filteredTracks);
+		//System.out.println("Filtered Tracks: " + filteredTracks);
 
 		double totalCountries = groupTracksByCountry(allTracks).keySet().size();
-		System.out.println("Total Countries: " + totalCountries);
+		//System.out.println("Total Countries: " + totalCountries);
 		double filterCountriesCount = groupTracksByCountry(filteredTracks).keySet().size();
-		System.out.println("Total Countries in period: " + filterCountriesCount);
+		//System.out.println("Total Countries in period: " + filterCountriesCount);
 		double rate = (filterCountriesCount / totalCountries) * 100;
 
 		return rate;
+	}
+
+	/**
+	 * Get increment rate of countries registered in some period (days) for specific activity
+	 * @param days the period to get rate for
+	 * @param activity  to get the rate for
+	 * @return  double value of increment rate
+	 */
+	public double getCountriesIncrementRate(int days, Activity activity) {
+		LocalDate start = LocalDate.now().minusDays(days);
+		LocalDate end   = LocalDate.now();
+		
+		Set<StudentTrack> allTracks      = studentTrackService.findAllByOrderByRegisterDate();
+		Set<StudentTrack> activityTracks = allTracks.stream()
+		                                            .filter(track -> track.getCourse().getActivity().equals(activity))
+		                                            .collect(Collectors.toSet());
+		Set<StudentTrack> filteredTracks = studentTrackService.findAllByRegisterDateBetween(start, end);
+		Set<StudentTrack> filteredActivityTracks = filteredTracks.stream()
+		                                                         .filter(track -> track.getCourse().getActivity().equals(activity))
+		                                                         .collect(Collectors.toSet());
+
+		//System.out.println("Filtered Tracks: " + filteredTracks);
+
+		double totalCountries = groupTracksByCountry(activityTracks).keySet().size();
+		//System.out.println("Total Countries: " + totalCountries);
+		double filterCountriesCount = groupTracksByCountry(filteredActivityTracks).keySet().size();
+		//System.out.println("Total Countries in period: " + filterCountriesCount);
+		double rate = (filterCountriesCount / totalCountries) * 100;
+
+		return rate;
+	}
+
+	public long getCountryCountByActivity(Activity activity){
+		  return studentTrackService.findAllByOrderByRegisterDate()
+		                            .stream()
+		                            .filter(track -> track.getCourse().getActivity().equals(activity))
+		                            .count();
 	}
 }

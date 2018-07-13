@@ -1,10 +1,7 @@
 package com.omarionapps.halaka.controller;
 
 import com.omarionapps.halaka.model.*;
-import com.omarionapps.halaka.service.ActivityService;
-import com.omarionapps.halaka.service.CountryService;
-import com.omarionapps.halaka.service.CourseService;
-import com.omarionapps.halaka.service.StorageService;
+import com.omarionapps.halaka.service.*;
 import com.omarionapps.halaka.utils.LocationTag;
 import com.omarionapps.halaka.utils.StudentStatus;
 import org.slf4j.Logger;
@@ -21,6 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -33,18 +31,25 @@ import java.util.Set;
 @Controller
 public class ActivityController {
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
-	private ActivityService activityService;
-	private CountryService  countryService;
-	private CourseService   courseService;
-	private StorageService  storageService;
+	
+	private ActivityService     activityService;
+	private CountryService      countryService;
+	private CourseService       courseService;
+	private StorageService      storageService;
+	private StudentTrackService studentTrackService;
+	private EventService eventService;
 
 	@Autowired
-	public ActivityController(ActivityService activityService,
-	                          CountryService countryService, CourseService courseService, StorageService storageService) {
+	public ActivityController(ActivityService activityService, CountryService countryService,
+	                          CourseService courseService, StorageService storageService,
+	                          StudentTrackService studentTrackService, EventService eventService) {
+
 		this.activityService = activityService;
 		this.countryService = countryService;
 		this.courseService = courseService;
 		this.storageService = storageService;
+		this.studentTrackService = studentTrackService;
+		this.eventService = eventService;
 	}
 
 	@GetMapping("/admin/activities")
@@ -67,42 +72,44 @@ public class ActivityController {
 
 	@GetMapping("/admin/activities/activity/{activityId}")
 	public ModelAndView getProfileView(@PathVariable(value = "activityId") Integer activityId) {
-		ModelAndView       modelAndView     = new ModelAndView("admin/activity-profile");
+		ModelAndView modelAndView = new ModelAndView("admin/activity-profile");
+		NumberFormat numberFormat = NumberFormat.getNumberInstance();
+		numberFormat.setMaximumFractionDigits(2);
+
 		Optional<Activity> optActivity      = activityService.findById(activityId);
 		Activity           activity         = optActivity.get();
 		Set<Student>       activityStudents = activityService.findStudentsByActivity(activity);
 
-		activity.setTeacher(activityService.findTeachersByActivity(activity));
+		activity.setTeachers(activityService.findTeachersByActivity(activity));
 
 		if (activityId != 7) {
-			long                           totalStudents     = activityService.getTotalStudentsByActivity(activity);
-			long                           totalStudying     = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.STUDYING);
-			long                           totalWaiting      = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.WAITING);
-			long                           totalCertified    = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.CERTIFIED);
-			long                           totalFired        = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.FIRED);
-			long                           totalTempStopped  = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.TEMP_STOP);
-			long                           totalFinalStopped = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.FINAL_STOP);
-			Map<String, Map<String, Long>> countryStudents   = activityService.getCountryCodeStudentsStatusCountMap(activity);
+			long totalStudents     = activityService.getTotalStudentsByActivity(activity);
+			long totalStudyingStudents     = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
+					                                                                                       .STUDYING);
+			long totalFiredStudents        = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
+					                                                                                        .FIRED);
+			long totalTempStoppedStudents  = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
+					                                                                                       .TEMP_STOP);
+			long totalFinalStoppedStudents = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
+					                                                                                       .FINAL_STOP);
 
-			Set<Student> waitStudents         = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.WAITING);
-			Set<Student> studyStudents        = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.STUDYING);
-			Set<Student> certifiedStudents    = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.CERTIFIED);
-			Set<Student> tempStoppedStudents  = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.TEMP_STOP);
-			Set<Student> finalStoppedStudents = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.FINAL_STOP);
-			Set<Student> firedStudents        = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.FIRED);
-
+			Map<String, Map<String, Long>> countryStudents = activityService.getCountryCodeStudentsStatusCountMap(activity);
+			
+			//Load activity's logo
 			String logoUrl = MvcUriComponentsBuilder
 					                 .fromMethodName(PhotoController.class, "getFile", activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC)
 					                 .build()
 					                 .toString();
-
 			activity.setLogoUrl(logoUrl);
 
+			//get candidates for each course in the activity
 			Map<Integer, Map<Country, Set<StudentTrack>>> candidates = activityService
 					                                                           .mapCandidatesWithCourse_IdByActivity
 							                                                            (activity);
-			candidates.entrySet().stream().forEach(courseMapEntry -> {
-				courseMapEntry.getValue().entrySet().stream().forEach(countryMapEntry -> {
+			System.out.println("Candidates: " + candidates.keySet());
+			//Load students' photos
+			candidates.entrySet().forEach(courseMapEntry -> {
+				courseMapEntry.getValue().entrySet().forEach(countryMapEntry -> {
 					countryMapEntry.getValue().forEach(track -> {
 						String photoUrl = MvcUriComponentsBuilder
 								                  .fromMethodName(PhotoController.class, "getFile", track.getStudent().getPhoto(),
@@ -115,25 +122,62 @@ public class ActivityController {
 				});
 			});
 
+			long   totalCountries         = countryService.getCountryCountByActivity(activity);
+			String countriesIncrementRate = numberFormat.format(countryService.getCountriesIncrementRate(30, activity));
+
+			long totalActiveStudents = totalStudyingStudents + totalTempStoppedStudents;
+			double activeStudentsRate = studentTrackService.getRateByStatusAndActivity(StudentStatus.STUDYING, 30, activity) +
+					                            studentTrackService.getRateByStatusAndActivity(StudentStatus.TEMP_STOP, 30, activity);
+			String strActiveStudentsRate = numberFormat.format(activeStudentsRate);
+
+			long totalWaitingStudents = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.WAITING);
+			String waitingIncrementRate = numberFormat.format(studentTrackService.getRateByStatusAndActivity(StudentStatus.WAITING, 30, activity));
+
+			long totalCertificates = activityService.findCertificatesByActivity(activity).size();
+			long totalCertifiedStudents    = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
+					                                                                                       .CERTIFIED);
+			String strCertificatesRate = numberFormat.format(eventService.getCertIncrementRate(LocalDate.now()
+			                                                                                            .getYear(),
+					activity));
+			
 			modelAndView.addObject("activity", activity);
+
+			modelAndView.addObject("totalCountries", totalCountries);
+			modelAndView.addObject("countriesIncrementRate", countriesIncrementRate);
+			modelAndView.addObject("totalActiveStudents", totalActiveStudents);
+			modelAndView.addObject("activeStudentsRate", strActiveStudentsRate);
+			modelAndView.addObject("waitingIncrementRate", waitingIncrementRate);
+			modelAndView.addObject("totalCertificates", totalCertificates);
+			modelAndView.addObject("certificatesRate",strCertificatesRate );
+			
 			modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(activityStudents));
 			modelAndView.addObject("countryStudents", countryStudents);
-			modelAndView.addObject("coursesTimeline", courseService.getActivityCoursesByDayMap(activity));
+			modelAndView.addObject("coursesTimeline", courseService.groupCoursesByDay(activity));
 			modelAndView.addObject("candidates", candidates);
 			modelAndView.addObject("students", activityStudents);
-			/*modelAndView.addObject("waitingStudents", waitStudents);
+			modelAndView.addObject("totalStudents", totalStudents);
+			modelAndView.addObject("totalStudying", totalStudyingStudents);
+			modelAndView.addObject("totalWaiting", totalWaitingStudents);
+			modelAndView.addObject("totalCertified", totalCertifiedStudents);
+			modelAndView.addObject("totalFired", totalFiredStudents);
+			modelAndView.addObject("totalTempStopped", totalTempStoppedStudents);
+			modelAndView.addObject("totalFinalStopped", totalFinalStoppedStudents);
+
+			/*
+			Set<Student> waitStudents         = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.WAITING);
+			Set<Student> studyStudents        = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.STUDYING);
+			Set<Student> certifiedStudents    = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.CERTIFIED);
+			Set<Student> tempStoppedStudents  = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.TEMP_STOP);
+			Set<Student> finalStoppedStudents = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.FINAL_STOP);
+			Set<Student> firedStudents        = activityService.findStudentsByActivityAndStatus(activity, StudentStatus.FIRED);
+			
+			modelAndView.addObject("waitingStudents", waitStudents);
 			modelAndView.addObject("studyingStudents", studyStudents);
 			modelAndView.addObject("certifiedStudents", certifiedStudents);
 			modelAndView.addObject("tempStoppedStudents", tempStoppedStudents);
 			modelAndView.addObject("finalStoppedStudents", finalStoppedStudents);
-			modelAndView.addObject("firedStudents", firedStudents);*/
-			modelAndView.addObject("totalStudents", totalStudents);
-			modelAndView.addObject("totalStudying", totalStudying);
-			modelAndView.addObject("totalWaiting", totalWaiting);
-			modelAndView.addObject("totalCertified", totalCertified);
-			modelAndView.addObject("totalFired", totalFired);
-			modelAndView.addObject("totalTempStopped", totalTempStopped);
-			modelAndView.addObject("totalFinalStopped", totalFinalStopped);
+			modelAndView.addObject("firedStudents", firedStudents);
+			*/
 
 			return modelAndView;
 		} else {

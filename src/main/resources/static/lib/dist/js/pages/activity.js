@@ -164,9 +164,9 @@ function pupolateStudentsTable(students, status) {
     }
 
     //make the table responsive
-    $("#all_students_dt").DataTable({
-        responsive: true
-    });
+    $("#all_students_dt").DataTable()
+        .columns.adjust()
+        .responsive.recalc();
 }
 
 /**

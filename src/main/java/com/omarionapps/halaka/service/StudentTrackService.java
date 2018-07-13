@@ -1,5 +1,6 @@
 package com.omarionapps.halaka.service;
 
+import com.omarionapps.halaka.model.Activity;
 import com.omarionapps.halaka.model.StudentTrack;
 import com.omarionapps.halaka.repository.StudentTrackRepository;
 import com.omarionapps.halaka.utils.StudentStatus;
@@ -25,18 +26,14 @@ public class StudentTrackService {
         this.studentTrackRepository = studentTrackRepository;
     }
 
-	public Optional<StudentTrack> findById(int id) {
-		return studentTrackRepository.findById(id);
+	public int getTotalActiveStudents (){
+		return findAllByStatus(StudentStatus.STUDYING).size() +
+				       findAllByStatus(StudentStatus.TEMP_STOP).size();
 	}
 
-	public Set<StudentTrack> findAllByStatus(StudentStatus status) {
-		return studentTrackRepository.findAllByStatus(status.toString());
-	}
-
-	public Set<StudentTrack> findAllByRegisterDateBetween(LocalDate start, LocalDate end) {
-		Date startDate = Utils.convertLocalDate(start);
-		Date endDate   = Utils.convertLocalDate(end);
-		return studentTrackRepository.findAllByRegisterDateBetween(startDate, endDate);
+	public double getActiveStudentsRate(int days){
+		return getRateByStatus(StudentStatus.STUDYING, days) +
+				       getRateByStatus(StudentStatus.TEMP_STOP, days);
 	}
 
 	public double getRateByStatus(StudentStatus status, int days) {
@@ -54,20 +51,56 @@ public class StudentTrackService {
 		return rate;
 	}
 
+	public double getRateByStatusAndActivity(StudentStatus status, int days, Activity activity) {
+		LocalDate startDate = LocalDate.now().minusDays(days);
+		LocalDate endDate   = LocalDate.now();
+
+		Set<StudentTrack> statusTracks = findAllByOrderByRegisterDate()
+				                                 .stream()
+				                                 .filter(track -> track.getCourse().getActivity().equals(activity))
+				                                 .collect(Collectors.toSet());
+		Set<StudentTrack> dateFilterStatusTracks = findAllByRegisterDateBetweenAndStatus(startDate, endDate, status)
+				                                           .stream()
+				                                           .filter(track -> track.getCourse().getActivity().equals(activity))
+				                                           .collect(Collectors.toSet());
+
+		double            totalTracks            = statusTracks.size();
+		double            filterTracks           = dateFilterStatusTracks.size();
+
+		double rate = (filterTracks / totalTracks) * 100;
+		return rate;
+	}
+
+	public Optional<StudentTrack> findById(int id) {
+		return studentTrackRepository.findById(id);
+	}
+
+	public Iterable<StudentTrack> saveAll(Iterable<StudentTrack> tracks) {
+		return studentTrackRepository.saveAll(tracks);
+	}
+
+	public Set<StudentTrack> findAllByStatus(StudentStatus status) {
+		return studentTrackRepository.findAllByStatus(status.toString());
+	}
+
+	public Set<StudentTrack> findAllByStatusAndActivity(StudentStatus status, Activity activity) {
+		return studentTrackRepository
+				       .findAllByStatus(status.toString())
+				       .stream()
+				       .filter(track -> track.getCourse().getActivity().equals(activity))
+				       .collect(Collectors.toSet());
+	}
+
+	public Set<StudentTrack> findAllByRegisterDateBetween(LocalDate start, LocalDate end) {
+		Date startDate = Utils.convertLocalDate(start);
+		Date endDate   = Utils.convertLocalDate(end);
+		return studentTrackRepository.findAllByRegisterDateBetween(startDate, endDate);
+	}
+	
 	public Set<StudentTrack> findAllByOrderByRegisterDate() {
 		return studentTrackRepository.findAllByOrderByRegisterDate();
 	}
-    public StudentTrack save(StudentTrack studentTrack) {
-        return studentTrackRepository.save(studentTrack);
-    }
-
-    public Iterable<StudentTrack> saveAll(Iterable<StudentTrack> tracks) {
-        return studentTrackRepository.saveAll(tracks);
-    }
-
-    public void deleteById(int id) {
-        studentTrackRepository.deleteById(id);
-    }
+	
 
 	public Set<StudentTrack> findAllByRegisterDateBetweenAndStatus(LocalDate start, LocalDate end, StudentStatus
 			                                                                                               status) {
@@ -75,4 +108,13 @@ public class StudentTrackService {
 		Date endDate   = Utils.convertLocalDate(end);
 		return studentTrackRepository.findAllByRegisterDateBetweenAndStatus(startDate, endDate, status.toString());
 	}
+	
+	public StudentTrack save(StudentTrack studentTrack) {
+		return studentTrackRepository.save(studentTrack);
+	}
+
+	public void deleteById(int id) {
+		studentTrackRepository.deleteById(id);
+	}
+
 }

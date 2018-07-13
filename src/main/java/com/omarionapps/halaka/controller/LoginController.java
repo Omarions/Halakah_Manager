@@ -18,12 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @GetMapping(value = {"/", "/login"})
-    public ModelAndView login(@RequestParam(value = "logout", required = false) String logout,
+    public ModelAndView login(@RequestParam(value = "logout", required = false) boolean logout,
                               HttpServletRequest request,
                               HttpServletResponse response) {
 
         ModelAndView modelAndView = new ModelAndView();
-        if (logout != null) {
+        if (logout) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null) {
                 //new SecurityContextLogoutHandler().logout(request, response, auth);
@@ -34,7 +34,7 @@ public class LoginController {
 
                     userEmail = ((UserDetails) principal).getUsername();
                     modelAndView.addObject("userEmail", userEmail);
-	                //System.out.println(principal);
+	                System.out.println("Principal: " + principal);
 
                 }
 

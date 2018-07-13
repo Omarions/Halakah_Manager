@@ -56,7 +56,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <i class="fa fa-list"></i><span>Activities</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
-                            <span class="label label-primary pull-right" th:text="${application.activeActivitiesCount}">4</span>
+                            <span class="label label-primary pull-right" th:text="${activeActivitiesCount}">4</span>
                          </span>
                     </a>
                     <ul class="treeview-menu">
@@ -74,7 +74,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                             <span class="label label-primary pull-right"
-                                  th:text="${application.activeCoursesCount}">4</span>
+                                  th:text="${activeCoursesCount}">4</span>
                         </span>
                     </a>
                     <ul class="treeview-menu">
@@ -94,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                             <span class="label label-primary pull-right"
-                                  th:text="${application.certificatesCount}">4</span>
+                                  th:text="${certificatesCount}">4</span>
                         </span>
                     </a>
                     <ul class="treeview-menu">
@@ -112,7 +112,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                             <!-- total study -->
-                          <small class="label label-primary pull-right" th:text="${application.activeStudentsCount}">12
+                          <small class="label label-primary pull-right" th:text="${activeStudentsCount}">12
                           </small>
 
                             <!-- total wait
@@ -136,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <span class="pull-right-container">
     <i class="fa fa-angle-left pull-right"></i>
                                 <span class="label label-primary pull-right"
-                                      th:text="${application.activeTeachersCount}">4</span>
+                                      th:text="${activeTeachersCount}">4</span>
                             </span>
                     </a>
                     <ul class="treeview-menu">
@@ -153,7 +153,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <span class="pull-right-container">
     <i class="fa fa-angle-left pull-right"></i>
                                 <span class="label label-primary pull-right"
-                                      th:text="${application.eventsCount}">4</span>
+                                      th:text="${eventsCount}">4</span>
                             </span>
                     </a>
                     <ul class="treeview-menu">
@@ -180,7 +180,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <span>Activities</span>
                             <span class="pull-right-container">
                                 <span class="label label-primary pull-right"
-                                      th:text="${application.archivedActivitiesCount}">4</span>
+                                      th:text="${archivedActivitiesCount}">4</span>
                             </span>
                         </a></li>
                         <li><a href="#" th:href="@{/admin/archive/teachers}"><i class="fa fa-users"
@@ -188,7 +188,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <span>Teachers</span>
                             <span class="pull-right-container">
                                 <span class="label label-primary pull-right"
-                                      th:text="${application.archivedTeachersCount}">4</span>
+                                      th:text="${archivedTeachersCount}">4</span>
                             </span>
                         </a>
                         </li>
@@ -197,7 +197,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <span>Students</span>
                             <span class="pull-right-container">
                                 <span class="label label-primary pull-right"
-                                      th:text="${application.archivedStudentsCount}">4</span>
+                                      th:text="${archivedStudentsCount}">4</span>
                             </span>
                         </a></li>
                         <li><a href="#" th:href="@{/admin/archive/courses}"><i class="fa fa-university"
@@ -205,7 +205,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <span>courses</span>
                             <span class="pull-right-container">
                                 <span class="label label-primary pull-right"
-                                      th:text="${application.archivedCoursesCount}">4</span>
+                                      th:text="${archivedCoursesCount}">4</span>
                             </span>
                         </a></li>
                     </ul>

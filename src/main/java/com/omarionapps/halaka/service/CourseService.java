@@ -157,7 +157,7 @@ public class CourseService {
 		return course.getStudentTracks().stream().map((st) -> st.getStudent()).collect(Collectors.toSet());
 	}
 
-	public Map<String, List<Course>> getActivityCoursesByDayMap(Activity activity) {
+	public Map<String, List<Course>> groupCoursesByDay(Activity activity) {
 		Map<String, List<Course>> map = new HashMap<>();
 
 		for (WeekDays day : WeekDays.values()) {
@@ -171,7 +171,7 @@ public class CourseService {
 			filteredCourses.stream().sorted(Comparator.comparing(course -> course.getStartTime()));
 			map.put(day.toString(), filteredCourses);
 		}
-		System.out.println("CoursesDayMap: " + map);
+		//System.out.println("CoursesDayMap: " + map);
 		return map;
 	}
 

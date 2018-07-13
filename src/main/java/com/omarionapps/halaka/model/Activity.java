@@ -29,7 +29,7 @@ public class Activity implements Serializable {
 	@Column(name = "archived", columnDefinition = "TINYINT")
 	private boolean       archived;
 	@Transient
-	private Set<Teacher> teacher = new HashSet<>();
+	private Set<Teacher> teachers = new HashSet<>();
 	@Transient
 	private MultipartFile logoFile;
 	@Transient
@@ -83,13 +83,13 @@ public class Activity implements Serializable {
 	}
 
 	@JsonIgnore
-	public Set<Teacher> getTeacher() {
-		return teacher;
+	public Set<Teacher> getTeachers() {
+		return teachers;
 	}
 
 	@JsonIgnore
-	public void setTeacher(Set<Teacher> teacher) {
-		this.teacher = teacher;
+	public void setTeachers(Set<Teacher> teachers) {
+		this.teachers = teachers;
 	}
 
 	public Date getStartDate() {

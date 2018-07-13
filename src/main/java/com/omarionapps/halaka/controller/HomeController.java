@@ -53,36 +53,40 @@ public class HomeController {
 	    NumberFormat numberFormat = NumberFormat.getNumberInstance();
 	    numberFormat.setMaximumFractionDigits(2);
 
-	    double certifiedStudentsPercent = (Double.valueOf(studentService.getCountByStatus(StudentStatus.CERTIFIED)) /
-			                                       Double.valueOf(studentService.getTotalStudents())) * 100;
+	    double certifiedStudentsPercent = studentService.getStatusPercentage(StudentStatus.CERTIFIED);
+	    int totalActiveStudents = studentTrackService.getTotalActiveStudents();
+	    long totalWaitingStudents = studentService.getCountByStatus(StudentStatus.WAITING);
+	    long totalCertified = studentService.getCountByStatus(StudentStatus.CERTIFIED);
+
+	    double activeStudentsRate = studentTrackService.getActiveStudentsRate(30);
 	    
+	    String strActiveStudentsRate =  numberFormat.format(activeStudentsRate);
 	    String formattedCertPercentage = numberFormat.format(certifiedStudentsPercent);
 	    String countriesIncrementRate  = numberFormat.format(countryService.getCountriesIncrementRate(30));
 	    String waitingIncrementRate = numberFormat.format(studentTrackService.getRateByStatus(StudentStatus.WAITING,
 			    30));
-
-	    int totalActiveStudents = studentTrackService.findAllByStatus(StudentStatus.STUDYING).size() + studentTrackService.findAllByStatus(StudentStatus.TEMP_STOP).size();
-
-	    double activeStudentsRate = studentTrackService.getRateByStatus(StudentStatus.STUDYING, 30) +
-			                                studentTrackService.getRateByStatus(StudentStatus.TEMP_STOP, 30);
-
-	    long totalCertified = studentService.getCountByStatus(StudentStatus.CERTIFIED);
+	    String strCertificatesRate = numberFormat.format(eventService.getCertIncrementRate(LocalDate.now().getYear()));
+	    
         modelAndView.addObject("user", userService.findUserByUserDetails());
-        modelAndView.addObject("countryStudentsChart", countryService.getCountryStudentsCountByGenderMap());
+        
 	    modelAndView.addObject("countriesIncrementRate", countriesIncrementRate);
 	    modelAndView.addObject("totalActiveStudents", totalActiveStudents);
-	    modelAndView.addObject("activeStudentsRate", numberFormat.format(activeStudentsRate));
-	    modelAndView.addObject("totalWaitingStudents", studentTrackService.findAllByStatus(StudentStatus.WAITING).size());
+	    modelAndView.addObject("activeStudentsRate", strActiveStudentsRate);
+	    modelAndView.addObject("totalWaitingStudents", totalWaitingStudents);
 	    modelAndView.addObject("waitingIncrementRate", waitingIncrementRate);
 	    modelAndView.addObject("totalCertificates", eventService.getTotalCertificates());
+	    modelAndView.addObject("certificatesRate",strCertificatesRate );
 	    modelAndView.addObject("totalCertified", totalCertified);
-	    modelAndView.addObject("certificatesRate", numberFormat.format(eventService.getCertIncrementRate(LocalDate.now().getYear())));
+
+	    modelAndView.addObject("certifiedStudentsPercent", formattedCertPercentage);
+
+	    modelAndView.addObject("mapCounts", countryService.getAllCountryCodeStudentsCountMap());
+	    modelAndView.addObject("countryStudentsChart", countryService.getCountryStudentsCountByGenderMap());
         modelAndView.addObject("houseOccupied", houseService.getTotalOccupied());
         modelAndView.addObject("houseFree", houseService.getTotalFree());
         modelAndView.addObject("houseMaxCapacity", houseService.getTotalCapacity());
 	    // modelAndView.addObject("housesOccupy", houseService.findAllOrderById());
-        modelAndView.addObject("mapCounts", countryService.getAllCountryCodeStudentsCountMap());
-	    modelAndView.addObject("certifiedStudentsPercent", formattedCertPercentage);
+
         modelAndView.addObject("task", new Task());
         modelAndView.setViewName("admin/index");
 

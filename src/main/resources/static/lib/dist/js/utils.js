@@ -45,28 +45,21 @@ $("#input-cert-photo").change(function () {
  * @param tblId   the table id attribute to process its cells
  */
 function formatCommentsCell(objArray, tblId) {
-    var ids = [];
-    var commentsArray = [];
-
-    //to fill ids and comments arrays.
     for (oInd in objArray) {
-        ids.push(objArray[oInd]['id']);
+        //create cell id
+        var tdCommentsId = 'tdComments_' + objArray[oInd]['id'];
+        var comments = ' ';
         if (objArray[oInd]['comments'] == null) {
-            commentsArray.push(" ");
-        } else {
-            commentsArray.push(objArray[oInd]['comments']);
+            comments = ' ';
+        }  else{
+            comments = objArray[oInd]['comments'];
         }
+        $(tblId + ' td[id=' + tdCommentsId + ']').html(comments);
     }
-
-    //to format comments cell with Jquery
-    for (i in ids) {
-        var tdCommentsId = 'tdComments_' + ids[i];
-        var cellComment = commentsArray[i];
-
-        $(tblId + ' td[id=' + tdCommentsId + ']').html(cellComment);
-    }
-
-    $(tblId).DataTable();
+    
+    $(tblId).DataTable()
+        .columns.adjust()
+        .responsive.recalc();
 
 }
 

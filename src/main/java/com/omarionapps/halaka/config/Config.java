@@ -1,4 +1,4 @@
-package com.omarionapps.halaka.com.omarionapps.halaka.config;
+package com.omarionapps.halaka.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

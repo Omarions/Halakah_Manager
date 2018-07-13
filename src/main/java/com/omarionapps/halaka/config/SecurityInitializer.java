@@ -1,4 +1,4 @@
-package com.omarionapps.halaka.com.omarionapps.halaka.config;
+package com.omarionapps.halaka.config;
 
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;

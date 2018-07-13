@@ -61,4 +61,11 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "UserDetailsImpl{" +
+                       "userEmail=" + user.getEmail() + ", Password: " + user.getPassword() +
+                       '}';
+    }
 }
