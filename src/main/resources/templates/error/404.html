@@ -7,17 +7,22 @@
   <title>AdminLTE 2 | 404 Page not found</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"/>
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+        th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="../lib/plugins/font-awesome/css/font-awesome.min.css"
+        th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+  <link rel="stylesheet" href="../lib/plugins/Ionicons/css/ionicons.min.css"
+        th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css"/>
+  <link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"
+        th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../../lib/dist/css/skins/_all-skins.min.css"/>
+	   folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../lib/dist/css/skins/skin-blue.min.css"
+        th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -29,11 +34,11 @@
 <body class="hold-transition skin-blue sidebar-mini" style="height: auto;">
 <div class="wrapper" style="height: auto;">
 
-  <!-- Main Header -->
-  <!-- Removed because it gives error at #httpSesssion....-->
-
+  <!-- include header section from the layout file -->
+  <div th:include="layout/header :: header"></div>
   <!-- Left side column. contains the logo and sidebar -->
-  <!-- Removed because it gives error at #httpSesssion....-->
+  <!-- include sidebar nav section from the layout file -->
+  <div th:include="layout/sidebarnav :: sidebarnav"></div>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="min-height: 1125px;">

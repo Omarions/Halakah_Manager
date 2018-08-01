@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.sql.Date;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -31,13 +34,13 @@ import java.util.Set;
 @Controller
 public class ActivityController {
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
-	
+
 	private ActivityService     activityService;
 	private CountryService      countryService;
 	private CourseService       courseService;
 	private StorageService      storageService;
 	private StudentTrackService studentTrackService;
-	private EventService eventService;
+	private EventService        eventService;
 
 	@Autowired
 	public ActivityController(ActivityService activityService, CountryService countryService,
@@ -83,18 +86,18 @@ public class ActivityController {
 		activity.setTeachers(activityService.findTeachersByActivity(activity));
 
 		if (activityId != 7) {
-			long totalStudents     = activityService.getTotalStudentsByActivity(activity);
-			long totalStudyingStudents     = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
-					                                                                                       .STUDYING);
-			long totalFiredStudents        = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
-					                                                                                        .FIRED);
-			long totalTempStoppedStudents  = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
-					                                                                                       .TEMP_STOP);
+			long totalStudents = activityService.getTotalStudentsByActivity(activity);
+			long totalStudyingStudents = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
+					                                                                                          .STUDYING);
+			long totalFiredStudents = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
+					                                                                                       .FIRED);
+			long totalTempStoppedStudents = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
+					                                                                                             .TEMP_STOP);
 			long totalFinalStoppedStudents = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
-					                                                                                       .FINAL_STOP);
+					                                                                                              .FINAL_STOP);
 
 			Map<String, Map<String, Long>> countryStudents = activityService.getCountryCodeStudentsStatusCountMap(activity);
-			
+
 			//Load activity's logo
 			String logoUrl = MvcUriComponentsBuilder
 					                 .fromMethodName(PhotoController.class, "getFile", activity.getLogo(), LocationTag.ACTIVITY_STORE_LOC)
@@ -130,16 +133,16 @@ public class ActivityController {
 					                            studentTrackService.getRateByStatusAndActivity(StudentStatus.TEMP_STOP, 30, activity);
 			String strActiveStudentsRate = numberFormat.format(activeStudentsRate);
 
-			long totalWaitingStudents = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.WAITING);
+			long   totalWaitingStudents = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus.WAITING);
 			String waitingIncrementRate = numberFormat.format(studentTrackService.getRateByStatusAndActivity(StudentStatus.WAITING, 30, activity));
 
 			long totalCertificates = activityService.findCertificatesByActivity(activity).size();
-			long totalCertifiedStudents    = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
-					                                                                                       .CERTIFIED);
+			long totalCertifiedStudents = activityService.getTotalStudentsByActivityByStatus(activity, StudentStatus
+					                                                                                           .CERTIFIED);
 			String strCertificatesRate = numberFormat.format(eventService.getCertIncrementRate(LocalDate.now()
 			                                                                                            .getYear(),
 					activity));
-			
+
 			modelAndView.addObject("activity", activity);
 
 			modelAndView.addObject("totalCountries", totalCountries);
@@ -148,8 +151,8 @@ public class ActivityController {
 			modelAndView.addObject("activeStudentsRate", strActiveStudentsRate);
 			modelAndView.addObject("waitingIncrementRate", waitingIncrementRate);
 			modelAndView.addObject("totalCertificates", totalCertificates);
-			modelAndView.addObject("certificatesRate",strCertificatesRate );
-			
+			modelAndView.addObject("certificatesRate", strCertificatesRate);
+
 			modelAndView.addObject("mapCounts", countryService.getCountryCodeStudentsCountMapFromStudetns(activityStudents));
 			modelAndView.addObject("countryStudents", countryStudents);
 			modelAndView.addObject("coursesTimeline", courseService.groupCoursesByDay(activity));
@@ -224,11 +227,24 @@ public class ActivityController {
 		return "redirect:/admin/activities/activity/" + activityId;
 	}
 
+	/**
+	 * To add new activity.
+	 * Note:-
+	 * To make input validation working, BindingResult must be after @Valid object.
+	 *
+	 * @param activity      to be added
+	 * @param bindingResult to activate inpute validation
+	 * @param logoFile      the activity logo image file
+	 * @param model         to hold any data to view page
+	 * @return the path of redirection.
+	 */
 	@PostMapping("/admin/activities/activity")
-	public String addActivity(Activity activity, @RequestParam("logoFile") MultipartFile logoFile) {
-
+	public String addActivity(@Valid Activity activity, BindingResult bindingResult, @RequestParam("logoFile") MultipartFile logoFile, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("activity", activity);
+			return "admin/register-activity";
+		}
 		if (null == logoFile) {
-			//System.out.println("file is null");
 			activity.setLogo("");
 		} else {
 			try {

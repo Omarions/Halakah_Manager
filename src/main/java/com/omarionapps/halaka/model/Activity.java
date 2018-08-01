@@ -1,9 +1,11 @@
 package com.omarionapps.halaka.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
@@ -18,9 +20,12 @@ public class Activity implements Serializable {
 	@Id
 	@GeneratedValue
 	private int    id;
+	@NotNull(message = "Required Field")
 	private String name;
 	private String comments;
+	@NotNull(message = "Required Field")
 	private String logo;
+	@CreatedDate
 	private Date   startDate;
 	private Date   archivedDate;
 

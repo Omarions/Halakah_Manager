@@ -1,8 +1,12 @@
 package com.omarionapps.halaka.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Omar on 15-Apr-17.
@@ -10,17 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MyErrorController implements ErrorController {
 
-    private final String ERROR_PATH = "/error";
-    private final String ERROR_TEMPLATE = "error/404";
+    @RequestMapping("/error")
+    public String handleError(HttpServletRequest request) {
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
-    @RequestMapping("/404")
-    public String error(){
-        return ERROR_TEMPLATE;
+        if (status != null) {
+            Integer statusCode = Integer.valueOf(status.toString());
+
+            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+                return "error/404";
+            }
+            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                return "error/500";
+            }
+        }
+        return "error/404";
     }
-
     @Override
     public String getErrorPath() {
-        return ERROR_PATH;
+        return "/error";
     }
 }
 

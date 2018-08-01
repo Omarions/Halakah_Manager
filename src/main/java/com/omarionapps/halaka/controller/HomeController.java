@@ -4,11 +4,9 @@ import com.omarionapps.halaka.model.Task;
 import com.omarionapps.halaka.repository.UserRepository;
 import com.omarionapps.halaka.service.*;
 import com.omarionapps.halaka.utils.StudentStatus;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -42,14 +40,13 @@ public class HomeController {
 	PasswordEncoder     passwordEncoder;
 
     @RequestMapping("/")
-    public String home(Model model) {
-
+    public String home() {
         return "admin/index";
     }
 
     @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
-    public ModelAndView home(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView getHomeView() {
+        ModelAndView modelAndView = new ModelAndView("admin/index");
 	    NumberFormat numberFormat = NumberFormat.getNumberInstance();
 	    numberFormat.setMaximumFractionDigits(2);
 
@@ -88,9 +85,7 @@ public class HomeController {
 	    // modelAndView.addObject("housesOccupy", houseService.findAllOrderById());
 
         modelAndView.addObject("task", new Task());
-        modelAndView.setViewName("admin/index");
-
-
+        
         return modelAndView;
     }
 }
