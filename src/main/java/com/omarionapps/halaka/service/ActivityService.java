@@ -2,6 +2,7 @@ package com.omarionapps.halaka.service;
 
 import com.omarionapps.halaka.model.*;
 import com.omarionapps.halaka.repository.ActivityRepository;
+import com.omarionapps.halaka.utils.StudentGender;
 import com.omarionapps.halaka.utils.StudentStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,13 @@ public class ActivityService {
 		           .count();
 	}
 
+	public long getTotalStudentsByActivityAndGender(Activity activity, StudentGender gender) {
+		return findStudentsByActivity(activity)
+				       .stream()
+				       .filter(student -> student.getGender().equals(gender.toString()))
+				       .count();
+	}
+
 	public long getTotalStudentsByActivity(Activity activity) {
 		return findStudentsByActivity(activity).size();
 	}
@@ -63,6 +71,39 @@ public class ActivityService {
 		               .distinct()
 		               .count();
 
+	}
+
+	public long getTotalStudentsTeachersByActivity(Activity activity) {
+		return findTeachersByActivity(activity).stream().filter(teacher -> teacher.isCertifiedStudent()).count();
+	}
+
+	public long getTotalNationalitiesByActivity(Activity activity){
+		return findStudentsByActivity(activity).stream().map(student -> student.getCountry()).distinct().count();
+	}
+
+	public long getTotalNationalitiesByActivityAndStatus(Activity activity, StudentStatus status){
+		return findTracksByActivityAndStatus(activity, status).stream().map(st -> st.getStudent().getCountry()).distinct().count();
+	}
+
+	public long getTotalActiveStudentsForSTByActivity(Activity activity) {
+		long totalStudying = activity.getCourses()
+		                             .stream()
+		                             .filter(course -> course.getTeacher().isCertifiedStudent())
+		                             .flatMap(course -> course.getStudentTracks()
+		                                                      .stream())
+		                             .filter(st -> st.getStatus().equals(StudentStatus.STUDYING))
+		                             .count();
+		long totalTemp = activity.getCourses()
+		                         .stream()
+		                         .filter(course -> course.getTeacher().isCertifiedStudent())
+		                         .flatMap(course -> course.getStudentTracks()
+		                                                  .stream())
+		                         .filter(st -> st.getStatus().equals(StudentStatus.TEMP_STOP))
+		                         .count();
+
+		long total = totalStudying + totalTemp;
+
+		return total;
 	}
 
 	public Optional<Activity> findById(int id) {

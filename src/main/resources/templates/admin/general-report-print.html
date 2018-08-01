@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>AdminLTE 2 | Halaqah General Report</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
+	<!-- google fonts -->
+	<link rel="stylesheet"
+	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="../lib/plugins/font-awesome/css/font-awesome.min.css"
+	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="../lib/plugins/Ionicons/css/ionicons.min.css"
+	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
+	<!-- Theme style -->
+	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"
+	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
+
+	<link rel="stylesheet" href="print-style.css" th:href="@{~/lib/dist/css/print-style.css}" type="text/css" media="print">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	
+</head>
+<body onload="window.print();">
+<div class="wrapper">
+	<!-- Main content -->
+	<section class="report">
+		<!-- title row -->
+		<div class="row">
+			<div class="col-xs-12">
+				<h2 class="page-header">
+					<img class="profile-user-img img-responsive img-circle" src="../dist/img/halaqah_logo.jpg" th:src="@{~/lib/dist/img/halaqah_logo.jpg}" alt="Halaqah Logo"/> Halaqah Foundation
+					<small class="pull-right">Date: 2/10/2014</small>
+				</h2>
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- info row -->
+		<div class="row">
+			<div class="col-sm-12">
+					<div class="col-sm-12" th:each="report : ${reports}">
+						<div class="box box-widget widget-user-2">
+							<div class="widget-user-header">
+								<div class="widget-user-image">
+									<img class="profile-user-img img-responsive img-circle" src="../dist/img/user7-128x128.jpg"
+									     th:src="@{${report.activity.logoUrl}}" alt="User Avatar">
+								</div>
+								<h3 class="widget-user-username" th:text="${report.activity.name}">Activity Name</h3>
+								<h5 class="widget-user-desc" th:text="${report.activity.startDate}">2007-23-12</h5>
+							</div>
+							<div class="box-body">
+								<p>     The foundation served <strong th:text="${report.totalMales}">5000</strong> male and <strong th:text="${report.totalFemales}">5000</strong> females with total of <strong th:text="${report.totalActiveStudents}">10000</strong> students till now from<strong th:text="${report.totalStudentsNationalities}">500</strong>. Beside that we have waiting list with <strong th:text="${report.totalWaitingStudents}">5000</strong> request. The foundation provided total <strong th:text="${report.totalCertificates}">1000</strong>certificates to <strong th:text="${report.totalCertifiedStudents}">800</strong> students. Some of certified students works now as teachers and we have <strong th:text="${report.totalStudentTeacher}">20</strong> student and they teach <strong th:text="${report.totalStudentsForST}">300</strong> students.
+								</p>
+							</div>
+							
+
+						</div>
+
+					</div>
+				<div class="page-break"></div>
+				<div class="col-sm-12">
+					<table id="report_dt"
+					       class="table table-bordered table-striped dataTable dt-responsive no-wrap"
+					       role="grid" style="width: 100%;"
+					       aria-describedby="report_dt_info">
+
+						<!-- Header of the table -->
+						<thead>
+							<tr role="row">
+								<th class="sorting_asc" tabindex="0" aria-controls="report_dt"
+								    rowspan="1"
+								    colspan="1" aria-sort="ascending"
+								    aria-label="#: activate to sort column descending"
+								    style="width: 50px;">#
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="report_dt"
+								    rowspan="1"
+								    colspan="1" aria-label="Name: activate to sort column ascending"
+								    style="width: 266px;">Activity
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="report_dt"
+								    rowspan="1"
+								    colspan="1"
+								    aria-label="Total Courses: activate to sort column ascending"
+								    style="width: 130px;">Total Active Students
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="report_dt"
+								    rowspan="1"
+								    colspan="1"
+								    aria-label="Total Teachers: activate to sort column ascending"
+								    style="width: 130px;">Total Waiting Students
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="report_dt"
+								    rowspan="1"
+								    colspan="1"
+								    aria-label="Total Students: activate to sort column ascending"
+								    style="width: 130px;">Total Certified Students
+								</th>
+								<th class="sorting" tabindex="0" aria-controls="report_dt"
+								    rowspan="1"
+								    colspan="1"
+								    aria-label="Total Certificates: activate to sort column ascending"
+								    style="width: 130px;">Total Certificates
+								</th>
+							</tr>
+						</thead>
+						<!-- End of header -->
+
+						<!-- Body of the table -->
+						<tbody th:remove="all-but-first">
+							<tr th:each="report : ${reports}"
+							    th:class="${reportStat}? 'odd' :'even'">
+								<td th:text="${reportStat.index} + 1">1</td>
+								<td th:text="${report.activity.name}">activity</td>
+								<td th:text="${report.totalActiveStudents}">10000</td>
+								<td th:text="${report.totalWaitingStudents}">5000</td>
+								<td th:text="${report.totalCertifiedStudents}">3000</td>
+								<td th:text="${report.totalCertificates}">3500</td>
+							</tr>
+							<tr role="row" class="odd">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+							<tr role="row" class="even">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+							<tr role="row" class="odd">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+							<tr role="row" class="even">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+							<tr role="row" class="odd">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+							<tr role="row" class="even">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+							<tr role="row" class="odd">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+							<tr role="row" class="even">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+							<tr role="row" class="odd">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+							<tr role="row" class="even">
+								<td class="sorting_1">1</td>
+								<td>Mozilla 1.0</td>
+								<td>1000</td>
+								<td>500</td>
+								<td>300</td>
+								<td>100</td>
+							</tr>
+						</tbody>
+						<!-- End of body -->
+
+						<!-- Footer of the table -->
+						<tfoot>
+							<tr>
+								<th rowspan="1" colspan="1">#</th>
+								<th rowspan="1" colspan="1">Activity</th>
+								<th rowspan="1" colspan="1">Total Active Students</th>
+								<th rowspan="1" colspan="1">Total Waiting Students</th>
+								<th rowspan="1" colspan="1">Total Certified Students</th>
+								<th rowspan="1" colspan="1">Total Certificates</th>
+							</tr>
+						</tfoot>
+						<!-- End of footer -->
+
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- /.row -->
+		
+	</section>
+	<!-- /.content -->
+</div>
+<!-- ./wrapper -->
+</body>
+</html>
