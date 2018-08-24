@@ -42,7 +42,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <ul class="menu">
                   <li><!-- start message -->
                     <a href="#">
-                      <div class="pull-left">
+                      <div class="pull-right">
                         <!-- User Image -->
                         <img src="../lib/dist/img/user/user2-160x160.jpg"
                              th:src="@{'/lib/dist/img/user/' + ${#httpSession.getAttribute('user')?.photo}}"
@@ -106,7 +106,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <!-- Task title and progress text -->
                       <h3>
                         Design some buttons
-                        <small class="pull-right">20%</small>
+                        <small class="pull-left">20%</small>
                       </h3>
                       <!-- The progress bar -->
                       <div class="progress xs">
@@ -134,7 +134,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                    th:src="@{'/lib/dist/img/user/' + ${#httpSession.getAttribute('user')?.photo}}" class="user-image"
                    alt="User Image"/>
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs" th:text="${#httpSession.getAttribute('user')?.name}">Alexander Pierce</span>
+              <span class="hidden-xs" th:text="${#httpSession.getAttribute('user')?.name}">عمر فوزي</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -144,34 +144,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                      alt="User Image"/>
 
                 <p>
-                  <span th:text="${#httpSession.getAttribute('user')?.name}">Alexander Pierce</span> - <span
-                        th:text="${#httpSession.getAttribute('user')?.title}">Web Developer</span>
-                  <small>Member since Nov. 2012</small>
+                  <span th:text="${#httpSession.getAttribute('user')?.name}">عمر فوزي</span> - <span
+                        th:text="${#httpSession.getAttribute('user')?.title}">مشرف الموقع</span>
+                  <small>مشرف منذ نوفمبر 2012</small>
                 </p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
                 </div>
                 <!-- /.row -->
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
                 <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">الملف الشخصي</a>
+                </div>
+                <div class="pull-left">
 
-                  <a href="/logout" th:href="@{/login(logout='true')}" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="/logout" th:href="@{/login(logout='true')}" class="btn btn-default btn-flat">خروج</a>
 
                 </div>
               </li>
