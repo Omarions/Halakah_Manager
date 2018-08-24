@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:javascript="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+      xmlns:javascript="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" lang="ar">
 <head>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<title>Halaka Manager | Dashboard</title>
+	<title>مدير الحلقة| لوحة التحكم</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
 
 	<!-- Bootstrap 3.3.7 -->
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+	<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
 	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
 	<!-- google fonts -->
 	<link rel="stylesheet"
 	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="../lib/plugins/font-awesome/css/font-awesome.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/font-awesome/css/font-awesome.min.css"
 	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="../lib/plugins/Ionicons/css/ionicons.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
 	<!-- Theme style -->
-	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
 	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		 folder instead of downloading all of them to reduce the load. -->
-	<link rel="stylesheet" href="../lib/dist/css/skins/skin-blue.min.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/skins/skin-blue.min.css"
 	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 	<!-- DataTables -->
-	<link rel="stylesheet" href="../../lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css"
 	      th:href="@{~/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css}"/>
-	<link rel="stylesheet" href="../../lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"
 	      th:href="@{~/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css}"/>
 	<!-- DataTables tools column -->
-	<link rel="stylesheet" href="../../lib/dist/css/common-styles.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/common-styles.css"
 	      th:href="@{~/lib/dist/css/common-styles.css}"/>
+
+	<link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+	      th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -42,26 +45,30 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="skin-blue sidebar-mini">
 <div class="wrapper">
 	<!-- include header section from the layout file -->
-	<div th:include="layout/header :: header"></div>
+	<header class="main-header">
+		<div th:include="layout/header :: header"></div>
+	</header>
+
 	<!-- Left side column. contains the logo and sidebar -->
 	<!-- include sidebar nav section from the layout file -->
-	<div th:include="layout/sidebarnav :: sidebarnav"></div>
-
+	<aside class="main-sidebar">
+		<div th:include="layout/sidebarnav :: sidebarnav"></div>
+	</aside>
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Dashboard
-				<small>Control panel</small>
+				صفحة الأنشطة
+				<small>لوحة التحكم</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-				<li th:if="${isArchived}">Archive</li>
-				<li class="active">Activities</li>
+				<li><a href="#"><i class="fa fa-dashboard"></i> الرئيسية</a></li>
+				<li th:if="${isArchived}">الارشيف</li>
+				<li class="active">الأنشطة</li>
 			</ol>
 		</section>
 
@@ -72,7 +79,7 @@
 				<div class="box-header">
 
 					<div class="col-sm-10">
-						<h3 class="box-title">Halaka Activity List</h3>
+						<h2 class="box-title">قائمة أنشطة الحلقة</h2>
 					</div>
 
 					<!-- add new activity button -->
@@ -80,7 +87,7 @@
 						<a class="btn btn-block btn-primary pull-right"
 						   href="#"
 						   th:href="@{/admin/activities/activity}"><i
-								class="fa fa-plus"> Add Activity</i></a>
+								class="fa fa-plus"> إضافة نشاط</i></a>
 					</div>
 					<br/>
 					<!-- Error message -->
@@ -111,6 +118,7 @@
 						<table id="activities_dt"
 						       class="table table-bordered table-striped dataTable dt-responsive no-wrap"
 						       role="grid" style="width: 100%;"
+						       dir="rtl"
 						       aria-describedby="activities_dt_info">
 
 							<!-- Header of the table -->
@@ -120,46 +128,46 @@
 									    rowspan="1"
 									    colspan="1" aria-sort="ascending"
 									    aria-label="ID: activate to sort column descending"
-									    style="width: 50px;">ID
+									    style="width: 50px;">مسلسل
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1" aria-label="Name: activate to sort column ascending"
-									    style="width: 266px;">Name
+									    style="width: 266px;">الاسم
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Total Courses: activate to sort column ascending"
-									    style="width: 130px;">Total Courses
+									    style="width: 130px;">إجمالي المجموعات
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Total Teachers: activate to sort column ascending"
-									    style="width: 130px;">Total Teachers
+									    style="width: 130px;">إجمالي المدرسين
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Total Students: activate to sort column ascending"
-									    style="width: 130px;">Total Students
+									    style="width: 130px;">إجمالي الطلبة
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Total Certificates: activate to sort column ascending"
-									    style="width: 130px;">Total Certificates
+									    style="width: 130px;">إجمالي الإجازات
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1" aria-label="Comments: activate to sort column ascending"
-									    style="width: 266px;">Comments
+									    style="width: 266px;">التعليقات
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1" aria-label="Tools: activate to sort column ascending"
-									    style="width: 130px;">Tools
+									    style="width: 130px;">أدوات التحرير
 									</th>
 								</tr>
 							</thead>
@@ -276,14 +284,14 @@
 							<!-- Footer of the table -->
 							<tfoot>
 								<tr>
-									<th rowspan="1" colspan="1">ID</th>
-									<th rowspan="1" colspan="1">Name</th>
-									<th rowspan="1" colspan="1">Total Courses</th>
-									<th rowspan="1" colspan="1">Total Teachers</th>
-									<th rowspan="1" colspan="1">Total Students</th>
-									<th rowspan="1" colspan="1">Total Certificates</th>
-									<th rowspan="1" colspan="1">Comments</th>
-									<th rowspan="1" colspan="1">Tools</th>
+									<th rowspan="1" colspan="1">مسلسل</th>
+									<th rowspan="1" colspan="1">الاسم</th>
+									<th rowspan="1" colspan="1">إجمالي المجموعات</th>
+									<th rowspan="1" colspan="1">إجمالي المدرسين</th>
+									<th rowspan="1" colspan="1">إجمالي الطلبة</th>
+									<th rowspan="1" colspan="1">إجمالي الإجازات</th>
+									<th rowspan="1" colspan="1">التعليقات</th>
+									<th rowspan="1" colspan="1">أدوات التحرير</th>
 								</tr>
 							</tfoot>
 							<!-- End of footer -->

@@ -9,10 +9,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <body>
 <div th:fragment="sidebarnav">
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
-
         <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
+
 
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
@@ -24,7 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="pull-left info">
                     <p th:text="${#httpSession.getAttribute('user')?.name}">عمر فوزي</p>
                     <!-- Status -->
-                    <a href="#" th:class="${#httpSession.getAttribute('user')?.status}"><i
+                    <a href="#" th:if="${#httpSession.getAttribute('user')?.status}"><i
                             class="fa fa-circle text-success"></i>
                         Online</a>
                     <a href="#" th:unless="${#httpSession.getAttribute('user')?.status}"><i
@@ -60,10 +58,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                          </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/activities}"><i class="fa fa-list-ul"></i> List</a></li>
+                        <li><a href="#" th:href="@{/admin/activities}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
                         <li><a href="#" th:href="@{/admin/activities/activity}"><i class="fa fa-plus-square"></i>
-                            New</a></li>
-                        <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
+                            إضافة جديدة</a></li>
                     </ul>
                 </li>
 
@@ -78,10 +75,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/courses}"><i class="fa fa-list-ul"></i> List</a></li>
-                        <li><a href="#" th:href="@{/admin/courses/course}"><i class="fa fa-plus-square"></i> New</a>
+                        <li><a href="#" th:href="@{/admin/courses}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
+                        <li><a href="#" th:href="@{/admin/courses/course}"><i class="fa fa-plus-square"></i> إضافة جديدة</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
 
@@ -99,7 +95,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="treeview-menu">
                         <li><a href="#" th:href="@{/admin/certificates}"><i class="fa fa-flag"
                                                                             aria-hidden="true"></i>
-                            <span>list</span></a>
+                            <span>عرض الكل</span></a>
                         </li>
                     </ul>
                 </li>
@@ -121,10 +117,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
 
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/students}"><i class="fa fa-list-ul"></i> List</a></li>
-                        <li><a href="#" th:href="@{/admin/students/student}"><i class="fa fa-plus-square"></i> New</a>
+                        <li><a href="#" th:href="@{/admin/students}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
+                        <li><a href="#" th:href="@{/admin/students/student}"><i class="fa fa-plus-square"></i> إضافة جديدة</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
 
@@ -138,10 +133,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/teachers}"><i class="fa fa-list-ul"></i> List</a></li>
-                        <li><a href="#" th:href="@{/admin/teachers/teacher}"><i class="fa fa-plus-square"></i> New</a>
+                        <li><a href="#" th:href="@{/admin/teachers}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
+                        <li><a href="#" th:href="@{/admin/teachers/teacher}"><i class="fa fa-plus-square"></i> إضافة جديدة</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
 
@@ -155,10 +149,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/events}"><i class="fa fa-list-ul"></i> List</a></li>
-                        <li><a href="#" th:href="@{/admin/events/event}"><i class="fa fa-plus-square"></i> New</a>
+                        <li><a href="#" th:href="@{/admin/events}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
+                        <li><a href="#" th:href="@{/admin/events/event}"><i class="fa fa-plus-square"></i> إضافة جديدة</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-pie-chart"></i> Chart</a></li>
                     </ul>
                 </li>
 
@@ -210,9 +203,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
             </ul>
             <!-- /.sidebar-menu -->
-        </section>
-        <!-- /.sidebar -->
-    </aside>
+       
 </div>
 <script>
     //Variable to save new status of the user
