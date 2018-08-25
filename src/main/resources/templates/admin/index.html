@@ -16,7 +16,7 @@
 	<!-- Ionicons -->
 	<link rel="stylesheet" href="../../static/lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
-	
+
 	<!-- jvectormap -->
 	<link rel="stylesheet" href="../../static/lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css"
 	      th:href="@{~/lib/plugins/jvectormap/jquery-jvectormap-1.2.2.css}">
@@ -26,7 +26,7 @@
 	<!-- bootstrap wysihtml5 - text editor -->
 	<link rel="stylesheet" href="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
 	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
-	
+
 	<!-- Theme style -->
 	<link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
 	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
@@ -51,8 +51,8 @@
 		<div th:include="layout/header :: header"></div>
 	</header>
 
-                         <!-- Left side column. contains the logo and sidebar -->
-                         <!-- include sidebar nav section from the layout file -->
+	<!-- Left side column. contains the logo and sidebar -->
+	<!-- include sidebar nav section from the layout file -->
 	<aside class="main-sidebar">
 		<section class="sidebar">
 			<div th:include="layout/sidebarnav :: sidebarnav"></div>
@@ -63,12 +63,13 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Dashboard
-				<small>Control panel</small>
+				<span th:text="#{index.breadcrumb.dashboard}">Dashboard</span>
+				<small th:text="#{index.breadcrumb.control_panel}">Control panel</small>
 			</h1>
 			<ol class="breadcrumb pull-left">
-				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-				<li class="active">Dashboard</li>
+				<li><a href="#"><i class="fa fa-dashboard"></i> <span th:text="#{index.breadcrumb.home}"> Home</span>
+					Home</a></li>
+				<li class="active" th:text="#{index.breadcrumb.dashboard}">Dashboard</li>
 			</ol>
 		</section>
 
@@ -84,14 +85,14 @@
 							<!-- get total no. of subjects from DB -->
 							<h3 th:text="${activeActivitiesCount}">150</h3>
 
-							<p>الأنشطة</p>
+							<p th:text="#{index.box.activities}">Activities</p>
 						</div>
 						<div class="icon">
 							<i class="ion ion-bag"></i>
 						</div>
 						<!-- goes to list of activities page -->
-						<a href="#" th:href="@{/admin/activities/activity}" class="small-box-footer">أضف المزيد <i
-								class="fa fa-arrow-circle-right"></i></a>
+						<a href="#" th:href="@{/admin/activities/activity}" class="small-box-footer"><span
+								th:text="#{index.box.add}">Add More</span> <i class="fa fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 				<!-- ./activities-box -->
@@ -107,15 +108,15 @@
 							</sup>
 							</h3>
 
-							<p>الإجازات</p>
+							<p th:text="#{index.box.certificates}">Certificates</p>
 						</div>
 						<div class="icon">
 							<i class="ion ion-stats-bars"></i>
 						</div>
 						<!-- goes to schedules page -->
-						<a href="/schedules" th:href="@{/admin/certificates}" class="small-box-footer">عرض الكل
-							<i
-									class="fa fa-arrow-circle-right"></i></a>
+						<a href="/schedules" th:href="@{/admin/certificates}" class="small-box-footer"><span
+								th:text="#{index.box.view}"> View All</span> 
+							<i class="fa fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 				<!-- ./certificates-box -->
@@ -128,14 +129,14 @@
 							<!-- get no. of waiting students at all -->
 							<h3 th:text="${activeStudentsCount}">44</h3>
 
-							<p>الطلبة</p>
+							<p th:text="#{index.box.students}">Students</p>
 						</div>
 						<div class="icon">
 							<i class="ion ion-person-add"></i>
 						</div>
 						<!-- goes to list of students page -->
-						<a href="#" th:href="@{/admin/students/student}" class="small-box-footer">أضف المزيد <i
-								class="fa fa-arrow-circle-right"></i></a>
+						<a href="#" th:href="@{/admin/students/student}" class="small-box-footer"> <span
+								th:text="#{index.box.add}">Add More</span> <i class="fa fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 				<!-- ./students-box -->
@@ -148,14 +149,15 @@
 							<!-- get total no. of teachers from DB -->
 							<h3 th:text="${activeTeachersCount}">65</h3>
 
-							<p>المدرسين</p>
+							<p th:text="#{index.box.teachers}">Teachers</p>
 						</div>
 						<div class="icon">
 							<i class="ion ion-android-person-add"></i>
 						</div>
 						<!-- goes to list of teachers page -->
-						<a href="teachers" th:href="@{/admin/teachers/teacher}" class="small-box-footer">أضف المزيد <i
-									class="fa fa-arrow-circle-right"></i></a>
+						<a href="teachers" th:href="@{/admin/teachers/teacher}"
+						   class="small-box-footer"><span th:text="#{index.box.add}">Add More</span> <i
+								class="fa fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 				<!-- ./teachers-box -->
@@ -169,7 +171,7 @@
 					<!-- Statistics box -->
 					<div class="box box-default">
 						<div class="box-header with-border">
-							<h3 class="box-title">Halaqah Statistics</h3>
+							<h3 class="box-title" th:text="#{index.statistics.title}">Halaqah Statistics</h3>
 
 							<div class="box-tools pull-right">
 								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -187,7 +189,7 @@
 									<div class="info-box bg-blue">
 										<span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
 										<div class="info-box-content">
-											<span class="info-box-text">Active Students</span>
+											<span class="info-box-text" th:text="#{index.statistics.active_students}">Active Students</span>
 											<span class="info-box-number"
 											      th:text="${totalActiveStudents}">41,
 											                                                                 410</span>
@@ -197,9 +199,7 @@
 												     style="width: 70%"></div>
 											</div>
 											<span class="progress-description"
-											      th:text="${activeStudentsRate} + '% Increase in 30 Days'">
-            70% Increase in 30 Days
-          </span>
+											      th:text="'%' + ${activeStudentsRate} + ' '+ #{index.statistics.increase_days}">70% Increase in 30 Days</span>
 										</div><!-- /.info-box-content -->
 									</div><!-- /.info-box -->
 								</div>
@@ -210,18 +210,17 @@
 									<div class="info-box bg-green">
 										<span class="info-box-icon"><i class="fa fa-certificate"></i></span>
 										<div class="info-box-content">
-											<span class="info-box-text">Certificates</span>
+											<span class="info-box-text" th:text="#{index.statistics.certificates}">Certificates</span>
 											<span class="info-box-number"
-											      th:text="${totalCertificates} + ' to ' + ${totalCertified} + ' students'">41,
-											                                                                 410</span>
+											      th:text="${totalCertificates} + ' ' + #{index.statistics.to} + ' ' + ${totalCertified} + ' ' + #{index.statistics.students}">41,410</span>
 											<div class="progress">
 												<div class="progress-bar"
 												     th:style="'width:' + ${certificatesRate} + '%'"
 												     style="width: 70%"></div>
 											</div>
 											<span class="progress-description"
-											      th:text="${certificatesRate} + '% Increase this year'">
-            70% Increase in 30 Days
+											      th:text="'%' + ${certificatesRate} + ' ' + #{index.statistics.increase_year}">
+            70% Increase this year
           </span>
 										</div><!-- /.info-box-content -->
 									</div><!-- /.info-box -->
@@ -233,7 +232,7 @@
 									<div class="info-box bg-yellow">
 										<span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
 										<div class="info-box-content">
-											<span class="info-box-text">Waiting Students</span>
+											<span class="info-box-text" th:text="#{index.statistics.waiting_students}">Waiting Students</span>
 											<span class="info-box-number"
 											      th:text="${totalWaitingStudents}">41,
 											                                                                 410</span>
@@ -243,7 +242,7 @@
 												     style="width: 70%"></div>
 											</div>
 											<span class="progress-description"
-											      th:text="${waitingIncrementRate} + '% Increase in 30 Days'">
+											      th:text="'%' + ${waitingIncrementRate} + ' ' + #{index.statistics.increase_days}">
             70% Increase in 30 Days
           </span>
 										</div><!-- /.info-box-content -->
@@ -256,7 +255,7 @@
 									<div class="info-box bg-aqua">
 										<span class="info-box-icon"><i class="fa fa-flag-o"></i></span>
 										<div class="info-box-content">
-											<span class="info-box-text">Countries</span>
+											<span class="info-box-text" th:text="#{index.statistics.countries}">Countries</span>
 											<span class="info-box-number"
 											      th:text="${countryStudentsChart.entrySet().size()}">410</span>
 											<div class="progress">
@@ -265,7 +264,7 @@
 												     style="width: 70%"></div>
 											</div>
 											<span class="progress-description"
-											      th:text="${countriesIncrementRate} + '% Increase in 30 Days'">
+											      th:text="'%' + ${countriesIncrementRate} + ' ' + #{index.statistics.increase_days}">
             70% Increase in 30 Days
           </span>
 										</div><!-- /.info-box-content -->
@@ -294,11 +293,15 @@
 					<div class="nav-tabs-custom">
 						<!-- Tabs within a box -->
 						<ul class="nav nav-tabs pull-right">
-							<li class="active"><a href="#country-chart" data-toggle="tab">Country</a></li>
-							<li><a href="#genderChart" data-toggle="tab">Gender</a></li>
-							<li class="pull-left header"><i class="fa fa-inbox"></i> Students Chart</li>
+							<li class="active"><a href="#country-chart"
+							                      data-toggle="tab"><span
+									th:text="#{index.students.chart.country_tab}"> Country</span></a></li>
+							<li><a href="#genderChart" data-toggle="tab"><span
+									th:text="#{index.students.chart.gender_tab}">Gender</span></a></li>
+							<li class="pull-left header"><i class="fa fa-inbox"></i> <span
+									th:text="#{index.students.chart.title}">Students Chart</span></li>
 						</ul>
-						<div class="tab-content no-padding">
+						<div class="tab-content">
 							<!-- Morris chart - Sales -->
 							<div class="chart tab-pane active" id="country-chart"
 							     style="position: relative; height: 300px; -webkit-tap-highlight-color: rgba(0,0,0,0);">
@@ -344,7 +347,7 @@
 
 							<i class="fa fa-map-marker"></i>
 
-							<h3 class="box-title">
+							<h3 class="box-title" th:text="#{index.map.title}">
 								Worldwide Statistics
 							</h3>
 						</div>
@@ -361,17 +364,17 @@
 							<div class="row">
 								<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
 									<div></div>
-									<div class="knob-label">Studying</div>
+									<div class="knob-label"><span th:text="#{index.map.studying}">Studying</span></div>
 								</div>
 								<!-- ./col -->
 								<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
 									<div></div>
-									<div class="knob-label">Waiting</div>
+									<div class="knob-label"><span th:text="#{index.map.waiting}">Waiting</span></div>
 								</div>
 								<!-- ./col -->
 								<div class="col-xs-4 text-center">
 									<div></div>
-									<div class="knob-label">Certified</div>
+									<div class="knob-label"><span th:text="#{index.map.certified}">Certified</span></div>
 								</div>
 								<!-- ./col -->
 							</div>
@@ -385,7 +388,7 @@
 						<div class="box-header">
 							<i class="ion ion-clipboard"></i>
 
-							<h3 class="box-title">To Do List</h3>
+							<h3 class="box-title" th:text="#{index.todolist.title}">To Do List</h3>
 
 							<div class="box-tools pull-right">
 								<ul class="pagination pagination-sm inline">
@@ -495,7 +498,7 @@
 						<div class="box-footer clearfix no-border">
 							<button type="button" data-toggle="modal" data-target="#add-task-modal"
 							        class="btn btn-default pull-right"><i class="fa fa-plus"></i>
-								Add item
+								<span th:text="#{index.todolist.add}">Add item</span>
 							</button>
 							<div id="add-task-modal" class="modal modal-primary">
 								<div class="modal-dialog">
@@ -504,7 +507,7 @@
 											<button type="button" class="close" data-dismiss="modal"
 											        aria-label="Close">
 												<span aria-hidden="true">×</span></button>
-											<h4 class="modal-title">Create New Task</h4>
+											<h4 class="modal-title" th:text="#{index.todolist.modal.title}">Create New Task</h4>
 										</div>
 										<div class="modal-body">
 											<div class="box-primary">
@@ -516,7 +519,9 @@
 
 														<div class="form-group">
 															<label for="input-title"
-															       class="col-sm-2 control-label">Title</label>
+															       class="col-sm-2 control-label"
+															       th:text="#{index.todolist.modal.name}">Title
+															</label>
 
 															<div class="col-sm-10">
 																<input type="text" id="input-title"
@@ -526,7 +531,7 @@
 														</div>
 
 														<div class="form-group">
-															<label class="col-sm-2 control-label">Due
+															<label class="col-sm-2 control-label" th:text="#{index.todolist.modal.due_date}">Due
 															                                      Date</label>
 
 															<div class="input-group col-sm-10">
@@ -546,9 +551,10 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-outline pull-left"
-											        data-dismiss="modal">Close
+											        data-dismiss="modal" th:text="#{index.todolist.modal.close}">Close
 											</button>
-											<button type="button" class="btn btn-outline">Save changes</button>
+											<button type="button" class="btn btn-outline" th:text="#{index.todolist.modal.save}">Save
+											                                                          changes</button>
 										</div>
 									</div>
 									<!-- /.modal-content -->
@@ -569,7 +575,7 @@
 						<div class="box-header">
 							<i class="fa fa-th"></i>
 
-							<h3 class="box-title">Housing Graph</h3>
+							<h3 class="box-title" th:text="#{index.housing.chart.title}">Housing Graph</h3>
 
 							<div class="box-tools pull-right">
 								<button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i
@@ -591,14 +597,14 @@
 									       th:value="${houseOccupied}"
 									       data-width="60" data-height="60" data-fgColor="#39CCCC"/>
 
-									<div class="knob-label">Total Occupied</div>
+									<div class="knob-label" th:text="#{index.housing.chart.occupied}">Total Occupied</div>
 								</div>
 								<!-- ./col -->
 								<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
 									<input type="text" class="knob" data-readonly="true" th:value="${houseFree}"
 									       data-width="60" data-height="60" data-fgColor="#39CCCC"/>
 
-									<div class="knob-label">Total Free</div>
+									<div class="knob-label" th:text="#{index.housing.chart.free}">Total Free</div>
 								</div>
 								<!-- ./col -->
 								<div class="col-xs-4 text-center">
@@ -606,7 +612,7 @@
 									       th:value="${houseMaxCapacity}"
 									       data-width="60" data-height="60" data-fgColor="#39CCCC"/>
 
-									<div class="knob-label">Max Capacity</div>
+									<div class="knob-label" th:text="#{index.housing.chart.capacity}">Max Capacity</div>
 								</div>
 								<!-- ./col -->
 							</div>
@@ -620,7 +626,7 @@
 						<div class="box-header">
 							<i class="fa fa-comments-o"></i>
 
-							<h3 class="box-title">Chat</h3>
+							<h3 class="box-title" th:text="#{index.chat.box.title}">Chat</h3>
 
 							<div class="box-tools pull-right" data-toggle="tooltip" title="Status">
 								<div class="btn-group" data-toggle="btn-toggle">
@@ -725,7 +731,7 @@
 						<div class="box-header ui-sortable-handle" style="cursor: move;">
 							<i class="fa fa-calendar"></i>
 
-							<h3 class="box-title">Calendar</h3>
+							<h3 class="box-title" th:text="#{index.calendar.box.title}">Calendar</h3>
 							<!-- tools box -->
 							<div class="pull-right box-tools">
 								<!-- button with a dropdown -->
@@ -734,10 +740,13 @@
 									        data-toggle="dropdown">
 										<i class="fa fa-bars"></i></button>
 									<ul class="dropdown-menu pull-right" role="menu">
-										<li><a href="#">Add new event</a></li>
-										<li><a href="#">Clear events</a></li>
+										<li><a href="#">
+											<span th:text="#{index.calendar.box.add_event}">Add new event</span></a></li>
+										<li><a href="#"><span th:text="#{index.calendar.box.clear_events}">Clear events</span>
+											</a></li>
 										<li class="divider"></li>
-										<li><a href="#">View calendar</a></li>
+										<li><a href="#">
+											<span th:text="#{index.calendar.box.view}">View calendar</span></a></li>
 									</ul>
 								</div>
 								<button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i
@@ -815,7 +824,7 @@
 						<div class="box-header">
 							<i class="fa fa-envelope"></i>
 
-							<h3 class="box-title">Quick Email</h3>
+							<h3 class="box-title" th:text="#{index.email.box.title}">Quick Email</h3>
 							<!-- tools box -->
 							<div class="pull-right box-tools">
 								<button type="button" class="btn btn-info btn-sm" data-widget="remove"
@@ -828,20 +837,20 @@
 							<form action="#" method="post">
 								<div class="form-group">
 									<input type="email" class="form-control" name="emailto"
-									       placeholder="Email to:"/>
+									       placeholder="Email to:" th:placeholder="#{index.email.box.to}"/>
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control" name="subject"
-									       placeholder="Subject"/>
+									       placeholder="Subject" th:placeholder="#{index.email.box.subject}"/>
 								</div>
 								<div>
-                                    <textarea class="textarea" placeholder="Message"
+                                    <textarea class="textarea" placeholder="Message" th:placeholder="#{index.email.box.message}"
                                               style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
 								</div>
 							</form>
 						</div>
 						<div class="box-footer clearfix">
-							<button type="button" class="pull-right btn btn-default" id="sendEmail">Send
+							<button type="button" class="pull-right btn btn-default" id="sendEmail" th:text="#{index.email.box.send}">Send
 								<i class="fa fa-arrow-circle-right"></i></button>
 						</div>
 					</div>

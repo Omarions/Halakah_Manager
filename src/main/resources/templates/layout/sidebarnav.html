@@ -45,29 +45,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <!-- Sidebar Menu -->
 	        <ul class="sidebar-menu" data-widget="tree">
-		        <li class="header">القائمة الرئيسية</li>
+		        <li class="header" th:text="#{sidenav.mainnav}"> Main Navigation</li>
                 <!-- Optionally, you can add icons to the links -->
 
                 <!-- activity menu-tree -->
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-list"></i><span>الأنشطة</span>
+                        <i class="fa fa-list"></i> <span th:text="#{sidenav.activities}">Activities</span>
                         <span class="pull-left-container">
                             <i class="fa fa-angle-left pull-left"></i>
                             <span class="label label-primary pull-left" th:text="${activeActivitiesCount}">4</span>
                          </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/activities}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
+                        <li><a href="#" th:href="@{/admin/activities}"><i class="fa fa-list-ul"></i> <span th:text="#{sidenav.list}"> List</span></a></li>
                         <li><a href="#" th:href="@{/admin/activities/activity}"><i class="fa fa-plus-square"></i>
-                            إضافة جديدة</a></li>
+                            <span th:text="#{sidenav.new}">New</span> </a></li>
                     </ul>
                 </li>
 
                 <!-- course menu-tree -->
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-university" aria-hidden="true"></i> <span>المجموعات</span>
+                        <i class="fa fa-university" aria-hidden="true"></i> <span th:text="#{sidenav.courses}">Courses</span>
                         <span class="pull-left-container">
                             <i class="fa fa-angle-left pull-left"></i>
                             <span class="label label-primary pull-left"
@@ -75,8 +75,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/courses}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
-                        <li><a href="#" th:href="@{/admin/courses/course}"><i class="fa fa-plus-square"></i> إضافة جديدة</a>
+                        <li><a href="#" th:href="@{/admin/courses}"><i class="fa fa-list-ul"></i> <span th:text="#{sidenav.list}">List</span></a></li>
+                        <li><a href="#" th:href="@{/admin/courses/course}"><i class="fa fa-plus-square"></i><span th:text="#{sidenav.new}">New</span></a>
                         </li>
                     </ul>
                 </li>
@@ -85,7 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="treeview">
                     <a href="#"><i class="fa fa-certificate"
                                    aria-hidden="true"></i>
-                        <span>الإجازات</span>
+                        <span th:text="#{sidenav.certificates}">Certificates</span>
                         <span class="pull-left-container">
                             <i class="fa fa-angle-left pull-left"></i>
                             <span class="label label-primary pull-left"
@@ -95,7 +95,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="treeview-menu">
                         <li><a href="#" th:href="@{/admin/certificates}"><i class="fa fa-flag"
                                                                             aria-hidden="true"></i>
-                            <span>عرض الكل</span></a>
+                            <span th:text="#{sidenav.list}">List</span></a>
                         </li>
                     </ul>
                 </li>
@@ -103,7 +103,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- student menu-tree -->
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>الطلبة</span>
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i> <span th:text="#{sidenav.students}">Students</span>
                         <span class="pull-left-container">
                             <i class="fa fa-angle-left pull-left"></i>
                             <span class="label label-primary pull-left"
@@ -117,15 +117,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
 
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/students}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
-                        <li><a href="#" th:href="@{/admin/students/student}"><i class="fa fa-plus-square"></i> إضافة جديدة</a>
+                        <li><a href="#" th:href="@{/admin/students}"><i class="fa fa-list-ul"></i><span th:text="#{sidenav.list}">List</span></a></li>
+                        <li><a href="#" th:href="@{/admin/students/student}"><i class="fa fa-plus-square"></i> <span th:text="#{sidenav.new}">New</span></a>
                         </li>
                     </ul>
                 </li>
 
                 <!-- teacher menu-tree -->
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span>المدرسين</span>
+                    <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span th:text="#{sidenav.teachers}">Teachers</span>
                         <span class="pull-left-container">
                             <i class="fa fa-angle-left pull-left"></i>
                             <span class="label label-primary pull-left"
@@ -133,15 +133,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/teachers}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
-                        <li><a href="#" th:href="@{/admin/teachers/teacher}"><i class="fa fa-plus-square"></i> إضافة جديدة</a>
+                        <li><a href="#" th:href="@{/admin/teachers}"><i class="fa fa-list-ul"></i> <span th:text="#{sidenav.list}">List</span></a></li>
+                        <li><a href="#" th:href="@{/admin/teachers/teacher}"><i class="fa fa-plus-square"></i>  <span th:text="#{sidenav.new}">New</span></a>
                         </li>
                     </ul>
                 </li>
 
                 <!-- event menu-tree -->
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span>الحفلات</span>
+                    <a href="#"><i class="fa fa-users" aria-hidden="true"></i> <span th:text="#{sidenav.events}">Events</span>
                         <span class="pull-left-container">
                             <i class="fa fa-angle-left pull-left"></i>
                             <span class="label label-primary pull-left"
@@ -149,26 +149,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#" th:href="@{/admin/events}"><i class="fa fa-list-ul"></i> عرض الكل</a></li>
-                        <li><a href="#" th:href="@{/admin/events/event}"><i class="fa fa-plus-square"></i> إضافة جديدة</a>
+                        <li><a href="#" th:href="@{/admin/events}"><i class="fa fa-list-ul"></i> <span th:text="#{sidenav.list}">List</span></a></li>
+                        <li><a href="#" th:href="@{/admin/events/event}"><i class="fa fa-plus-square"></i> <span th:text="#{sidenav.new}">New</span></a>
                         </li>
                     </ul>
                 </li>
 
                 <!-- countries menu-tree -->
-                <li><a href="#" th:href="@{/admin/report}"><i class="fa  fa-print" aria-hidden="true"></i><span>التقرير العام للحلقة</span>
+                <li><a href="#" th:href="@{/admin/report}"><i class="fa  fa-print" aria-hidden="true"></i><span th:text="#{sidenav.generalreport}">General Report</span>
                 </a></li>
 
                 <!-- archive menu-tree -->
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-archive" aria-hidden="true"></i> <span>الأرشيف</span>
+                    <a href="#"><i class="fa fa-archive" aria-hidden="true"></i> <span th:text="#{sidenav.archive}">Archive</span>
                     <span class="pull-left-container">
                         <i class="fa fa-angle-left pull-left"></i>
                     </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="#" th:href="@{/admin/archive/activities}"><i class="fa fa-list"></i>
-                            <span>الأنشطة</span>
+                            <span th:text="#{sidenav.activities}">Activities</span>
                             <span class="pull-left-container">
                             <span class="label label-primary pull-left"
                                       th:text="${archivedActivitiesCount}">4</span>
@@ -176,7 +176,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a></li>
                         <li><a href="#" th:href="@{/admin/archive/teachers}"><i class="fa fa-users"
                                                                                 aria-hidden="true"></i>
-                            <span>المدرسين</span>
+                            <span th:text="#{sidenav.teachers}">Teachers</span>
                             <span class="pull-left-container">
                             <span class="label label-primary pull-left"
                                       th:text="${archivedTeachersCount}">4</span>
@@ -185,7 +185,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li><a href="#" th:href="@{/admin/archive/students}"><i class="fa fa-graduation-cap"
                                                                                 aria-hidden="true"></i>
-                            <span>الطلبة</span>
+                            <span th:text="#{sidenav.students}">Students</span>
                             <span class="pull-left-container">
                             <span class="label label-primary pull-left"
                                       th:text="${archivedStudentsCount}">4</span>
@@ -193,7 +193,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a></li>
                         <li><a href="#" th:href="@{/admin/archive/courses}"><i class="fa fa-university"
                                                                                aria-hidden="true"></i>
-                            <span>المجموعات</span>
+                            <span th:text="#{sidenav.courses}">Courses</span>
                             <span class="pull-left-container">
                             <span class="label label-primary pull-left"
                                       th:text="${archivedCoursesCount}">4</span>
