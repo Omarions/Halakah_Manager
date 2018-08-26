@@ -32,9 +32,15 @@
 	      th:href="@{~/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css}"/>
 	<link rel="stylesheet" href="../../lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"
 	      th:href="@{~/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css}"/>
+	<!-- Fixed Column extension for DataTables to support RTL -->
+	<script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/css/fixedColumns.bootstrap4.min.css"
+	        th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/js/fixedColumns.bootstrap4.min.css}"></script>
 	<!-- DataTables tools column -->
-	<link rel="stylesheet" href="../../lib/dist/css/common-styles.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/common-styles.css"
 	      th:href="@{~/lib/dist/css/common-styles.css}"/>
+
+	<link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+	      th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -45,18 +51,25 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 	<!-- include header section from the layout file -->
-	<div th:include="layout/header :: header"></div>
+	<header class="main-header">
+		<div th:include="layout/header :: header"></div>
+	</header>
+
 	<!-- Left side column. contains the logo and sidebar -->
 	<!-- include sidebar nav section from the layout file -->
-	<div th:include="layout/sidebarnav :: sidebarnav"></div>
-
+	<aside class="main-sidebar">
+		<section class="sidebar">
+			<div th:include="layout/sidebarnav :: sidebarnav"></div>
+		</section>
+	</aside>
+	
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Dashboard
-				<small>Control panel</small>
+				<span th:text="#{students.title}">Dashboard</span>
+				<small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
@@ -70,13 +83,13 @@
 			<div class="box box-primary">
 				<div class="box-header">
 					<div class="col-sm-10">
-						<h3 class="box-title">Halaka Students List</h3>
+						<h3 class="box-title" th:text="#{students.box.title}">Halaka Students List</h3>
 					</div>
 					<div class="col-sm-2">
 						<a class="btn btn-block btn-primary pull-right"
 						   href="#"
 						   th:href="@{/admin/students/student}"><i
-								class="fa fa-plus"> Add Student</i></a>
+								class="fa fa-plus"> <span th:text="#{students.add}">Add Student</span> </i></a>
 					</div>
 					<br/>
 					<div th:if="${messageSuccess}" class="row">
@@ -114,106 +127,106 @@
 									    rowspan="1"
 									    colspan="1" aria-sort="ascending"
 									    aria-label="ID: activate to sort column descending"
-									    style="width: 130.4px;">ID
+									    style="width: 130.4px;" th:text="#{students.table.id}">ID
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1" aria-label="Name: activate to sort column ascending"
-									    style="width: 266.4px;">Name
+									    style="width: 266.4px;" th:text="#{students.table.name}">Name
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Activities: activate to sort column ascending"
-									    style="width: 237.4px;">Tracks
+									    style="width: 237.4px;" th:text="#{students.table.tracks}">Tracks
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Identity ID: activate to sort column ascending"
-									    style="width: 160.4px;">Gender
+									    style="width: 160.4px;" th:text="#{students.table.gender}">Gender
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Identity ID: activate to sort column ascending"
-									    style="width: 160.4px;">Identity ID
+									    style="width: 160.4px;" th:text="#{students.table.identity_id}">Identity ID
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Birth Date: activate to sort column ascending"
-									    style="width: 160.2px;">Birth Date
+									    style="width: 160.2px;" th:text="#{students.table.birth_date}">Birth Date
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Birth Location: activate to sort column ascending"
-									    style="width: 135.2px;">Birth Location
+									    style="width: 135.2px;" th:text="#{students.table.birth_location}">Birth Location
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Country: activate to sort column ascending"
-									    style="width: 266.2px;">Country
+									    style="width: 266.2px;" th:text="#{students.table.country}">Country
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="CSS grade: activate to sort column ascending"
-									    style="width: 160.2px;">Home Address
+									    style="width: 160.2px;" th:text="#{students.table.home_address}">Home Address
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Egypt Address: activate to sort column ascending"
-									    style="width: 266.2px;">Egypt Address
+									    style="width: 266.2px;" th:text="#{students.table.egypt_address}">Egypt Address
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1" aria-label="Tel: activate to sort column ascending"
-									    style="width: 266.2px;">Tel
+									    style="width: 266.2px;" th:text="#{students.table.tel}">Tel
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Email: activate to sort column ascending"
-									    style="width: 266.2px;">Email
+									    style="width: 266.2px;" th:text="#{students.table.email}">Email
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Facebook: activate to sort column ascending"
-									    style="width: 266.2px;">Facebook
+									    style="width: 266.2px;" th:text="#{students.table.facebook}">Facebook
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Education: activate to sort column ascending"
-									    style="width: 266.2px;">Education
+									    style="width: 266.2px;" th:text="#{students.table.education}">Education
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1" aria-label="Job: activate to sort column ascending"
-									    style="width: 266.2px;">Job
+									    style="width: 266.2px;" th:text="#{students.table.job}">Job
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="House: activate to sort column ascending"
-									    style="width: 266.2px;">House
+									    style="width: 266.2px;" th:text="#{students.table.housing}">House
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Comments: activate to sort column ascending"
-									    style="width: 266.2px;">Comments
+									    style="width: 266.2px;" th:text="#{students.table.comments}">Comments
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="students_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="CSS grade: activate to sort column ascending"
-									    style="width: 266.2px;">Tools
+									    style="width: 266.2px;" th:text="#{students.table.tools}">Tools
 									</th>
 								</tr>
 							</thead>
@@ -310,24 +323,24 @@
 							</tbody>
 							<tfoot>
 								<tr>
-									<th rowspan="1" colspan="1">ID</th>
-									<th rowspan="1" colspan="1">Name</th>
-									<th rowspan="1" colspan="1">Tracks</th>
-									<th rowspan="1" colspan="1">Gender</th>
-									<th rowspan="1" colspan="1">Identity ID</th>
-									<th rowspan="1" colspan="1">Birth Date</th>
-									<th rowspan="1" colspan="1">Birth Location</th>
-									<th rowspan="1" colspan="1">Country</th>
-									<th rowspan="1" colspan="1">Home Address</th>
-									<th rowspan="1" colspan="1">Egypt Address</th>
-									<th rowspan="1" colspan="1">Tel</th>
-									<th rowspan="1" colspan="1">Email</th>
-									<th rowspan="1" colspan="1">Facebook</th>
-									<th rowspan="1" colspan="1">Education</th>
-									<th rowspan="1" colspan="1">Job</th>
-									<th rowspan="1" colspan="1">House</th>
-									<th rowspan="1" colspan="1">Comments</th>
-									<th rowspan="1" colspan="1">Tools</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.id}">ID</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.name}">Name</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.tracks}">Tracks</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.gender}">Gender</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.identity_id}">Identity ID</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.birth_date}">Birth Date</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.birth_location}">Birth Location</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.country}">Country</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.home_address}">Home Address</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.egypt_address}">Egypt Address</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.tel}">Tel</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.email}">Email</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.facebook}">Facebook</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.education}">Education</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.job}">Job</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.housing}">House</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.comments}">Comments</th>
+									<th rowspan="1" colspan="1" th:text="#{students.table.tools}">Tools</th>
 								</tr>
 							</tfoot>
 						</table>
@@ -557,7 +570,9 @@
 <!-- Responsive extension for DataTables -->
 <script src="../../lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"
         th:src="@{~/lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js}"></script>
-
+<!-- Fixed Column extension for DataTables to support RTL -->
+<script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js"
+        th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js}"></script>
 <!-- FastClick -->
 <script src="../../lib/plugins/fastclick/lib/fastclick.js"
         th:src="@{~/lib/plugins/fastclick/lib/fastclick.js}"></script>
@@ -567,6 +582,29 @@
 <script src="../../static/lib/dist/js/utils.js" th:src="@{~/lib/dist/js/utils.js}"></script>
 <script>
     $(function () {
+        $("#students_dt").DataTable({
+            "language":{
+                "sProcessing":   "جارٍ التحميل...",
+                "sLengthMenu":   "أظهر _MENU_ مدخلات",
+                "sZeroRecords":  "لم يعثر على أية سجلات",
+                "sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                "sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
+                "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                "sInfoPostFix":  "",
+                "sSearch":       "ابحث:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "الأول",
+                    "sPrevious": "السابق",
+                    "sNext":     "التالي",
+                    "sLast":     "الأخير"
+                }
+            },
+            fixedColumns:   true
+        })
+            .columns.adjust()
+            .responsive.recalc();
+        
         formatCommentsCell(students, "#students_dt")
     });
 

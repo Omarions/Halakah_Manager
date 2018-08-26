@@ -51,15 +51,13 @@ function formatCommentsCell(objArray, tblId) {
         var comments = ' ';
         if (objArray[oInd]['comments'] == null) {
             comments = ' ';
-        }  else{
+        } else {
             comments = objArray[oInd]['comments'];
         }
         $(tblId + ' td[id=' + tdCommentsId + ']').html(comments);
     }
-    
-    $(tblId).DataTable()
-        .columns.adjust()
-        .responsive.recalc();
+
+
 
 }
 

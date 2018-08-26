@@ -32,6 +32,9 @@
 	      th:href="@{~/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css}"/>
 	<link rel="stylesheet" href="../../static/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"
 	      th:href="@{~/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css}"/>
+	<!-- Fixed Column extension for DataTables to support RTL -->
+	<script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/css/fixedColumns.bootstrap4.min.css"
+	        th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/js/fixedColumns.bootstrap4.min.css}"></script>
 	<!-- DataTables tools column -->
 	<link rel="stylesheet" href="../../static/lib/dist/css/common-styles.css"
 	      th:href="@{~/lib/dist/css/common-styles.css}"/>
@@ -55,20 +58,23 @@
 	<!-- Left side column. contains the logo and sidebar -->
 	<!-- include sidebar nav section from the layout file -->
 	<aside class="main-sidebar">
-		<div th:include="layout/sidebarnav :: sidebarnav"></div>
+		<section class="sidebar">
+			<div th:include="layout/sidebarnav :: sidebarnav"></div>
+		</section>
 	</aside>
+	
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				صفحة الأنشطة
-				<small>لوحة التحكم</small>
+				<span th:text="#{activities.title}">Dashboard</span>
+				<small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="#"><i class="fa fa-dashboard"></i> الرئيسية</a></li>
-				<li th:if="${isArchived}">الارشيف</li>
-				<li class="active">الأنشطة</li>
+				<li><a href="#"><i class="fa fa-dashboard"></i> <span th:text="#{common.breadcrumb.home}"> Home</span></a></li>
+				<li th:if="${isArchived}" th:text="#{common.breadcrumb.archive}">Archive</li>
+				<li class="active" th:text="#{common.breadcrumb.activities}">Activities</li>
 			</ol>
 		</section>
 
@@ -79,7 +85,7 @@
 				<div class="box-header">
 
 					<div class="col-sm-10">
-						<h2 class="box-title">قائمة أنشطة الحلقة</h2>
+						<h2 class="box-title" th:text="#{activities.box.title}">Halaka Activities List</h2>
 					</div>
 
 					<!-- add new activity button -->
@@ -87,7 +93,7 @@
 						<a class="btn btn-block btn-primary pull-right"
 						   href="#"
 						   th:href="@{/admin/activities/activity}"><i
-								class="fa fa-plus"> إضافة نشاط</i></a>
+								class="fa fa-plus"> <span th:text="#{activities.add}">Add Activity</span> </i></a>
 					</div>
 					<br/>
 					<!-- Error message -->
@@ -128,46 +134,46 @@
 									    rowspan="1"
 									    colspan="1" aria-sort="ascending"
 									    aria-label="ID: activate to sort column descending"
-									    style="width: 50px;">مسلسل
+									    style="width: 50px;" th:text="#{activities.table.id}">ID
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1" aria-label="Name: activate to sort column ascending"
-									    style="width: 266px;">الاسم
+									    style="width: 266px;" th:text="#{activities.table.name}">Name
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Total Courses: activate to sort column ascending"
-									    style="width: 130px;">إجمالي المجموعات
+									    style="width: 130px;" th:text="#{activities.table.courses}">Courses
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Total Teachers: activate to sort column ascending"
-									    style="width: 130px;">إجمالي المدرسين
+									    style="width: 130px;" th:text="#{activities.table.teachers}">Teachers
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Total Students: activate to sort column ascending"
-									    style="width: 130px;">إجمالي الطلبة
+									    style="width: 130px;" th:text="#{activities.table.students}">Students
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1"
 									    aria-label="Total Certificates: activate to sort column ascending"
-									    style="width: 130px;">إجمالي الإجازات
+									    style="width: 130px;" th:text="#{activities.table.certificates}">Certificates
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1" aria-label="Comments: activate to sort column ascending"
-									    style="width: 266px;">التعليقات
+									    style="width: 266px;" th:text="#{activities.table.comments}">Comments
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="activities_dt"
 									    rowspan="1"
 									    colspan="1" aria-label="Tools: activate to sort column ascending"
-									    style="width: 130px;">أدوات التحرير
+									    style="width: 130px;" th:text="#{activities.table.tools}">Tools
 									</th>
 								</tr>
 							</thead>
@@ -284,14 +290,14 @@
 							<!-- Footer of the table -->
 							<tfoot>
 								<tr>
-									<th rowspan="1" colspan="1">مسلسل</th>
-									<th rowspan="1" colspan="1">الاسم</th>
-									<th rowspan="1" colspan="1">إجمالي المجموعات</th>
-									<th rowspan="1" colspan="1">إجمالي المدرسين</th>
-									<th rowspan="1" colspan="1">إجمالي الطلبة</th>
-									<th rowspan="1" colspan="1">إجمالي الإجازات</th>
-									<th rowspan="1" colspan="1">التعليقات</th>
-									<th rowspan="1" colspan="1">أدوات التحرير</th>
+									<th rowspan="1" colspan="1" th:text="#{activities.table.id}">ID</th>
+									<th rowspan="1" colspan="1" th:text="#{activities.table.name}">Name</th>
+									<th rowspan="1" colspan="1" th:text="#{activities.table.courses}">Courses</th>
+									<th rowspan="1" colspan="1" th:text="#{activities.table.teachers}">Teachers</th>
+									<th rowspan="1" colspan="1" th:text="#{activities.table.students}">Students</th>
+									<th rowspan="1" colspan="1" th:text="#{activities.table.certificates}">Certificates</th>
+									<th rowspan="1" colspan="1" th:text="#{activities.table.comments}">Comments</th>
+									<th rowspan="1" colspan="1" th:text="#{activities.table.tools}">Tools</th>
 								</tr>
 							</tfoot>
 							<!-- End of footer -->
@@ -522,7 +528,9 @@
 <!-- Responsive extension for DataTables -->
 <script src="../../static/lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"
         th:src="@{~/lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js}"></script>
-
+<!-- Fixed Column extension for DataTables to support RTL -->
+<script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js"
+        th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js}"></script>
 <!-- FastClick -->
 <script src="../../static/lib/plugins/fastclick/fastclick.js"
         th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
@@ -533,7 +541,31 @@
 
 <script>
     $(function () {
+        $("#activities_dt").DataTable({
+            "language":{
+                "sProcessing":   "جارٍ التحميل...",
+                "sLengthMenu":   "أظهر _MENU_ مدخلات",
+                "sZeroRecords":  "لم يعثر على أية سجلات",
+                "sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                "sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
+                "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                "sInfoPostFix":  "",
+                "sSearch":       "ابحث:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "الأول",
+                    "sPrevious": "السابق",
+                    "sNext":     "التالي",
+                    "sLast":     "الأخير"
+                }
+            },
+            fixedColumns:   true
+        })
+            .columns.adjust()
+            .responsive.recalc();
+        
         formatCommentsCell(activities, "#activities_dt");
+
     });
 
 </script>

@@ -30,6 +30,10 @@
 	<!-- bootstrap wysihtml5 - text editor -->
 	<link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
 	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
+
+
+	<link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+	      th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -40,18 +44,24 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 	<!-- include header section from the layout file -->
-	<div th:include="layout/header :: header"></div>
+	<header class="main-header">
+		<div th:include="layout/header :: header"></div>
+	</header>
+
 	<!-- Left side column. contains the logo and sidebar -->
 	<!-- include sidebar nav section from the layout file -->
-	<div th:include="layout/sidebarnav :: sidebarnav"></div>
-
+	<aside class="main-sidebar">
+		<section class="sidebar">
+			<div th:include="layout/sidebarnav :: sidebarnav"></div>
+		</section>
+	</aside>
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Dashboard
-				<small>Control panel</small>
+				<span th:text="#{register.activity.title}">Dashboard</span>
+				<small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Home</a></li>

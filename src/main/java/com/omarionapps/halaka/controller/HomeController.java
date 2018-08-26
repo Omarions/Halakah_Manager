@@ -44,6 +44,11 @@ public class HomeController {
         return "admin/index";
     }
 
+    @RequestMapping("/starter")
+    public String starter(){
+    	return "admin/starter";
+    }
+
     @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
     public ModelAndView getHomeView() {
         ModelAndView modelAndView = new ModelAndView("admin/index");
