@@ -100,7 +100,7 @@
 
 							<div class="box-body">
 								<!-- input for name -->
-								<div th:class="form-group"
+								<div class="form-group"
 								     th:classappend="${#fields.hasErrors('name')}? 'has-error'">
 									<label for="inputName" class="col-sm-2 control-label" th:text="#{register.course.label.name}">Name</label>
 
@@ -189,54 +189,18 @@
 								<!-- /.input-for-days -->
 
 								<!-- Start Time Picker -->
-								<div class="bootstrap-timepicker"
+								<div class="form-group"
 								     th:classappend="${#fields.hasErrors('startTime')}? 'has-error'">
-									<div class="bootstrap-timepicker-widget dropdown-menu">
-										<table>
-											<tbody>
-												<tr>
-													<td><a href="#" data-action="incrementHour"><i
-															class="glyphicon glyphicon-chevron-up"></i></a></td>
-													<td class="separator">&nbsp;</td>
-													<td><a href="#" data-action="incrementMinute"><i
-															class="glyphicon glyphicon-chevron-up"></i></a></td>
-													<td class="separator">&nbsp;</td>
-													<td class="meridian-column"><a href="#"
-													                               data-action="toggleMeridian"><i
-															class="glyphicon glyphicon-chevron-up"></i></a></td>
-												</tr>
-												<tr>
-													<td><span class="bootstrap-timepicker-hour">06</span></td>
-													<td class="separator">:</td>
-													<td><span class="bootstrap-timepicker-minute">00</span></td>
-													<td class="separator">&nbsp;</td>
-													<td><span class="bootstrap-timepicker-meridian">AM</span></td>
-												</tr>
-												<tr>
-													<td><a href="#" data-action="decrementHour"><i
-															class="glyphicon glyphicon-chevron-down"></i></a></td>
-													<td class="separator"></td>
-													<td><a href="#" data-action="decrementMinute"><i
-															class="glyphicon glyphicon-chevron-down"></i></a></td>
-													<td class="separator">&nbsp;</td>
-													<td><a href="#" data-action="toggleMeridian"><i
-															class="glyphicon glyphicon-chevron-down"></i></a></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
 									<div class="form-group">
 										<label class="col-sm-2 control-label" th:text="#{register.course.label.start_time}">Start Time</label>
 
 										<div class="col-sm-10">
-											<div class="input-group">
+											<div class="input-group bootstrap-timepicker timepicker">
 												<input id="tpStartTime" type="text"
-												       class="form-control timepicker"
+												       class="form-control input-small"
 												       th:field="*{startTime}"/>
-
-												<div class="input-group-addon">
-													<i class="fa fa-clock-o"></i>
-												</div>
+												<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+												
 											</div>
 
 											<span th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"
@@ -249,57 +213,18 @@
 								<!-- /.start-time-picker -->
 
 								<!-- End Time Picker -->
-								<div class="bootstrap-timepicker"
+								<div class="form-group"
 								     th:classappend="${#fields.hasErrors('endTime')}? 'has-error'">
-									<div class="bootstrap-timepicker-widget dropdown-menu">
-										<table>
-											<tbody>
-												<tr>
-													<td><a href="#" data-action="incrementHour"><i
-															class="glyphicon glyphicon-chevron-up"></i></a></td>
-													<td class="separator">&nbsp;</td>
-													<td><a href="#" data-action="incrementMinute"><i
-															class="glyphicon glyphicon-chevron-up"></i></a></td>
-													<td class="separator">&nbsp;</td>
-													<td class="meridian-column"><a href="#"
-													                               data-action="toggleMeridian"><i
-															class="glyphicon glyphicon-chevron-up"></i></a></td>
-												</tr>
-												<tr>
-													<td><span class="bootstrap-timepicker-hour">12</span></td>
-													<td class="separator">:</td>
-													<td><span class="bootstrap-timepicker-minute">45</span></td>
-													<td class="separator">&nbsp;</td>
-													<td><span class="bootstrap-timepicker-meridian">AM</span>
-													</td>
-												</tr>
-												<tr>
-													<td><a href="#" data-action="decrementHour"><i
-															class="glyphicon glyphicon-chevron-down"></i></a>
-													</td>
-													<td class="separator"></td>
-													<td><a href="#" data-action="decrementMinute"><i
-															class="glyphicon glyphicon-chevron-down"></i></a>
-													</td>
-													<td class="separator">&nbsp;</td>
-													<td><a href="#" data-action="toggleMeridian"><i
-															class="glyphicon glyphicon-chevron-down"></i></a>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
 									<div class="form-group">
 										<label class="col-sm-2 control-label" th:text="#{register.course.label.end_time}">End Time</label>
 
 										<div class="col-sm-10">
-											<div class="input-group">
-												<input type="text" class="form-control timepicker"
+											<div class="input-group bootstrap-timepicker timepicker">
+												<input type="text" id="tpEndTime" class="form-control input-small"
 												       th:field="*{endTime}"/>
 
-												<div class="input-group-addon">
-													<i class="fa fa-clock-o"></i>
-												</div>
+												<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+
 											</div>
 											<span th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"
 											      th:class="help-block">End Time Errors</span>
@@ -319,7 +244,7 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-											<input type="text" class="form-control pull-right"
+											<input type="text" class="form-control pull-right datepicker"
 											       id="startDatePicker"
 											       th:value="Null" th:field="*{startDate}">
 										</div>
@@ -337,7 +262,7 @@
 											<div class="input-group-addon">
 												<i class="fa fa-calendar"></i>
 											</div>
-											<input type="text" class="form-control pull-right"
+											<input type="text" class="form-control pull-right datepicker"
 											       id="endDatePicker"
 											       th:value="Null" th:field="*{endDate}">
 										</div>
@@ -627,6 +552,10 @@
 <!-- bootstrap datepicker -->
 <script src="../../static/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
         th:src="@{~/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+<!-- bootstrap datepicker Arabic translation -->
+<script src="../../static/lib/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.ar.min.js"
+        th:src="@{~/lib/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.ar.min.js}"></script>
+
 <!-- AdminLTE App -->
 <script src="../../static/lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -654,23 +583,18 @@
 	        dir:"rtl"
         });
         //Timepicker
-        $(".timepicker").timepicker({
-            showSeconds: true,
-            showMeridian: false,
-            format: 'HH:mm',
-            showInputs: false,
-            explicitMode: true
-        });
+        $("#tpStartTime").timepicker();
+        $("#tpEndTime").timepicker();
         //Start Date Picker
-        $("#startDatePicker").datepicker({
+        $(".datepicker").datepicker({
+            rtl: true,
+            language:'ar',
             format: 'yyyy-mm-dd',
+            todayBtn: true,
+            todayHighlight: true,
             autoclose: true
         });
-        //Start Date Picker
-        $("#endDatePicker").datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true
-        });
+       
     });
 
 </script>

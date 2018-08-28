@@ -96,3 +96,6 @@ div.dataTables_wrapper {
     width: 800px;
     margin: 0 auto;
 }
+.datepicker-dropdown {max-width: 300px;}
+.datepicker {float: right}
+.datepicker.dropdown-menu {right:auto}

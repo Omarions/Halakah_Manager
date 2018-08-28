@@ -123,7 +123,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-offset-6 col-sm-6">
 
-                                                <img src="../../lib/dist/img/avatar5.png"
+                                                <img src="../../static/lib/dist/img/avatar5.png"
                                                      th:src="@{'/lib/dist/img/avatar5.png'}"
                                                      id="img-photo" name="image" class="img-circle" alt="Student Image"
                                                      style="width: 160px; height: 160px" th:field="*{image}"/>
@@ -784,6 +784,10 @@
         <!-- bootstrap datepicker -->
         <script src="../../static/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
                 th:src="@{~/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+        <!-- bootstrap datepicker Arabic translation -->
+        <script src="../../static/lib/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.ar.min.js"
+                th:src="@{~/lib/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.ar.min.js}"></script>
+
         <!-- iCheck -->
         <script src="../../static/lib/plugins/iCheck/icheck.min.js" th:src="@{~/lib/plugins/iCheck/icheck.min.js}"></script>
         <!-- Select2 -->
@@ -804,7 +808,7 @@
         <script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js"
                 th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js}"></script>
         
-        <script src="../../lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
+        <script src="../../static/lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
         <!-- AdminLTE App -->
         <script src="../../static/lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -823,11 +827,6 @@
                     "ordering": false,
                 });
 
-                $('#birthDatePicker').datepicker({
-                    format: 'yyyy-mm-dd',
-                    autoclose: true
-                });
-
                 //Initialize Select2 Elements
                 $("#select-activity").select2({
                     dir: "rtl"
@@ -838,13 +837,14 @@
                     placeholder: countryPlaceholder,
                     dir: "rtl"
                 });
-
-                $('.date-picker').datepicker({
+                
+                $('#birthDatePicker').datepicker({
+                    rtl: true,
+                    language:'ar',
                     format: 'yyyy-mm-dd',
                     todayBtn: true,
-                    todayHighlight: true,
                     autoclose: true
-                }).datepicker("setDate", new Date());
+                });
 
                 $('input').iCheck({
                     checkboxClass: 'icheckbox_square-blue',
