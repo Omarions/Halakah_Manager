@@ -7,29 +7,37 @@
     <title>Halaka Manager | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
           th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
-    <!-- Font Awesome -->
+    <!-- google fonts -->
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"/>
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/lib/plugins/font-awesome/css/font-awesome.min.css"
+          th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="../../static/lib/plugins/Ionicons/css/ionicons.min.css"
+          th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
+    <link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
+          th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../lib/dist/css/skins/skin-blue.min.css"
+		 folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="../../static/lib/dist/css/skins/skin-blue.min.css"
           th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+    <link rel="stylesheet" href="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
           th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
+
+    <link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+          th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
     <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
-          th:href="@{~/lib/plugins/datepicker/datepicker3.css}">
+    <link rel="stylesheet" href="../../static/lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
+          th:href="@{~/lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
     <!-- Select2 -->
-    <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
-          th:href="@{~/lib/plugins/select2/select2.min.css}"/>
+    <link rel="stylesheet" href="../../static/lib/plugins/select2/css/select2.min.css"
+          th:href="@{~/lib/plugins/select2/css/select2.min.css}"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,23 +49,31 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <!-- include header section from the layout file -->
-    <div th:include="layout/header :: header"></div>
+    <header class="main-header">
+        <div th:include="layout/header :: header"></div>
+    </header>
+
     <!-- Left side column. contains the logo and sidebar -->
     <!-- include sidebar nav section from the layout file -->
-    <div th:include="layout/sidebarnav :: sidebarnav"></div>
-
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <div th:include="layout/sidebarnav :: sidebarnav"></div>
+        </section>
+    </aside>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Dashboard
-                <small>Control panel</small>
+                <span th:text="#{register.event.title}">Dashboard</span>
+                <small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#" th:href="@{/admin/events}"> Events</a></li>
-                <li class="active"> Event Registration</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> <span th:text="#{common.breadcrumb.home}"> Home</span></a></li>
+                <li><a href="#"
+                       th:href="@{/admin/courses}"><span th:text="#{common.breadcrumb.events}"> Courses
+				</span></a></li>
+                <li class="active" th:text="#{register.event.breadcrumb.register}">Event Registration</li>
             </ol>
         </section>
 
@@ -67,9 +83,8 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><i class="fa fa-university" aria-hidden="true"></i> Event
-                                Registration
-                                Form</h3>
+                            <h3 class="box-title"><i class="fa fa-university" aria-hidden="true"></i> <span
+                                    th:text="#{register.event.box.title}"> Event Registration Form</span></h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
@@ -83,11 +98,11 @@
                                 <!-- input for name -->
                                 <div th:class="form-group"
                                      th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                    <label for="inputName" class="col-sm-2 control-label" th:text="#{register.event.label.name}">Name</label>
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputName"
-                                               placeholder="Name"
+                                               placeholder="Name" th:placeholder="#{register.course.placeholder.name}"
                                                th:field="*{name}"/>
                                         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                                               th:class="help-block">Name Errors</span>
@@ -98,11 +113,11 @@
                                 <!-- input for introducer -->
                                 <div class="form-group"
                                      th:classappend="${#fields.hasErrors('introducer')} ? 'has-error'">
-                                    <label for="inputIntroducer" class="col-sm-2 control-label">Introducer</label>
-
+                                    <label for="inputIntroducer" class="col-sm-2 control-label" th:text="#{register.event.label.introducer}"> Introducer</label>
+                                    
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputIntroducer"
-                                               placeholder="Introducer"
+                                               placeholder="Introducer" th:placeholder="#{register.event.placeholder.introducer}"
                                                th:field="*{introducer}"/>
                                         <span th:if="${#fields.hasErrors('introducer')}" th:errors="*{introducer}"
                                               th:class="help-block">Introducer Error</span>
@@ -114,15 +129,14 @@
                                 <div class="form-group"
                                      th:classappend="${#fields.hasErrors('status')}? 'has-error'">
                                     <label for="select-status"
-                                           class="col-sm-2 control-label">Status</label>
+                                           class="col-sm-2 control-label" th:text="#{register.event.label.status}">Status</label>
 
                                     <div class="col-sm-10">
                                         <select id="select-status"
                                                 class="form-control select2 select2-hidden-accessible"
                                                 multiple="" style="width: 100%;" tabindex="-1"
                                                 aria-hidden="true" th:field="*{status}">
-                                            <option value="" text="Select days" selected>Select
-                                                Status
+                                            <option value="" text="Select status" th:text="#{register.event.placeholder.status}" selected>Select Status
                                             </option>
                                             <option th:each="eventStatus : ${eventStatuses}"
                                                     th:value="${eventStatus.toString()}"
@@ -138,7 +152,7 @@
 
                                 <!-- Event Date Picker -->
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Event Date</label>
+                                    <label class="col-sm-2 control-label" th:text="#{register.event.label.date}">Event Date</label>
 
                                     <div class="col-sm-10">
                                         <div class="input-group date">
@@ -156,11 +170,12 @@
 
                                 <!-- Input for guests -->
                                 <div class="form-group">
-                                    <label for="input_guests" class="col-sm-2 control-label">Guests</label>
+                                    <label for="input_guests" class="col-sm-2 control-label" th:text="#{register.event.label.guests}">Guests
+                                    </label>
 
                                     <div class="col-sm-10">
                                         <textarea type="text" class="form-control" id="input_guests"
-                                                  placeholder="Add Guests"
+                                                  placeholder="Add Guests" th:placeholder="#{register.event.placeholder.guests}"
                                                   th:field="*{guests}">Add Guests</textarea>
                                     </div>
                                 </div>
@@ -168,11 +183,11 @@
 
                                 <!-- Input for description -->
                                 <div class="form-group">
-                                    <label for="input_description" class="col-sm-2 control-label">Description</label>
+                                    <label for="input_description" class="col-sm-2 control-label" th:text="#{register.event.label.description}">Description</label>
 
                                     <div class="col-sm-10">
                                         <textarea type="text" class="form-control" id="input_description"
-                                                  placeholder="Add description for the event"
+                                                  placeholder="Add description for the event" th:placeholder="#{register.event.placeholder.description}"
                                                   th:field="*{description}">Add Description</textarea>
                                     </div>
                                 </div>
@@ -180,11 +195,12 @@
 
                                 <!-- Input for Comments -->
                                 <div class="form-group">
-                                    <label for="inputComments" class="col-sm-2 control-label">Comment</label>
+                                    <label for="inputComments" class="col-sm-2 control-label" th:text="#{register.event.label.comments}">Comment
+                                    </label>
 
                                     <div class="col-sm-10">
                                         <textarea type="text" class="form-control" id="inputComments"
-                                                  placeholder="Add comments for the event"
+                                                  placeholder="Add comments for the event" th:placeholder="#{register.event.placeholder.comments}"
                                                   th:field="*{comments}">Extra info</textarea>
                                     </div>
                                 </div>
@@ -193,7 +209,7 @@
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary  pull-right"><i class="fa fa-save"></i>
-                                    Save
+                                    <span th:text="#{register.event.button.save}">Save</span>
                                 </button>
                             </div>
                             <!-- /.box-footer -->
@@ -405,24 +421,37 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
-<!-- jQuery 2.2.3 -->
-<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-        th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:inline="javascript">
+    var statuslaceholder=[[#{register.event.placeholder.status}]];
+</script>
+<!-- jQuery 3.3.1 -->
+<script src="../../static/lib/plugins/jQuery/dist/jquery.min.js"
+        th:src="@{~/lib/plugins/jQuery/dist/jquery.min.js}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script src="../../static/lib/plugins/fastclick/fastclick.min.js"
+        th:src="@{~/lib/plugins/fastclick/fastclick.min.js}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
+        th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
 <!-- Select2 -->
-<script src="../../lib/plugins/select2/select2.full.min.js"
-        th:src="@{~/lib/plugins/select2/select2.full.min.js}"></script>
-
+<script src="../../static/lib/plugins/select2/js/select2.full.min.js"
+        th:src="@{~/lib/plugins/select2/js/select2.full.min.js}"></script>
 <!-- bootstrap datepicker -->
-<script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
-        th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+<script src="../../static/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
+        th:src="@{~/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+<!-- AdminLTE App -->
+<script src="../../static/lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../../static/lib/dist/js/utils.js" th:src="@{~/lib/dist/js/utils.js}"></script>
+
 <script>
 
     $(function () {
         $("#select-status").select2({
-            placeholder: "Select status"
+            placeholder: statuslaceholder,
+            dir: "rtl"
         });
 
         //Event Date Picker
@@ -430,6 +459,12 @@
             format: 'yyyy-mm-dd',
             autoclose: true
         });
+
+        //bootstrap WYSIHTML5 - text editor
+        $("#inputComments").wysihtml5();
+        //bootstrap WYSIHTML5 - text editor
+        $("#input_description").wysihtml5();
+
 
     });
 

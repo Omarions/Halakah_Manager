@@ -7,40 +7,53 @@
         <title>Halaka Manager | Dashboard</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-        <!-- Bootstrap 3.3.6 -->
-        <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+        <!-- Bootstrap 3.3.7 -->
+        <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
               th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
+        <!-- google fonts -->
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <!-- Font Awesome -->
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
-	          th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
+        <link rel="stylesheet" href="../../static/lib/plugins/font-awesome/css/font-awesome.min.css"
+              th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
         <!-- Ionicons -->
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
-	          th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
-        <!-- Select2 -->
-        <link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
-              th:href="@{~/lib/plugins/select2/select2.min.css}"/>
-        <!-- iCheck -->
-        <link rel="stylesheet" href="../lib/plugins/iCheck/square/blue.css"
-              th:href="@{~/lib/plugins/iCheck/square/blue.css}"/>
-        <!-- bootstrap datepicker -->
-        <link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
-              th:href="@{~/lib/plugins/datepicker/datepicker3.css}"/>
-        <!-- DataTables -->
-        <link rel="stylesheet" href="../lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css"
-              th:href="@{/lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css}"/>
-        <link rel="stylesheet" href="../lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css"
-              th:href="@{/lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css}"/>
-        <!-- bootstrap wysihtml5 - text editor -->
-        <link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
-              th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
+        <link rel="stylesheet" href="../../static/lib/plugins/Ionicons/css/ionicons.min.css"
+              th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
         <!-- Theme style -->
-        <link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
+        <link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
+              th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
         <!-- AdminLTE Skins. Choose a skin from the css/skins
-             folder instead of downloading all of them to reduce the load. -->
-        <!-- use skin-blue -->
-	    <link rel="stylesheet" href="../../lib/dist/css/skins/skin-blue.min.css"
-	          th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
+			 folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../../static/lib/dist/css/skins/skin-blue.min.css"
+              th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
+        <!-- bootstrap wysihtml5 - text editor -->
+        <link rel="stylesheet" href="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+              th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
+        <!-- iCheck -->
+        <link rel="stylesheet" href="../../static/lib/plugins/iCheck/square/blue.css"
+              th:href="@{~/lib/plugins/iCheck/square/blue.css}"/>
+        <link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+              th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
+        <!-- bootstrap datepicker -->
+        <link rel="stylesheet" href="../../static/lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
+              th:href="@{~/lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
+        <!-- Select2 -->
+        <link rel="stylesheet" href="../../static/lib/plugins/select2/css/select2.min.css"
+              th:href="@{~/lib/plugins/select2/css/select2.min.css}"/>
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../../static/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css"
+              th:href="@{~/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css}"/>
+        <link rel="stylesheet" href="../../static/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"
+              th:href="@{~/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css}"/>
+        <!-- Fixed Column extension for DataTables to support RTL -->
+        <script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/css/fixedColumns.bootstrap4.min.css"
+                th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/css/fixedColumns.bootstrap4.min.css}"></script>
+        <!-- DataTables tools column -->
+        <link rel="stylesheet" href="../../static/lib/dist/css/common-styles.css"
+              th:href="@{~/lib/dist/css/common-styles.css}"/>
 
+        <link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+              th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,23 +65,31 @@
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
             <!-- include header section from the layout file -->
-            <div th:include="layout/header :: header"></div>
+            <header class="main-header">
+                <div th:include="layout/header :: header"></div>
+            </header>
+
             <!-- Left side column. contains the logo and sidebar -->
             <!-- include sidebar nav section from the layout file -->
-            <div th:include="layout/sidebarnav :: sidebarnav"></div>
-
+            <aside class="main-sidebar">
+                <section class="sidebar">
+                    <div th:include="layout/sidebarnav :: sidebarnav"></div>
+                </section>
+            </aside>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Dashboard
-                        <small>Control panel</small>
+                        <span th:text="#{register.student.title}">Dashboard</span>
+                        <small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#" th:href="@{/admin/students}"> Students</a></li>
-                        <li class="active">Student Registration</li>
+                        <li><a href="#"><i class="fa fa-dashboard"></i> <span th:text="#{common.breadcrumb.home}"> Home</span></a></li>
+                        <li><a href="#"
+                               th:href="@{/admin/students}"><span th:text="#{common.breadcrumb.students}"> Students
+				</span></a></li>
+                        <li class="active" th:text="#{register.student.breadcrumb.register}"> Student Registration</li>
                     </ol>
                 </section>
 
@@ -82,10 +103,8 @@
 	                        <div class="box box-primary">
                                 <!-- box header -->
                                 <div class="box-header with-border">
-                                    <h3 class="box-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                        Student
-                                        Registration
-                                        Form</h3>
+                                    <h3 class="box-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span
+                                            th:text="#{register.student.box.title}"> Student Registration Form</span></h3>
                                 </div>
                                 <!-- /.box-header -->
 
@@ -118,11 +137,13 @@
                                         <!-- input for name -->
                                         <div class="form-group"
                                              th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                                            <label for="input-name" class="col-sm-2 control-label">Name</label>
+                                            <label for="input-name" class="col-sm-2 control-label" th:text="#{register.student.label.name}">Name
+                                            </label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-name"
-                                                       placeholder="Name" name="name" th:field="*{name}"/>
+                                                       placeholder="Name" th:placeholder="#{register.student.placeholder.name}" name="name"
+                                                       th:field="*{name}"/>
                                                 <span th:if="${#fields.hasErrors('name')}"
                                                       th:errors="*{name}"
                                                       th:class="help-block">Name Errors</span>
@@ -131,21 +152,24 @@
                                         <!-- /.input-for-name -->
 
                                         <!-- input for gender -->
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Gender</label>
+                                        <div class="form-group" th:classappend="${#fields.hasErrors('gender')}? 'has-error'">
+                                            <label class="col-sm-2 control-label" th:text="#{register.teacher.label.gender}">Gender</label>
 
                                             <div class="col-sm-10">
                                                 <div class="iradio">
                                                     <label>
                                                         <input type="radio" name="gender" id="male-radio"
-                                                               value="MALE" checked="true"
-                                                               th:field="*{gender}"/> Male
+                                                               value="MALE" text="Male" th:text="' ' + #{common.gender.male}"
+                                                               checked="true"
+                                                               th:field="*{gender}"/>
                                                     </label>
                                                 </div>
                                                 <div class="iradio">
                                                     <label>
                                                         <input type="radio" name="gender" id="female-radio"
-                                                               value="FEMALE" th:field="*{gender}"/> Female
+                                                               value="FEMALE" text="Female"
+                                                               th:text="' ' + #{common.gender.female}"
+                                                               th:field="*{gender}"/>
                                                     </label>
                                                 </div>
                                             </div>
@@ -154,12 +178,14 @@
 
                                         <!-- input for Identity ID -->
                                         <div class="form-group">
-                                            <label for="inputIdentityId" class="col-sm-2 control-label">Identity
+                                            <label for="inputIdentityId" class="col-sm-2 control-label"
+                                                   th:text="#{register.student.label.identity_id}">Identity
                                                 ID</label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputIdentityId"
                                                        placeholder="Identity ID"
+                                                       th:placeholder="#{register.student.placeholder.identity_id}"
                                                        th:field="*{identityId}"/>
                                             </div>
                                         </div>
@@ -168,7 +194,7 @@
                                         <!-- Birth Date Picker -->
                                         <div class="form-group"
                                              th:classappend="${#fields.hasErrors('birthDate')}? 'has-error'">
-                                            <label class="col-sm-2 control-label">Birth Date</label>
+                                            <label class="col-sm-2 control-label" th:text="#{register.student.label.birth_date}">Birth Date</label>
 
                                             <div class="col-sm-10">
                                                 <div class="input-group date">
@@ -190,12 +216,13 @@
 
                                         <!-- input for birth location -->
                                         <div class="form-group">
-                                            <label for="inputBirthLocation" class="col-sm-2 control-label">Birth
+                                            <label for="inputBirthLocation" class="col-sm-2 control-label"
+                                                   th:text="#{register.student.label.birth_location}">Birth
                                                 Location</label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputBirthLocation"
-                                                       placeholder="Birth Location"
+                                                       placeholder="Birth Location"   th:placeholder="#{register.student.placeholder.birth_location}"
                                                        th:field="*{birthLocation}"/>
                                             </div>
                                         </div>
@@ -203,17 +230,17 @@
 
                                         <!-- country dropdown list -->
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">Country</label>
+                                            <label class="col-sm-2 control-label" th:text="#{register.student.label.country}">Country</label>
 
                                             <div class="col-sm-10">
                                                 <select id="select-country"
                                                         class="form-control select2 select2-hidden-accessible"
                                                         style="width: 100%;"
                                                         tabindex="-1" aria-hidden="true" th:field="*{country}">
-                                                    <option value="" selected="selected">Select Country</option>
+                                                    <option value="" th:text="#{register.student.placeholder.country}" selected="selected">Select Country</option>
                                                     <option th:each="country : ${countries}"
                                                             th:value="${country.id}"
-                                                            th:text="${country.englishName}">Country Name
+                                                            th:text="${country.arabicName}">Country Name
                                                     </option>
                                                 </select>
                                             </div>
@@ -222,12 +249,13 @@
 
                                         <!-- input for home address -->
                                         <div class="form-group">
-                                            <label for="inputHomeAddress" class="col-sm-2 control-label">Home
+                                            <label for="inputHomeAddress" class="col-sm-2 control-label"
+                                                   th:text="#{register.student.label.home_address}">Home
                                                 Address</label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputHomeAddress"
-                                                       placeholder="Home Address"
+                                                       placeholder="Home Address" th:placeholder="#{register.student.placeholder.home_address}"
                                                        th:field="*{homeAddress}"/>
                                             </div>
                                         </div>
@@ -235,12 +263,13 @@
 
                                         <!-- input for egypt address -->
                                         <div class="form-group">
-                                            <label for="inputEgyptAddress" class="col-sm-2 control-label">Egypt
+                                            <label for="inputEgyptAddress" class="col-sm-2 control-label"
+                                                   th:text="#{register.student.label.egypt_address}">Egypt
                                                 Address</label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputEgyptAddress"
-                                                       placeholder="Egypt Address"
+                                                       placeholder="Egypt Address" th:placeholder="#{register.student.placeholder.egypt_address}"
                                                        th:field="*{egyptAddress}"/>
                                             </div>
                                         </div>
@@ -248,11 +277,12 @@
 
                                         <!-- input for tel -->
                                         <div class="form-group">
-                                            <label for="input-tel" class="col-sm-2 control-label">Tel</label>
+                                            <label for="input-tel" class="col-sm-2 control-label" th:text="#{register.student.label.tel}">Tel
+                                            </label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-tel"
-                                                       name="tel" placeholder="Tel"
+                                                       name="tel" placeholder="Tel" th:placeholder="#{register.student.placeholder.tel}"
                                                        th:field="*{tel}"/>
                                                 <span th:if="${#fields.hasErrors('tel')}"
                                                       th:errors="*{tel}"
@@ -263,11 +293,13 @@
 
                                         <!-- input for email -->
                                         <div class="form-group">
-                                            <label for="input-email" class="col-sm-2 control-label">Email</label>
+                                            <label for="input-email" class="col-sm-2 control-label" th:text="#{register.student.label.email}">Email
+                                            </label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-email"
-                                                       name="email" placeholder="Email" th:field="*{email}"/>
+                                                       name="email" placeholder="Email" th:placeholder="#{register.student.placeholder.email}"
+                                                       th:field="*{email}"/>
                                                 <span th:if="${#fields.hasErrors('email')}"
                                                       th:errors="*{email}"
                                                       th:class="help-block">Email Errors</span>
@@ -277,11 +309,13 @@
 
                                         <!-- input for facebook -->
                                         <div class="form-group">
-                                            <label for="inputFacebook" class="col-sm-2 control-label">Facebook</label>
+                                            <label for="inputFacebook" class="col-sm-2 control-label" th:text="#{register.student.label.facebook}">
+                                                Facebook</label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="inputFacebook"
                                                        placeholder="Facebook"
+                                                       th:placeholder="#{register.student.placeholder.facebook}"
                                                        th:field="*{facebook}"/>
                                             </div>
                                         </div>
@@ -290,11 +324,11 @@
                                         <!-- input for education -->
                                         <div class="form-group">
                                             <label for="input-education"
-                                                   class="col-sm-2 control-label">Education</label>
+                                                   class="col-sm-2 control-label" th:text="#{register.student.label.education}">Education</label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-education"
-                                                       name="education" placeholder="Education"
+                                                       name="education" placeholder="Education"    th:placeholder="#{register.student.placeholder.education}"
                                                        th:field="*{education}"/>
                                                 <span th:if="${#fields.hasErrors('education')}"
                                                       th:errors="*{education}"
@@ -305,11 +339,12 @@
 
                                         <!-- input for job -->
                                         <div class="form-group">
-                                            <label for="input-job" class="col-sm-2 control-label">Job</label>
+                                            <label for="input-job" class="col-sm-2 control-label" th:text="#{register.student.label.job}">Job
+                                            </label>
 
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="input-job"
-                                                       name="job" placeholder="Job"
+                                                       name="job" placeholder="Job"   th:placeholder="#{register.student.placeholder.job}"
                                                        th:field="*{job}"/>
                                                 <span th:if="${#fields.hasErrors('job')}"
                                                       th:errors="*{job}"
@@ -320,13 +355,18 @@
 
                                         <!-- Input for Comments -->
                                         <div class="form-group">
-                                            <label for="input-comments" class="col-sm-2 control-label">Comment</label>
+                                            <label for="inputComments" class="col-sm-2 control-label" th:text="#{register.student.label.comments}">Comment
+                                            </label>
 
                                             <div class="col-sm-10">
-                                                <textarea type="text" class="form-control" id="input-comments"
-                                                          name="comments"
-                                                          placeholder="Set comments for the student if needed"
-                                                          th:field="*{comments}">Extra info</textarea>
+                                                <div class="box">
+                                                    <div class="box-body">
+											<textarea type="textarea" class="form-control" id="inputComments"
+                                                      placeholder="Set comments for the activity if needed"
+                                                      th:placeholder="#{register.student.placeholder.comments}"
+                                                      th:field="*{comments}">Extra info</textarea>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- /.input-for-comments -->
@@ -334,13 +374,14 @@
                                         <!-- tracks -->
                                         <div class="form-group">
 
-                                            <label for="table-tracks" class="col-sm-2 control-label">Tracks</label>
+                                            <label for="table-tracks" class="col-sm-2 control-label" th:text="#{register.student.label.tracks}">
+                                                Tracks</label>
 
                                             <!-- table of created tracks -->
                                             <div class="col-sm-12">
                                                 <table id="table-tracks"
-                                                       class="table table-bordered table-striped dataTable dt-responsive no-wrap"
-                                                       role="grid" width="100%"
+                                                       class="table table-bordered table-striped dataTable dt-responsive nowrap"
+                                                       role="grid" style="width: 100%"
                                                        aria-describedby="table-tracks_info">
                                                     <thead>
                                                         <tr>
@@ -348,49 +389,54 @@
 	                                                            aria-controls="courses-list-dt" rowspan="1"
 	                                                            colspan="1" aria-sort="ascending"
 	                                                            aria-label="Select: activate to sort column descending"
-	                                                            style="width: 20px;">Select
+	                                                            style="width: 20px;" th:text="#{register.student.table.select}">Select
 	                                                        </th>
 	                                                        <th class="sorting_asc" tabindex="0"
 	                                                            aria-controls="courses-list-dt" rowspan="1"
 	                                                            colspan="1" aria-sort="ascending"
 	                                                            aria-label="Activity: activate to sort column descending"
-	                                                            style="width: 150px;">Activity
+	                                                            style="width: 150px;"
+                                                                th:text="#{register.student.table.activity}">Activity
 	                                                        </th>
 	                                                        <th class="sorting_asc" tabindex="0"
 	                                                            aria-controls="courses-list-dt" rowspan="1"
 	                                                            colspan="1" aria-sort="ascending"
 	                                                            aria-label="Course: activate to sort column descending"
-	                                                            style="width: 130px;">Course
+	                                                            style="width: 130px;" th:text="#{register.student.table.course}">Course
 	                                                        </th>
 	                                                        <th class="sorting_asc" tabindex="0"
 	                                                            aria-controls="courses-list-dt" rowspan="1"
 	                                                            colspan="1" aria-sort="ascending"
 	                                                            aria-label="Track Status: activate to sort column descending"
-	                                                            style="width: 150px;">Track Status
+	                                                            style="width: 150px;"
+                                                                th:text="#{register.student.table.track_status}">Track Status
 	                                                        </th>
 	                                                        <th class="sorting_asc" tabindex="0"
 	                                                            aria-controls="courses-list-dt" rowspan="1"
 	                                                            colspan="1" aria-sort="ascending"
 	                                                            aria-label="Register Date: activate to sort column descending"
-	                                                            style="width: 200px;">Register Date
+	                                                            style="width: 200px;"
+                                                                th:text="#{register.student.table.register_date}">Register Date
 	                                                        </th>
 	                                                        <th class="sorting_asc" tabindex="0"
 	                                                            aria-controls="courses-list-dt" rowspan="1"
 	                                                            colspan="1" aria-sort="ascending"
 	                                                            aria-label="Start Date: activate to sort column descending"
-	                                                            style="width: 200px;">Start Date
+	                                                            style="width: 200px;"
+                                                                th:text="#{register.student.table.start_date}">Start Date
 	                                                        </th>
 	                                                        <th class="sorting_asc" tabindex="0"
 	                                                            aria-controls="courses-list-dt" rowspan="1"
 	                                                            colspan="1" aria-sort="ascending"
 	                                                            aria-label="Evaluation: activate to sort column descending"
-	                                                        >Evaluation
+                                                                th:text="#{register.student.table.evaluation}">Evaluation
 	                                                        </th>
 	                                                        <th class="sorting_asc" tabindex="0"
 	                                                            aria-controls="courses-list-dt" rowspan="1"
 	                                                            colspan="1" aria-sort="ascending"
 	                                                            aria-label="Comments: activate to sort column descending"
-	                                                            style="width: 300px;">Comments
+	                                                            style="width: 300px;"
+                                                                th:text="#{register.student.label.comments}">Comments
 	                                                        </th>
                                                         </tr>
                                                     </thead>
@@ -504,7 +550,8 @@
 
                                         <div class="box-footer">
                                             <button type="submit" id="btn-register" class="btn btn-info pull-right">
-                                                Register
+                                                <i class="fa fa-save"></i>
+                                                 <span th:text="#{register.teacher.button.save}">Save</span>
                                             </button>
                                         </div>
                                         <!-- /.box-footer -->
@@ -723,40 +770,57 @@
         </div>
         <!-- ./wrapper -->
 
-        <!-- jQuery 2.2.3 -->
-        <script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-                th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
-        <!-- Bootstrap 3.3.6 -->
-        <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
-        <!-- Select2 -->
-        <script src="../../lib/plugins/select2/select2.full.min.js"
-                th:src="@{~/lib/plugins/select2/select2.full.min.js}"></script>
-        <!-- iCheck -->
-        <script src="../../lib/plugins/iCheck/icheck.min.js" th:src="@{~/lib/plugins/iCheck/icheck.min.js}"></script>
+        <!-- jQuery 3.3.1 -->
+        <script src="../../static/lib/plugins/jQuery/dist/jquery.min.js"
+                th:src="@{~/lib/plugins/jQuery/dist/jquery.min.js}"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
+        <!-- FastClick -->
+        <script src="../../static/lib/plugins/fastclick/fastclick.min.js"
+                th:src="@{~/lib/plugins/fastclick/fastclick.min.js}"></script>
+        <!-- Bootstrap WYSIHTML5 -->
+        <script src="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
+                th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
         <!-- bootstrap datepicker -->
-        <script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
-                th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+        <script src="../../static/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
+                th:src="@{~/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+        <!-- iCheck -->
+        <script src="../../static/lib/plugins/iCheck/icheck.min.js" th:src="@{~/lib/plugins/iCheck/icheck.min.js}"></script>
+        <!-- Select2 -->
+        <script src="../../static/lib/plugins/select2/js/select2.full.min.js"
+                th:src="@{~/lib/plugins/select2/js/select2.full.min.js}"></script>
+        <!-- Bootstrap WYSIHTML5 -->
+        <script src="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
+                th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
         <!-- DataTables -->
-        <script src="../../lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js"
-                th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js}"></script>
-        <script src="../../lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"
-                th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
+        <script src="../../static/lib/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"
+                th:src="@{~/lib/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js}"></script>
+        <script src="../../static/lib/plugins/datatables/DataTables-1.10.18/js/dataTables.bootstrap.min.js"
+                th:src="@{~/lib/plugins/datatables/DataTables-1.10.18/js/dataTables.bootstrap.min.js}"></script>
         <!-- Responsive extension for DataTables -->
-        <script src="../../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
-                th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
-        <script src="../../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
-                th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
-
+        <script src="../../static/lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"
+                th:src="@{~/lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js}"></script>
+        <!-- Fixed Column extension for DataTables to support RTL -->
+        <script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js"
+                th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js}"></script>
+        
         <script src="../../lib/dist/js/pages/student.js" th:src="@{~/lib/dist/js/pages/student.js}"></script>
-        <script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
+        <!-- AdminLTE App -->
+        <script src="../../static/lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <script src="../../static/lib/dist/js/utils.js" th:src="@{~/lib/dist/js/utils.js}"></script>
 
-
+        <script th:inline="javascript">
+            var countryPlaceholder = [[#{register.student.placeholder.country}]];
+        </script>
         <script>
             $(function () {
+                //bootstrap WYSIHTML5 - text editor
+                $("#inputComments").wysihtml5();
+                
                 $("#table-tracks").DataTable({
                     responsive: true,
                     "ordering": false,
-                    "scrollX": true
                 });
 
                 $('#birthDatePicker').datepicker({
@@ -766,11 +830,13 @@
 
                 //Initialize Select2 Elements
                 $("#select-activity").select2({
-                    placeholder: "Select An Activity"
+                    dir: "rtl"
                 });
+                
                 //Initialize Select2 Elements
                 $("#select-country").select2({
-                    placeholder: "Select Country"
+                    placeholder: countryPlaceholder,
+                    dir: "rtl"
                 });
 
                 $('.date-picker').datepicker({

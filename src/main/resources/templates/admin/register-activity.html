@@ -9,29 +9,28 @@
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
 
 	<!-- Bootstrap 3.3.7 -->
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+	<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
 	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
 	<!-- google fonts -->
 	<link rel="stylesheet"
 	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="../lib/plugins/font-awesome/css/font-awesome.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/font-awesome/css/font-awesome.min.css"
 	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="../lib/plugins/Ionicons/css/ionicons.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
 	<!-- Theme style -->
-	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
 	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		 folder instead of downloading all of them to reduce the load. -->
-	<link rel="stylesheet" href="../lib/dist/css/skins/skin-blue.min.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/skins/skin-blue.min.css"
 	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 	<!-- bootstrap wysihtml5 - text editor -->
-	<link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
 	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
-
-
+	
 	<link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
 	      th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -64,9 +63,11 @@
 				<small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Home</a></li>
-				<li><a href="#" th:href="@{/admin/activities}"> Activities</a></li>
-				<li class="active">Activity Registration</li>
+				<li><a href="#"><i class="fa fa-dashboard"></i> <span th:text="#{common.breadcrumb.home}"> Home</span></a></li>
+				<li><a href="#"
+				       th:href="@{/admin/activities}"><span th:text="#{common.breadcrumb.activities}"> Activities
+				</span></a></li>
+				<li class="active" th:text="#{register.activity.breadcrumb.register}">Activity Registration</li>
 			</ol>
 		</section>
 
@@ -76,7 +77,7 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">Activity Registration Form</h3>
+							<h3 class="box-title" th:text="#{register.activity.box.title}">Activity Registration Form</h3>
 						</div>
 						<!-- /.box-header -->
 						<!-- form start -->
@@ -105,11 +106,11 @@
 
 								<!-- input for name -->
 								<div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-									<label for="inputName" class="col-sm-2 control-label">Name</label>
+									<label for="inputName" class="col-sm-2 control-label" th:text="#{register.activity.label.name}">Name</label>
 
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="inputName" placeholder="Name"
-										       th:field="*{name}"/>
+										       th:field="*{name}" th:placeholder="#{register.activity.placeholder.name}"/>
 										<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 										      th:class="help-block">Name Errors</span>
 									</div>
@@ -118,12 +119,14 @@
 
 								<!-- input for comments -->
 								<div class="form-group">
-									<label for="inputComments" class="col-sm-2 control-label">Comment</label>
+									<label for="inputComments" class="col-sm-2 control-label" th:text="#{register.activity.label.comments}">Comment
+									</label>
 									<div class="col-sm-10">
 										<div class="box">
 											<div class="box-body">
 											<textarea type="textarea" class="form-control" id="inputComments"
 											          placeholder="Set comments for the activity if needed"
+											          th:placeholder="#{register.activity.placeholder.comments}"
 											          th:field="*{comments}">Extra info</textarea>
 											</div>
 										</div>
@@ -134,7 +137,7 @@
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer">
-								<button type="submit" class="btn btn-info pull-right">Register</button>
+								<button type="submit" class="btn btn-info pull-right" th:text="#{register.activity.button.save}">Register</button>
 							</div>
 							<!-- /.box-footer -->
 						</form>
@@ -346,22 +349,22 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3.3.1 -->
-<script src="../lib/plugins/jquery/dist/jquery.min.js"
-        th:src="@{~/lib/plugins/jquery/dist/jquery.min.js}"></script>
+<script src="../../static/lib/plugins/jQuery/dist/jquery.min.js"
+        th:src="@{~/lib/plugins/jQuery/dist/jquery.min.js}"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="../lib/bootstrap/js/bootstrap.min.js"
-        th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
+
 <!-- FastClick -->
-<script src="../../lib/plugins/fastclick/lib/fastclick.js"
-        th:src="@{~/lib/plugins/fastclick/lib/fastclick.js}"></script>
+<script src="../../static/lib/plugins/fastclick/fastclick.min.js"
+        th:src="@{~/lib/plugins/fastclick/fastclick.min.js}"></script>
 
 <!-- Bootstrap WYSIHTML5 -->
-<script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
+<script src="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
         th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
 <!-- AdminLTE App -->
-<script src="../../lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
+<script src="../../static/lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
+<script src="../../static/lib/dist/js/utils.js" th:src="@{~/lib/dist/js/utils.js}"></script>
 
 <script>
     $(function () {

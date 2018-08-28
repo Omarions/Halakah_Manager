@@ -7,35 +7,39 @@
 	<title>Halaka Manager | Dashboard</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-	<!-- Bootstrap 3.3.6 -->
-	<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
-	      th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
+	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
+	<!-- google fonts -->
+	<link rel="stylesheet"
+	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/font-awesome/css/font-awesome.min.css"
 	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
-	<!-- bootstrap datepicker -->
-	<link rel="stylesheet" href="../../lib/plugins/datepicker/datepicker3.css"
-	      th:href="@{/lib/plugins/datepicker/datepicker3.css}"/>
 	<!-- Theme style -->
-	<link rel="stylesheet" href="../../lib/dist/css/AdminLTE.min.css" th:href="@{/lib/dist/css/AdminLTE.min.css}"/>
+	<link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
+	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		 folder instead of downloading all of them to reduce the load. -->
-	<!-- use skin-blue -->
-	<link rel="stylesheet" href="../../lib/dist/css/skins/skin-blue.min.css"
-	      th:href="@{/lib/dist/css/skins/skin-blue.min.css}"/>
-	<!-- iCheck -->
-	<link rel="stylesheet" href="../lib/plugins/iCheck/square/blue.css"
-	      th:href="@{~/lib/plugins/iCheck/square/blue.css}"/>
+	<link rel="stylesheet" href="../../static/lib/dist/css/skins/skin-blue.min.css"
+	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 	<!-- bootstrap wysihtml5 - text editor -->
-	<link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
 	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
-
+	<!-- iCheck -->
+	<link rel="stylesheet" href="../../static/lib/plugins/iCheck/square/blue.css"
+	      th:href="@{~/lib/plugins/iCheck/square/blue.css}"/>
+	<link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+	      th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
+	<!-- bootstrap datepicker -->
+	<link rel="stylesheet" href="../../static/lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
+	      th:href="@{~/lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
 	<!-- Select2 -->
-	<link rel="stylesheet" href="../../lib/plugins/select2/select2.min.css"
-	      th:href="@{/lib/plugins/select2/select2.min.css}"/>
+	<link rel="stylesheet" href="../../static/lib/plugins/select2/css/select2.min.css"
+	      th:href="@{~/lib/plugins/select2/css/select2.min.css}"/>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,23 +51,31 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 	<!-- include header section from the layout file -->
-	<div th:include="layout/header :: header"></div>
+	<header class="main-header">
+		<div th:include="layout/header :: header"></div>
+	</header>
+
 	<!-- Left side column. contains the logo and sidebar -->
 	<!-- include sidebar nav section from the layout file -->
-	<div th:include="layout/sidebarnav :: sidebarnav"></div>
-
+	<aside class="main-sidebar">
+		<section class="sidebar">
+			<div th:include="layout/sidebarnav :: sidebarnav"></div>
+		</section>
+	</aside>
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Dashboard
-				<small>Control panel</small>
+				<span th:text="#{register.teacher.title}">Dashboard</span>
+				<small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Home</a></li>
-				<li>Register</li>
-				<li class="active">Teacher</li>
+				<li><a href="#"><i class="fa fa-dashboard"></i> <span th:text="#{common.breadcrumb.home}"> Home</span></a></li>
+				<li><a href="#"
+				       th:href="@{/admin/teachers}"><span th:text="#{common.breadcrumb.teachers}"> Teachers
+				</span></a></li>
+				<li class="active" th:text="#{register.teacher.breadcrumb.register}">Teacher Registration</li>
 			</ol>
 		</section>
 
@@ -73,9 +85,8 @@
 				<div class="col-md-12">
 					<div class="box box-primary">
 						<div class="box-header with-border">
-							<h3 class="box-title"><i class="fa fa-university" aria-hidden="true"></i> Teacher
-							                                                                          Registration
-							                                                                          Form</h3>
+							<h3 class="box-title"><i class="fa fa-users" aria-hidden="true"></i> <span
+									th:text="#{register.teacher.box.title}"> Teacher Registration Form</span></h3>
 						</div>
 						<!-- /.box-header -->
 						<!-- form start -->
@@ -104,11 +115,11 @@
 								<!-- input for name -->
 								<div th:class="form-group"
 								     th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-									<label for="inputName" class="col-sm-2 control-label">Name</label>
+									<label for="inputName" class="col-sm-2 control-label" th:text="#{register.teacher.label.name}">Name</label>
 
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="inputName"
-										       placeholder="Name"
+										       placeholder="Name" th:placeholder="#{register.teacher.placeholder.name}"
 										       th:field="*{name}"/>
 										<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 										      th:class="help-block">Name Errors</span>
@@ -118,20 +129,23 @@
 
 								<!-- input for gender -->
 								<div class="form-group" th:classappend="${#fields.hasErrors('gender')}? 'has-error'">
-									<label class="col-sm-2 control-label">Gender</label>
+									<label class="col-sm-2 control-label" th:text="#{register.teacher.label.gender}">Gender</label>
 
 									<div class="col-sm-10">
 										<div class="iradio">
 											<label>
 												<input type="radio" name="gender" id="male-radio"
-												       value="MALE" checked="true"
-												       th:field="*{gender}"/> Male
+												       value="MALE" text="Male" th:text="' ' + #{common.gender.male}"
+												       checked="true"
+												       th:field="*{gender}"/>
 											</label>
 										</div>
 										<div class="iradio">
 											<label>
 												<input type="radio" name="gender" id="female-radio"
-												       value="FEMALE" th:field="*{gender}"/> Female
+												       value="FEMALE" text="Female"
+												       th:text="' ' + #{common.gender.female}"
+												       th:field="*{gender}"/>
 											</label>
 										</div>
 									</div>
@@ -140,11 +154,11 @@
 
 								<!-- input for tel -->
 								<div class="form-group" th:classappend="${#fields.hasErrors('tel')}? 'has-error'">
-									<label for="inputTel" class="col-sm-2 control-label">Tel</label>
+									<label for="inputTel" class="col-sm-2 control-label" th:text="#{register.teacher.label.tel}">Tel</label>
 
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="inputTel"
-										       placeholder="Tel"
+										       placeholder="Tel" th:placeholder="#{register.teacher.placeholder.tel}"
 										       th:field="*{tel}"/>
 										<span th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"
 										      th:class="help-block">Tel Errors</span>
@@ -154,11 +168,11 @@
 
 								<!-- input for email -->
 								<div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
-									<label for="inputEmail" class="col-sm-2 control-label">Email</label>
+									<label for="inputEmail" class="col-sm-2 control-label" th:text="#{register.teacher.label.email}">Email</label>
 
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="inputEmail"
-										       placeholder="Email"
+										       placeholder="Email" th:placeholder="#{register.teacher.placeholder.email}"
 										       th:field="*{email}"/>
 										<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
 										      th:class="help-block">Email Errors</span>
@@ -168,11 +182,12 @@
 
 								<!-- input for address -->
 								<div class="form-group">
-									<label for="inputAddress" class="col-sm-2 control-label">Address</label>
+									<label for="inputAddress" class="col-sm-2 control-label" th:text="#{register.teacher.label.address}">Address
+									</label>
 
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="inputAddress"
-										       placeholder="Address"
+										       placeholder="Address" th:placeholder="#{register.teacher.placeholder.address}"
 										       th:field="*{address}"/>
 										<span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
 										      th:class="help-block">Address Errors</span>
@@ -182,11 +197,12 @@
 
 								<!-- input for education -->
 								<div class="form-group">
-									<label for="inputEducation" class="col-sm-2 control-label">Education</label>
+									<label for="inputEducation" class="col-sm-2 control-label" th:text="#{register.teacher.label.education}">Education</label>
 
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="inputEducation"
 										       placeholder="Education"
+										       th:placeholder="#{register.teacher.placeholder.education}"
 										       th:field="*{education}"/>
 										<span th:if="${#fields.hasErrors('education')}" th:errors="*{education}"
 										      th:class="help-block">Education Errors</span>
@@ -196,11 +212,11 @@
 
 								<!-- input for job -->
 								<div class="form-group">
-									<label for="inputJob" class="col-sm-2 control-label">Job</label>
+									<label for="inputJob" class="col-sm-2 control-label" th:text="#{register.teacher.label.job}">Job</label>
 
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="inputJob"
-										       placeholder="Job"
+										       placeholder="Job" th:placeholder="#{register.teacher.placeholder.job}"
 										       th:field="*{job}"/>
 										<span th:if="${#fields.hasErrors('job')}" th:errors="*{job}"
 										      th:class="help-block">Job Errors</span>
@@ -210,7 +226,8 @@
 
 								<!-- Hire Date Picker -->
 								<div class="form-group">
-									<label class="col-sm-2 control-label">Hire Date</label>
+									<label class="col-sm-2 control-label" th:text="#{register.teacher.label.hire_date}">Hire
+									                                                                            Date</label>
 
 									<div class="col-sm-10">
 										<div class="input-group date">
@@ -231,12 +248,13 @@
 
 								<!-- input for resume -->
 								<div class="form-group">
-									<label for="inputResume" class="col-sm-2 control-label">Resume</label>
+									<label for="inputResume" class="col-sm-2 control-label" th:text="#{register.teacher.label.resume}">Resume</label>
 									<div class="col-sm-10">
 										<div class="box">
 											<div class="box-body">
 											<textarea type="textarea" class="form-control" id="inputResume"
 											          placeholder="Add resume"
+											          th:placeholder="#{register.teacher.placeholder.resume}"
 											          th:field="*{resume}">Teacher Resume</textarea>
 											</div>
 										</div>
@@ -246,12 +264,13 @@
 
 								<!-- input for comments -->
 								<div class="form-group">
-									<label for="inputComments" class="col-sm-2 control-label">Comment</label>
+									<label for="inputComments" class="col-sm-2 control-label" th:text="#{register.teacher.label.comments}">Comment</label>
 									<div class="col-sm-10">
 										<div class="box">
 											<div class="box-body">
 											<textarea type="textarea" class="form-control" id="inputComments"
 											          placeholder="Set comments for the activity if needed"
+											          th:placeholder="#{register.teacher.placeholder.comments}"
 											          th:field="*{comments}">Extra info</textarea>
 											</div>
 										</div>
@@ -261,7 +280,8 @@
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer">
-								<button type="submit" class="btn btn-info pull-right">Register
+								<button type="submit" class="btn btn-info pull-right"><i class="fa fa-save"></i>
+									<span th:text="#{register.teacher.button.save}">Save</span>
 								</button>
 							</div>
 							<!-- /.box-footer -->
@@ -480,28 +500,26 @@
 <script th:inline="javascript">
     var courses = [[${courses}]];
 </script>
-<!-- jQuery 2.2.3 -->
-<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-        th:src="@{/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<!-- Slimscroll -->
-<script src="../../lib/plugins/slimScroll/jquery.slimscroll.min.js"
-        th:src="@{~/lib/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+<!-- jQuery 3.3.1 -->
+<script src="../../static/lib/plugins/jQuery/dist/jquery.min.js"
+        th:src="@{~/lib/plugins/jQuery/dist/jquery.min.js}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- FastClick -->
-<script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
-<!-- Select2 -->
-<script src="../../lib/plugins/select2/select2.full.min.js"
-        th:src="@{/lib/plugins/select2/select2.full.min.js}"></script>
-<!-- iCheck -->
-<script src="../../lib/plugins/iCheck/icheck.min.js" th:src="@{~/lib/plugins/iCheck/icheck.min.js}"></script>
-<!-- bootstrap datepicker -->
-<script src="../../lib/plugins/datepicker/bootstrap-datepicker.js"
-        th:src="@{~/lib/plugins/datepicker/bootstrap-datepicker.js}"></script>
+<script src="../../static/lib/plugins/fastclick/fastclick.min.js"
+        th:src="@{~/lib/plugins/fastclick/fastclick.min.js}"></script>
 <!-- Bootstrap WYSIHTML5 -->
-<script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
+<script src="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
         th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
-<script src="../../lib/dist/js/pages/utils.js" th:src="@{~/lib/dist/js/pages/utils.js}"></script>
+<!-- bootstrap datepicker -->
+<script src="../../static/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
+        th:src="@{~/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+<!-- iCheck -->
+<script src="../../static/lib/plugins/iCheck/icheck.min.js" th:src="@{~/lib/plugins/iCheck/icheck.min.js}"></script>
+<!-- AdminLTE App -->
+<script src="../../static/lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../../static/lib/dist/js/utils.js" th:src="@{~/lib/dist/js/utils.js}"></script>
 
 <script>
     $(function () {
@@ -510,11 +528,6 @@
 
         //bootstrap WYSIHTML5 - text editor
         $("#inputResume").wysihtml5();
-
-        //Initialize Select2 Elements
-        $("#selectActivities").select2({
-            placeholder: "Select Activities"
-        });
 
         $('#hireDatePicker').datepicker({
             format: 'yyyy-mm-dd',

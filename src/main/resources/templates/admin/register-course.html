@@ -9,36 +9,38 @@
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
 
 	<!-- Bootstrap 3.3.7 -->
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+	<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
 	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
 	<!-- google fonts -->
 	<link rel="stylesheet"
 	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="../lib/plugins/font-awesome/css/font-awesome.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/font-awesome/css/font-awesome.min.css"
 	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="../lib/plugins/Ionicons/css/ionicons.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
 	<!-- Theme style -->
-	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
 	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		 folder instead of downloading all of them to reduce the load. -->
-	<link rel="stylesheet" href="../lib/dist/css/skins/skin-blue.min.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/skins/skin-blue.min.css"
 	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 	<!-- bootstrap wysihtml5 - text editor -->
-	<link rel="stylesheet" href="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
 	      th:href="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css}"/>
 
+	<link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+	      th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
 	<!-- bootstrap datepicker -->
-	<link rel="stylesheet" href="../../lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css"
 	      th:href="@{~/lib/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}">
 	<!-- Select2 -->
-	<link rel="stylesheet" href="../../lib/plugins/select2/css/select2.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/select2/css/select2.min.css"
 	      th:href="@{~/lib/plugins/select2/css/select2.min.css}"/>
 	<!-- Bootstrap Time picker -->
-	<link rel="stylesheet" href="../../lib/plugins/timepicker/bootstrap-timepicker.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/timepicker/bootstrap-timepicker.css"
 	      th:href="@{~/lib/plugins/timepicker/bootstrap-timepicker.css}"/>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -51,23 +53,31 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 	<!-- include header section from the layout file -->
-	<div th:include="layout/header :: header"></div>
+	<header class="main-header">
+		<div th:include="layout/header :: header"></div>
+	</header>
+
 	<!-- Left side column. contains the logo and sidebar -->
 	<!-- include sidebar nav section from the layout file -->
-	<div th:include="layout/sidebarnav :: sidebarnav"></div>
-
+	<aside class="main-sidebar">
+		<section class="sidebar">
+			<div th:include="layout/sidebarnav :: sidebarnav"></div>
+		</section>
+	</aside>
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Dashboard
-				<small>Control panel</small>
+				<span th:text="#{register.course.title}">Dashboard</span>
+				<small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Home</a></li>
-				<li><a href="#" th:href="@{/admin/courses}"> Courses</a></li>
-				<li class="active"> Course Registration</li>
+				<li><a href="#"><i class="fa fa-dashboard"></i> <span th:text="#{common.breadcrumb.home}"> Home</span></a></li>
+				<li><a href="#"
+				       th:href="@{/admin/courses}"><span th:text="#{common.breadcrumb.courses}"> Courses
+				</span></a></li>
+				<li class="active" th:text="#{register.course.breadcrumb.register}">Course Registration</li>
 			</ol>
 		</section>
 
@@ -77,9 +87,8 @@
 				<div class="col-md-12">
 					<div class="box box-primary">
 						<div class="box-header with-border">
-							<h3 class="box-title"><i class="fa fa-university" aria-hidden="true"></i> Course
-							                                                                          Registration
-							                                                                          Form</h3>
+							<h3 class="box-title"><i class="fa fa-university" aria-hidden="true"></i> <span
+									th:text="#{register.course.box.title}"> Course Registration Form</span></h3>
 						</div>
 						<!-- /.box-header -->
 						<!-- form start -->
@@ -93,11 +102,11 @@
 								<!-- input for name -->
 								<div th:class="form-group"
 								     th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-									<label for="inputName" class="col-sm-2 control-label">Name</label>
+									<label for="inputName" class="col-sm-2 control-label" th:text="#{register.course.label.name}">Name</label>
 
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="inputName"
-										       placeholder="Name"
+										       placeholder="Name" th:placeholder="#{register.course.placeholder.name}"
 										       th:field="*{name}"/>
 										<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 										      th:class="help-block">Name Errors</span>
@@ -108,7 +117,8 @@
 								<!-- Dropdown list of activities -->
 								<div class="form-group"
 								     th:classappend="${#fields.hasErrors('activity')} ? 'has-error'">
-									<label for="select-activity" class="col-sm-2 control-label">Activity</label>
+									<label for="select-activity" class="col-sm-2 control-label" th:text="#{register.course.label.activity}">Activity
+									</label>
 
 									<div class="col-sm-10">
 										<select id="select-activity"
@@ -116,7 +126,7 @@
 										        style="width: 100%;"
 										        tabindex="-1" aria-hidden="true" th:field="*{activity}"
 										>
-											<option value="" text="Select Activity">Select Activity</option>
+											<option value="" text="Select Activity" th:text="#{register.course.placeholder.activity}">Select Activity</option>
 											<option th:each="act : ${activities}"
 											        th:value="${act.id}" th:text="${act.name}">activity name
 											</option>
@@ -131,7 +141,8 @@
 								<!-- Dropdown list of teachers -->
 								<div class="form-group"
 								     th:classappend="${#fields.hasErrors('teacher')}? 'has-error'">
-									<label for="select-teacher" class="col-sm-2 control-label">Teacher</label>
+									<label for="select-teacher" class="col-sm-2 control-label" th:text="#{register.course.label.teacher}">Teacher
+									</label>
 
 									<div class="col-sm-10">
 										<select id="select-teacher"
@@ -139,7 +150,7 @@
 										        style="width: 100%;"
 										        tabindex="-1" aria-hidden="true"
 										        th:field="*{teacher}">
-											<option value="" text="Select Teacher" selected>Select
+											<option value="" text="Select Teacher" th:text="#{register.course.placeholder.teacher}" selected>Select
 											                                                Teacher
 											</option>
 											<option th:each="teacher : ${teachers}"
@@ -157,17 +168,14 @@
 								<!-- Dropdown list for days -->
 								<div class="form-group"
 								     th:classappend="${#fields.hasErrors('days')}? 'has-error'">
-									<label for="select-teacher" class="col-sm-2 control-label">Days</label>
+									<label for="select-teacher" class="col-sm-2 control-label" th:text="#{register.course.label.days}">Days
+									</label>
 
 									<div class="col-sm-10">
 										<select id="select-days"
 										        class="form-control select2 select2-hidden-accessible"
-										        multiple data-placeholder="Select Days" style="width: 100%;"
-										        tabindex="-1" aria-hidden="true"
+										        multiple style="width: 100%;" tabindex="-1" aria-hidden="true"
 										        th:field="*{days}">
-											<option value="" text="Select Teacher" selected>Select
-											                                                Days
-											</option>
 											<option th:each="day : ${weekDays}"
 											        th:value="${day.toString()}"
 											        th:text="${day.toString()}">Days
@@ -218,7 +226,7 @@
 										</table>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-2 control-label">Start Time</label>
+										<label class="col-sm-2 control-label" th:text="#{register.course.label.start_time}">Start Time</label>
 
 										<div class="col-sm-10">
 											<div class="input-group">
@@ -282,7 +290,7 @@
 										</table>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-2 control-label">End Time</label>
+										<label class="col-sm-2 control-label" th:text="#{register.course.label.end_time}">End Time</label>
 
 										<div class="col-sm-10">
 											<div class="input-group">
@@ -294,7 +302,7 @@
 												</div>
 											</div>
 											<span th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"
-											      th:class="help-block">Days Errors</span>
+											      th:class="help-block">End Time Errors</span>
 										</div>
 										<!-- /.input group -->
 									</div>
@@ -304,7 +312,7 @@
 
 								<!-- Start Date Picker -->
 								<div class="form-group">
-									<label class="col-sm-2 control-label">Start Date</label>
+									<label class="col-sm-2 control-label" th:text="#{register.course.label.start_date}">Start Date</label>
 
 									<div class="col-sm-10">
 										<div class="input-group date">
@@ -322,7 +330,7 @@
 
 								<!-- End Date Picker -->
 								<div class="form-group">
-									<label for="endDatePicker" class="col-sm-2 control-label">End Date</label>
+									<label for="endDatePicker" class="col-sm-2 control-label" th:text="#{register.course.label.end_date}">End Date</label>
 
 									<div class="col-sm-10">
 										<div class="input-group date">
@@ -342,11 +350,10 @@
 								<div th:class="form-group"
 								     th:classappend="${#fields.hasErrors('capacity')}? 'has-error'">
 									<label for="inputCapacity"
-									       class="col-sm-2 control-label">Capacity</label>
+									       class="col-sm-2 control-label" th:text="#{register.course.label.capacity}">Capacity</label>
 
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="inputCapacity"
-										       placeholder="Capacity"
 										       value="10"
 										       th:field="*{capacity}"/>
 										<span th:if="${#fields.hasErrors('capacity')}"
@@ -358,13 +365,15 @@
 
 								<!-- Input for Comments -->
 								<div class="form-group">
-									<label for="inputComments" class="col-sm-2 control-label">Comment</label>
+									<label for="inputComments" class="col-sm-2 control-label" th:text="#{register.course.label.comments}">Comment
+									</label>
 
 									<div class="col-sm-10">
 										<div class="box">
 											<div class="box-body">
 											<textarea type="textarea" class="form-control" id="inputComments"
 											          placeholder="Set comments for the activity if needed"
+											          th:placeholder="#{register.course.placeholder.comments}"
 											          th:field="*{comments}">Extra info</textarea>
 											</div>
 										</div>
@@ -375,7 +384,7 @@
 							<!-- /.box-body -->
 							<div class="box-footer">
 								<button type="submit" class="btn btn-primary  pull-right"><i class="fa fa-save"></i>
-									Save
+								 <span th:text="#{register.course.button.save}">Save</span>
 								</button>
 							</div>
 							<!-- /.box-footer -->
@@ -593,29 +602,35 @@
     var teachers = [[${teachers}]];
 </script>
 -->
-
+<script th:inline="javascript">
+	var teacherPlaceholder=[[#{register.course.placeholder.teacher}]];
+	var activityPlaceholder=[[#{register.course.placeholder.activity}]];
+	var daysPlaceholder=[[#{register.course.placeholder.days}]];
+</script>
 <!-- jQuery 3.3.1 -->
-<script src="../lib/plugins/jquery/dist/jquery.min.js"
-        th:src="@{~/lib/plugins/jquery/dist/jquery.min.js}"></script>
+<script src="../../static/lib/plugins/jQuery/dist/jquery.min.js"
+        th:src="@{~/lib/plugins/jQuery/dist/jquery.min.js}"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="../lib/bootstrap/js/bootstrap.min.js"
-        th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- FastClick -->
-<script src="../../lib/plugins/fastclick/lib/fastclick.js"
-        th:src="@{~/lib/plugins/fastclick/lib/fastclick.js}"></script>
+<script src="../../static/lib/plugins/fastclick/fastclick.min.js"
+        th:src="@{~/lib/plugins/fastclick/fastclick.min.js}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../../static/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
+        th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
 <!-- Select2 -->
-<script src="../../lib/plugins/select2/js/select2.full.min.js"
+<script src="../../static/lib/plugins/select2/js/select2.full.min.js"
         th:src="@{~/lib/plugins/select2/js/select2.full.min.js}"></script>
-
 <!-- Time Picker -->
-<script src="../../lib/plugins/timepicker/bootstrap-timepicker.min.js"
+<script src="../../static/lib/plugins/timepicker/bootstrap-timepicker.min.js"
         th:src="@{~/lib/plugins/timepicker/bootstrap-timepicker.min.js}"></script>
 <!-- bootstrap datepicker -->
-<script src="../../lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
+<script src="../../static/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
         th:src="@{~/lib/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="../../lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
-        th:src="@{~/lib/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js}"></script>
+<!-- AdminLTE App -->
+<script src="../../static/lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../../static/lib/dist/js/utils.js" th:src="@{~/lib/dist/js/utils.js}"></script>
 
 <script>
 
@@ -625,15 +640,18 @@
 
         //Initialize Select2 Elements
         $("#select-days").select2({
-            placeholder: "Select days"
+            placeholder: daysPlaceholder,
+            dir:"rtl"
         });
         //Initialize Select2 Elements
         $("#select-activity").select2({
-            placeholder: "Select activity"
+            placeholder: activityPlaceholder,
+	        dir:"rtl"
         });
         //Initialize Select2 Elements   
         $("#select-teacher").select2({
-            placeholder: "Select teacher"
+	        placeholder:teacherPlaceholder,
+	        dir:"rtl"
         });
         //Timepicker
         $(".timepicker").timepicker({
