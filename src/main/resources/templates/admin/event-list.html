@@ -7,28 +7,40 @@
 	<title>Halaka Manager | Dashboard</title>
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-	<!-- Bootstrap 3.3.6 -->
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
-	      th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
+	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
+	<!-- google fonts -->
+	<link rel="stylesheet"
+	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/font-awesome/css/font-awesome.min.css"
 	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
-	<!-- DataTables -->
-	<link rel="stylesheet" href="../../lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css"
-	      th:href="@{~/lib/plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap4.css}"/>
-	<link rel="stylesheet" href="../../lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css"
-	      th:href="@{~/lib/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.css}"/>
-
 	<!-- Theme style -->
-	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css" th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
-	<link rel="stylesheet" href="../lib/dist/css/common-styles.css" th:href="@{~/lib/dist/css/common-styles.css}"/>
+	<link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
+	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		 folder instead of downloading all of them to reduce the load. -->
-	<link rel="stylesheet" href="../lib/dist/css/skins/_all-skins.min.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/skins/skin-blue.min.css"
 	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
+	<!-- DataTables -->
+	<link rel="stylesheet" href="../../static/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css"
+	      th:href="@{~/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css}"/>
+	<link rel="stylesheet"
+	      href="../../static/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"
+	      th:href="@{~/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css}"/>
+	<!-- Fixed Column extension for DataTables to support RTL -->
+	<script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/css/fixedColumns.bootstrap4.min.css"
+	        th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/js/fixedColumns.bootstrap4.min.css}"></script>
+	<!-- DataTables tools column -->
+	<link rel="stylesheet" href="../../static/lib/dist/css/common-styles.css"
+	      th:href="@{~/lib/dist/css/common-styles.css}"/>
+
+	<link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+	      th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -39,22 +51,30 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 	<!-- include header section from the layout file -->
-	<div th:include="layout/header :: header"></div>
+	<header class="main-header">
+		<div th:include="layout/header :: header"></div>
+	</header>
+
 	<!-- Left side column. contains the logo and sidebar -->
 	<!-- include sidebar nav section from the layout file -->
-	<div th:include="layout/sidebarnav :: sidebarnav"></div>
+	<aside class="main-sidebar">
+		<section class="sidebar">
+			<div th:include="layout/sidebarnav :: sidebarnav"></div>
+		</section>
+	</aside>
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Dashboard
-				<small>Control panel</small>
+				<span th:text="#{events.title}">Dashboard</span>
+				<small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="#" th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-				<li class="active">Events</li>
+				<li><a href="#"><i class="fa fa-dashboard"></i> <span
+						th:text="#{common.breadcrumb.home}"> Home</span></a></li>
+				<li class="active" th:text="#{common.breadcrumb.events}">Events</li>
 			</ol>
 		</section>
 
@@ -65,7 +85,7 @@
 				<div class="box-header">
 
 					<div class="col-sm-10">
-						<h3 class="box-title">Halaka Events List</h3>
+						<h2 class="box-title" th:text="#{events.box.title}">Halaka Events List</h2>
 					</div>
 
 					<!-- add new event button -->
@@ -73,7 +93,7 @@
 						<a class="btn btn-block btn-primary pull-right"
 						   href="#"
 						   th:href="@{/admin/events/event}"><i
-								class="fa fa-plus"> Add Event</i></a>
+								class="fa fa-plus"> <span th:text="#{events.add}">Add Event</span></i></a>
 					</div>
 					<br/>
 					<!-- Error message -->
@@ -100,261 +120,196 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-					<div id="events_dt_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-						<div class="row" th:remove="all">
-							<div class="col-sm-6">
-								<div class="dataTables_length" id="events_dt_length">
-									<label>Show
-										<select name="events_dt_length" aria-controls="events_dt"
-										        class="form-control input-sm">
-											<option value="10">10</option>
-											<option value="25">25</option>
-											<option value="50">50</option>
-											<option value="100">100</option>
-										</select>
-									       entries</label>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div id="events_dt_filter" class="dataTables_filter">
-									<label>Search:<input type="search" class="form-control input-sm"
-									                     placeholder="Teacher Name"
-									                     aria-controls="events_dt"></label>
-								</div>
-							</div>
-						</div>
-						<div class="row" th:remove="all-but-first">
-							<div class="col-sm-12">
-								<table id="events_dt"
-								       class="table table-bordered table-striped dataTable dt-responsive"
-								       role="grid" style="width: 100%;"
-								       aria-describedby="events_dt_info">
+					<div class="col-sm-12">
+						<table id="events_dt"
+						       class="table table-bordered table-striped dataTable dt-responsive nowrap"
+						       role="grid" style="width: 100%;"
+						       aria-describedby="events_dt_info">
 
-									<!-- Header of the table -->
-									<thead>
-										<tr role="row">
-											<th class="sorting_asc" tabindex="0" aria-controls="events_dt"
-											    rowspan="1"
-											    colspan="1" aria-sort="ascending"
-											    aria-label="ID: activate to sort column descending"
-											    style="width: 130.4px;">ID
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
-											    colspan="1" aria-label="Name: activate to sort column ascending"
-											    style="width: 266.4px;">Name
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
-											    colspan="1" aria-label="Introducer: activate to sort column ascending"
-											    style="width: 237.4px;">Introducer
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
-											    colspan="1" aria-label="Description: activate to sort column ascending"
-											    style="width: 186.4px;">Description
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
-											    colspan="1" aria-label="Guests: activate to sort column ascending"
-											    style="width: 135.2px;">Guests
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
-											    colspan="1" aria-label="Date: activate to sort column ascending"
-											    style="width: 135.2px;">Date
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
-											    colspan="1" aria-label="Status: activate to sort column ascending"
-											    style="width: 135.2px;">Status
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
-											    colspan="1"
-											    aria-label="Total Certificates: activate to sort column ascending"
-											    style="width: 135.2px;">Total Certificates
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
-											    colspan="1" aria-label="Comments: activate to sort column ascending"
-											    style="width: 266.2px;">Comments
-											</th>
-											<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
-											    colspan="1" aria-label="Tools: activate to sort column ascending"
-											    style="width: 266.2px;">Tools
-											</th>
-										</tr>
-									</thead>
-									<!-- End of header -->
+							<!-- Header of the table -->
+							<thead>
+								<tr role="row">
+									<th class="sorting_asc" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1" aria-sort="ascending"
+									    aria-label="ID: activate to sort column descending"
+									    style="width: 130.4px;" th:text="#{events.table.id}">ID
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1" aria-label="Name: activate to sort column ascending"
+									    style="width: 266.4px;" th:text="#{events.table.name}">Name
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1" aria-label="Introducer: activate to sort column ascending"
+									    style="width: 237.4px;" th:text="#{events.table.introducer}">Introducer
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1" aria-label="Description: activate to sort column ascending"
+									    style="width: 186.4px;" th:text="#{events.table.description}">Description
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1" aria-label="Guests: activate to sort column ascending"
+									    style="width: 135.2px;" th:text="#{events.table.guests}">Guests
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1" aria-label="Date: activate to sort column ascending"
+									    style="width: 135.2px;" th:text="#{events.table.date}">Date
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1" aria-label="Status: activate to sort column ascending"
+									    style="width: 135.2px;" th:text="#{events.table.status}">Status
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1"
+									    aria-label="Total Certificates: activate to sort column ascending"
+									    style="width: 135.2px;" th:text="#{events.table.certificates}">Total Certificates
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1" aria-label="Comments: activate to sort column ascending"
+									    style="width: 266.2px;" th:text="#{events.table.comments}">Comments
+									</th>
+									<th class="sorting" tabindex="0" aria-controls="events_dt" rowspan="1"
+									    colspan="1" aria-label="Tools: activate to sort column ascending"
+									    style="width: 266.2px;" th:text="#{events.table.tools}">Tools
+									</th>
+								</tr>
+							</thead>
+							<!-- End of header -->
 
-									<!-- Body of the table -->
-									<tbody th:remove="all-but-first">
-										<tr rol="row" th:each="event : ${events}"
-										    th:class="${eventStat.odd}? 'odd' : 'even'">
-											<td class="sorting_1" th:text="${event.id}">Event ID</td>
-											<td><a href="#"
-											       th:href="@{'/admin/events/event/' + ${event.id}}">
+							<!-- Body of the table -->
+							<tbody th:remove="all-but-first">
+								<tr rol="row" th:each="event : ${events}"
+								    th:class="${eventStat.odd}? 'odd' : 'even'">
+									<td class="sorting_1" th:text="${event.id}">Event ID</td>
+									<td><a href="#"
+									       th:href="@{'/admin/events/event/' + ${event.id}}">
                                             <span class="text-center"
                                                   th:text="${event.name}">Event Name
                                             </span></a></td>
-											<td th:text="${event.introducer}">Introducer</td>
-											<td th:text="${event.description}">Description</td>
-											<td th:text="${event.guests}">Guests</td>
-											<td th:text="${event.eventDate}">Event Date</td>
-											<td>
-												<div th:switch="${event.status}">
+									<td th:text="${event.introducer}">Introducer</td>
+									<td th:text="${event.description}">Description</td>
+									<td th:text="${event.guests}">Guests</td>
+									<td th:text="${event.eventDate}">Event Date</td>
+									<td>
+										<div th:switch="${event.status}">
                                                  <span th:case="${eventStatuses[0].toString()}"
                                                        class="label label-primary "
                                                        th:text="${event.status}">Planned Event</span>
-													<span th:case="${eventStatuses[1].toString()}"
-													      class="label label-warning"
-													      th:text="${event.status}">Event is in progress</span>
-													<span th:case="${eventStatuses[2].toString()}"
-													      class="label label-success"
-													      th:text="${event.status}">Event is done</span>
+											<span th:case="${eventStatuses[1].toString()}"
+											      class="label label-warning"
+											      th:text="${event.status}">Event is in progress</span>
+											<span th:case="${eventStatuses[2].toString()}"
+											      class="label label-success"
+											      th:text="${event.status}">Event is done</span>
+										</div>
+									</td>
+									<td th:text="${event.certificates.size()}">8</td>
+									<td th:text="${event.comments}">Comments</td>
+									<td>
+										<ul class="dtt">
+											<li>
+												<div class="tools">
+													<a href="#"
+													   th:href="@{'/admin/events/event/' + ${event.id} + '#settings'}"><i
+															class="fa fa-edit fa-3x"></i></a>
+													<a href="#"
+													   th:href="@{'/admin/events/event/' + ${event.id} + '/delete'}"><i
+															class="fa fa-trash-o fa-3x"></i></a>
 												</div>
-											</td>
-											<td th:text="${event.certificates.size()}">8</td>
-											<td th:text="${event.comments}">Comments</td>
-											<td>
-												<ul class="dtt">
-													<li>
-														<div class="tools">
-															<a href="#"
-															   th:href="@{'/admin/events/event/' + ${event.id} + '#settings'}"><i
-																	class="fa fa-edit fa-3x"></i></a>
-															<a href="#"
-															   th:href="@{'/admin/events/event/' + ${event.id} + '/delete'}"><i
-																	class="fa fa-trash-o fa-3x"></i></a>
-														</div>
-													</li>
-												</ul>
-											</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">Gecko</td>
-											<td>Firefox 1.0</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td>1.7</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">Gecko</td>
-											<td>Firefox 1.5</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td>1.8</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">Gecko</td>
-											<td>Firefox 2.0</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td>1.8</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">Gecko</td>
-											<td>Firefox 3.0</td>
-											<td>Win 2k+ / OSX.3+</td>
-											<td>1.9</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">Gecko</td>
-											<td>Camino 1.0</td>
-											<td>OSX.2+</td>
-											<td>1.8</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">Gecko</td>
-											<td>Camino 1.5</td>
-											<td>OSX.3+</td>
-											<td>1.8</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">Gecko</td>
-											<td>Netscape 7.2</td>
-											<td>Win 95+ / Mac OS 8.6-9.2</td>
-											<td>1.7</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">Gecko</td>
-											<td>Netscape Browser 8</td>
-											<td>Win 98SE+</td>
-											<td>1.7</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="odd">
-											<td class="sorting_1">Gecko</td>
-											<td>Netscape Navigator 9</td>
-											<td>Win 98+ / OSX.2+</td>
-											<td>1.8</td>
-											<td>A</td>
-										</tr>
-										<tr role="row" class="even">
-											<td class="sorting_1">Gecko</td>
-											<td>Mozilla 1.0</td>
-											<td>Win 95+ / OSX.1+</td>
-											<td>1</td>
-											<td>A</td>
-										</tr>
-									</tbody>
-									<!-- End of body -->
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="sorting_1">Gecko</td>
+									<td>Firefox 1.0</td>
+									<td>Win 98+ / OSX.2+</td>
+									<td>1.7</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="sorting_1">Gecko</td>
+									<td>Firefox 1.5</td>
+									<td>Win 98+ / OSX.2+</td>
+									<td>1.8</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="sorting_1">Gecko</td>
+									<td>Firefox 2.0</td>
+									<td>Win 98+ / OSX.2+</td>
+									<td>1.8</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="sorting_1">Gecko</td>
+									<td>Firefox 3.0</td>
+									<td>Win 2k+ / OSX.3+</td>
+									<td>1.9</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="sorting_1">Gecko</td>
+									<td>Camino 1.0</td>
+									<td>OSX.2+</td>
+									<td>1.8</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="sorting_1">Gecko</td>
+									<td>Camino 1.5</td>
+									<td>OSX.3+</td>
+									<td>1.8</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="sorting_1">Gecko</td>
+									<td>Netscape 7.2</td>
+									<td>Win 95+ / Mac OS 8.6-9.2</td>
+									<td>1.7</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="sorting_1">Gecko</td>
+									<td>Netscape Browser 8</td>
+									<td>Win 98SE+</td>
+									<td>1.7</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="odd">
+									<td class="sorting_1">Gecko</td>
+									<td>Netscape Navigator 9</td>
+									<td>Win 98+ / OSX.2+</td>
+									<td>1.8</td>
+									<td>A</td>
+								</tr>
+								<tr role="row" class="even">
+									<td class="sorting_1">Gecko</td>
+									<td>Mozilla 1.0</td>
+									<td>Win 95+ / OSX.1+</td>
+									<td>1</td>
+									<td>A</td>
+								</tr>
+							</tbody>
+							<!-- End of body -->
 
-									<!-- Footer of the table -->
-									<tfoot>
-										<tr>
-											<th rowspan="1" colspan="1">ID</th>
-											<th rowspan="1" colspan="1">Name</th>
-											<th rowspan="1" colspan="1">Introducer</th>
-											<th rowspan="1" colspan="1">Description</th>
-											<th rowspan="1" colspan="1">Guests</th>
-											<th rowspan="1" colspan="1">Date</th>
-											<th rowspan="1" colspan="1">Status</th>
-											<th rowspan="1" colspan="1">Total Certificates</th>
-											<th rowspan="1" colspan="1">Comments</th>
-											<th rowspan="1" colspan="1">Tools</th>
-										</tr>
-									</tfoot>
-									<!-- End of footer -->
+							<!-- Footer of the table -->
+							<tfoot>
+								<tr>
+									<th rowspan="1" colspan="1" th:text="#{events.table.id}">ID</th>
+									<th rowspan="1" colspan="1" th:text="#{events.table.name}">Name</th>
+									<th rowspan="1" colspan="1" th:text="#{events.table.introducer}">Introducer</th>
+									<th rowspan="1" colspan="1" th:text="#{events.table.description}">Description</th>
+									<th rowspan="1" colspan="1" th:text="#{events.table.guests}">Guests</th>
+									<th rowspan="1" colspan="1" th:text="#{events.table.date}">Date</th>
+									<th rowspan="1" colspan="1" th:text="#{events.table.status}">Status</th>
+									<th rowspan="1" colspan="1" th:text="#{events.table.certificates}">Total Certificates</th>
+									<th rowspan="1" colspan="1" th:text="#{events.table.comments}">Comments</th>
+									<th rowspan="1" colspan="1" th:text="#{events.table.tools}">Tools</th>
+								</tr>
+							</tfoot>
+							<!-- End of footer -->
 
-								</table>
-							</div>
-						</div>
-
-						<div class="row" th:remove="all">
-							<div class="col-sm-5">
-								<div class="dataTables_info" id="events_dt_info" role="status"
-								     aria-live="polite">Showing
-								                        1 to 10 of 57 entries
-								</div>
-							</div>
-							<div class="col-sm-7">
-								<div class="dataTables_paginate paging_simple_numbers" id="events_dt_paginate">
-									<ul class="pagination">
-										<li class="paginate_button previous disabled" id="events_dt_previous"><a
-												href="#"
-												aria-controls="events_dt"
-												data-dt-idx="0"
-												tabindex="0">Previous</a>
-										</li>
-										<li class="paginate_button active"><a href="#" aria-controls="events_dt"
-										                                      data-dt-idx="1" tabindex="0">1</a></li>
-										<li class="paginate_button "><a href="#" aria-controls="events_dt"
-										                                data-dt-idx="2" tabindex="0">2</a></li>
-										<li class="paginate_button "><a href="#" aria-controls="events_dt"
-										                                data-dt-idx="3" tabindex="0">3</a></li>
-										<li class="paginate_button "><a href="#" aria-controls="events_dt"
-										                                data-dt-idx="4" tabindex="0">4</a></li>
-										<li class="paginate_button "><a href="#" aria-controls="events_dt"
-										                                data-dt-idx="5" tabindex="0">5</a></li>
-										<li class="paginate_button "><a href="#" aria-controls="events_dt"
-										                                data-dt-idx="6" tabindex="0">6</a></li>
-										<li class="paginate_button next" id="events_dt_next"><a href="#"
-										                                                        aria-controls="events_dt"
-										                                                        data-dt-idx="7"
-										                                                        tabindex="0">Next</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
+						</table>
 					</div>
 				</div>
 				<!-- /.box-body -->
@@ -562,34 +517,60 @@
 	<div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
+<!-- to send data from db to javascript code -->
+<script th:inline="javascript">
+    var events = [[${events}]];
+</script>
+<!-- jQuery 3.3.1 -->
+<script src="../../static/lib/plugins/jQuery/dist/jquery.min.js"
+        th:src="@{~/lib/plugins/jQuery/dist/jquery.min.js}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
 
-<!-- jQuery 2.2.3 -->
-<script src="../../lib/plugins/jQuery/jquery-2.2.3.min.js"
-        th:src="@{~/lib/plugins/jQuery/jquery-2.2.3.min.js}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{~/lib/bootstrap/js/bootstrap.min.js}"></script>
 <!-- DataTables -->
-<script src="../../lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js"
-        th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/jquery.dataTables.min.js}"></script>
-<script src="../../lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"
-        th:src="@{~/lib/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js}"></script>
+<script src="../../static/lib/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js"
+        th:src="@{~/lib/plugins/datatables/DataTables-1.10.18/js/jquery.dataTables.min.js}"></script>
+<script src="../../static/lib/plugins/datatables/DataTables-1.10.18/js/dataTables.bootstrap.min.js"
+        th:src="@{~/lib/plugins/datatables/DataTables-1.10.18/js/dataTables.bootstrap.min.js}"></script>
 <!-- Responsive extension for DataTables -->
-<script src="../../lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js"
-        th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/dataTables.responsive.min.js}"></script>
-<script src="../../lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js"
-        th:src="@{~/lib/plugins/datatables/Responsive-2.2.1/js/responsive.bootstrap4.min.js}"></script>
-
-<!-- Slimscroll -->
-<script src="../../lib/plugins/slimScroll/jquery.slimscroll.min.js"
-        th:src="@{~/lib/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+<script src="../../static/lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js"
+        th:src="@{~/lib/plugins/datatables/Responsive-2.2.2/js/dataTables.responsive.min.js}"></script>
+<!-- Fixed Column extension for DataTables to support RTL -->
+<script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js"
+        th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/js/dataTables.fixedColumns.min.js}"></script>
 <!-- FastClick -->
-<script src="../../lib/plugins/fastclick/fastclick.js" th:src="@{~/lib/plugins/fastclick/fastclick.js}"></script>
+<script src="../../static/lib/plugins/fastclick/fastclick.min.js"
+        th:src="@{~/lib/plugins/fastclick/fastclick.min.js}"></script>
+<!-- AdminLTE App -->
+<script src="../../static/lib/dist/js/adminlte.min.js" th:src="@{~/lib/dist/js/adminlte.min.js}"></script>
+<!-- Utils to format comments cells -->
+<script src="../../static/lib/dist/js/utils.js" th:src="@{~/lib/dist/js/utils.js}"></script>
 
 <script>
     $(function () {
         $("#events_dt").DataTable({
-            responsive: true
-        });
+            "language": {
+                "sProcessing": "جارٍ التحميل...",
+                "sLengthMenu": "أظهر _MENU_ مدخلات",
+                "sZeroRecords": "لم يعثر على أية سجلات",
+                "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                "sInfoPostFix": "",
+                "sSearch": "ابحث:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "الأول",
+                    "sPrevious": "السابق",
+                    "sNext": "التالي",
+                    "sLast": "الأخير"
+                }
+            }
+        })
+            .columns.adjust()
+            .responsive.recalc();
+
+        formatCommentsCell(events, "#events_dt");
     });
 
 </script>

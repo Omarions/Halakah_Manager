@@ -10,36 +10,43 @@
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
 
 	<!-- Bootstrap 3.3.7 -->
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css"
+	<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css"
 	      th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
 	<!-- google fonts -->
 	<link rel="stylesheet"
 	      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="../lib/plugins/font-awesome/css/font-awesome.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/font-awesome/css/font-awesome.min.css"
 	      th:href="@{~/lib/plugins/font-awesome/css/font-awesome.min.css}"/>
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="../lib/plugins/Ionicons/css/ionicons.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/Ionicons/css/ionicons.min.css"
 	      th:href="@{~/lib/plugins/Ionicons/css/ionicons.min.css}"/>
 	<!-- Theme style -->
-	<link rel="stylesheet" href="../lib/dist/css/AdminLTE.min.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/AdminLTE.min.css"
 	      th:href="@{~/lib/dist/css/AdminLTE.min.css}"/>
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		 folder instead of downloading all of them to reduce the load. -->
-	<link rel="stylesheet" href="../lib/dist/css/skins/skin-blue.min.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/skins/skin-blue.min.css"
 	      th:href="@{~/lib/dist/css/skins/skin-blue.min.css}"/>
 	<!-- DataTables -->
-	<link rel="stylesheet" href="../../lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css"
 	      th:href="@{~/lib/plugins/datatables/Responsive-2.2.2/css/responsive.bootstrap4.min.css}"/>
-	<link rel="stylesheet" href="../../lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"
+	<link rel="stylesheet" href="../../static/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"
 	      th:href="@{~/lib/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css}"/>
+	<!-- Fixed Column extension for DataTables to support RTL -->
+	<script src="../../static/lib/plugins/datatables/FixedColumns-3.2.4/css/fixedColumns.bootstrap4.min.css"
+	        th:src="@{~/lib/plugins/datatables/FixedColumns-3.2.4/js/fixedColumns.bootstrap4.min.css}"></script>
 	<!-- DataTables tools column -->
-	<link rel="stylesheet" href="../../lib/dist/css/common-styles.css"
+	<link rel="stylesheet" href="../../static/lib/dist/css/common-styles.css"
 	      th:href="@{~/lib/dist/css/common-styles.css}"/>
-
+	
 	<link rel="stylesheet" href="../lib/dist/css/certificates-custom.css"
 	      th:href="@{/lib/dist/css/certificates-custom.css}"/>
 
+	<link rel="stylesheet" href="../../static/lib/dist/css/bootstrap-rtl.min.css"
+	      th:href="@{~/lib/dist/css/bootstrap-rtl.min.css}">
+	
+	
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -52,22 +59,29 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 	<!-- include header section from the layout file -->
-	<div th:include="layout/header :: header"></div>
+	<header class="main-header">
+		<div th:include="layout/header :: header"></div>
+	</header>
+
 	<!-- Left side column. contains the logo and sidebar -->
 	<!-- include sidebar nav section from the layout file -->
-	<div th:include="layout/sidebarnav :: sidebarnav"></div>
+	<aside class="main-sidebar">
+		<section class="sidebar">
+			<div th:include="layout/sidebarnav :: sidebarnav"></div>
+		</section>
+	</aside>
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 			<h1>
-				Dashboard
-				<small>Control panel</small>
+				<span th:text="#{certificates.title}">Dashboard</span>
+				<small th:text="#{common.breadcrumb.control_panel}">Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-				<li class="active">Certificates</li>
+				<li><a href="#"><i class="fa fa-dashboard"></i> <span th:text="#{common.breadcrumb.home}"> Home</span></a></li>
+				<li class="active" th:text="#{common.breadcrumb.certificates}">Certificates</li>
 			</ol>
 		</section>
 
@@ -79,7 +93,7 @@
 				<div class="box-header">
 
 					<div class="col-sm-6">
-						<h3 class="box-title">Certificates List</h3>
+						<h2 class="box-title" th:text="#{certificates.box.title}">Halaka Certificates List</h2>
 					</div>
 
 					<br/>
@@ -113,40 +127,39 @@
 									<th class="sorting_asc" tabindex="0" aria-controls="certificates_dt" rowspan="1"
 									    colspan="1" aria-sort="ascending"
 									    aria-label="ID: activate to sort column descending"
-									    style="width: 130.4px;">ID
+									    style="width: 130.4px;" th:text="#{certificates.table.id}">ID
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
 									    colspan="1" aria-label="Name: activate to sort column ascending"
-									    style="width: 266.4px;">Name
+									    style="width: 266.4px;" th:text="#{certificates.table.name}">Name
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
 									    colspan="1" aria-label="Activity: activate to sort column ascending"
-									    style="width: 237.4px;">Activity
+									    style="width: 237.4px;" th:text="#{certificates.table.activity}">Activity
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
 									    colspan="1" aria-label="Student: activate to sort column ascending"
-									    style="width: 186.4px;">Student
+									    style="width: 186.4px;" th:text="#{certificates.table.student}">Student
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
 									    colspan="1" aria-label="Teacher: activate to sort column ascending"
-									    style="width: 135.2px;">Teacher
+									    style="width: 135.2px;" th:text="#{certificates.table.teacher}">Teacher
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
 									    colspan="1" aria-label="Date: activate to sort column ascending"
-									    style="width: 266.2px;">Date
+									    style="width: 266.2px;" th:text="#{certificates.table.date}">Date
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
 									    colspan="1" aria-label="Photo: activate to sort column ascending"
-									    style="width: 135.2px;">Photo
+									    style="width: 135.2px;" th:text="#{certificates.table.photo}">Photo
 									</th>
-									<th class="sorting" tabindex="0" aria-controls="certificates_dt"
-									    rowspan="1"
+									<th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
 									    colspan="1" aria-label="Comments: activate to sort column ascending"
-									    style="width: 266px;">Comments
+									    style="width: 266px;" th:text="#{certificates.table.comments}">Comments
 									</th>
 									<th class="sorting" tabindex="0" aria-controls="certificates_dt" rowspan="1"
 									    colspan="1" aria-label="CSS grade: activate to sort column ascending"
-									    style="width: 266.2px;">Tools
+									    style="width: 266.2px;" th:text="#{certificates.table.tools}">Tools
 									</th>
 								</tr>
 							</thead>
@@ -268,15 +281,15 @@
 							<!-- Footer of the table -->
 							<tfoot>
 								<tr>
-									<th rowspan="1" colspan="1">ID</th>
-									<th rowspan="1" colspan="1">Name</th>
-									<th rowspan="1" colspan="1">Activity</th>
-									<th rowspan="1" colspan="1">Student</th>
-									<th rowspan="1" colspan="1">Teacher</th>
-									<th rowspan="1" colspan="1">Date</th>
-									<th rowspan="1" colspan="1">Photo</th>
-									<th rowspan="1" colspan="1">Comments</th>
-									<th rowspan="1" colspan="1">Tools</th>
+									<th rowspan="1" colspan="1" th:text="#{certificates.table.id}">ID</th>
+									<th rowspan="1" colspan="1" th:text="#{certificates.table.name}">Name</th>
+									<th rowspan="1" colspan="1" th:text="#{certificates.table.activity}">Activity</th>
+									<th rowspan="1" colspan="1" th:text="#{certificates.table.student}">Student</th>
+									<th rowspan="1" colspan="1" th:text="#{certificates.table.teacher}">Teacher</th>
+									<th rowspan="1" colspan="1" th:text="#{certificates.table.date}">Date</th>
+									<th rowspan="1" colspan="1" th:text="#{certificates.table.photo}">Photo</th>
+									<th rowspan="1" colspan="1" th:text="#{certificates.table.comments}">Comments</th>
+									<th rowspan="1" colspan="1" th:text="#{certificates.table.tools}">Tools</th>
 								</tr>
 							</tfoot>
 							<!-- End of footer -->
@@ -520,6 +533,29 @@
 
 <script>
     $(function () {
+        $("#certificates_dt").DataTable({
+            "language":{
+                "sProcessing":   "جارٍ التحميل...",
+                "sLengthMenu":   "أظهر _MENU_ مدخلات",
+                "sZeroRecords":  "لم يعثر على أية سجلات",
+                "sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                "sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
+                "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                "sInfoPostFix":  "",
+                "sSearch":       "ابحث:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "الأول",
+                    "sPrevious": "السابق",
+                    "sNext":     "التالي",
+                    "sLast":     "الأخير"
+                }
+            },
+            fixedColumns:   true
+        })
+            .columns.adjust()
+            .responsive.recalc();
+        
         formatCommentsCell(certificates, "#certificates_dt");
 
         // images click event
